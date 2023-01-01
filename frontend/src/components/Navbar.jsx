@@ -26,7 +26,7 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Career",
+    label: "Roadmap",
     icon: LineChart,
     children: [
       [
@@ -42,7 +42,7 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Company",
+    label: "About",
     icon: Info,
     children: [
       [
