@@ -18,7 +18,7 @@ from app.models import User
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="ATS Resume Checker", version="1.0.0")
+app = FastAPI(title="ProfileOptimizer", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,

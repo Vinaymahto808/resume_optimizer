@@ -15,8 +15,8 @@ export default function Navbar() {
       <div style={styles.inner}>
         <Link to="/" style={styles.logo}>
           <span style={styles.logoIcon}>{">"}_</span>
-          <span style={styles.logoText}>ats</span>
-          <span style={styles.logoAccent}>.check</span>
+          <span style={styles.logoText}>Profile</span>
+          <span style={styles.logoAccent}>Optimizer</span>
         </Link>
         <div style={styles.links}>
           <Link to="/pricing" style={styles.link}>Pricing</Link>

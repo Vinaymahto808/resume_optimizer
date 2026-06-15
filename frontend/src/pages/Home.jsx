@@ -32,7 +32,7 @@ export default function Home() {
   const tools = [
     {
       icon: "scan",
-      title: "ATS Resume Scan",
+      title: "Resume Scan",
       desc: "Upload your resume and get a precise 0-100 ATS score with breakdown across formatting, keywords, experience, and compatibility.",
       link: "/scan",
       color: "#4f7dff",
@@ -121,10 +121,10 @@ export default function Home() {
                 Signed in as <span style={styles.userEmail}>{user.email}</span>
               </div>
             )}
-            <div style={styles.heroBadge}>AI-Powered ATS Optimization</div>
+            <div style={styles.heroBadge}>AI-Powered Profile Optimization</div>
             <h1 style={styles.title}>
               Get Hired Faster with{" "}
-              <span style={styles.highlight}>AI-Powered</span> Resume Optimization
+              <span style={styles.highlight}>AI-Powered</span> Profile Optimization
             </h1>
             <p style={styles.subtitle}>
               Analyze resumes, optimize LinkedIn profiles, and discover jobs using AI.
@@ -295,7 +295,7 @@ function Footer() {
               <line x1="16" y1="13" x2="8" y2="13" />
               <line x1="16" y1="17" x2="8" y2="17" />
             </svg>
-            <span style={styles.footerBrand}>ATSCheck</span>
+            <span style={styles.footerBrand}>ProfileOptimizer</span>
           </div>
           <p style={styles.footerDesc}>
             AI-powered resume analysis and LinkedIn profile optimization. Land more interviews with data-driven insights.
@@ -329,7 +329,7 @@ function Footer() {
         </div>
       </div>
       <div style={styles.footerDivider} />
-      <p style={styles.footerCopy}>&copy; 2026 ATSCheck. All rights reserved.</p>
+      <p style={styles.footerCopy}>&copy; 2026 ProfileOptimizer. All rights reserved.</p>
     </footer>
   );
 }

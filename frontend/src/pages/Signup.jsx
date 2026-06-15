@@ -43,8 +43,8 @@ export default function Signup() {
       <form onSubmit={handleSubmit} style={styles.card}>
         <Link to="/" style={styles.logo}>
           <span style={styles.logoIcon}>{">"}_</span>
-          <span>ats</span>
-          <span style={styles.logoAccent}>.check</span>
+          <span>Profile</span>
+          <span style={styles.logoAccent}>Optimizer</span>
         </Link>
         <h2 style={styles.title}>Create account</h2>
         <p style={styles.subtitle}>Start optimizing your resume for free</p>
