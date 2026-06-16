@@ -14,5 +14,8 @@ class Settings(BaseSettings):
     UPLOAD_DIR: str = "uploads"
     CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "http://localhost:5173")
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    PAYPAL_CLIENT_ID: str = os.getenv("PAYPAL_CLIENT_ID", "")
+    PAYPAL_CLIENT_SECRET: str = os.getenv("PAYPAL_CLIENT_SECRET", "")
+    PAYPAL_MODE: str = os.getenv("PAYPAL_MODE", "sandbox")
 
 settings = Settings()

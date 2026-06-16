@@ -21,6 +21,12 @@ services:
         sync: false
       - key: GEMINI_API_KEY
         sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_MODE
+        value: sandbox
 
   - type: web
     name: ats-resume-checker-frontend

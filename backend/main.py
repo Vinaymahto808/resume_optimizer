@@ -10,6 +10,7 @@ from app.auth import (
     create_access_token, UserCreate, get_current_user,
 )
 from app.stripe_integration import router as stripe_router
+from app.paypal_integration import router as paypal_router
 from app.resume_routes import router as resume_router
 from app.template_routes import router as template_router
 from app.profile_routes import router as profile_router
@@ -59,6 +60,7 @@ def get_me(user: User = Depends(get_current_user)):
     return {"id": user.id, "email": user.email, "full_name": user.full_name}
 
 app.include_router(stripe_router)
+app.include_router(paypal_router)
 app.include_router(resume_router)
 app.include_router(template_router)
 app.include_router(profile_router)

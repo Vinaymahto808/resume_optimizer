@@ -35,6 +35,39 @@ export default function Pricing() {
     setLoadingId(null);
   };
 
+  const handlePayPal = async (priceId) => {
+    if (!user) {
+      navigate("/signup");
+      return;
+    }
+    setLoading(true);
+    setLoadingId(`pp_${priceId}`);
+    try {
+      const result = await payments.paypalCreateOrder({
+        price_id: priceId,
+        success_url: `${window.location.origin}/dashboard`,
+        cancel_url: `${window.location.origin}/pricing`,
+      });
+      if (result.approval_url) {
+        window.location.href = result.approval_url;
+      }
+    } catch {
+      alert("PayPal payment failed. Check your PayPal credentials.");
+    }
+    setLoading(false);
+    setLoadingId(null);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    if (token) {
+      payments.paypalCaptureOrder({ price_id: token }).then(() => {
+        window.location.href = "/dashboard";
+      });
+    }
+  }, []);
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.bgGlow} />
@@ -87,8 +120,20 @@ export default function Pricing() {
                   ? "Processing..."
                   : isFree
                   ? "Get Started"
-                  : "Subscribe"}
+                  : "Subscribe with Card"}
               </button>
+              {!isFree && (
+                <button
+                  className="btn-paypal"
+                  style={styles.paypalBtn}
+                  onClick={() => handlePayPal(p.price_id)}
+                  disabled={loading}
+                >
+                  {loading && loadingId === `pp_${p.price_id}`
+                    ? "Processing..."
+                    : "Pay with PayPal"}
+                </button>
+              )}
             </div>
           );
         })}
@@ -169,4 +214,18 @@ const styles = {
     borderBottom: "1px solid var(--border)",
   },
   btn: { width: "100%", marginTop: 20, textAlign: "center" },
+  paypalBtn: {
+    width: "100%",
+    marginTop: 8,
+    textAlign: "center",
+    background: "#0070ba",
+    color: "#fff",
+    border: "none",
+    padding: "12px 28px",
+    borderRadius: "var(--radius-sm)",
+    fontSize: 15,
+    fontWeight: 600,
+    cursor: "pointer",
+    transition: "background 0.15s",
+  },
 };
