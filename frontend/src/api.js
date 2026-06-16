@@ -34,10 +34,6 @@ export const payments = {
   getSubscription: () =>
     API.get("/api/payments/subscription").then((r) => r.data),
   cancel: () => API.post("/api/payments/cancel").then((r) => r.data),
-  paypalCreateOrder: (data) =>
-    API.post("/api/payments/paypal/create-order", data).then((r) => r.data),
-  paypalCaptureOrder: (data) =>
-    API.post("/api/payments/paypal/capture-order", data).then((r) => r.data),
 };
 
 export const resumes = {

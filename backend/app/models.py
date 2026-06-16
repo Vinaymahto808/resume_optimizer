@@ -36,8 +36,6 @@ class Subscription(Base):
     user_id = Column(String, ForeignKey("users.id"), unique=True, nullable=False)
     plan = Column(SAEnum(PlanTier), default=PlanTier.FREE)
     status = Column(SAEnum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE)
-    stripe_customer_id = Column(String, nullable=True)
-    stripe_subscription_id = Column(String, nullable=True)
     current_period_end = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
