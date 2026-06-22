@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import AuthShell from "../components/AuthShell";
 
 const MIN = 12;
 
@@ -38,16 +39,28 @@ export default function Signup() {
   };
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.bgGlow} />
-      <form onSubmit={handleSubmit} style={styles.card}>
+    <AuthShell
+      eyebrow="New account"
+      title="Create a workspace for better applications."
+      subtitle="Start with a free scan, then move into keyword analysis, template matching, and AI-assisted rewrites."
+      metrics={[
+        { value: "Free", label: "first scan" },
+        { value: "19", label: "checks" },
+        { value: "1", label: "login" },
+      ]}
+      bullets={[
+        "Resume scans, profile insights, and job recommendations live in one account.",
+        "You’ll get cleaner ATS feedback without needing a separate tool for every step.",
+        "Upgrade later only if you want AI rewrites and deeper analysis.",
+      ]}
+    >
+      <form onSubmit={handleSubmit} className="ui-card" style={styles.card}>
         <Link to="/" style={styles.logo}>
-          <span style={styles.logoIcon}>{">"}_</span>
-          <span>Profile</span>
+          <span style={{ color: "var(--text)" }}>Profile</span>
           <span style={styles.logoAccent}>Optimizer</span>
         </Link>
         <h2 style={styles.title}>Create account</h2>
-        <p style={styles.subtitle}>Start optimizing your resume for free</p>
+        <p style={styles.subtitle}>Set up your profile in a minute or two.</p>
 
         {error && <p style={styles.error}>{error}</p>}
 
@@ -84,53 +97,34 @@ export default function Signup() {
           </Link>
         </p>
       </form>
-    </div>
+    </AuthShell>
   );
 }
 
 const styles = {
-  wrapper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "calc(100vh - 64px)",
-    padding: "24px",
-    position: "relative",
-  },
-  bgGlow: {
-    position: "absolute",
-    top: "30%",
-    left: "50%",
-    width: 400,
-    height: 400,
-    background:
-      "radial-gradient(circle, rgba(79,125,255,0.08) 0%, transparent 60%)",
-    transform: "translate(-50%, -50%)",
-    pointerEvents: "none",
-  },
   card: {
     position: "relative",
     width: "100%",
-    maxWidth: 400,
+    maxWidth: 460,
     background: "var(--bg-card)",
     border: "1px solid var(--border)",
-    borderRadius: "var(--radius)",
-    padding: "40px 32px",
-    textAlign: "center",
+    borderRadius: 22,
+    padding: "36px 34px",
+    textAlign: "left",
   },
   logo: {
     display: "inline-flex",
     alignItems: "center",
     gap: 2,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 700,
-    marginBottom: 24,
+    marginBottom: 20,
     textDecoration: "none",
+    fontFamily: "var(--font-display)",
   },
-  logoIcon: { color: "var(--accent)", fontFamily: "monospace" },
   logoAccent: { color: "var(--accent)" },
-  title: { fontSize: 22, fontWeight: 700, marginBottom: 4 },
-  subtitle: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 28 },
+  title: { fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, marginBottom: 6, lineHeight: 1.05 },
+  subtitle: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 24, lineHeight: 1.7 },
   error: {
     color: "var(--danger)",
     fontSize: 13,
@@ -140,7 +134,7 @@ const styles = {
     borderRadius: "var(--radius-sm)",
   },
   input: { marginBottom: 14 },
-  btn: { width: "100%", marginTop: 4 },
+  btn: { width: "100%", marginTop: 6 },
   footer: { fontSize: 13, color: "var(--text-secondary)", marginTop: 20 },
   link: { color: "var(--accent)", fontWeight: 500 },
 };

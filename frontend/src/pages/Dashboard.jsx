@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { resumes, payments } from "../api";
 
+function StatusPill({ atsScore }) {
+  if (atsScore === null || atsScore === undefined) {
+    return <span style={s.pillParsing}>Parsing Failed</span>;
+  }
+  const score = typeof atsScore === "number" ? atsScore : (parseInt(atsScore) || 0);
+  if (score >= 80) return <span style={s.pillSuccess}>Successful</span>;
+  return <span style={s.pillFail}>Needs Work</span>;
+}
+
 export default function Dashboard() {
   const [list, setList] = useState([]);
   const [sub, setSub] = useState(null);
@@ -11,149 +20,131 @@ export default function Dashboard() {
     payments.getSubscription().then(setSub).catch(() => {});
   }, []);
 
-  const avg =
-    list.length > 0
-      ? Math.round(list.reduce((s, r) => s + (r.ats_score || 0), 0) / list.length)
-      : null;
+  const totalScans = list.length;
+  const topProfiles = list.filter((r) => (r.ats_score || 0) >= 80).length;
+  const scored = list.filter((r) => r.ats_score !== null && r.ats_score !== undefined);
+  const avg = scored.length > 0
+    ? Math.round(scored.reduce((s, r) => s + (r.ats_score || 0), 0) / scored.length)
+    : null;
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.header}>
-        <div>
-          <h2 style={styles.title}>Dashboard</h2>
-          <p style={styles.subtitle}>
-            {list.length} resume{list.length !== 1 ? "s" : ""} scanned
-          </p>
+    <div>
+      {/* KPI Row */}
+      <div style={s.kpiRow}>
+        <div className="ui-card" style={s.kpiCard}>
+          <div style={s.kpiValue}>{totalScans}</div>
+          <div style={s.kpiLabel}>Total Scans</div>
+          <div style={s.kpiSub}>All time uploads</div>
         </div>
-        <div style={styles.headerRight}>
-          <span style={styles.badge}>
-            {(sub?.plan || "Free").toUpperCase()}
-          </span>
-          <Link to="/scan" className="btn-primary" style={styles.scanBtn}>
-            + New Scan
-          </Link>
+        <div className="ui-card" style={s.kpiCard}>
+          <div style={s.kpiValue}>{topProfiles}</div>
+          <div style={s.kpiLabel}>Top Profiles</div>
+          <div style={s.kpiSub}>Scored above 80%</div>
         </div>
-      </div>
-
-      <div style={styles.stats}>
-        <div style={styles.statCard}>
-          <div style={styles.statNum}>{list.length}</div>
-          <div style={styles.statLabel}>Total Scans</div>
-        </div>
-        <div style={styles.statCard}>
-          <div style={styles.statNum}>
-            {list.filter((r) => (r.ats_score || 0) >= 80).length}
-          </div>
-          <div style={styles.statLabel}>Above 80%</div>
-        </div>
-        <div style={styles.statCard}>
-          <div style={styles.statNum}>{avg ?? "--"}</div>
-          <div style={styles.statLabel}>Average Score</div>
+        <div className="ui-card" style={s.kpiCard}>
+          <div style={{ ...s.kpiValue, color: "var(--accent)" }}>{avg ?? "--"}/100</div>
+          <div style={s.kpiLabel}>Avg. Score</div>
+          <div style={s.kpiSub}>Excluding failed parsing</div>
         </div>
       </div>
 
-      {list.length === 0 ? (
-        <div style={styles.empty}>
-          <div style={styles.emptyIcon}>{String.fromCodePoint(0x1F4C4)}</div>
-          <h3 style={styles.emptyTitle}>No resumes yet</h3>
-          <p style={styles.emptyText}>
-            Upload your first resume to get your ATS score.
-          </p>
-          <Link to="/scan" className="btn-primary">
-            Upload Resume
-          </Link>
-        </div>
-      ) : (
-        <div style={styles.table}>
-          <div style={styles.tableHeader}>
-            <span style={styles.th}>Filename</span>
-            <span style={styles.th}>Score</span>
-            <span style={styles.th}>Date</span>
+      {/* Recent Resumes Table */}
+      <div className="ui-card" style={s.tableCard}>
+        <div style={s.tableTitle}>Recent Resumes</div>
+        <div style={s.table}>
+          <div style={s.tableHead}>
+            <span style={s.th}>Filename</span>
+            <span style={s.th}>Score</span>
+            <span style={s.th}>Date</span>
+            <span style={s.th}>Status</span>
           </div>
-          {list.map((r) => {
-            const s = r.ats_score || 0;
-            const color =
-              s >= 80
-                ? "var(--success)"
-                : s >= 50
-                ? "var(--warning)"
-                : "var(--danger)";
-            return (
-              <Link key={r.id} to={`/results/${r.id}`} style={styles.row}>
-                <span style={styles.filename}>{r.filename}</span>
-                <span style={{ ...styles.score, color }}>{s}/100</span>
-                <span style={styles.date}>
-                  {new Date(r.created_at).toLocaleDateString()}
-                </span>
-              </Link>
-            );
-          })}
+          {list.length === 0 ? (
+            <div style={s.empty}>
+              <div style={s.emptyIcon}>{String.fromCodePoint(0x1F4C4)}</div>
+              <p style={s.emptyText}>No resumes uploaded yet</p>
+              <Link to="/scan" className="btn-primary" style={{ fontSize: 13 }}>Upload Resume</Link>
+            </div>
+          ) : (
+            list.map((r) => {
+              const s = r.ats_score || 0;
+              const scoreColor = s >= 80 ? "var(--success)" : s >= 50 ? "var(--warning)" : "var(--danger)";
+              return (
+                <Link key={r.id} to={`/results/${r.id}`} style={s.row}>
+                  <span style={s.filename}>{r.filename}</span>
+                  <span style={{ ...s.score, color: scoreColor }}>{s}/100</span>
+                  <span style={s.date}>
+                    {r.created_at ? new Date(r.created_at).toLocaleDateString() : "--"}
+                  </span>
+                  <span><StatusPill atsScore={r.ats_score} /></span>
+                </Link>
+              );
+            })
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-const styles = {
-  wrapper: { maxWidth: 900, margin: "0 auto", padding: "40px 24px" },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 32,
-  },
-  title: { fontSize: 28, fontWeight: 700, marginBottom: 4 },
-  subtitle: { fontSize: 14, color: "var(--text-secondary)" },
-  headerRight: { display: "flex", alignItems: "center", gap: 12 },
-  badge: {
-    background: "rgba(79,125,255,0.12)",
-    color: "var(--accent)",
-    padding: "4px 14px",
-    borderRadius: 20,
-    fontSize: 12,
-    fontWeight: 600,
-    border: "1px solid rgba(79,125,255,0.2)",
-  },
-  scanBtn: { fontSize: 13, padding: "8px 18px" },
-  stats: {
+const s = {
+  kpiRow: {
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: 16,
-    marginBottom: 32,
+    marginBottom: 28,
   },
-  statCard: {
+  kpiCard: {
     background: "var(--bg-card)",
     border: "1px solid var(--border)",
     borderRadius: "var(--radius)",
     padding: 24,
-    textAlign: "center",
+    backdropFilter: "blur(12px)",
   },
-  statNum: { fontSize: 32, fontWeight: 800, color: "var(--accent)" },
-  statLabel: { fontSize: 13, color: "var(--text-secondary)", marginTop: 4 },
-  empty: {
-    textAlign: "center",
-    padding: "80px 24px",
+  kpiValue: {
+    fontSize: 36,
+    fontWeight: 800,
+    color: "var(--text)",
+    lineHeight: 1,
+    marginBottom: 6,
   },
-  emptyIcon: { fontSize: 48, marginBottom: 16 },
-  emptyTitle: { fontSize: 20, fontWeight: 600, marginBottom: 8 },
-  emptyText: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 24 },
-  table: {
+  kpiLabel: {
+    fontSize: 13,
+    fontWeight: 600,
+    color: "var(--text-secondary)",
+    marginBottom: 2,
+  },
+  kpiSub: {
+    fontSize: 12,
+    color: "var(--text-muted)",
+  },
+
+  tableCard: {
     background: "var(--bg-card)",
     border: "1px solid var(--border)",
     borderRadius: "var(--radius)",
-    overflow: "hidden",
   },
-  tableHeader: {
-    display: "flex",
-    padding: "14px 20px",
+  tableTitle: {
+    fontSize: 16,
+    fontWeight: 700,
+    padding: "18px 20px",
     borderBottom: "1px solid var(--border)",
-    fontSize: 12,
+  },
+  table: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  tableHead: {
+    display: "flex",
+    padding: "12px 20px",
+    fontSize: 11,
     fontWeight: 600,
     color: "var(--text-muted)",
     textTransform: "uppercase",
-    letterSpacing: "0.05em",
+    letterSpacing: "0.06em",
+    borderBottom: "1px solid var(--border)",
+    background: "rgba(148,163,184,0.03)",
   },
-  th: { flex: 1 },
+  th: { flex: 1, textAlign: "left" },
   row: {
     display: "flex",
     alignItems: "center",
@@ -161,9 +152,47 @@ const styles = {
     textDecoration: "none",
     color: "inherit",
     borderBottom: "1px solid var(--border)",
-    transition: "background 0.15s",
+    transition: "background 0.12s",
   },
-  filename: { flex: 1, fontWeight: 500, fontSize: 14 },
-  score: { flex: 1, fontWeight: 700, fontSize: 15 },
+  filename: { flex: 1, fontWeight: 500, fontSize: 14, color: "var(--text)" },
+  score: { flex: 1, fontWeight: 700, fontSize: 14 },
   date: { flex: 1, fontSize: 13, color: "var(--text-muted)" },
+
+  pillSuccess: {
+    display: "inline-flex",
+    padding: "3px 10px",
+    borderRadius: 20,
+    fontSize: 11,
+    fontWeight: 600,
+    background: "rgba(16,185,129,0.12)",
+    color: "var(--success)",
+    border: "1px solid rgba(16,185,129,0.2)",
+  },
+  pillFail: {
+    display: "inline-flex",
+    padding: "3px 10px",
+    borderRadius: 20,
+    fontSize: 11,
+    fontWeight: 600,
+    background: "rgba(239,68,68,0.12)",
+    color: "var(--danger)",
+    border: "1px solid rgba(239,68,68,0.2)",
+  },
+  pillParsing: {
+    display: "inline-flex",
+    padding: "3px 10px",
+    borderRadius: 20,
+    fontSize: 11,
+    fontWeight: 600,
+    background: "rgba(148,163,184,0.1)",
+    color: "var(--text-muted)",
+    border: "1px solid var(--border)",
+  },
+
+  empty: {
+    textAlign: "center",
+    padding: "48px 24px",
+  },
+  emptyIcon: { fontSize: 40, marginBottom: 12 },
+  emptyText: { fontSize: 14, color: "var(--text-muted)", marginBottom: 16 },
 };

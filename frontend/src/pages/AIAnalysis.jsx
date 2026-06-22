@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
 import { ai, profile } from "../api";
+import { useResume } from "../contexts/ResumeContext";
 
 export default function AIAnalysis() {
-  const [text, setText] = useState("");
+  const { latestText } = useResume();
+  const [text, setText] = useState(latestText || "");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [autoFired, setAutoFired] = useState(false);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("profileText");
-    if (saved) setText(saved);
+    if (saved && !latestText) setText(saved);
   }, []);
 
-  const handleAnalyze = async () => {
-    if (!text.trim()) return;
+  useEffect(() => {
+    if (latestText && !autoFired && !loading && !result) {
+      setText(latestText);
+      setAutoFired(true);
+      const timer = setTimeout(() => handleAnalyze(latestText), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [latestText]);
+
+  const handleAnalyze = async (overrideText) => {
+    const t = overrideText ?? text;
+    if (!t.trim()) return;
     setLoading(true);
     setError("");
     try {
-      sessionStorage.setItem("profileText", text);
-      const data = await ai.analyze(text);
+      sessionStorage.setItem("profileText", t);
+      const data = await ai.analyze(t);
       setResult(data.data);
     } catch (err) {
       const msg =
@@ -37,7 +50,7 @@ export default function AIAnalysis() {
         Get an expert-level AI critique of your profile using Google Gemini.
       </p>
 
-      <div style={styles.card}>
+      <div className="ui-card" style={styles.card}>
         <textarea
           style={styles.textarea}
           rows={6}
@@ -48,7 +61,7 @@ export default function AIAnalysis() {
         {error && <p style={styles.error}>{error}</p>}
         <button
           className="btn-primary"
-          onClick={handleAnalyze}
+          onClick={() => handleAnalyze()}
           disabled={loading || !text.trim()}
           style={{ marginTop: 12 }}
         >
@@ -60,7 +73,7 @@ export default function AIAnalysis() {
         <div style={styles.results}>
           {result.overall_rating && (
             <div style={styles.scoreRow}>
-              <div style={styles.scoreCard}>
+              <div className="ui-card" style={styles.scoreCard}>
                 <div
                   style={{
                     ...styles.scoreNum,
@@ -78,7 +91,7 @@ export default function AIAnalysis() {
                 <div style={styles.scoreLabel}>AI Rating</div>
               </div>
               {result.career_level && (
-                <div style={styles.scoreCard}>
+                <div className="ui-card" style={styles.scoreCard}>
                   <div style={styles.scoreNum}>{result.career_level}</div>
                   <div style={styles.scoreLabel}>Career Level</div>
                 </div>
@@ -88,7 +101,7 @@ export default function AIAnalysis() {
 
           <div style={styles.grid}>
             {result.strengths?.length > 0 && (
-              <div style={{ ...styles.card, borderLeft: "3px solid var(--success)" }}>
+              <div className="ui-card" style={{ ...styles.card, borderLeft: "3px solid var(--success)" }}>
                 <h3 style={{ ...styles.cardTitle, color: "var(--success)" }}>Strengths</h3>
                 <ul style={styles.list}>
                   {result.strengths.map((s, i) => (
@@ -99,7 +112,7 @@ export default function AIAnalysis() {
             )}
 
             {result.gaps?.length > 0 && (
-              <div style={{ ...styles.card, borderLeft: "3px solid var(--danger)" }}>
+              <div className="ui-card" style={{ ...styles.card, borderLeft: "3px solid var(--danger)" }}>
                 <h3 style={{ ...styles.cardTitle, color: "var(--danger)" }}>Gaps</h3>
                 <ul style={styles.list}>
                   {result.gaps.map((g, i) => (
@@ -111,7 +124,7 @@ export default function AIAnalysis() {
           </div>
 
           {result.custom_suggestions?.length > 0 && (
-            <div style={styles.card}>
+            <div className="ui-card" style={styles.card}>
               <h3 style={styles.cardTitle}>Suggestions</h3>
               <ul style={styles.list}>
                 {result.custom_suggestions.map((s, i) => (
@@ -122,21 +135,21 @@ export default function AIAnalysis() {
           )}
 
           {result.headline_suggestion && (
-            <div style={styles.card}>
+            <div className="ui-card" style={styles.card}>
               <h3 style={styles.cardTitle}>Suggested Headline</h3>
               <p style={styles.copyText}>{result.headline_suggestion}</p>
             </div>
           )}
 
           {result.impactful_rewrite && (
-            <div style={styles.card}>
+            <div className="ui-card" style={styles.card}>
               <h3 style={styles.cardTitle}>Rewritten About Section</h3>
               <p style={styles.copyText}>{result.impactful_rewrite}</p>
             </div>
           )}
 
           {result.recommended_roles?.length > 0 && (
-            <div style={styles.card}>
+            <div className="ui-card" style={styles.card}>
               <h3 style={styles.cardTitle}>Recommended Roles</h3>
               <ul style={styles.list}>
                 {result.recommended_roles.map((r, i) => (
@@ -159,7 +172,7 @@ const styles = {
     left: "50%",
     width: 500,
     height: 500,
-    background: "radial-gradient(circle, rgba(79,125,255,0.06) 0%, transparent 60%)",
+    background: "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 60%)",
     transform: "translate(-50%, -50%)",
     pointerEvents: "none",
   },
@@ -176,8 +189,8 @@ const styles = {
   textarea: {
     width: "100%",
     padding: "12px 14px",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid var(--border)",
+    background: "rgba(15,23,42,0.72)",
+    border: "1px solid rgba(148,163,184,0.14)",
     borderRadius: "var(--radius-sm)",
     color: "var(--text)",
     fontSize: 14,

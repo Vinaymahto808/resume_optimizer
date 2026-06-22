@@ -29,6 +29,7 @@ class ResumeDetailResponse(ResumeResponse):
     category_breakdown: dict | None
     word_count: int | None
     raw_text: str | None
+    nineteen_point: dict | None = None
 
 def get_user_plan(user: User, db: Session) -> PlanTier:
     sub = db.query(Subscription).filter(Subscription.user_id == user.id).first()
@@ -117,6 +118,14 @@ def get_resume(
     keywords_missing = resume.keywords_missing.split(",") if resume.keywords_missing else []
     suggestions = resume.suggestions.split("\n") if resume.suggestions else []
 
+    try:
+        ats_result = calculate_ats_score(resume.file_path)
+        breakdown = ats_result.get("breakdown", {})
+        nineteen_point = ats_result.get("nineteen_point", {})
+    except Exception:
+        breakdown = {}
+        nineteen_point = {}
+
     cat_analysis = keyword_match_analysis(resume.raw_text or "")["categories"] if resume.raw_text else {}
 
     return ResumeDetailResponse(
@@ -126,10 +135,11 @@ def get_resume(
         keywords_found=keywords_found,
         keywords_missing=keywords_missing,
         suggestions=suggestions,
-        breakdown={},
+        breakdown=breakdown,
         category_breakdown=cat_analysis,
         word_count=len((resume.raw_text or "").split()),
         raw_text=resume.raw_text,
+        nineteen_point=nineteen_point,
         created_at=resume.created_at.isoformat() if resume.created_at else "",
     )
 

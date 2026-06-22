@@ -25,6 +25,10 @@ export const auth = {
   login: (data) =>
     API.post("/api/auth/login", new URLSearchParams(data)).then((r) => r.data),
   me: () => API.get("/api/auth/me").then((r) => r.data),
+  forgotPassword: (email) =>
+    API.post("/api/auth/forgot-password", { email }).then((r) => r.data),
+  resetPassword: (token, new_password) =>
+    API.post("/api/auth/reset-password", { token, new_password }).then((r) => r.data),
 };
 
 export const payments = {
@@ -51,6 +55,10 @@ export const templates = {
   list: () => API.get("/api/templates/").then((r) => r.data),
   generate: (data) =>
     API.post("/api/templates/generate", data).then((r) => r.data),
+  generatePdf: (data) =>
+    API.post("/api/templates/generate-pdf", data).then((r) => r.data),
+  studentPdf: (data) =>
+    API.post("/api/templates/student-pdf", data, { responseType: "blob" }),
 };
 
 export const profile = {
@@ -83,4 +91,94 @@ export const ai = {
     }).then((r) => r.data),
   suggestJobs: (text) =>
     API.post("/api/ai-suggest-jobs", { profile_text: text }).then((r) => r.data),
+  roadmap: (targetRole) =>
+    API.post("/api/ai-roadmap", { target_role: targetRole }).then((r) => r.data),
+  portfolio: (resumeText) =>
+    API.post("/api/ai-portfolio", { resume_text: resumeText }).then((r) => r.data),
+  analytics: (text) =>
+    API.post("/api/ai-analytics", { profile_text: text }).then((r) => r.data),
+};
+
+// === v1 Unified API (covers all landing page promises) ===
+export const v1 = {
+  // Resume upload with async scan
+  uploadResume: (file) => {
+    const fd = new FormData();
+    fd.append("file", file);
+    return API.post("/api/v1/upload", fd).then((r) => r.data);
+  },
+  // Poll scan status
+  scanStatus: (taskId) =>
+    API.get(`/api/v1/scan/${taskId}/status`).then((r) => r.data),
+
+  // Profile analysis (keywords, headline, about, suggestions)
+  analyze: (text) =>
+    API.post("/api/v1/analyze", { profile_text: text }).then((r) => r.data),
+
+  // AI Rewriting
+  rewriteBullet: (original, jobDesc = "", context = "") =>
+    API.post("/api/v1/rewrite/bullet", {
+      original_text: original, job_description: jobDesc, profile_context: context,
+    }).then((r) => r.data),
+  rewriteHeadline: (profileText, targetRole = "") =>
+    API.post("/api/v1/rewrite/headline", {
+      profile_text: profileText, target_role: targetRole,
+    }).then((r) => r.data),
+  rewriteSummary: (profileText, targetRole = "") =>
+    API.post("/api/v1/rewrite/summary", {
+      profile_text: profileText, target_role: targetRole,
+    }).then((r) => r.data),
+
+  // Optimization suggestions
+  suggestions: (text) =>
+    API.post("/api/v1/suggestions", { profile_text: text }).then((r) => r.data),
+
+  // LinkedIn scraping + ingestion
+  scrapeLinkedIn: (url) =>
+    API.post("/api/v1/linkedin/scrape", { url }).then((r) => r.data),
+  ingestLinkedIn: (url) =>
+    API.post("/api/v1/linkedin/ingest", { url }).then((r) => r.data),
+
+  // Job matching
+  matchJobs: (text, minMatch = 10, topN = 12) =>
+    API.post("/api/v1/jobs/match", {
+      profile_text: text, min_match: minMatch, top_n: topN,
+    }).then((r) => r.data),
+  analyzeJobs: (text, topN = 5) =>
+    API.post("/api/v1/jobs/analyze", {
+      profile_text: text, top_n: topN,
+    }).then((r) => r.data),
+
+  // Optimization checklist / action plan
+  getChecklist: (profileText) =>
+    API.post("/api/v1/checklist", { profile_text: profileText }).then((r) => r.data),
+
+  // Skill extraction & matching
+  extractSkills: (text) =>
+    API.post("/api/v1/skills/extract", { text }).then((r) => r.data),
+  scoreSkills: (profileSkills, jobSkills) =>
+    API.post("/api/v1/skills/score", {
+      profile_skills: profileSkills, job_skills: jobSkills,
+    }).then((r) => r.data),
+
+  // Unified ingest (resume text + optional LinkedIn)
+  ingestUnified: (resumeText, linkedinUrl = "") =>
+    API.post("/api/v1/unified/ingest", {
+      resume_text: resumeText, linkedin_url: linkedinUrl,
+    }).then((r) => r.data),
+
+  // Full unified scan (ingest + analyze + match + checklist)
+  fullScan: (resumeText, linkedinUrl = "") =>
+    API.post("/api/v1/unified/scan", {
+      resume_text: resumeText, linkedin_url: linkedinUrl,
+    }).then((r) => r.data),
+};
+
+export const latex = {
+  list: () => API.get("/api/latex-templates/").then((r) => r.data),
+  get: (id) => API.get(`/api/latex-templates/${id}`).then((r) => r.data),
+  downloadUrl: (id) => `${API.defaults.baseURL}/api/latex-templates/${id}/download`,
+  previewUrl: (id) => `${API.defaults.baseURL}/api/latex-templates/${id}/preview`,
+  compile: (id, substitutions) =>
+    API.post(`/api/latex-templates/${id}/compile`, { substitutions }, { responseType: "blob" }).then((r) => r.data),
 };

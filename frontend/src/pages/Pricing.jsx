@@ -3,10 +3,54 @@ import { payments } from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+const FALLBACK_PLANS = [
+  {
+    id: "free",
+    name: "Free",
+    description: "Basic ATS scan to get started",
+    price_id: "free",
+    amount: 0,
+    features: [
+      "1 resume scan / month",
+      "Basic ATS score",
+      "5 optimization suggestions",
+    ],
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    description: "Unlimited scans + detailed analysis",
+    price_id: "price_pro_monthly",
+    amount: 1000,
+    features: [
+      "Unlimited resume scans",
+      "Detailed ATS breakdown (19 checks)",
+      "Keyword & skill analysis",
+      "AI rewrite (bullets, headline, summary)",
+      "Resume templates",
+      "Priority support",
+    ],
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    description: "For teams & recruiters",
+    price_id: "price_enterprise_monthly",
+    amount: 3000,
+    features: [
+      "Everything in Pro",
+      "Bulk upload (50+)",
+      "Team dashboard",
+      "API access",
+      "Dedicated account manager",
+    ],
+  },
+];
+
 export default function Pricing() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [prices, setPrices] = useState([]);
+  const [prices, setPrices] = useState(FALLBACK_PLANS);
   const [loading, setLoading] = useState(false);
   const [loadingId, setLoadingId] = useState(null);
 
@@ -30,7 +74,8 @@ export default function Pricing() {
       if (result.url) {
         window.location.href = result.url;
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       alert("Payment failed. Check your credentials.");
     }
     setLoading(false);
@@ -52,6 +97,7 @@ export default function Pricing() {
           return (
             <div
               key={p.id}
+              className="hover-card proximity-glow ui-card"
               style={{
                 ...styles.card,
                 borderColor: isPopular ? "var(--accent)" : "var(--border)",
@@ -113,7 +159,7 @@ const styles = {
     width: 600,
     height: 600,
     background:
-      "radial-gradient(circle, rgba(79,125,255,0.06) 0%, transparent 60%)",
+      "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 60%)",
     transform: "translate(-50%, -50%)",
     pointerEvents: "none",
   },

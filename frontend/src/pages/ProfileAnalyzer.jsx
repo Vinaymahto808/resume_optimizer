@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { profile, atsLegacy } from "../api";
+import { v1, atsLegacy } from "../api";
+import { useResume } from "../contexts/ResumeContext";
 
 export default function ProfileAnalyzer() {
-  const [text, setText] = useState("");
+  const { latestText } = useResume();
+  const [text, setText] = useState(latestText || "");
   const [mode, setMode] = useState("manual");
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -11,16 +13,27 @@ export default function ProfileAnalyzer() {
   const [matches, setMatches] = useState([]);
   const [error, setError] = useState("");
   const [step, setStep] = useState(-1);
+  const [autoFired, setAutoFired] = useState(false);
   const inputRef = useRef();
   const jobsRef = useRef(null);
 
-  const analyzeProfile = async () => {
-    if (!text.trim()) return;
+  useEffect(() => {
+    if (latestText && !autoFired && !result && !loading) {
+      setText(latestText);
+      setAutoFired(true);
+      const timer = setTimeout(() => analyzeProfile(), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [latestText]);
+
+  const analyzeProfile = async (overrideText) => {
+    const t = overrideText ?? text;
+    if (!t.trim()) return;
     setLoading(true);
     setError("");
     setStep(0);
     try {
-      const data = await profile.analyze(text);
+      const data = await v1.analyze(text);
       setResult(data.data);
       setStep(1);
       setLoading(false);
@@ -28,7 +41,7 @@ export default function ProfileAnalyzer() {
       setJobLoading(true);
       setStep(2);
       try {
-        const jobData = await profile.recommendJobs(text);
+        const jobData = await v1.matchJobs(text);
         setMatches(jobData.data || []);
         setStep(3);
       } catch {
@@ -52,9 +65,9 @@ export default function ProfileAnalyzer() {
     setLoading(true);
     setError("");
     try {
-      const data = await profile.fetchLinkedIn(url);
+      const data = await v1.scrapeLinkedIn(url);
       if (data.success) {
-        setText(data.text);
+        setText(data.data.text || data.text || "");
         setError("");
       } else {
         setError(data.error || "Could not fetch profile");
@@ -100,26 +113,29 @@ export default function ProfileAnalyzer() {
 
   return (
     <div style={styles.wrapper}>
-      <div style={styles.bgGlow} />
       <h2 style={styles.title}>Profile Analyzer</h2>
       <p style={styles.subtitle}>
         Paste your LinkedIn profile or upload a resume. Get keyword analysis, optimized copy, and matching jobs.
       </p>
 
       <div style={styles.tabs}>
-        {["manual", "url", "upload"].map((m) => (
-          <button
-            key={m}
-            style={{
-              ...styles.tab,
-              background: mode === m ? "var(--accent)" : "transparent",
-              color: mode === m ? "#fff" : "var(--text-secondary)",
-            }}
-            onClick={() => setMode(m)}
-          >
-            {m === "manual" ? "Paste Text" : m === "url" ? "LinkedIn URL" : "Upload"}
-          </button>
-        ))}
+        {["manual", "url", "upload"].map((m) => {
+          const active = mode === m;
+          return (
+            <button
+              key={m}
+              style={{
+                ...styles.tab,
+                background: active ? "rgba(34,197,94,0.14)" : "transparent",
+                color: active ? "#dcfce7" : "var(--text-muted)",
+                boxShadow: active ? "0 1px 3px rgba(2,6,23,0.25)" : "none",
+              }}
+              onClick={() => setMode(m)}
+            >
+              {m === "manual" ? "Paste Text" : m === "url" ? "LinkedIn URL" : "Upload"}
+            </button>
+          );
+        })}
       </div>
 
       <div style={styles.card}>
@@ -148,45 +164,35 @@ export default function ProfileAnalyzer() {
           </div>
         ) : null}
 
-        {mode === "manual" && (
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>
-            <button
-              onClick={() => setText(SAMPLE_TEXT)}
-              style={{
-                background: "none", border: "none", color: "var(--accent)", fontSize: 12,
-                cursor: "pointer", fontFamily: "inherit", fontWeight: 500, padding: 0,
-              }}
-            >
-              Load sample profile &rarr;
-            </button>
-          </div>
-        )}
-
         {(mode === "manual" || mode === "url") && (
-          <textarea
-            style={styles.textarea}
-            rows={8}
-            placeholder="Paste your LinkedIn About / Summary section here..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
+          <div style={styles.textareaWrap}>
+            {mode === "manual" && (
+              <button onClick={() => setText(SAMPLE_TEXT)} style={styles.sampleBtn}>
+                Load sample profile &rarr;
+              </button>
+            )}
+            <textarea
+              style={styles.textarea}
+              rows={8}
+              placeholder="Paste your LinkedIn About / Summary section here..."
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+          </div>
         )}
 
         {text && <p style={styles.charCount}>{text.length} characters</p>}
         {error && <p style={styles.error}>{error}</p>}
 
-        <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+        <div style={styles.actionRow}>
           <button
             className="btn-primary"
-            onClick={analyzeProfile}
+            onClick={() => analyzeProfile()}
             disabled={loading || !text.trim()}
           >
             {loading ? "Analyzing..." : "Analyze Profile"}
           </button>
-          <button
-            className="btn-secondary"
-            onClick={() => { setText(""); setResult(null); setMatches([]); setStep(-1); }}
-          >
+          <button className="btn-secondary" onClick={() => { setText(""); setResult(null); setMatches([]); setStep(-1); }}>
             Clear
           </button>
         </div>
@@ -194,7 +200,6 @@ export default function ProfileAnalyzer() {
 
       {result && (
         <div style={styles.results}>
-          {/* Overall Score */}
           {result.strength && (
             <div style={styles.scoreRow}>
               <div style={styles.scoreCard}>
@@ -216,7 +221,6 @@ export default function ProfileAnalyzer() {
             </div>
           )}
 
-          {/* Keyword Categories */}
           {result.keywords?.categories && (
             <div style={styles.card}>
               <h3 style={styles.cardTitle}>Keyword Categories</h3>
@@ -228,25 +232,17 @@ export default function ProfileAnalyzer() {
                     <div key={cat} style={styles.catBlock}>
                       <div style={styles.catHeader}>
                         <span style={styles.catName}>{cat}</span>
-                        <span style={{ ...styles.catScore, color }}>
-                          {info.matched}/{info.total}
-                        </span>
+                        <span style={{ ...styles.catScore, color }}>{info.count}/{info.total}</span>
                       </div>
-                      {info.matched_keywords?.length > 0 && (
+                      {info.matched?.length > 0 && (
                         <div style={styles.keywordRow}>
-                          {info.matched_keywords.map((kw) => (
+                          {info.matched.map((kw) => (
                             <span key={kw} style={styles.keywordTag}>{kw}</span>
                           ))}
                         </div>
                       )}
                       <div style={styles.barBg}>
-                        <div
-                          style={{
-                            ...styles.barFill,
-                            width: `${Math.min(pct, 100)}%`,
-                            background: color,
-                          }}
-                        />
+                        <div style={{ ...styles.barFill, width: `${Math.min(pct, 100)}%`, background: color }} />
                       </div>
                     </div>
                   );
@@ -255,38 +251,28 @@ export default function ProfileAnalyzer() {
             </div>
           )}
 
-          {/* Strengths & Gaps */}
           <div style={styles.splitGrid}>
             {result.strength?.strengths?.length > 0 && (
               <div style={{ ...styles.card, borderTop: "3px solid var(--success)" }}>
-                <h3 style={{ ...styles.cardTitle, color: "var(--success)" }}>
-                  Strengths
-                </h3>
+                <h3 style={{ ...styles.cardTitle, color: "var(--success)" }}>Strengths</h3>
                 <div style={styles.statGrid}>
                   {result.strength.strengths.map(([cat, score]) => (
                     <div key={cat} style={styles.statItem}>
                       <span style={styles.statName}>{cat}</span>
-                      <span style={{ ...styles.statPct, color: "var(--success)" }}>
-                        {score}%
-                      </span>
+                      <span style={{ ...styles.statPct, color: "var(--success)" }}>{score}%</span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-
             {result.strength?.weaknesses?.length > 0 && (
               <div style={{ ...styles.card, borderTop: "3px solid var(--danger)" }}>
-                <h3 style={{ ...styles.cardTitle, color: "var(--danger)" }}>
-                  Gaps to Fix
-                </h3>
+                <h3 style={{ ...styles.cardTitle, color: "var(--danger)" }}>Gaps to Fix</h3>
                 <div style={styles.statGrid}>
                   {result.strength.weaknesses.map(([cat, score]) => (
                     <div key={cat} style={styles.statItem}>
                       <span style={styles.statName}>{cat}</span>
-                      <span style={{ ...styles.statPct, color: "var(--danger)" }}>
-                        {score}%
-                      </span>
+                      <span style={{ ...styles.statPct, color: "var(--danger)" }}>{score}%</span>
                     </div>
                   ))}
                 </div>
@@ -294,7 +280,6 @@ export default function ProfileAnalyzer() {
             )}
           </div>
 
-          {/* Suggestions */}
           {result.suggestions?.length > 0 && (
             <div style={styles.card}>
               <h3 style={styles.cardTitle}>Suggestions</h3>
@@ -306,7 +291,6 @@ export default function ProfileAnalyzer() {
             </div>
           )}
 
-          {/* Optimized Headline */}
           {result.optimized_headline && (
             <div style={{ ...styles.card, borderLeft: "3px solid var(--accent)" }}>
               <h3 style={styles.cardTitle}>Optimized Headline</h3>
@@ -314,7 +298,6 @@ export default function ProfileAnalyzer() {
             </div>
           )}
 
-          {/* Optimized About */}
           {result.optimized_about && (
             <div style={{ ...styles.card, borderLeft: "3px solid #a78bfa" }}>
               <h3 style={styles.cardTitle}>Optimized About Section</h3>
@@ -324,23 +307,37 @@ export default function ProfileAnalyzer() {
         </div>
       )}
 
-      {/* Job Recommendations */}
       <div ref={jobsRef} style={styles.jobsSection}>
         <div style={styles.jobsHeader}>
           <h3 style={styles.jobsTitle}>Recommended Jobs</h3>
           {step >= 2 && (
-            <span style={styles.jobsBadge}>
-              {matches.length} matches
-            </span>
+            <span style={styles.jobsBadge}>{matches.length} matches</span>
           )}
         </div>
+
+        {step < 2 && !result && (
+          <div style={styles.emptyState}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            <p style={styles.emptyText}>Analyze your profile above to populate custom matching jobs here.</p>
+          </div>
+        )}
 
         {step >= 2 && jobLoading && (
           <div style={styles.loadingJobs}>Finding matching jobs...</div>
         )}
 
         {step >= 3 && matches.length === 0 && !jobLoading && (
-          <div style={styles.noJobs}>Add more keywords to your profile to get job matches.</div>
+          <div style={styles.emptyState}>
+            <p style={styles.emptyText}>Add more keywords to your profile to get job matches.</p>
+          </div>
+        )}
+
+        {step < 2 && result && (
+          <div style={styles.emptyState}>
+            <p style={styles.emptyText}>Job recommendations will appear here after analysis...</p>
+          </div>
         )}
 
         {matches.length > 0 && (
@@ -353,15 +350,10 @@ export default function ProfileAnalyzer() {
                   <div style={styles.jobTop}>
                     <div>
                       <h4 style={styles.jobTitle}>{job.title}</h4>
-                      <p style={styles.jobMeta}>
-                        {job.company} &middot; {job.location}
-                      </p>
+                      <p style={styles.jobMeta}>{job.company} &middot; {job.location}</p>
                     </div>
-                    <div style={{ ...styles.jobScore, color, borderColor: `${color}40` }}>
-                      {m.match_pct}%
-                    </div>
+                    <div style={{ ...styles.jobScore, color, borderColor: `${color}40` }}>{m.match_pct}%</div>
                   </div>
-
                   <div style={styles.skillsRow}>
                     <div>
                       <p style={{ ...styles.skillsLabel, color: "var(--success)" }}>Matched</p>
@@ -383,7 +375,6 @@ export default function ProfileAnalyzer() {
                       </div>
                     </div>
                   </div>
-
                   <a href={job.url} target="_blank" rel="noreferrer" className="btn-primary" style={styles.applyBtn}>
                     Apply Now &rarr;
                   </a>
@@ -392,10 +383,6 @@ export default function ProfileAnalyzer() {
             })}
           </div>
         )}
-
-        {result && step < 2 && (
-          <div style={styles.loadingJobs}>Job recommendations will appear here after analysis...</div>
-        )}
       </div>
     </div>
   );
@@ -403,47 +390,59 @@ export default function ProfileAnalyzer() {
 
 const styles = {
   wrapper: { maxWidth: 860, margin: "0 auto", padding: "40px 24px", position: "relative" },
-  bgGlow: {
-    position: "absolute", top: "15%", left: "50%", width: 500, height: 500,
-    background: "radial-gradient(circle, rgba(79,125,255,0.06) 0%, transparent 60%)",
-    transform: "translate(-50%, -50%)", pointerEvents: "none",
-  },
-  title: { fontSize: 28, fontWeight: 700, marginBottom: 4, position: "relative" },
-  subtitle: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 24, position: "relative" },
+  title: { fontSize: 28, fontWeight: 700, marginBottom: 4, color: "var(--text)" },
+  subtitle: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 24, lineHeight: 1.6 },
+
+  /* Segmented Control */
   tabs: {
-    display: "flex", gap: 4, marginBottom: 16, background: "var(--bg-card)",
-    border: "1px solid var(--border)", borderRadius: 8, padding: 4, maxWidth: 340, position: "relative",
+    display: "flex", gap: 2, marginBottom: 16,
+    background: "rgba(148,163,184,0.08)", borderRadius: 8, padding: 3,
+    maxWidth: 340, position: "relative",
   },
   tab: {
-    padding: "7px 18px", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600,
+    padding: "8px 18px", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600,
     cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", flex: 1,
   },
+
   card: {
     background: "var(--bg-card)", border: "1px solid var(--border)",
-    borderRadius: "var(--radius)", padding: 20, marginBottom: 16, position: "relative",
+    borderRadius: "var(--radius)", padding: 20, marginBottom: 16,
   },
   urlRow: { display: "flex", gap: 8, alignItems: "center" },
   input: {
-    width: "100%", padding: "10px 14px", background: "rgba(255,255,255,0.04)",
-    border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", color: "var(--text)",
+    width: "100%", padding: "10px 14px", background: "rgba(15,23,42,0.72)",
+    border: "1px solid rgba(148,163,184,0.14)", borderRadius: "var(--radius-sm)", color: "var(--text)",
     fontSize: 14, fontFamily: "inherit", outline: "none", boxSizing: "border-box",
   },
   dropzone: {
-    border: "2px dashed var(--border)", borderRadius: "var(--radius)", padding: 40,
-    textAlign: "center", cursor: "pointer", marginBottom: 16,
+    border: "1px dashed rgba(148,163,184,0.22)", borderRadius: "var(--radius)", padding: 40,
+    textAlign: "center", cursor: "pointer", marginBottom: 16, background: "rgba(15,23,42,0.7)",
   },
   dropText: { fontWeight: 600, fontSize: 14, color: "var(--text-secondary)" },
+
+  /* Textarea with sample button */
+  textareaWrap: { position: "relative" },
+  sampleBtn: {
+    position: "absolute", top: 8, right: 8, zIndex: 1,
+    background: "none", border: "none", color: "var(--accent)", fontSize: 12,
+    cursor: "pointer", fontFamily: "inherit", fontWeight: 600, padding: "4px 8px",
+    borderRadius: 4,
+  },
   textarea: {
-    width: "100%", padding: "12px 14px", background: "rgba(255,255,255,0.04)",
-    border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", color: "var(--text)",
+    width: "100%", padding: "12px 14px", background: "rgba(15,23,42,0.72)",
+    border: "1px solid rgba(148,163,184,0.14)", borderRadius: "var(--radius-sm)", color: "var(--text)",
     fontSize: 14, fontFamily: "inherit", resize: "vertical", lineHeight: 1.7,
     outline: "none", boxSizing: "border-box",
+    transition: "border-color 0.15s, box-shadow 0.15s",
   },
   charCount: { fontSize: 12, color: "var(--text-muted)", marginTop: 8 },
   error: {
     color: "var(--danger)", fontSize: 13, padding: "8px 12px",
-    background: "rgba(248,113,113,0.1)", borderRadius: "var(--radius-sm)", marginTop: 12,
+    background: "var(--danger-soft)", borderRadius: "var(--radius-sm)", margin: "12px 0 0",
   },
+
+  actionRow: { display: "flex", gap: 10, marginTop: 16 },
+
   results: { marginTop: 24, display: "flex", flexDirection: "column", gap: 14 },
 
   scoreRow: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 },
@@ -451,63 +450,63 @@ const styles = {
   scoreNum: { fontSize: 36, fontWeight: 800, color: "var(--accent)" },
   scoreLabel: { fontSize: 12, color: "var(--text-secondary)", marginTop: 4 },
 
-  cardTitle: { fontSize: 15, fontWeight: 600, marginBottom: 12 },
+  cardTitle: { fontSize: 15, fontWeight: 600, marginBottom: 12, color: "var(--text)" },
   barWrap: { display: "flex", flexDirection: "column", gap: 16 },
   catBlock: {},
   catHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 },
-  catName: { fontSize: 13, fontWeight: 600 },
+  catName: { fontSize: 13, fontWeight: 600, color: "var(--text)" },
   catScore: { fontSize: 13, fontWeight: 700 },
   keywordRow: { display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 },
   keywordTag: {
-    background: "rgba(79,125,255,0.08)", color: "var(--accent)", padding: "2px 8px",
-    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(79,125,255,0.15)",
+    background: "rgba(16,185,129,0.08)", color: "var(--accent)", padding: "2px 8px",
+    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(16,185,129,0.15)",
   },
-  barBg: { height: 8, background: "rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden" },
+  barBg: { height: 8, background: "rgba(148,163,184,0.08)", borderRadius: 4, overflow: "hidden" },
   barFill: { height: "100%", borderRadius: 4, transition: "width 0.6s" },
 
   splitGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 },
   statGrid: { display: "flex", flexDirection: "column", gap: 8 },
-  statItem: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8 },
+  statItem: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "rgba(148,163,184,0.08)", borderRadius: 8, border: "1px solid rgba(148,163,184,0.08)" },
   statName: { fontSize: 13, fontWeight: 500, color: "var(--text-secondary)" },
   statPct: { fontSize: 14, fontWeight: 700 },
 
   suggestWrap: { display: "flex", flexDirection: "column", gap: 8 },
   suggestItem: {
     padding: "10px 14px", fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6,
-    background: "rgba(79,125,255,0.04)", border: "1px solid rgba(79,125,255,0.08)",
-    borderLeft: "3px solid var(--accent)", borderRadius: 8,
+    background: "rgba(148,163,184,0.08)", border: "1px solid rgba(148,163,184,0.14)", borderLeft: "3px solid var(--accent)", borderRadius: 8,
   },
   copyText: { fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.7, whiteSpace: "pre-wrap", margin: 0 },
 
   /* Jobs section */
   jobsSection: { marginTop: 36, paddingTop: 24, borderTop: "1px solid var(--border)" },
   jobsHeader: { display: "flex", alignItems: "center", gap: 12, marginBottom: 16 },
-  jobsTitle: { fontSize: 20, fontWeight: 700, margin: 0 },
+  jobsTitle: { fontSize: 20, fontWeight: 700, margin: 0, color: "var(--text)" },
   jobsBadge: {
-    background: "rgba(79,125,255,0.12)", color: "var(--accent)", padding: "3px 12px",
-    borderRadius: 12, fontSize: 12, fontWeight: 600, border: "1px solid rgba(79,125,255,0.2)",
+    background: "var(--success-soft)", color: "var(--success)", padding: "3px 12px",
+    borderRadius: 12, fontSize: 12, fontWeight: 600, border: "1px solid rgba(16,185,129,0.2)",
   },
+  emptyState: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "32px 20px", textAlign: "center" },
+  emptyText: { fontSize: 14, color: "var(--text-muted)", fontStyle: "italic", margin: 0 },
   loadingJobs: { fontSize: 14, color: "var(--text-muted)", padding: 20, textAlign: "center" },
-  noJobs: { fontSize: 14, color: "var(--text-muted)", padding: 20, textAlign: "center" },
   jobsGrid: { display: "flex", flexDirection: "column", gap: 14 },
   jobCard: {
     background: "var(--bg-card)", border: "1px solid var(--border)",
-    borderRadius: "var(--radius)", padding: 20,
+    borderRadius: "var(--radius)", padding: 20, transition: "border-color 0.15s, box-shadow 0.15s",
   },
   jobTop: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, marginBottom: 10 },
-  jobTitle: { fontSize: 15, fontWeight: 700, margin: 0 },
+  jobTitle: { fontSize: 15, fontWeight: 700, margin: 0, color: "var(--text)" },
   jobMeta: { fontSize: 13, color: "var(--text-secondary)", margin: "4px 0 0" },
   jobScore: { padding: "8px 14px", borderRadius: 8, border: "1px solid", fontSize: 18, fontWeight: 800, whiteSpace: "nowrap" },
   skillsRow: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 },
   skillsLabel: { fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 },
   tagWrap: { display: "flex", flexWrap: "wrap", gap: 4 },
   tagSuccess: {
-    background: "rgba(74,222,128,0.1)", color: "var(--success)", padding: "3px 8px",
-    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(74,222,128,0.2)",
+    background: "rgba(16,185,129,0.08)", color: "var(--success)", padding: "3px 8px",
+    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(16,185,129,0.15)",
   },
   tagDanger: {
-    background: "rgba(248,113,113,0.1)", color: "var(--danger)", padding: "3px 8px",
-    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(248,113,113,0.2)",
+    background: "var(--danger-soft)", color: "var(--danger)", padding: "3px 8px",
+    borderRadius: 4, fontSize: 11, fontWeight: 500, border: "1px solid rgba(239,68,68,0.15)",
   },
   tagMore: { fontSize: 11, color: "var(--text-muted)", padding: "3px 4px" },
   applyBtn: { display: "inline-block", fontSize: 12, padding: "8px 18px", textDecoration: "none" },

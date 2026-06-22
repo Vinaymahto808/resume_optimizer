@@ -1,0 +1,434 @@
+%-------------------------------------------------------------------------------
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2025 - Today Jan Küster <info@jankuester.com>
+%
+%	https://github.com/jankapunkt/latexcv
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-------------------------------------------------------------------------------
+
+
+%============================================================================%
+%
+%	DOCUMENT DEFINITION
+%
+%============================================================================%
+% we use article class because we want to fully customize the page 
+% and thus, do not use a CV template
+\documentclass[10pt,A4]{article}
+
+
+%----------------------------------------------------------------------------------------
+%	ENCODING
+%----------------------------------------------------------------------------------------
+% we use utf8 since we want to build from any machine
+\usepackage[utf8]{inputenc}
+
+%----------------------------------------------------------------------------------------
+%	LOGIC
+%----------------------------------------------------------------------------------------
+% provides \isempty test
+\usepackage{xifthen}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+% some tex-live fonts - choose your own
+
+% \usepackage[defaultsans]{droidsans}
+% \usepackage[default]{comfortaa}
+% \usepackage{cmbright}
+% \usepackage[default]{raleway}
+% \usepackage{fetamont}
+% \usepackage[default]{gillius}
+% \usepackage[light,math]{iwona}
+\usepackage[default]{roboto} 
+
+% set font default
+\renewcommand*\familydefault{\sfdefault} 	
+\linespread{1.22}
+
+\usepackage[T1]{fontenc}
+
+% more font size definitions
+\usepackage{moresize}
+
+% use icons as fonts
+\usepackage{fontawesome5}
+
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT  DEFINITIONS
+%----------------------------------------------------------------------------------------
+% debug page outer frames
+% \usepackage{showframe}			
+
+% define page styles using geometry,
+% so you can adjust page margins, if desired
+% \usepackage[a4paper]{geometry}		
+% \geometry{top=1.25cm, bottom=-.6cm, left=1.5cm, right=1.5cm} 	
+
+% use customized header
+\usepackage{fancyhdr}				
+\pagestyle{fancy}
+
+% less space between header and content
+\setlength{\headheight}{-5pt}
+
+
+% customize entries left, center and right
+% \lhead{}
+% \chead{}
+% \rhead{}
+
+
+% new paragraph indentation is zero
+\setlength{\parindent}{0mm}
+
+%----------------------------------------------------------------------------------------
+%	TABLE /ARRAY DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+% for layouting tables
+\usepackage{multicol}			
+\usepackage{multirow}
+
+% extended aligning of tabular cells
+\usepackage{array}
+
+\newcolumntype{x}[1]{%
+>{\raggedleft\hspace{0pt}}p{#1}}%
+
+
+%----------------------------------------------------------------------------------------
+%	GRAPHICS DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+% for header image
+\usepackage{xcolor,graphicx}
+% for more controlled boxes with bg colors, borders etc.
+\usepackage[many]{tcolorbox}
+
+% for floating figures
+\usepackage{wrapfig}
+\usepackage{float}
+% \floatstyle{boxed} 
+% \restylefloat{figure}
+
+% for drawing graphics		
+\usepackage{tikz}				
+\usetikzlibrary{shapes, backgrounds,mindmap, trees}
+
+% circular profile photo - usage: \profilephoto[width]{filename}
+\newcommand{\profilephoto}[2][0.2\linewidth]{%
+\begin{tikzpicture}
+\begin{scope}
+\clip (0,0) circle(#1/2);
+\node at (0,0) {\includegraphics[width=#1, keepaspectratio]{#2}};
+\end{scope}
+\draw[white, line width=2pt] (0,0) circle(#1/2);
+\end{tikzpicture}%
+}
+
+%----------------------------------------------------------------------------------------
+%	LINKS / URLS
+%---------------------------------------------------------------------------------------- 
+%Package for links, must be the last package used
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\link}[1]{\textcolor{bgcol}{\href{#1}{#1}}}
+
+%----------------------------------------------------------------------------------------
+%	Color DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+\usepackage{color}
+
+% accent color
+\definecolor{sectcol}{RGB}{0,150,130}
+
+% dark background color
+\definecolor{bgcol}{RGB}{110,110,110}
+
+% light background / accent color
+\definecolor{softcol}{RGB}{225,225,225}
+
+
+%============================================================================%
+%
+%
+%	DEFINITIONS
+%
+%
+%============================================================================%
+
+%----------------------------------------------------------------------------------------
+% 	HEADER
+%----------------------------------------------------------------------------------------
+
+% remove top header line
+\renewcommand{\headrulewidth}{0pt} 
+
+% remove bottom header line
+\renewcommand{\footrulewidth}{0pt}	  	
+
+% remove pagenum
+\renewcommand{\thepage}{}	
+
+% remove section num		
+\renewcommand{\thesection}{}			
+
+%----------------------------------------------------------------------------------------
+% 	ARROW GRAPHICS in Tikz
+%----------------------------------------------------------------------------------------
+
+% a six pointed arrow pointing to the left
+\newcommand{\tzlarrow}{(0,0) -- (0.2,0) -- (0.3,0.2) -- (0.2,0.4) -- (0,0.4) -- (0.1,0.2) -- cycle;}	
+
+% include the left arrow into a tikz picture
+% param1: fill color
+%
+\newcommand{\larrow}[1]
+{\begin{tikzpicture}[scale=0.58]
+	 \filldraw[fill=#1!100,draw=#1!100!black]  \tzlarrow
+ \end{tikzpicture}
+}
+
+% a six pointed arrow pointing to the right
+\newcommand{\tzrarrow}{ (0,0.2) -- (0.1,0) -- (0.3,0) -- (0.2,0.2) -- (0.3,0.4) -- (0.1,0.4) -- cycle;}
+
+% include the right arrow into a tikz picture
+% param1: fill color
+%
+\newcommand{\rarrow}
+{\begin{tikzpicture}[scale=0.7]
+	\filldraw[fill=sectcol!100,draw=sectcol!100!black] \tzrarrow
+ \end{tikzpicture}
+}
+
+
+
+%----------------------------------------------------------------------------------------
+%	custom sections
+%----------------------------------------------------------------------------------------
+
+% create a coloured box with arrow and title as cv section headline
+% param 1: section title
+%
+\newcommand{\cvsection}[1]
+{
+	\begin{flushleft}
+		\LARGE\textcolor{black}{\uppercase{#1}}	\\[20pt]
+	\end{flushleft}
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% creates a stretched box as cv entry headline followed by some paragraphs about 
+% the work you did
+% uses vbox, which is never broken across pages!
+% param 1:	event time i.e. 2014 or 2011-2014 etc.
+% param 2:	event name (what did you do?)
+% param 3:	institution (where did you work / study)
+% param 4:	list of paragraphs
+%
+\newcommand{\cvevent}[4] {
+\begin{flushleft}
+\vbox{
+\textcolor{sectcol}{\textbf{#2}}\\
+\textcolor{bgcol}{{#3} | {#1}}\\[10pt]
+}
+\foreach \desc in {#4}{\vbox{\desc\\[10pt]}}
+\end{flushleft}
+\vspace{10pt}
+}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM STRUT FOR EMPTY BOXES
+%----------------------------------------- -----------------------------------------------
+\newcommand{\mystrut}{\rule[-.3\baselineskip]{0pt}{\baselineskip}}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM LOREM IPSUM
+%----------------------------------------------------------------------------------------
+\newcommand{\lorem}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.}
+
+%----------------------------------------------------------------------------------------
+%	ICON-SET EMBEDDING
+%---------------------------------------------------------------------------------------- 
+
+% font awesome icon
+\newcommand{\icon}[1]{\makebox[10pt][c]{\textcolor{sectcol}{\csname fa#1\endcsname}}}
+
+%icon with text shortcut
+\newcommand{\icontext}[2]{
+	\icon{#1} \small{#2}
+}
+
+%============================================================================%
+%
+%
+%
+%	DOCUMENT CONTENT
+%
+%
+%
+%============================================================================%
+\begin{document}
+
+
+% use our custom fancy header definitions
+\pagestyle{fancy}	
+
+
+%----------------------------------------------------------------------------------------
+%	HEADER IMAGE
+%----------------------------------------------------------------------------------------
+\profilephoto[0.25\linewidth]{myfoto.png}
+
+%---------------------------------------------------------------------------------------
+%	TITLE HEADLINE
+%----------------------------------------------------------------------------------------
+\vspace{-48pt}
+\textcolor{softcol}{\hrule}
+\colorbox{white}{\makebox[1\linewidth][c]{
+	\HUGE \textsc{First Last}
+}}
+
+\begin{center}
+	\small \textsc{Software Engineer}
+\end{center}
+
+
+
+
+%---------------------------------------------------------------------------------------
+%	META SECTION
+%----------------------------------------------------------------------------------------
+\begin{center}
+\icontext{MapMarker}{City, State}
+\href{mailto:email@example.com}{\icontext{Envelope}{email@example.com}}
+\icontext{Mobile}{+1 555 123 4567}
+\\[10pt]
+\href{https://yourwebsite.com}{\icontext{MousePointer}{yourwebsite.com}}
+\href{https://github.com/username}{\icontext{Github}{github.com/username}}
+\href{https://linkedin.com/in/username}{\icontext{Linkedin}{linkedin.com/in/username}}
+\end{center}
+
+\normalsize
+
+%---------------------------------------------------------------------------------------
+%	SUMMARY (optional)
+%----------------------------------------------------------------------------------------
+\textcolor{softcol}{\hrule}
+\bigskip
+
+A dedicated software engineer with experience building modern web applications and leading cross-functional teams.
+
+%============================================================================%
+%
+%	CV SECTIONS AND EVENTS (MAIN CONTENT)
+%
+%============================================================================%
+
+%---------------------------------------------------------------------------------------
+%	EXPERIENCE
+%----------------------------------------------------------------------------------------
+\cvsection{Experience}
+
+\cvevent{2022 - Present}{Senior Software Engineer}{Tech Corp}{
+	{Led development of a modern SaaS platform serving 50k+ users},
+	{Architected microservices backend and React-based frontend},
+	{Mentored junior developers and established code review practices}
+}
+
+\cvevent{2020 - 2022}{Software Engineer}{Startup Inc.}{
+	{Built RESTful APIs and real-time data processing pipelines},
+	{Implemented CI/CD pipelines reducing deployment time by 60\%},
+	{Collaborated with product team on feature roadmap and technical design}
+}
+
+\cvevent{2018 - 2020}{Junior Software Engineer}{Web Agency}{
+	{Developed responsive web applications using React and Node.js},
+	{Contributed to open-source libraries and internal tooling},
+	{Worked directly with clients to gather requirements and deliver solutions}
+}
+
+%---------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%--------------------------------------------------------------------------------------
+\bigskip
+\cvsection{Education}
+
+\cvevent{2015 / 07}{Graduated as M.Sc. Digital Media}{University of Bremen}{
+	{Master Thesis: Semi Automated Scoring in Technology Based Assessment},
+	{Developed and evaluated an algorithm for semi automated scoring of spreadsheet data}
+}
+
+% \textcolor{softcol}{\hrule}
+
+%
+\cvevent{2012 - 2013}{Master Project - PrIMA}{University of Bremen}{
+	{Co-Invented a touch table application for medical support, co-developed software (Java)},
+	{Formed a scrum team, mainted project dev server (Debian), surveyed target audience}
+}
+
+% \textcolor{softcol}{\hrule}
+
+%
+\cvevent{2012 - 2015}{Master Studies Digital Media}{University of Bremen}{
+	{Inter-cultural classes in English, covering special topics in computer science and design},
+	{Professionalized in research methods, software development and e-assessment}
+}
+
+% \textcolor{softcol}{\hrule}
+
+%
+\cvevent{2009 - 2010}{Semester Abroad}{University of Melbourne}{
+	{Mastered six months of study and trans-cultural experience in Melbourne, Australia},
+	{Finished machine programming, information visualization, professional essay writing}
+}
+\cvevent{2007 - 2011}{Bachelor Studies Digital Media}{University of Bremen}{
+	{Foundations of Digial Media, Computer Science and Software Engineering}
+}
+
+%--------------------------------------------------------------------------------------------------
+%	ARTIFICIAL FOOTER (fancy footer cannot exceed linewidth) 
+%--------------------------------------------------------------------------------------------------
+
+\null
+\vspace*{\fill}
+\hspace{-0.25\linewidth}\colorbox{white}{\makebox[1.5\linewidth][c]{\mystrut  \textnormal{\textcolor{sectcol}{https://yourwebsite.com} $\cdot$ \textcolor{sectcol}{github.com/username}}}}
+
+
+
+
+%============================================================================%
+%
+%
+%
+%	DOCUMENT END
+%
+%
+%
+%============================================================================%
+\end{document}

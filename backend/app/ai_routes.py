@@ -2,7 +2,10 @@ import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from app.config import settings
-from app.gemini_helper import analyze_with_gemini, match_job_with_gemini, suggest_jobs_with_gemini
+from app.gemini_helper import (
+    analyze_with_gemini, match_job_with_gemini, suggest_jobs_with_gemini,
+    generate_career_roadmap, generate_portfolio_html, generate_analytics_suggestions,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["ai"])
@@ -18,6 +21,15 @@ class AIMatchRequest(BaseModel):
     job_description: str = Field(max_length=MAX_TEXT_LENGTH)
 
 class AISuggestJobsRequest(BaseModel):
+    profile_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
+
+class AIRoadmapRequest(BaseModel):
+    target_role: str = Field(min_length=2, max_length=200)
+
+class AIPortfolioRequest(BaseModel):
+    resume_text: str = Field(min_length=20, max_length=MAX_TEXT_LENGTH)
+
+class AIAnalyticsRequest(BaseModel):
     profile_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
 
 def get_api_key():
@@ -66,4 +78,46 @@ def ai_suggest_jobs(req: AISuggestJobsRequest):
         raise
     except Exception as e:
         logger.error(f"AI suggest jobs error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/ai-roadmap")
+def ai_roadmap(req: AIRoadmapRequest):
+    try:
+        api_key = get_api_key()
+        result = generate_career_roadmap(req.target_role, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Roadmap generation failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI roadmap error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/ai-portfolio")
+def ai_portfolio(req: AIPortfolioRequest):
+    try:
+        api_key = get_api_key()
+        result = generate_portfolio_html(req.resume_text, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Portfolio generation failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI portfolio error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/ai-analytics")
+def ai_analytics(req: AIAnalyticsRequest):
+    try:
+        api_key = get_api_key()
+        result = generate_analytics_suggestions(req.profile_text, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Analytics generation failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI analytics error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

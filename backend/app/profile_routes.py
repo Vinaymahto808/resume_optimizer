@@ -6,6 +6,7 @@ from app.job_recommender import recommend_jobs
 from app.linkedin_scraper import fetch_profile_text
 from app.ats_analyzer import analyze_ats
 from app.resume_parser import extract_text_from_resume
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["legacy"])
@@ -13,6 +14,12 @@ router = APIRouter(prefix="/api", tags=["legacy"])
 MAX_TEXT_LENGTH = 50_000
 MAX_URL_LENGTH = 2000
 MAX_FILE_SIZE = 10 * 1024 * 1024
+
+ALLOWED_DOC_EXTS = {"pdf", "doc", "docx"}
+ALLOWED_IMAGE_EXTS = {"png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "tif"}
+
+def _get_gemini_key() -> str:
+    return getattr(settings, "GEMINI_API_KEY", "") or ""
 
 class AnalyzeRequest(BaseModel):
     profile_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
@@ -64,13 +71,18 @@ async def legacy_upload_resume(file: UploadFile = File(...)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="No file provided")
     ext = file.filename.lower().split(".")[-1] if "." in file.filename else ""
-    if ext not in ("pdf", "doc", "docx"):
-        raise HTTPException(status_code=400, detail="Unsupported format. Please upload PDF or DOC/DOCX.")
+    allowed = ALLOWED_DOC_EXTS | ALLOWED_IMAGE_EXTS
+    if ext not in allowed:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported format .{ext}. Please upload PDF, DOC/DOCX, or image (PNG, JPG)."
+        )
     try:
         contents = await file.read()
         if len(contents) > MAX_FILE_SIZE:
             raise HTTPException(status_code=413, detail=f"File too large. Max size is {MAX_FILE_SIZE // (1024*1024)}MB.")
-        result = extract_text_from_resume(file.filename, contents, ext)
+        gemini_key = _get_gemini_key()
+        result = extract_text_from_resume(file.filename, contents, ext, gemini_key)
         if not result.get("success"):
             raise HTTPException(status_code=400, detail=result.get("error", "Extraction failed"))
         return result

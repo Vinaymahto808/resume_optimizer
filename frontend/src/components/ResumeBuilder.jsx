@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { templates } from "../api";
 
+const TEMPLATE_LAYOUT = {
+  "simple-clean": "simple", "simple-minimal": "simple", "simple-basic": "simple", "simple-light": "simple",
+  "modern-pro": "modern", "modern-sleek": "modern", "modern-vibrant": "modern", "modern-edge": "modern",
+  "onecol-executive": "onecol", "onecol-professional": "onecol", "onecol-corporate": "onecol",
+  "photo-profile": "photo", "photo-visual": "photo",
+  "pro-classic": "professional", "pro-elegant": "professional", "pro-premium": "professional",
+  "ats-optimized": "ats", "ats-max": "ats", "ats-ultra": "ats",
+};
+
 export default function ResumeBuilder({ templateId, onBack }) {
   const [form, setForm] = useState({
     full_name: "",
@@ -12,125 +21,75 @@ export default function ResumeBuilder({ templateId, onBack }) {
     summary: "",
     skills: "",
   });
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [downloading, setDownloading] = useState(false);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleGenerate = async () => {
-    setLoading(true);
+  const handleDownload = async () => {
+    setDownloading(true);
     try {
-      const data = await templates.generate({
-        template_id: templateId,
-        ...form,
-        skills: form.skills
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        experience: [],
-        education: [],
-        projects: [],
-        certifications: [],
-        achievements: [],
+      const res = await fetch("http://127.0.0.1:8000/api/templates/download-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+        body: JSON.stringify({
+          template_id: templateId,
+          layout_family: TEMPLATE_LAYOUT[templateId] || "",
+          ...form,
+          skills: form.skills.split(",").map((s) => s.trim()).filter(Boolean),
+          experience: [],
+          education: [],
+          projects: [],
+          certifications: [],
+          achievements: [],
+        }),
       });
-      setResult(data);
-    } catch {
-      alert("Failed to generate resume. Try again.");
+      if (!res.ok) { alert("PDF download failed."); return; }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${form.full_name || "resume"}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert("PDF generation failed. Try again.");
     }
-    setLoading(false);
+    setDownloading(false);
   };
 
-  const handleDownload = () => {
-    if (!result) return;
-    const blob = new Blob([result.latex], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = result.filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  if (result) {
-    return (
-      <div style={styles.wrapper}>
-        <div style={styles.resultCard}>
-          <h3 style={styles.resultTitle}>Resume Generated!</h3>
-          <p style={styles.resultText}>
-            Your LaTeX resume is ready. Download the .tex file and compile it
-            with pdflatex.
-          </p>
-          <div style={styles.resultActions}>
-            <button style={styles.btn} onClick={handleDownload}>
-              Download .tex File
-            </button>
-            <button style={styles.btnOutline} onClick={() => setResult(null)}>
-              Edit Again
-            </button>
-          </div>
-          <details style={styles.preview}>
-            <summary style={styles.previewSummary}>Preview LaTeX</summary>
-            <pre style={styles.pre}>{result.latex.slice(0, 2000)}...</pre>
-          </details>
-        </div>
-      </div>
-    );
-  }
+  const fields = [
+    { name: "full_name", placeholder: "Full Name" },
+    { name: "email", placeholder: "Email" },
+    { name: "phone", placeholder: "Phone" },
+    { name: "location", placeholder: "Location" },
+    { name: "linkedin", placeholder: "LinkedIn username" },
+    { name: "github", placeholder: "GitHub username" },
+  ];
 
   return (
     <div style={styles.wrapper}>
       <button onClick={onBack} style={styles.backBtn}>
         {"<"} Back to Templates
       </button>
-      <div style={styles.card}>
+      <div className="ui-card" style={styles.card}>
         <h3 style={styles.title}>Customize Your Resume</h3>
-
         <div style={styles.grid}>
-          <input
-            style={styles.input}
-            name="full_name"
-            placeholder="Full Name"
-            value={form.full_name}
-            onChange={handleChange}
-          />
-          <input
-            style={styles.input}
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          <input
-            style={styles.input}
-            name="phone"
-            placeholder="Phone"
-            value={form.phone}
-            onChange={handleChange}
-          />
-          <input
-            style={styles.input}
-            name="location"
-            placeholder="Location"
-            value={form.location}
-            onChange={handleChange}
-          />
-          <input
-            style={styles.input}
-            name="linkedin"
-            placeholder="LinkedIn username"
-            value={form.linkedin}
-            onChange={handleChange}
-          />
-          <input
-            style={styles.input}
-            name="github"
-            placeholder="GitHub username"
-            value={form.github}
-            onChange={handleChange}
-          />
+          {fields.map((f) => (
+            <input
+              key={f.name}
+              style={styles.input}
+              name={f.name}
+              placeholder={f.placeholder}
+              value={form[f.name]}
+              onChange={handleChange}
+            />
+          ))}
         </div>
-
         <textarea
           style={styles.textarea}
           name="summary"
@@ -139,7 +98,6 @@ export default function ResumeBuilder({ templateId, onBack }) {
           value={form.summary}
           onChange={handleChange}
         />
-
         <input
           style={styles.input}
           name="skills"
@@ -147,14 +105,11 @@ export default function ResumeBuilder({ templateId, onBack }) {
           value={form.skills}
           onChange={handleChange}
         />
-
-        <button
-          style={styles.btn}
-          onClick={handleGenerate}
-          disabled={loading}
-        >
-          {loading ? "Generating..." : "Generate Resume"}
-        </button>
+        <div style={styles.btnRow}>
+          <button style={styles.btn} onClick={handleDownload} disabled={downloading}>
+            {downloading ? "Generating PDF..." : "Download PDF"}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -182,7 +137,7 @@ const styles = {
     fontSize: 14,
     width: "100%",
     boxSizing: "border-box",
-    background: "rgba(255,255,255,0.04)",
+    background: "rgba(15,23,42,0.72)",
     color: "var(--text)",
     outline: "none",
     fontFamily: "inherit",
@@ -197,31 +152,20 @@ const styles = {
     marginBottom: 12,
     fontFamily: "inherit",
     resize: "vertical",
-    background: "rgba(255,255,255,0.04)",
+    background: "rgba(15,23,42,0.72)",
     color: "var(--text)",
     outline: "none",
   },
+  btnRow: { marginTop: 16, display: "flex", gap: 12 },
   btn: {
-    width: "100%",
+    flex: 1,
     padding: 13,
-    background: "linear-gradient(135deg, #4f7dff, #6c5ce7)",
+    background: "var(--accent-gradient)",
     color: "#fff",
     border: "none",
     borderRadius: "var(--radius-sm)",
     fontSize: 16,
     fontWeight: 700,
-    cursor: "pointer",
-    marginTop: 16,
-    fontFamily: "inherit",
-  },
-  btnOutline: {
-    padding: "10px 20px",
-    background: "transparent",
-    color: "var(--accent)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius-sm)",
-    fontSize: 14,
-    fontWeight: 600,
     cursor: "pointer",
     fontFamily: "inherit",
   },
@@ -234,27 +178,5 @@ const styles = {
     cursor: "pointer",
     marginBottom: 16,
     fontFamily: "inherit",
-  },
-  resultCard: {
-    background: "var(--bg-card)",
-    padding: 32,
-    borderRadius: "var(--radius)",
-    border: "1px solid var(--border)",
-    textAlign: "center",
-  },
-  resultTitle: { fontSize: 22, fontWeight: 700, color: "var(--success)", marginBottom: 8 },
-  resultText: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 20 },
-  resultActions: { display: "flex", gap: 12, justifyContent: "center", marginBottom: 20 },
-  preview: { marginTop: 16, textAlign: "left" },
-  previewSummary: { cursor: "pointer", fontWeight: 600, fontSize: 14, color: "var(--accent)" },
-  pre: {
-    background: "rgba(255,255,255,0.04)",
-    padding: 16,
-    borderRadius: "var(--radius-sm)",
-    fontSize: 11,
-    overflowX: "auto",
-    marginTop: 8,
-    color: "var(--text-secondary)",
-    border: "1px solid var(--border)",
   },
 };
