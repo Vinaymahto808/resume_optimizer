@@ -48,6 +48,16 @@ app.add_middleware(ErrorHandlerMiddleware)
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
 
+@app.get("/")
+def root():
+    return {
+        "app": "ProfileOptimizer API",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/api/health",
+    }
+
+
 @app.get("/api/health")
 def health():
     from sqlalchemy import text
