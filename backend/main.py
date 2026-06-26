@@ -27,7 +27,10 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception:
+    logger.warning("Table/type creation skipped (may already exist on PostgreSQL)")
 
 app = FastAPI(title="ProfileOptimizer", version="1.0.0")
 
