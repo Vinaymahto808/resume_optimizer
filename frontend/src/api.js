@@ -174,6 +174,13 @@ export const v1 = {
     }).then((r) => r.data),
 };
 
+export const analytics = {
+  track: (event, data = {}) =>
+    API.post("/api/analytics/track", { event, data }).then((r) => r.data),
+  trackAnonymous: (event, data = {}) =>
+    API.post("/api/analytics/track-anonymous", { event, data }).then((r) => r.data),
+};
+
 export const latex = {
   list: () => API.get("/api/latex-templates/").then((r) => r.data),
   get: (id) => API.get(`/api/latex-templates/${id}`).then((r) => r.data),
@@ -181,4 +188,22 @@ export const latex = {
   previewUrl: (id) => `${API.defaults.baseURL}/api/latex-templates/${id}/preview`,
   compile: (id, substitutions) =>
     API.post(`/api/latex-templates/${id}/compile`, { substitutions }, { responseType: "blob" }).then((r) => r.data),
+  search: (params = {}) =>
+    API.get("/api/latex-templates/search", { params }).then((r) => r.data),
+  industries: () =>
+    API.get("/api/latex-templates/industries").then((r) => r.data),
+  roles: () =>
+    API.get("/api/latex-templates/roles").then((r) => r.data),
+  styles: () =>
+    API.get("/api/latex-templates/styles").then((r) => r.data),
+  experienceLevels: () =>
+    API.get("/api/latex-templates/experience-levels").then((r) => r.data),
+  customCompile: (data) =>
+    API.post("/api/latex-templates/custom-compile", data, { responseType: "blob" }).then((r) => r.data),
+  analyzeJD: (data) =>
+    API.post("/api/latex-templates/analyze-jd", data).then((r) => r.data),
+  generateFromJD: (data) =>
+    API.post("/api/latex-templates/generate-from-jd", data, { responseType: "blob" }).then((r) => r.data),
+  aiOptimize: (data) =>
+    API.post("/api/latex-templates/ai-optimize", data).then((r) => r.data),
 };

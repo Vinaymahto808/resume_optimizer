@@ -1,0 +1,79 @@
+import logging
+from fastapi import APIRouter, Depends
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+
+from app.config import settings
+from app.database import get_db
+from app.models import User
+from app.auth import (
+    register_user, authenticate_user, create_access_token,
+    get_current_user, UserCreate, ForgotPasswordRequest,
+    ResetPasswordRequest, create_password_reset_token,
+    send_reset_email, reset_password,
+)
+from app.services.auth_service import create_refresh_token, rotate_refresh_token
+
+logger = logging.getLogger(__name__)
+router = APIRouter(tags=["auth"])
+
+
+@router.post("/api/auth/register")
+def register(data: UserCreate, db: Session = Depends(get_db)):
+    user = register_user(data, db)
+    access = create_access_token({"sub": user.id})
+    refresh = create_refresh_token(user.id, db)
+    return {
+        "access_token": access,
+        "refresh_token": refresh,
+        "token_type": "bearer",
+        "user": {"id": user.id, "email": user.email, "full_name": user.full_name},
+    }
+
+
+@router.post("/api/auth/login")
+def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = authenticate_user(form.username, form.password, db)
+    access = create_access_token({"sub": user.id})
+    refresh = create_refresh_token(user.id, db)
+    return {
+        "access_token": access,
+        "refresh_token": refresh,
+        "token_type": "bearer",
+        "user": {"id": user.id, "email": user.email, "full_name": user.full_name},
+    }
+
+
+@router.post("/api/auth/refresh")
+def refresh_token_endpoint(refresh_token: str, db: Session = Depends(get_db)):
+    new_access, new_refresh = rotate_refresh_token(refresh_token, db)
+    return {
+        "access_token": new_access,
+        "refresh_token": new_refresh,
+        "token_type": "bearer",
+    }
+
+
+@router.get("/api/auth/me")
+def get_me(user: User = Depends(get_current_user)):
+    return {"id": user.id, "email": user.email, "full_name": user.full_name}
+
+
+@router.post("/api/auth/forgot-password")
+def forgot_password(data: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == data.email).first()
+    extra = {}
+    if user:
+        token = create_password_reset_token(user, db)
+        ok = send_reset_email(user.email, token)
+        extra["dev_token"] = token
+        extra["dev_link"] = f"{settings.FRONTEND_URL}/reset-password?token={token}"
+        if not ok:
+            logger.error("Failed to send reset email to %s", data.email)
+    return {"message": "If that email is registered, a reset link has been sent.", **extra}
+
+
+@router.post("/api/auth/reset-password")
+def reset_password_endpoint(data: ResetPasswordRequest, db: Session = Depends(get_db)):
+    user = reset_password(data.token, data.new_password, db)
+    return {"message": "Password reset successfully"}

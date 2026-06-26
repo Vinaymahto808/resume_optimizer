@@ -15,56 +15,57 @@ router = APIRouter(prefix="/api/payments", tags=["payments"])
 PAYPAL_API = "https://api-m.sandbox.paypal.com" if settings.PAYPAL_MODE == "sandbox" else "https://api-m.paypal.com"
 
 PLAN_MAP = {
-    "price_pro_monthly": PlanTier.PRO,
-    "price_enterprise_monthly": PlanTier.ENTERPRISE,
+    "price_basic_monthly": PlanTier.PRO,
+    "price_pro_monthly": PlanTier.ENTERPRISE,
 }
 
 AMOUNT_MAP = {
+    "price_basic_monthly": "5.00",
     "price_pro_monthly": "10.00",
-    "price_enterprise_monthly": "30.00",
 }
 
 PRICES = [
     {
         "id": "free",
         "name": "Free",
-        "description": "Basic ATS scan",
+        "description": "Basic ATS scan to get started",
         "price_id": "free",
         "amount": 0,
         "currency": "usd",
         "features": [
             "1 resume scan / month",
             "Basic ATS score",
-            "5 suggestions",
+            "5 optimization suggestions",
+        ],
+    },
+    {
+        "id": "basic",
+        "name": "Basic",
+        "description": "Unlimited scans + essential checks",
+        "price_id": "price_basic_monthly",
+        "amount": 500,
+        "currency": "usd",
+        "features": [
+            "Unlimited resume scans",
+            "Detailed ATS breakdown (19 checks)",
+            "Keyword & skill analysis",
+            "Resume templates",
+            "Email support",
         ],
     },
     {
         "id": "pro",
         "name": "Pro",
-        "description": "Unlimited scans + detailed analysis",
+        "description": "Full toolkit for serious applicants",
         "price_id": "price_pro_monthly",
         "amount": 1000,
         "currency": "usd",
         "features": [
-            "Unlimited resume scans",
-            "Detailed ATS breakdown",
-            "Keyword analysis",
-            "Resume templates",
+            "Everything in Basic",
+            "AI rewrite suggestions",
+            "LinkedIn profile analysis",
+            "Job matching (9 portals)",
             "Priority support",
-        ],
-    },
-    {
-        "id": "enterprise",
-        "name": "Enterprise",
-        "description": "For teams & recruiters",
-        "price_id": "price_enterprise_monthly",
-        "amount": 3000,
-        "currency": "usd",
-        "features": [
-            "Everything in Pro",
-            "Bulk upload (50+)",
-            "Team dashboard",
-            "API access",
         ],
     },
 ]

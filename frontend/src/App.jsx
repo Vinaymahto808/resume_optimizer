@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ResumeProvider } from "./contexts/ResumeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import DashboardLayout from "./components/DashboardLayout";
+import GTMProvider from "./components/GTMProvider";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -21,6 +22,20 @@ import CareerRoadmap from "./pages/CareerRoadmap";
 import PortfolioGenerator from "./pages/PortfolioGenerator";
 import DashboardAnalytics from "./pages/DashboardAnalytics";
 import StudentResume from "./pages/StudentResume";
+import LatexBuilder from "./pages/LatexBuilder";
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+
+function PublicLayout() {
+  return (
+    <>
+      <Navbar />
+      <main className="app-main"><Outlet /></main>
+      <Footer />
+    </>
+  );
+}
 
 function AuthPage({ children }) {
   return <DashboardLayout>{children}</DashboardLayout>;
@@ -30,25 +45,21 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <GTMProvider>
         <ResumeProvider>
           <Routes>
             {/* Public pages with Navbar */}
-            <Route path="/*" element={
-              <>
-                <Navbar />
-                <main className="app-main">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                  </Routes>
-                </main>
-                <Footer />
-              </>
-            } />
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+            </Route>
             {/* Authenticated pages with Sidebar */}
             <Route path="/dashboard" element={<AuthPage><Dashboard /></AuthPage>} />
             <Route path="/scan" element={<AuthPage><Scan /></AuthPage>} />
@@ -61,8 +72,10 @@ export default function App() {
             <Route path="/portfolio-generator" element={<AuthPage><PortfolioGenerator /></AuthPage>} />
             <Route path="/dashboard-analytics" element={<AuthPage><DashboardAnalytics /></AuthPage>} />
             <Route path="/student-resume" element={<AuthPage><StudentResume /></AuthPage>} />
+            <Route path="/latex-builder/:id" element={<AuthPage><LatexBuilder /></AuthPage>} />
           </Routes>
         </ResumeProvider>
+        </GTMProvider>
       </AuthProvider>
     </BrowserRouter>
   );

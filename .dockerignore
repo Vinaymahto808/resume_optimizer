@@ -1,0 +1,15 @@
+.venv/
+.venv*/
+__pycache__/
+*.pyc
+.env
+.venv
+.git/
+.pytest_cache/
+.DS_Store
+*.db
+*.db-shm
+*.db-wal
+tests/
+node_modules/
+frontend/

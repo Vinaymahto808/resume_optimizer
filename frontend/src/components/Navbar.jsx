@@ -1,12 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import logo from "../assets/logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Scan", to: "/scan" },
-  { label: "Analyzer", to: "/profile-analyzer" },
-  { label: "Jobs", to: "/job-recommender" },
+  { label: "How it Works", to: "/#process" },
   { label: "Pricing", to: "/pricing" },
 ];
 
@@ -58,21 +57,13 @@ export default function Navbar() {
   };
 
   const ctaTo = user ? "/scan" : "/signup";
-  const ctaLabel = user ? "Start scan" : "Get started";
+  const ctaLabel = user ? "Start scan" : "Get Score";
 
   return (
     <header className="site-header">
       <nav className="site-nav" ref={navRef}>
         <Link to="/" className="brand" aria-label="Profile Optimizer home">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <rect width="28" height="28" rx="8" fill="var(--accent)" opacity="0.12" />
-            <path d="M8 10h12M8 14h10M8 18h8" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
-            <path d="M18 8l4 4-4 4" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="brand-copy">
-            <span className="brand-name">Profile</span>
-            <span className="brand-accent">Optimizer</span>
-          </span>
+          <img src={logo} alt="Profile Optimizer" className="brand-logo" />
         </Link>
 
         <div className="nd nav-links">
@@ -125,7 +116,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className="nav-link">Sign in</Link>
+              <Link to="/login" className="nav-link">Login</Link>
               <Link to={ctaTo} className="btn-primary" style={{ padding: "8px 16px", fontSize: 13 }}>{ctaLabel}</Link>
             </>
           )}

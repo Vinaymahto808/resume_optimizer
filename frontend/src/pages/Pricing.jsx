@@ -17,32 +17,31 @@ const FALLBACK_PLANS = [
     ],
   },
   {
-    id: "pro",
-    name: "Pro",
-    description: "Unlimited scans + detailed analysis",
-    price_id: "price_pro_monthly",
-    amount: 1000,
+    id: "basic",
+    name: "Basic",
+    description: "Unlimited scans + essential checks",
+    price_id: "price_basic_monthly",
+    amount: 500,
     features: [
       "Unlimited resume scans",
       "Detailed ATS breakdown (19 checks)",
       "Keyword & skill analysis",
-      "AI rewrite (bullets, headline, summary)",
       "Resume templates",
-      "Priority support",
+      "Email support",
     ],
   },
   {
-    id: "enterprise",
-    name: "Enterprise",
-    description: "For teams & recruiters",
-    price_id: "price_enterprise_monthly",
-    amount: 3000,
+    id: "pro",
+    name: "Pro",
+    description: "Full toolkit for serious applicants",
+    price_id: "price_pro_monthly",
+    amount: 1000,
     features: [
-      "Everything in Pro",
-      "Bulk upload (50+)",
-      "Team dashboard",
-      "API access",
-      "Dedicated account manager",
+      "Everything in Basic",
+      "AI rewrite suggestions",
+      "LinkedIn profile analysis",
+      "Job matching (9 portals)",
+      "Priority support",
     ],
   },
 ];
@@ -92,7 +91,7 @@ export default function Pricing() {
 
       <div style={styles.grid}>
         {prices.map((p, idx) => {
-          const isPopular = p.id === "pro";
+          const isPopular = p.id === "basic";
           const isFree = p.id === "free";
           return (
             <div

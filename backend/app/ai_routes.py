@@ -121,3 +121,71 @@ def ai_analytics(req: AIAnalyticsRequest):
     except Exception as e:
         logger.error(f"AI analytics error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ═══════════════════════════════════════════
+#  Resume Builder AI Endpoints
+# ═══════════════════════════════════════════
+
+class AIOptimizeResumeRequest(BaseModel):
+    resume_data: dict = {}
+    job_description: str = ""
+    focus_areas: list[str] = []
+
+class AIOptimizeBulletRequest(BaseModel):
+    bullet_text: str = Field(min_length=5, max_length=1000)
+    job_description: str = ""
+    context: str = ""
+
+class AIGenerateSummaryRequest(BaseModel):
+    resume_data: dict = {}
+    target_role: str = ""
+    job_description: str = ""
+
+
+@router.post("/ai-optimize-resume")
+def ai_optimize_resume(req: AIOptimizeResumeRequest):
+    try:
+        api_key = get_api_key()
+        from app.gemini_helper import optimize_resume_with_gemini
+        result = optimize_resume_with_gemini(req.resume_data, req.job_description, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Resume optimization failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI optimize resume error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/ai-optimize-bullet")
+def ai_optimize_bullet(req: AIOptimizeBulletRequest):
+    try:
+        api_key = get_api_key()
+        from app.gemini_helper import optimize_bullet_with_gemini
+        result = optimize_bullet_with_gemini(req.bullet_text, req.job_description, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Bullet optimization failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI optimize bullet error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/ai-generate-summary")
+def ai_generate_summary(req: AIGenerateSummaryRequest):
+    try:
+        api_key = get_api_key()
+        from app.gemini_helper import generate_summary_with_gemini
+        result = generate_summary_with_gemini(req.resume_data, req.target_role, api_key)
+        if result is None or "error" in result:
+            raise HTTPException(status_code=500, detail=result.get("error", "Summary generation failed."))
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"AI generate summary error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

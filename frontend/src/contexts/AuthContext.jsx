@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { auth } from "../api";
+import { pushGTMEvent } from "../hooks/useGTM";
 
 const AuthContext = createContext(null);
 
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("token", data.access_token);
     localStorage.setItem("user", JSON.stringify(data.user));
     setUser(data.user);
+    pushGTMEvent("login", { method: "email" });
     return data;
   };
 
@@ -43,6 +45,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("token", data.access_token);
     localStorage.setItem("user", JSON.stringify(data.user));
     setUser(data.user);
+    pushGTMEvent("signup", { method: "email" });
     return data;
   };
 
@@ -50,6 +53,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    pushGTMEvent("logout");
   };
 
   return (

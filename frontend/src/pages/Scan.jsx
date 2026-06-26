@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v1 } from "../api";
 import ProgressStepper from "../components/ProgressStepper";
@@ -41,6 +41,11 @@ export default function Scan() {
   const [error, setError] = useState("");
   const [scanStep, setScanStep] = useState(0);
   const inputRef = useRef();
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => { mountedRef.current = false; };
+  }, []);
 
   const scanSteps = [
     { label: "Uploading", icon: "📄" },
@@ -55,13 +60,19 @@ export default function Scan() {
       if (status.status === "completed") {
         setScanStep(3);
         setUploading(false);
-        setTimeout(() => navigate(`/results/${status.result.resume_id}`), 600);
+        const resumeId = status.result?.resume_id;
+        if (resumeId) {
+          setTimeout(() => navigate(`/results/${resumeId}`), 600);
+        } else {
+          setError("Scan completed but result ID is missing");
+          setUploading(false);
+        }
       } else if (status.status === "failed") {
         setUploading(false);
         setError(status.error || "Scan failed");
       } else {
         setScanStep((s) => Math.min(s + 1, 2));
-        setTimeout(() => pollStatus(taskId), 1500);
+        setTimeout(() => { if (mountedRef.current) pollStatus(taskId); }, 1500);
       }
     } catch (err) {
       setUploading(false);
@@ -224,8 +235,8 @@ const styles = {
     padding: "6px 14px",
     borderRadius: 999,
     border: "1px solid rgba(34,197,94,0.18)",
-    background: "rgba(34,197,94,0.12)",
-    color: "#dcfce7",
+    background: "var(--accent-soft)",
+    color: "var(--accent)",
     fontSize: 12,
     fontWeight: 700,
     letterSpacing: "0.14em",
@@ -258,7 +269,7 @@ const styles = {
     cursor: "pointer",
     marginBottom: 20,
     transition: "background 0.15s, border-color 0.15s",
-    background: "rgba(15,23,42,0.7)",
+    background: "var(--bg-soft)",
   },
   dropIcon: { marginBottom: 12 },
   dropText: { fontWeight: 600, fontSize: 15, marginBottom: 4, color: "var(--text)" },

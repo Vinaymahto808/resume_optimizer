@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import logo from "../assets/logo.png";
 
 const productLinks = [
   { label: "Resume Scan", to: "/scan" },
@@ -13,23 +14,6 @@ const companyLinks = [
   { label: "Templates", to: "/templates" },
   { label: "Dashboard", to: "/dashboard" },
 ];
-
-function FooterMark() {
-  return (
-    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="footerGrad" x1="5" y1="6" x2="33" y2="32" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#22c55e" />
-          <stop offset="1" stopColor="#06b6d4" />
-        </linearGradient>
-      </defs>
-      <circle cx="19" cy="19" r="18" fill="url(#footerGrad)" opacity="0.14" />
-      <path d="M13 10.5H9.5A2.5 2.5 0 0 0 7 13v12.5A2.5 2.5 0 0 0 9.5 28h13A2.5 2.5 0 0 0 25 25.5V16l-6.5-5.5H13Z" stroke="url(#footerGrad)" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M17 10.5V16h5.5" stroke="url(#footerGrad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12.5 20h10M12.5 23h7" stroke="url(#footerGrad)" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 function SocialIcon({ children, href, label }) {
   return (
@@ -50,11 +34,8 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand-panel">
           <div className="footer-brand-row">
-            <FooterMark />
+            <img src={logo} alt="Profile Optimizer" className="footer-logo" />
             <div>
-              <div className="footer-brand-name">
-                Profile<span className="footer-brand-accent">Optimizer</span>
-              </div>
               <div className="footer-brand-tag">ATS + LinkedIn optimization in one workflow</div>
             </div>
           </div>
@@ -87,9 +68,9 @@ export default function Footer() {
               {item.label}
             </Link>
           ))}
-          <span className="footer-link footer-muted">About us</span>
-          <span className="footer-link footer-muted">Privacy policy</span>
-          <span className="footer-link footer-muted">Terms of service</span>
+          <Link to="/about" className="footer-link">About us</Link>
+          <Link to="/privacy" className="footer-link">Privacy policy</Link>
+          <Link to="/terms" className="footer-link">Terms of service</Link>
         </div>
 
         <div className="footer-column footer-art-panel">

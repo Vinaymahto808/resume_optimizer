@@ -1,5 +1,6 @@
 import re
 import secrets
+import logging
 import httpx
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
@@ -11,6 +12,8 @@ from pydantic import BaseModel
 from app.config import settings
 from app.database import get_db
 from app.models import User, PasswordResetToken
+
+logger = logging.getLogger(__name__)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
@@ -111,9 +114,9 @@ def create_password_reset_token(user: User, db: Session) -> str:
     return token
 
 def send_reset_email(to_email: str, token: str) -> bool:
-    api_token = settings.POSTMARK_API_TOKEN or settings.SMTP_PASSWORD
-    if not api_token:
-        print("[email] Postmark not configured", flush=True)
+    api_key = settings.RESEND_API_KEY or settings.POSTMARK_API_TOKEN or settings.SMTP_PASSWORD
+    if not api_key:
+        logger.warning("Resend not configured — cannot send reset email")
         return False
 
     reset_link = f"{settings.FRONTEND_URL}/reset-password?token={token}"
@@ -138,7 +141,7 @@ You requested a password reset. Click the button below to set a new password. Th
 </p>
 </td></tr>
 <tr><td style="text-align:center;padding-bottom:24px">
-<a href="{reset_link}" style="display:inline-block;padding:12px 32px;background:linear-gradient(135deg,#10b981,#34d399);color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px">Reset Password</a>
+<a href="{reset_link}" style="display:inline-block;padding:12px 32px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px">Reset Password</a>
 </td></tr>
 <tr><td style="text-align:center">
 <p style="font-size:12px;color:#94a3b8;margin:0;line-height:1.5">
@@ -159,29 +162,19 @@ Button not working? Paste this in your browser:<br>
 </html>"""
 
     try:
-        resp = httpx.post(
-            "https://api.postmarkapp.com/email",
-            headers={
-                "X-Postmark-Server-Token": api_token,
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            json={
-                "From": settings.SMTP_FROM_EMAIL,
-                "To": to_email,
-                "Subject": "Reset your ProfileOptimizer password",
-                "HtmlBody": html,
-                "TextBody": f"Reset your password\n\nClick: {reset_link}",
-                "MessageStream": "outbound",
-            },
-            timeout=15,
-        )
-        if resp.is_success:
-            return True
-        print(f"[email] Postmark error for {to_email}: {resp.status_code} {resp.text}", flush=True)
-        return False
-    except Exception as e:
-        print(f"[email] Exception for {to_email}: {e}", flush=True)
+        import resend
+        resend.api_key = api_key
+        r = resend.Emails.send({
+            "from": settings.SMTP_FROM_EMAIL,
+            "to": [to_email],
+            "subject": "Reset your ProfileOptimizer password",
+            "html": html,
+            "text": f"Reset your password\n\nClick: {reset_link}",
+        })
+        logger.info("Reset email sent to %s — id=%s", to_email, r.get("id", "unknown"))
+        return True
+    except Exception:
+        logger.exception("Resend exception for %s", to_email)
         return False
 
 

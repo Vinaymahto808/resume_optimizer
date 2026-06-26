@@ -77,3 +77,18 @@ Unified post-scan dashboard showing:
 ## Verification
 - Build: `npx vite build` (runs from `frontend/`)
 - Server: `uvicorn main:app --reload` (runs from `backend/`)
+- Tests: `source .venv/bin/activate && python -m pytest tests/ -v --tb=short` (from `backend/`)
+- Coverage: `source .venv/bin/activate && python -m pytest tests/ --cov=app --cov-report=term-missing` (from `backend/`)
+
+## Test Suite (328 passing)
+- **All 328 tests pass** (279 non-route + 49 route/payment endpoint tests)
+- **Core module coverage**: `ats_analyzer.py` 100%, `auth.py` 100%, `config.py` 100%, `database.py` 100%, `job_recommender.py` 100%, `models.py` 100%, `ats_scorer.py` 98%, `resume_parser.py` 97%, `gemini_helper.py` 96%, `profile_analyzer.py` 95%, `resume_routes.py` 91%
+- **Route/payment tests fixed**: replaced `@patch("module.get_current_user")` (which doesn't work with `Depends()`) with `app.dependency_overrides[]` — `Depends()` captures the original function reference at import time, so module-level patching doesn't intercept the dependency injection
+- **AI match text length fix**: increased test profile_text from `"python"` (6 chars) to `"python developer with ML skills"` (30 chars) to satisfy pydantic `min_length=10`
+- **Overall app coverage**: 54% (328 tests) — core modules are well-covered; drag from 9 large low-coverage non-core modules (`template_routes.py` 28%, `rewrite_service.py` 12%, `v1_routes.py` 38%, etc.)
+
+## Test Architecture
+- All external deps mocked (no real DB/network/filesystem)
+- `tests/conftest.py` — shared fixtures (`mock_db`, `sample_user`, etc.)
+- Lazy imports (pdfplumber, pypypdf, docx, fitz, pytesseract, PIL, google.generativeai, pdfminer) mocked via `patch.dict("sys.modules", {"module": MagicMock()})`
+- `Depends`-based auth: use `app.dependency_overrides[get_current_user]`, never `@patch` on the module attribute

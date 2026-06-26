@@ -251,3 +251,134 @@ def suggest_jobs_with_gemini(profile_text: str, api_key: str) -> Optional[dict]:
         return json.loads(text)
     except Exception as e:
         return {"error": str(e)}
+
+
+# ═══════════════════════════════════════════
+#  JD Analysis & Resume Optimization Prompts
+# ═══════════════════════════════════════════
+
+JD_ANALYSIS_PROMPT = """You are a senior technical recruiter with 15+ years of experience analyzing job descriptions. Analyze this JD and return a JSON object with:
+
+1. "required_skills": array of 8-15 specific technical and soft skills that are REQUIRED (must-have)
+2. "preferred_skills": array of 5-10 skills that are preferred/nice-to-have
+3. "keywords": array of 15-25 important keywords and phrases from the JD
+4. "culture_fit": array of 3-5 cultural attributes the company is looking for
+5. "role_level": estimated level: "entry", "mid", "senior", "lead", or "executive"
+6. "industry": the primary industry (tech, finance, healthcare, creative, consulting, academic, government, research, or other)
+7. "must_have_qualifications": array of 3-6 absolute requirements (degrees, years of experience, certifications)
+8. "nice_to_have": array of 3-5 qualifications that are preferred but not required
+9. "years_experience_required": estimated years of experience needed (or "Not specified")
+10. "education_required": education level required (or "Not specified")
+11. "certifications_preferred": array of certifications mentioned or implied
+
+Job Title: {job_title}
+Company: {company_name}
+Job Description:
+{job_description}
+
+Return ONLY valid JSON. No markdown, no code fences."""
+
+RESUME_OPTIMIZE_PROMPT = """You are an expert ATS resume optimizer and career coach. Given a resume JSON and a job description, optimize the resume to maximize ATS score and match rate.
+
+Return a JSON object with:
+1. "optimized_resume": the FULL optimized resume data structure (same keys as input, with improvements):
+   - Rewrite summary to include relevant keywords from JD
+   - Reorder skills to put JD-matching ones first
+   - Add JD keywords to skills list if missing
+   - Rewrite bullet points to use JD terminology and quantify achievements
+   - Preserve ALL original sections and data, only enhance
+2. "ats_score_estimate": estimated ATS match percentage (0-100)
+3. "suggestions": array of 5-8 specific improvement suggestions
+4. "keywords_added": array of keywords that were added to the resume from the JD
+5. "weak_phrases_removed": array of phrases that were replaced or removed
+
+Resume JSON:
+{resume_json}
+
+Job Description:
+{job_description}
+
+Return ONLY valid JSON. No markdown, no code fences."""
+
+BULLET_OPTIMIZE_PROMPT = """You are a resume writing expert. Transform this weak bullet point into a powerful, achievement-oriented statement optimized for ATS parsing.
+
+Original bullet: "{bullet_text}"
+Job context: {job_description}
+
+Return JSON:
+1. "optimized": the rewritten bullet point (strong action verb, quantified result, relevant keywords)
+2. "explanation": brief explanation of what was improved and why
+
+Return ONLY valid JSON. No markdown, no code fences."""
+
+SUMMARY_GENERATE_PROMPT = """You are a professional resume writer. Generate a compelling professional summary based on the candidate's resume data and target role.
+
+Resume Data:
+{resume_json}
+
+Target Role: {target_role}
+
+Write a 3-4 sentence professional summary that:
+- Opens with a strong hook (years of experience, key expertise)
+- Includes 4-6 key skills relevant to the target role
+- Highlights 1-2 major achievements or differentiators
+- Ends with what the candidate is seeking
+- Is optimized for ATS with relevant keywords
+
+Return JSON:
+1. "summary": the 3-4 sentence summary (150-250 words)
+2. "keywords_used": array of keywords incorporated
+
+Return ONLY valid JSON. No markdown, no code fences."""
+
+
+def _call_gemini(prompt: str, api_key: str) -> Optional[dict]:
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        response = model.generate_content(prompt)
+        import json, re
+        text = response.text.strip()
+        text = re.sub(r'^```json\s*', '', text)
+        text = re.sub(r'\s*```$', '', text)
+        text = re.sub(r'^```\s*', '', text)
+        text = re.sub(r'\s*```$', '', text)
+        return json.loads(text)
+    except Exception as e:
+        return {"error": str(e)}
+
+
+def analyze_jd_with_gemini(job_description: str, company_name: str, job_title: str, api_key: str) -> Optional[dict]:
+    prompt = JD_ANALYSIS_PROMPT.format(
+        job_description=job_description,
+        company_name=company_name or "Unknown",
+        job_title=job_title or "Unknown",
+    )
+    return _call_gemini(prompt, api_key)
+
+
+def optimize_resume_with_gemini(resume_json: dict, job_description: str, api_key: str) -> Optional[dict]:
+    import json as _json
+    prompt = RESUME_OPTIMIZE_PROMPT.format(
+        resume_json=_json.dumps(resume_json, indent=2, default=str),
+        job_description=job_description or "No specific job description provided.",
+    )
+    return _call_gemini(prompt, api_key)
+
+
+def optimize_bullet_with_gemini(bullet_text: str, job_description: str, api_key: str) -> Optional[dict]:
+    prompt = BULLET_OPTIMIZE_PROMPT.format(
+        bullet_text=bullet_text,
+        job_description=job_description or "General professional context",
+    )
+    return _call_gemini(prompt, api_key)
+
+
+def generate_summary_with_gemini(resume_json: dict, target_role: str, api_key: str) -> Optional[dict]:
+    import json as _json
+    prompt = SUMMARY_GENERATE_PROMPT.format(
+        resume_json=_json.dumps(resume_json, indent=2, default=str),
+        target_role=target_role or "Professional",
+    )
+    return _call_gemini(prompt, api_key)
