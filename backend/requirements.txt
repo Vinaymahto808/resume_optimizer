@@ -25,4 +25,4 @@ pypdf>=4.0.0
 thefuzz>=0.22.0
 cachetools>=7.0.0
 gunicorn>=23.0.0
-resend>=4.0.0
+resend>=2.10.0
