@@ -57,6 +57,7 @@ export default function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/templates" element={<Templates />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
@@ -65,7 +66,6 @@ export default function App() {
             <Route path="/dashboard" element={<AuthPage><Dashboard /></AuthPage>} />
             <Route path="/scan" element={<AuthPage><Scan /></AuthPage>} />
             <Route path="/results/:id" element={<AuthPage><Results /></AuthPage>} />
-            <Route path="/templates" element={<AuthPage><Templates /></AuthPage>} />
             <Route path="/profile-analyzer" element={<AuthPage><ProfileAnalyzer /></AuthPage>} />
             <Route path="/job-recommender" element={<AuthPage><JobRecommender /></AuthPage>} />
             <Route path="/ai-analysis" element={<AuthPage><AIAnalysis /></AuthPage>} />

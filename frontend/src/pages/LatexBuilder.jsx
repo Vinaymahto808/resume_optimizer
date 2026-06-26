@@ -210,9 +210,9 @@ export default function LatexBuilder() {
       </div>
 
       {/* Main Split */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
+      <div className="lb-split" style={{ display: "flex", flex: 1, overflow: "hidden" }}>
         {/* LEFT: Editor */}
-        <div style={{ width: "42%", minWidth: 320, display: "flex", flexDirection: "column", borderRight: "1px solid var(--border)" }}>
+        <div className="lb-editor" style={{ width: "42%", minWidth: 320, display: "flex", flexDirection: "column", borderRight: "1px solid var(--border)" }}>
           {/* Section tabs */}
           <div style={{ display: "flex", gap: 2, padding: "4px 8px", borderBottom: "1px solid var(--border)", overflowX: "auto", flexShrink: 0, background: "rgba(148,163,184,0.02)" }}>
             {sections.map((s) => (
@@ -544,6 +544,12 @@ export default function LatexBuilder() {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .lb-split { flex-direction: column !important; }
+          .lb-editor { width: 100% !important; min-width: unset !important; border-right: none !important; max-height: 50vh !important; }
+        }
+      `}</style>
     </div>
   );
 }

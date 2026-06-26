@@ -62,55 +62,20 @@ TEMPLATE_META = {
         "tags": ["finance","consulting","single-column","professional"], "industry": ["finance","consulting","tech"], "role": ["finance","consulting","product-manager"], "experience_level": ["mid","senior","executive"], "style": "single-column", "ats_score": 96, "base_template": "classic",
         "config": {"color":"emerald","font":"serif","spacing":"normal"},"has_preview":False,"popular":True,"premium":False,
     },
-    "classic-crimson": {
-        "id": "classic-crimson", "name": "Classic Crimson", "description": "Bold crimson-accented traditional resume. Stand out with confident color while maintaining ATS-friendly structure.",
-        "tags": ["executive","bold","single-column"], "industry": ["tech","consulting","government"], "role": ["executive","product-manager"], "experience_level": ["senior","executive"], "style": "single-column", "ats_score": 93, "base_template": "classic",
-        "config": {"color":"crimson","font":"serif","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
     "classic-slate": {
-        "id": "classic-slate", "name": "Classic Slate", "description": "Understated slate gray traditional resume. Professional and subtle — ideal for government and academic roles.",
+        "id": "classic-slate", "name": "Classic Slate", "description": "Understated slate gray traditional resume. Professional and subtle, ideal for government and academic roles.",
         "tags": ["government","academic","single-column","professional"], "industry": ["government","academic","research"], "role": ["government","academic","research"], "experience_level": ["mid","senior"], "style": "single-column", "ats_score": 97, "base_template": "classic",
         "config": {"color":"slate","font":"serif","spacing":"compact"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "classic-purple": {
-        "id": "classic-purple", "name": "Classic Purple", "description": "Elegant purple tones in a classic single-column layout. Great for creative professionals seeking traditional structure.",
-        "tags": ["creative","single-column","professional"], "industry": ["creative","tech","academic"], "role": ["creative","marketing"], "experience_level": ["entry","mid"], "style": "single-column", "ats_score": 94, "base_template": "classic",
-        "config": {"color":"purple","font":"elegant","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "classic-rose": {
-        "id": "classic-rose", "name": "Classic Rose", "description": "Warm rose accents on a clean traditional layout. Distinctive yet professional for any industry.",
-        "tags": ["creative","marketing","single-column"], "industry": ["creative","marketing","healthcare"], "role": ["creative","marketing","healthcare"], "experience_level": ["entry","mid","senior"], "style": "single-column", "ats_score": 92, "base_template": "classic",
-        "config": {"color":"rose","font":"serif","spacing":"spacious"},"has_preview":False,"popular":False,"premium":True,
     },
     "modern-navy": {
         "id": "modern-navy", "name": "Modern Navy", "description": "Sleek modern design with dark navy header bar and clean sans-serif typography. Photo-ready layout.",
         "tags": ["modern","photo","tech","colorful"], "industry": ["tech","creative","consulting"], "role": ["software-engineer","data-scientist","product-manager"], "experience_level": ["entry","mid","senior"], "style": "modern", "ats_score": 88, "base_template": "modern",
         "config": {"color":"navy","font":"sans","spacing":"normal"},"has_preview":True,"popular":True,"premium":False,
     },
-    "modern-teal": {
-        "id": "modern-teal", "name": "Modern Teal", "description": "Fresh teal accents in a modern header-bar layout. Contemporary and approachable for startups.",
-        "tags": ["modern","tech","startup","colorful"], "industry": ["tech","creative"], "role": ["software-engineer","product-manager","marketing"], "experience_level": ["entry","mid"], "style": "modern", "ats_score": 87, "base_template": "modern",
-        "config": {"color":"teal","font":"sans","spacing":"compact"},"has_preview":False,"popular":True,"premium":False,
-    },
-    "modern-amber": {
-        "id": "modern-amber", "name": "Modern Amber", "description": "Warm amber color scheme on a modern layout. Eye-catching design for creative and marketing roles.",
-        "tags": ["modern","creative","colorful"], "industry": ["creative","marketing","consulting"], "role": ["creative","marketing"], "experience_level": ["mid","senior"], "style": "modern", "ats_score": 86, "base_template": "modern",
-        "config": {"color":"amber","font":"sans","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "modern-rose": {
-        "id": "modern-rose", "name": "Modern Rose", "description": "Elegant rose-colored modern layout for professionals in creative and healthcare fields.",
-        "tags": ["modern","creative","healthcare","colorful"], "industry": ["creative","healthcare","marketing"], "role": ["creative","healthcare","marketing"], "experience_level": ["entry","mid","senior"], "style": "modern", "ats_score": 85, "base_template": "modern",
-        "config": {"color":"rose","font":"modern","spacing":"spacious"},"has_preview":False,"popular":False,"premium":True,
-    },
     "modern-indigo": {
         "id": "modern-indigo", "name": "Modern Indigo", "description": "Deep indigo modern design that balances professionalism with contemporary flair.",
         "tags": ["modern","tech","finance","colorful"], "industry": ["tech","finance","consulting"], "role": ["software-engineer","data-scientist","product-manager","finance"], "experience_level": ["mid","senior","executive"], "style": "modern", "ats_score": 89, "base_template": "modern",
         "config": {"color":"indigo","font":"sans","spacing":"normal"},"has_preview":False,"popular":True,"premium":False,
-    },
-    "modern-slate": {
-        "id": "modern-slate", "name": "Modern Slate", "description": "Refined slate gray modern layout. Professional and understated for corporate environments.",
-        "tags": ["modern","finance","consulting","corporate"], "industry": ["finance","consulting","government"], "role": ["finance","consulting","government"], "experience_level": ["senior","executive"], "style": "modern", "ats_score": 90, "base_template": "modern",
-        "config": {"color":"slate","font":"modern","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
     },
     "minimalistic-slate": {
         "id": "minimalistic-slate", "name": "Minimal Slate", "description": "Ultra-clean minimal design with slate accents and FontAwesome icons. Perfect for design-conscious professionals.",
@@ -122,60 +87,20 @@ TEMPLATE_META = {
         "tags": ["minimal","tech","clean","icons"], "industry": ["tech","consulting","research"], "role": ["software-engineer","data-scientist","research"], "experience_level": ["entry","mid","senior"], "style": "minimal", "ats_score": 90, "base_template": "minimalistic",
         "config": {"color":"emerald","font":"sans","spacing":"compact"},"has_preview":False,"popular":True,"premium":False,
     },
-    "minimalistic-zinc": {
-        "id": "minimalistic-zinc", "name": "Minimal Zinc", "description": "Neutral zinc-toned minimal resume with subtle elegance. Ideal for academic and research positions.",
-        "tags": ["minimal","academic","research","clean"], "industry": ["academic","research","government"], "role": ["academic","research","government"], "experience_level": ["mid","senior","executive"], "style": "minimal", "ats_score": 93, "base_template": "minimalistic",
-        "config": {"color":"zinc","font":"serif","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "minimalistic-purple": {
-        "id": "minimalistic-purple", "name": "Minimal Purple", "description": "Creative purple-accented minimal layout. Stand out with color while keeping a clean, readable structure.",
-        "tags": ["minimal","creative","icons","colorful"], "industry": ["creative","tech","marketing"], "role": ["creative","marketing","product-manager"], "experience_level": ["entry","mid"], "style": "minimal", "ats_score": 88, "base_template": "minimalistic",
-        "config": {"color":"purple","font":"sans","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
     "sidebar-emerald": {
         "id": "sidebar-emerald", "name": "Sidebar Emerald", "description": "Two-column layout with emerald sidebar containing contact info, skills, and proficiency ratings.",
         "tags": ["two-column","sidebar","ratings","colorful"], "industry": ["tech","creative","consulting"], "role": ["software-engineer","data-scientist","creative"], "experience_level": ["mid","senior"], "style": "sidebar", "ats_score": 82, "base_template": "sidebar",
         "config": {"color":"emerald","font":"modern","spacing":"compact"},"has_preview":True,"popular":True,"premium":False,
-    },
-    "sidebar-teal": {
-        "id": "sidebar-teal", "name": "Sidebar Teal", "description": "Teal sidebar layout with balanced two-column design. Great for showcasing skills alongside experience.",
-        "tags": ["two-column","sidebar","ratings","tech"], "industry": ["tech","creative","consulting"], "role": ["software-engineer","product-manager","creative"], "experience_level": ["entry","mid","senior"], "style": "sidebar", "ats_score": 81, "base_template": "sidebar",
-        "config": {"color":"teal","font":"sans","spacing":"compact"},"has_preview":False,"popular":False,"premium":False,
     },
     "sidebar-navy": {
         "id": "sidebar-navy", "name": "Sidebar Navy", "description": "Professional navy sidebar layout. Combines contact/skills sidebar with detailed main content column.",
         "tags": ["two-column","sidebar","professional","corporate"], "industry": ["finance","consulting","government"], "role": ["finance","consulting","government"], "experience_level": ["senior","executive"], "style": "sidebar", "ats_score": 84, "base_template": "sidebar",
         "config": {"color":"navy","font":"serif","spacing":"normal"},"has_preview":False,"popular":True,"premium":False,
     },
-    "sidebar-indigo": {
-        "id": "sidebar-indigo", "name": "Sidebar Indigo", "description": "Indigo-accented two-column layout. Perfect for data scientists and analysts who want to highlight technical skills.",
-        "tags": ["two-column","sidebar","tech","analytics"], "industry": ["tech","research","consulting"], "role": ["data-scientist","research","software-engineer"], "experience_level": ["mid","senior"], "style": "sidebar", "ats_score": 83, "base_template": "sidebar",
-        "config": {"color":"indigo","font":"modern","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "sidebar-crimson": {
-        "id": "sidebar-crimson", "name": "Sidebar Crimson", "description": "Bold crimson sidebar on a clean white background. Confident design for executive-level applications.",
-        "tags": ["two-column","sidebar","executive","bold"], "industry": ["executive","consulting","finance"], "role": ["executive","consulting"], "experience_level": ["senior","executive"], "style": "sidebar", "ats_score": 80, "base_template": "sidebar",
-        "config": {"color":"crimson","font":"serif","spacing":"spacious"},"has_preview":False,"popular":False,"premium":True,
-    },
     "sidebarleft-navy": {
         "id": "sidebarleft-navy", "name": "Sidebar Left Navy", "description": "Left-aligned navy sidebar with progress bars for skills. Modern take on two-column resumes.",
         "tags": ["two-column","sidebar","skills","progress-bars"], "industry": ["tech","creative","consulting"], "role": ["software-engineer","data-scientist","product-manager"], "experience_level": ["mid","senior"], "style": "sidebar", "ats_score": 81, "base_template": "sidebarleft",
         "config": {"color":"navy","font":"sans","spacing":"compact"},"has_preview":True,"popular":True,"premium":False,
-    },
-    "sidebarleft-emerald": {
-        "id": "sidebarleft-emerald", "name": "Sidebar Left Emerald", "description": "Emerald left-sidebar layout with skill progress bars. Modern and data-rich design.",
-        "tags": ["two-column","sidebar","skills","progress-bars"], "industry": ["tech","creative","research"], "role": ["data-scientist","research","software-engineer"], "experience_level": ["entry","mid","senior"], "style": "sidebar", "ats_score": 80, "base_template": "sidebarleft",
-        "config": {"color":"emerald","font":"modern","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "sidebarleft-amber": {
-        "id": "sidebarleft-amber", "name": "Sidebar Left Amber", "description": "Warm amber left-sidebar resume. Eye-catching progress bars make your skills pop.",
-        "tags": ["two-column","sidebar","creative","skills"], "industry": ["creative","marketing","tech"], "role": ["creative","marketing","product-manager"], "experience_level": ["entry","mid"], "style": "sidebar", "ats_score": 79, "base_template": "sidebarleft",
-        "config": {"color":"amber","font":"sans","spacing":"compact"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "sidebarleft-purple": {
-        "id": "sidebarleft-purple", "name": "Sidebar Left Purple", "description": "Purple left-sidebar design with skill rating bars. Creative and modern for design professionals.",
-        "tags": ["two-column","sidebar","creative","skills"], "industry": ["creative","tech","marketing"], "role": ["creative","marketing","product-manager"], "experience_level": ["entry","mid","senior"], "style": "sidebar", "ats_score": 78, "base_template": "sidebarleft",
-        "config": {"color":"purple","font":"elegant","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
     },
     "two-column-purple": {
         "id": "two-column-purple", "name": "Two-Column Purple", "description": "Balanced two-column layout with elegant purple accents. Side-by-side sections for dense information.",
@@ -187,85 +112,20 @@ TEMPLATE_META = {
         "tags": ["two-column","balanced","professional","corporate"], "industry": ["finance","consulting","tech"], "role": ["finance","consulting","product-manager"], "experience_level": ["senior","executive"], "style": "two-column", "ats_score": 80, "base_template": "two_column",
         "config": {"color":"navy","font":"serif","spacing":"normal"},"has_preview":False,"popular":True,"premium":False,
     },
-    "two-column-teal": {
-        "id": "two-column-teal", "name": "Two-Column Teal", "description": "Fresh teal two-column layout. Modern, balanced, and perfect for tech professionals.",
-        "tags": ["two-column","tech","modern","balanced"], "industry": ["tech","creative","research"], "role": ["software-engineer","data-scientist","research"], "experience_level": ["entry","mid"], "style": "two-column", "ats_score": 78, "base_template": "two_column",
-        "config": {"color":"teal","font":"modern","spacing":"compact"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "two-column-rose": {
-        "id": "two-column-rose", "name": "Two-Column Rose", "description": "Elegant rose two-column design for healthcare and creative professionals. Soft yet distinctive.",
-        "tags": ["two-column","healthcare","creative","balanced"], "industry": ["healthcare","creative","academic"], "role": ["healthcare","creative","academic"], "experience_level": ["mid","senior"], "style": "two-column", "ats_score": 77, "base_template": "two_column",
-        "config": {"color":"rose","font":"elegant","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "two-column-indigo": {
-        "id": "two-column-indigo", "name": "Two-Column Indigo", "description": "Deep indigo two-column layout. Data-rich design perfect for analysts and researchers.",
-        "tags": ["two-column","analytics","research","balanced"], "industry": ["research","tech","academic"], "role": ["data-scientist","research","academic"], "experience_level": ["mid","senior","executive"], "style": "two-column", "ats_score": 76, "base_template": "two_column",
-        "config": {"color":"indigo","font":"modern","spacing":"compact"},"has_preview":False,"popular":False,"premium":False,
-    },
     "rows-navy": {
         "id": "rows-navy", "name": "Rows Navy", "description": "Full-width row-based layout with dark navy header, photo, and colored section backgrounds.",
         "tags": ["rows","colorful","photo","visual"], "industry": ["tech","creative","marketing"], "role": ["software-engineer","product-manager","creative"], "experience_level": ["mid","senior"], "style": "modern", "ats_score": 85, "base_template": "rows",
         "config": {"color":"navy","font":"sans","spacing":"normal"},"has_preview":True,"popular":True,"premium":False,
-    },
-    "rows-emerald": {
-        "id": "rows-emerald", "name": "Rows Emerald", "description": "Vibrant emerald row-based design with bold section bands. Modern and visually striking.",
-        "tags": ["rows","colorful","modern","visual"], "industry": ["tech","creative","consulting"], "role": ["software-engineer","creative","product-manager"], "experience_level": ["entry","mid"], "style": "modern", "ats_score": 84, "base_template": "rows",
-        "config": {"color":"emerald","font":"modern","spacing":"compact"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "rows-crimson": {
-        "id": "rows-crimson", "name": "Rows Crimson", "description": "Bold crimson row-based layout. Confident design that commands attention.",
-        "tags": ["rows","executive","bold","visual"], "industry": ["executive","consulting","finance"], "role": ["executive","consulting"], "experience_level": ["senior","executive"], "style": "modern", "ats_score": 83, "base_template": "rows",
-        "config": {"color":"crimson","font":"serif","spacing":"spacious"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "rows-slate": {
-        "id": "rows-slate", "name": "Rows Slate", "description": "Professional slate row-based layout. Understated elegance for corporate and government roles.",
-        "tags": ["rows","corporate","government","professional"], "industry": ["government","finance","consulting"], "role": ["government","finance","consulting"], "experience_level": ["mid","senior","executive"], "style": "modern", "ats_score": 86, "base_template": "rows",
-        "config": {"color":"slate","font":"serif","spacing":"normal"},"has_preview":False,"popular":False,"premium":False,
-    },
-    "rows-teal": {
-        "id": "rows-teal", "name": "Rows Teal", "description": "Fresh teal row-based design for modern tech companies. Clean section bands with photo support.",
-        "tags": ["rows","tech","modern","photo"], "industry": ["tech","creative","research"], "role": ["software-engineer","data-scientist","research"], "experience_level": ["entry","mid","senior"], "style": "modern", "ats_score": 84, "base_template": "rows",
-        "config": {"color":"teal","font":"sans","spacing":"compact"},"has_preview":False,"popular":False,"premium":False,
     },
     "infographics-navy": {
         "id": "infographics-navy", "name": "Infographics Navy", "description": "Highly visual single-page layout with navy charts, graphs, and timeline. Perfect for data-driven roles.",
         "tags": ["infographic","charts","visual","timeline"], "industry": ["tech","research","creative"], "role": ["data-scientist","research","creative"], "experience_level": ["mid","senior"], "style": "infographic", "ats_score": 74, "base_template": "infographics",
         "config": {"color":"navy","font":"modern","spacing":"compact"},"has_preview":True,"popular":True,"premium":True,
     },
-    "infographics-emerald": {
-        "id": "infographics-emerald", "name": "Infographics Emerald", "description": "Visual infographic resume with emerald charts and data visualizations. Stand out with data storytelling.",
-        "tags": ["infographic","charts","visual","data"], "industry": ["tech","research","consulting"], "role": ["data-scientist","research","consulting"], "experience_level": ["mid","senior"], "style": "infographic", "ats_score": 73, "base_template": "infographics",
-        "config": {"color":"emerald","font":"modern","spacing":"compact"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "infographics-crimson": {
-        "id": "infographics-crimson", "name": "Infographics Crimson", "description": "Bold crimson infographic resume with charts and progress indicators. High-impact visual design.",
-        "tags": ["infographic","executive","visual","charts"], "industry": ["executive","consulting","marketing"], "role": ["executive","consulting","marketing"], "experience_level": ["senior","executive"], "style": "infographic", "ats_score": 72, "base_template": "infographics",
-        "config": {"color":"crimson","font":"sans","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "infographics-purple": {
-        "id": "infographics-purple", "name": "Infographics Purple", "description": "Creative purple visual resume with charts, bubble graphs and timeline. Ideal for design and marketing.",
-        "tags": ["infographic","creative","visual","charts"], "industry": ["creative","marketing","tech"], "role": ["creative","marketing","product-manager"], "experience_level": ["entry","mid"], "style": "infographic", "ats_score": 71, "base_template": "infographics",
-        "config": {"color":"purple","font":"elegant","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
     "infographics2-navy": {
         "id": "infographics2-navy", "name": "Infographics 2 Navy", "description": "Enhanced infographics layout with navy theme, FontAwesome icons, and timeline variants.",
         "tags": ["infographic","charts","timeline","modern"], "industry": ["tech","research","creative"], "role": ["data-scientist","research","software-engineer"], "experience_level": ["mid","senior"], "style": "infographic", "ats_score": 75, "base_template": "infographics2",
         "config": {"color":"navy","font":"modern","spacing":"compact"},"has_preview":True,"popular":False,"premium":True,
-    },
-    "infographics2-teal": {
-        "id": "infographics2-teal", "name": "Infographics 2 Teal", "description": "Modern teal enhanced infographic layout with vertical and horizontal timeline options.",
-        "tags": ["infographic","timeline","modern","charts"], "industry": ["tech","creative","research"], "role": ["software-engineer","data-scientist","creative"], "experience_level": ["entry","mid","senior"], "style": "infographic", "ats_score": 74, "base_template": "infographics2",
-        "config": {"color":"teal","font":"sans","spacing":"compact"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "infographics2-amber": {
-        "id": "infographics2-amber", "name": "Infographics 2 Amber", "description": "Warm amber enhanced infographic layout with Python-themed colors and data visualization.",
-        "tags": ["infographic","charts","data","visualization"], "industry": ["tech","research","consulting"], "role": ["data-scientist","research","consulting"], "experience_level": ["mid","senior"], "style": "infographic", "ats_score": 73, "base_template": "infographics2",
-        "config": {"color":"amber","font":"modern","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
-    },
-    "infographics2-indigo": {
-        "id": "infographics2-indigo", "name": "Infographics 2 Indigo", "description": "Deep indigo enhanced infographic layout. Rich data visualizations for analytical professionals.",
-        "tags": ["infographic","analytics","data","charts"], "industry": ["research","tech","academic"], "role": ["data-scientist","research","academic"], "experience_level": ["senior","executive"], "style": "infographic", "ats_score": 72, "base_template": "infographics2",
-        "config": {"color":"indigo","font":"serif","spacing":"normal"},"has_preview":False,"popular":False,"premium":True,
     },
 }
 

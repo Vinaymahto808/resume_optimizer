@@ -10,8 +10,7 @@ const navLinks = [
 ];
 
 const templateLinks = [
-  { label: "All Templates", to: "/templates", description: "Browse the full library" },
-  { label: "Advanced Templates", to: "/templates#advanced", description: "Premium, polished layouts" },
+  { label: "Browse Templates", to: "/templates", description: "Browse our full template library" },
 ];
 
 const aiToolLinks = [

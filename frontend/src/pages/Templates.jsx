@@ -330,7 +330,7 @@ export default function Templates() {
   return (
     <div>
       {/* Hero */}
-      <div style={{
+      <div className="tmpl-hero" style={{
         position: "relative", overflow: "hidden",
         background: "radial-gradient(circle at 20% 30%, rgba(34,197,94,0.08), transparent 40%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.06), transparent 35%), radial-gradient(circle at 50% 80%, rgba(56,189,248,0.05), transparent 30%)",
         padding: "clamp(32px, 4vw, 56px) 28px clamp(28px, 3vw, 40px)",
@@ -368,7 +368,7 @@ export default function Templates() {
             Professional <span style={{ background: "var(--accent-gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>LaTeX Resume</span> Templates
           </h1>
           <p style={{ fontSize: "clamp(14px, 1vw, 16px)", color: "var(--text-secondary)", maxWidth: 620, margin: "0 auto 24px", lineHeight: 1.6 }}>
-            Create beautifully typeset ATS-friendly resumes powered by LaTeX. Browse 40+ premium templates, customize with AI, preview instantly, and download production-quality PDFs.
+            Create beautifully typeset ATS-friendly resumes powered by LaTeX. Browse 14 premium templates, customize with AI, preview instantly, and download production-quality PDFs.
           </p>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <button className="btn-primary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("customize"); }}>Customize a Template</button>
@@ -379,7 +379,7 @@ export default function Templates() {
       </div>
 
       {/* Tab Navigation */}
-      <div ref={pdRef} style={{ display: "flex", gap: 4, marginTop: 28, marginBottom: 28, borderBottom: "1px solid var(--border)", paddingBottom: 0 }}>
+      <div ref={pdRef} className="tmpl-tab-nav" style={{ display: "flex", gap: 4, marginTop: 28, marginBottom: 28, borderBottom: "1px solid var(--border)", paddingBottom: 0 }}>
         {[
           { id: "browse", label: "Browse Templates", icon: "◈" },
           { id: "customize", label: "Customize & Compile", icon: "⚙" },
@@ -449,7 +449,7 @@ export default function Templates() {
               )}
             </div>
             {expandedFilter && (
-              <div style={{ padding: "12px 16px", display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <div className="tmpl-filters-expanded" style={{ padding: "12px 16px", display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
                 <select value={filterIndustry} onChange={(e) => setFilterIndustry(e.target.value)} style={{ fontSize: 12, padding: "6px 10px", borderRadius: 6, background: "rgba(15,23,42,0.72)", border: "1px solid var(--border)", color: "var(--text)", outline: "none", minWidth: 110 }}>
                   <option value="">All Industries</option>
                   {industries.map((i) => <option key={i} value={i}>{i.charAt(0).toUpperCase() + i.slice(1)}</option>)}
@@ -511,7 +511,7 @@ export default function Templates() {
               <button className="btn-secondary" style={{ fontSize: 12 }} onClick={() => { setSearchQ(""); setFilterIndustry(""); setFilterRole(""); setFilterStyle(""); setFilterExp(""); setFilterColor(""); setMinATS(0); }}>Clear All Filters</button>
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+            <div className="tmpl-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
               {filtered.map((t) => {
                 const color = t.config?.color || "navy";
                 return (
@@ -605,13 +605,22 @@ export default function Templates() {
           <style>{`
             .hover-card:hover .template-overlay { opacity: 1 !important; }
             @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+            @media (max-width: 768px) {
+              .tmpl-grid { grid-template-columns: 1fr !important; }
+              .tmpl-split { grid-template-columns: 1fr !important; }
+              .tmpl-hero { margin: -16px !important; padding: 24px 16px !important; }
+              .tmpl-filters-expanded { flex-direction: column !important; }
+              .tmpl-filters-expanded select { width: 100% !important; min-width: unset !important; }
+              .tmpl-tab-nav { overflow-x: auto !important; flex-wrap: nowrap !important; }
+              .tmpl-tab-nav button { white-space: nowrap !important; flex-shrink: 0 !important; }
+            }
           `}</style>
         </div>
       )}
 
       {/* ============ TAB: CUSTOMIZE ============ */}
       {activeTab === "customize" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        <div className="tmpl-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           {/* Left: Resume Data Form */}
           <div className="ui-card" style={{ padding: 20, maxHeight: "70vh", overflow: "auto" }}>
             <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", marginBottom: 16 }}>Resume Data</h3>
@@ -783,7 +792,7 @@ export default function Templates() {
 
       {/* ============ TAB: COMPANY TAILOR ============ */}
       {activeTab === "company" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        <div className="tmpl-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           {/* Left: JD Input */}
           <div className="ui-card" style={{ padding: 20 }}>
             <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", marginBottom: 4 }}>Company-Specific Resume</h3>
@@ -920,7 +929,7 @@ export default function Templates() {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="tmpl-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <div>
               <label style={{ fontSize: 11, fontWeight: 600, color: "var(--text-muted)", display: "block", marginBottom: 4 }}>Resume Data (JSON)</label>
               <textarea
@@ -956,7 +965,7 @@ export default function Templates() {
           </div>
 
           {/* AI Results */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="tmpl-split" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             {aiSuggestions.length > 0 && (
               <div style={{ padding: 14, borderRadius: 8, background: "rgba(245,158,11,0.04)", border: "1px solid rgba(245,158,11,0.15)" }}>
                 <h4 style={{ fontSize: 13, fontWeight: 700, color: "var(--warning)", marginBottom: 8 }}>💡 Suggestions</h4>
