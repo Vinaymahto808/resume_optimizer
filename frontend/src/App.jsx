@@ -23,6 +23,7 @@ import PortfolioGenerator from "./pages/PortfolioGenerator";
 import DashboardAnalytics from "./pages/DashboardAnalytics";
 import StudentResume from "./pages/StudentResume";
 import LatexBuilder from "./pages/LatexBuilder";
+import Account from "./pages/Account";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="/portfolio-generator" element={<AuthPage><PortfolioGenerator /></AuthPage>} />
             <Route path="/dashboard-analytics" element={<AuthPage><DashboardAnalytics /></AuthPage>} />
             <Route path="/student-resume" element={<AuthPage><StudentResume /></AuthPage>} />
+            <Route path="/account" element={<AuthPage><Account /></AuthPage>} />
             <Route path="/latex-builder/:id" element={<AuthPage><LatexBuilder /></AuthPage>} />
           </Routes>
         </ResumeProvider>

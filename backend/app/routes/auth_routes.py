@@ -1,5 +1,5 @@
 import logging
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -8,9 +8,10 @@ from app.database import get_db
 from app.models import User
 from app.auth import (
     register_user, authenticate_user, create_access_token,
-    get_current_user, UserCreate, ForgotPasswordRequest,
+    get_current_user, UserCreate, UpdateProfileRequest,
+    ChangePasswordRequest, ForgotPasswordRequest,
     ResetPasswordRequest, create_password_reset_token,
-    send_reset_email, reset_password,
+    send_reset_email, reset_password, hash_password, verify_password,
 )
 from app.services.auth_service import create_refresh_token, rotate_refresh_token
 
@@ -57,6 +58,25 @@ def refresh_token_endpoint(refresh_token: str, db: Session = Depends(get_db)):
 @router.get("/api/auth/me")
 def get_me(user: User = Depends(get_current_user)):
     return {"id": user.id, "email": user.email, "full_name": user.full_name}
+
+
+@router.put("/api/auth/me")
+def update_profile(data: UpdateProfileRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    user.full_name = data.full_name
+    db.commit()
+    db.refresh(user)
+    return {"id": user.id, "email": user.email, "full_name": user.full_name}
+
+
+@router.post("/api/auth/change-password")
+def change_password(data: ChangePasswordRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if not verify_password(data.current_password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+    if len(data.new_password) < 12:
+        raise HTTPException(status_code=400, detail="New password must be at least 12 characters")
+    user.hashed_password = hash_password(data.new_password)
+    db.commit()
+    return {"message": "Password changed successfully"}
 
 
 @router.post("/api/auth/forgot-password")

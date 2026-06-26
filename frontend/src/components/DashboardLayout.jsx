@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Navigate, Link, useLocation } from "react-router-dom";
+import { Navigate, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const NAV_ITEMS = [
@@ -24,6 +24,7 @@ const BREADCRUMB_MAP = {
   "/dashboard-analytics": ["Dashboard", "Analytics"],
   "/portfolio-generator": ["Dashboard", "Portfolio Generator"],
   "/student-resume": ["Dashboard", "Student Resume"],
+  "/account": ["Dashboard", "Account Settings"],
 };
 
 export default function DashboardLayout({ children }) {
@@ -194,14 +195,13 @@ export default function DashboardLayout({ children }) {
                   </div>
                   <div style={s.dropdownDivider} />
                   {[
-                    { icon: "◎", label: "My Account" },
-                    { icon: "◈", label: "Settings" },
-                    { icon: "◇", label: "Billing" },
+                    { icon: "◎", label: "My Account", path: "/account" },
+                    { icon: "◇", label: "Billing", path: "/pricing" },
                   ].map((item) => (
-                    <button key={item.label} style={s.dropdownItem}>
+                    <Link key={item.label} to={item.path} style={s.dropdownItem}>
                       <span style={s.dropdownItemIcon}>{item.icon}</span>
                       {item.label}
-                    </button>
+                    </Link>
                   ))}
                   <div style={s.dropdownDivider} />
                   <button

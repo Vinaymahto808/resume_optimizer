@@ -29,6 +29,10 @@ export const auth = {
     API.post("/api/auth/forgot-password", { email }).then((r) => r.data),
   resetPassword: (token, new_password) =>
     API.post("/api/auth/reset-password", { token, new_password }).then((r) => r.data),
+  updateProfile: (data) =>
+    API.put("/api/auth/me", data).then((r) => r.data),
+  changePassword: (data) =>
+    API.post("/api/auth/change-password", data).then((r) => r.data),
 };
 
 export const payments = {

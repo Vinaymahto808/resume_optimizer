@@ -23,6 +23,13 @@ class UserCreate(BaseModel):
     password: str
     full_name: str = ""
 
+class UpdateProfileRequest(BaseModel):
+    full_name: str
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
 class UserResponse(BaseModel):
     id: str
     email: str
