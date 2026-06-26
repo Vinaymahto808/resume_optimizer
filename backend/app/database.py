@@ -2,9 +2,12 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import settings
 
-connect_args = {"timeout": 15}
+connect_args = {}
 if settings.DATABASE_URL.startswith("sqlite"):
+    connect_args["timeout"] = 15
     connect_args["check_same_thread"] = False
+else:
+    connect_args["connect_timeout"] = 15
 
 engine = create_engine(settings.DATABASE_URL, connect_args=connect_args)
 
