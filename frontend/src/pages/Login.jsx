@@ -44,7 +44,7 @@ export default function Login() {
         "You can jump back into scans without rebuilding anything.",
       ]}
     >
-      <form onSubmit={handleSubmit} className="ui-card" style={styles.card}>
+      <form onSubmit={handleSubmit} className="ui-card auth-card-mobile" style={styles.card}>
         <Link to="/" style={styles.logo}>
           <span style={styles.logoText}>Profile</span>
           <span style={styles.logoAccent}>Optimizer</span>

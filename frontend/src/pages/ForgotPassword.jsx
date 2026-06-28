@@ -15,6 +15,7 @@ export default function ForgotPassword() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
+  const [devLink, setDevLink] = useState("");
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -36,8 +37,9 @@ export default function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      await auth.forgotPassword(email);
+      const res = await auth.forgotPassword(email);
       setSent(true);
+      if (res.dev_link) setDevLink(res.dev_link);
       startCooldown();
     } catch (err) {
       setError(getError(err));
@@ -49,7 +51,8 @@ export default function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      await auth.forgotPassword(email);
+      const res = await auth.forgotPassword(email);
+      if (res.dev_link) setDevLink(res.dev_link);
       startCooldown();
     } catch (err) {
       setError(getError(err));
@@ -83,7 +86,14 @@ export default function ForgotPassword() {
           <p style={styles.subtitle}>
             If an account with <strong>{email}</strong> exists, you'll receive a reset link shortly.
           </p>
-          <p style={styles.spamHint}>Don't see it? Check your spam folder.</p>
+          {devLink ? (
+            <p style={styles.devLink}>
+              No email service configured. Use this link instead:<br />
+              <a href={devLink} style={styles.devLinkAnchor}>{devLink}</a>
+            </p>
+          ) : (
+            <p style={styles.spamHint}>Don't see it? Check your spam folder.</p>
+          )}
           {cooldown > 0 ? (
             <p style={styles.cooldown}>Resend in {cooldown}s</p>
           ) : (
@@ -198,5 +208,20 @@ const styles = {
     color: "var(--text-muted)",
     marginTop: 12,
     fontWeight: 500,
+  },
+  devLink: {
+    fontSize: 12,
+    color: "var(--text-secondary)",
+    marginTop: 12,
+    padding: "8px 10px",
+    background: "rgba(16,185,129,0.08)",
+    borderRadius: "var(--radius-sm)",
+    lineHeight: 1.6,
+    wordBreak: "break-all",
+  },
+  devLinkAnchor: {
+    color: "var(--accent)",
+    fontWeight: 500,
+    textDecoration: "underline",
   },
 };

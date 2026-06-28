@@ -10,7 +10,7 @@ from app.database import get_db
 from app.auth import get_current_user
 from app.config import settings, TEMPLATES_DIR
 from app.models import User
-from app.gemini_helper import analyze_jd_with_gemini, optimize_resume_with_gemini
+from app.groq_helper import analyze_jd_with_groq, optimize_resume_with_groq
 
 LATEX_DIR = Path(TEMPLATES_DIR)
 
@@ -964,10 +964,10 @@ def _extract_skills_from_jd(jd_text: str) -> dict:
 
 
 def _analyze_jd(job_description: str, company_name: str = "", job_title: str = "") -> dict:
-    api_key = getattr(settings, "GEMINI_API_KEY", "") or ""
+    api_key = getattr(settings, "GROQ_API_KEY", "") or ""
     if api_key:
         try:
-            result = analyze_jd_with_gemini(job_description, company_name, job_title, api_key)
+            result = analyze_jd_with_groq(job_description, company_name, job_title, api_key)
             if result and "error" not in result:
                 return result
         except Exception:
@@ -985,10 +985,10 @@ def _optimize_resume_data(resume_data: dict, analysis: dict) -> dict:
             new_skills.append(kw)
     if new_skills:
         data["skills"] = data.get("skills", []) + new_skills[:10]
-    api_key = getattr(settings, "GEMINI_API_KEY", "") or ""
+    api_key = getattr(settings, "GROQ_API_KEY", "") or ""
     if api_key:
         try:
-            result = optimize_resume_with_gemini(data, analysis.get("job_description", ""), api_key)
+            result = optimize_resume_with_groq(data, analysis.get("job_description", ""), api_key)
             if result and "error" not in result:
                 return result.get("optimized_resume", data)
         except Exception:
@@ -1266,12 +1266,12 @@ async def generate_from_jd(req: ResumeFromJDRequest):
 @router.post("/ai-optimize")
 def ai_optimize(req: AIOptimizeRequest):
     data = req.resume_data.model_dump()
-    api_key = getattr(settings, "GEMINI_API_KEY", "") or ""
+    api_key = getattr(settings, "GROQ_API_KEY", "") or ""
     optimized = data
     suggestions = []
     if api_key:
         try:
-            result = optimize_resume_with_gemini(data, req.job_description, api_key)
+            result = optimize_resume_with_groq(data, req.job_description, api_key)
             if result and "error" not in result:
                 optimized = result.get("optimized_resume", data)
                 suggestions = result.get("suggestions", [])

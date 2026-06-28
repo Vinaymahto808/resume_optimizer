@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch, mock_open
 
 from app.resume_parser import (
     _validate_magic, _tesseract_available, _ocr_with_tesseract,
-    _ocr_with_gemini, _render_pdf_pages_as_images,
+    _ocr_with_groq, _render_pdf_pages_as_images,
     extract_text_from_scanned_pdf, extract_text_from_pdf,
     extract_text_from_docx, extract_text_from_image,
     extract_text_from_resume,
@@ -85,18 +85,17 @@ class TestOcrWithTesseract:
             mock_img.convert.assert_called_once_with("RGB")
 
 
-class TestOcrWithGemini:
-    def test_gemini_ocr(self):
-        mock_genai = MagicMock()
-        mock_model = MagicMock()
+class TestOcrWithGroq:
+    def test_groq_ocr(self):
+        mock_openai = MagicMock()
         mock_response = MagicMock()
-        mock_response.text = "Gemini extracted text"
-        mock_model.generate_content.return_value = mock_response
-        mock_genai.GenerativeModel.return_value = mock_model
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = _ocr_with_gemini(b"image bytes", "test-key")
-            assert result == "Gemini extracted text"
-            mock_genai.configure.assert_called_once_with(api_key="test-key")
+        mock_choice = MagicMock()
+        mock_choice.message.content = "Groq extracted text"
+        mock_response.choices = [mock_choice]
+        mock_openai.OpenAI.return_value.chat.completions.create.return_value = mock_response
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = _ocr_with_groq(b"image bytes", "test-key")
+            assert result == "Groq extracted text"
 
 
 class TestRenderPdfPagesAsImages:
@@ -141,20 +140,20 @@ class TestExtractTextFromScannedPdf:
 
     @patch("app.resume_parser._render_pdf_pages_as_images")
     @patch("app.resume_parser._tesseract_available")
-    @patch("app.resume_parser._ocr_with_gemini")
-    def test_falls_back_to_gemini(self, mock_gemini, mock_avail, mock_render):
+    @patch("app.resume_parser._ocr_with_groq")
+    def test_falls_back_to_groq(self, mock_groq, mock_avail, mock_render):
         mock_render.return_value = [b"img1"]
         mock_avail.return_value = False
-        mock_gemini.return_value = "Gemini text"
-        result = extract_text_from_scanned_pdf(b"pdf bytes", gemini_api_key="key")
-        assert "Gemini text" in result
+        mock_groq.return_value = "Groq text"
+        result = extract_text_from_scanned_pdf(b"pdf bytes", groq_api_key="key")
+        assert "Groq text" in result
 
     @patch("app.resume_parser._render_pdf_pages_as_images")
     @patch("app.resume_parser._tesseract_available")
     def test_no_engine_available(self, mock_avail, mock_render):
         mock_render.return_value = [b"img1"]
         mock_avail.return_value = False
-        result = extract_text_from_scanned_pdf(b"pdf bytes", gemini_api_key="")
+        result = extract_text_from_scanned_pdf(b"pdf bytes", groq_api_key="")
         assert result == ""
 
     @patch("app.resume_parser._render_pdf_pages_as_images")
@@ -182,7 +181,7 @@ class TestExtractTextFromPdf:
         with patch.dict("sys.modules", {"pypdf": mock_pypdf}):
             with patch("app.resume_parser.extract_text_from_scanned_pdf") as mock_ocr:
                 mock_ocr.return_value = "OCR full text"
-                result = extract_text_from_pdf(b"pdf bytes", "gemini-key")
+                result = extract_text_from_pdf(b"pdf bytes", "groq-key")
                 assert result == "OCR full text"
 
     def test_short_text_triggers_ocr_returns_original(self):
@@ -193,7 +192,7 @@ class TestExtractTextFromPdf:
         with patch.dict("sys.modules", {"pypdf": mock_pypdf}):
             with patch("app.resume_parser.extract_text_from_scanned_pdf") as mock_ocr:
                 mock_ocr.return_value = ""
-                result = extract_text_from_pdf(b"pdf bytes", "gemini-key")
+                result = extract_text_from_pdf(b"pdf bytes", "groq-key")
                 assert result == "short"
 
     def test_import_error(self):
@@ -244,12 +243,12 @@ class TestExtractTextFromImage:
         assert result == "Tesseract text"
 
     @patch("app.resume_parser._tesseract_available")
-    @patch("app.resume_parser._ocr_with_gemini")
-    def test_gemini_fallback(self, mock_gemini, mock_avail):
+    @patch("app.resume_parser._ocr_with_groq")
+    def test_groq_fallback(self, mock_groq, mock_avail):
         mock_avail.return_value = False
-        mock_gemini.return_value = "Gemini text"
+        mock_groq.return_value = "Groq text"
         result = extract_text_from_image(b"img", "key")
-        assert result == "Gemini text"
+        assert result == "Groq text"
 
     @patch("app.resume_parser._tesseract_available")
     def test_no_engine(self, mock_avail):

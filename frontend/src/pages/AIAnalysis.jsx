@@ -36,7 +36,7 @@ export default function AIAnalysis() {
     } catch (err) {
       const msg =
         err.response?.data?.detail ||
-        "AI analysis failed. Make sure GEMINI_API_KEY is set in the backend .env file.";
+        "AI analysis failed. Make sure GROQ_API_KEY is set in the backend .env file.";
       setError(msg);
     }
     setLoading(false);

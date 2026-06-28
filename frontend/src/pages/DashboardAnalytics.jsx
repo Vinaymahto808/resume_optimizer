@@ -87,7 +87,7 @@ export default function DashboardAnalytics() {
     } catch (err) {
       setError(
         err.response?.data?.detail ||
-        "Analytics generation failed. Make sure GEMINI_API_KEY is set."
+        "Analytics generation failed. Make sure GROQ_API_KEY is set."
       );
     }
     setLoading(false);

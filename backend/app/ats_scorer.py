@@ -72,10 +72,10 @@ def extract_text_from_pdf(file_path: str) -> str:
 
     text = text.strip()
     if len(text) < OCR_MIN_CHARS:
-        gemini_key = getattr(settings, "GEMINI_API_KEY", "") or ""
+        groq_key = getattr(settings, "GROQ_API_KEY", "") or ""
         with open(file_path, "rb") as f:
             file_bytes = f.read()
-        ocr_text = extract_text_from_scanned_pdf(file_bytes, gemini_key)
+        ocr_text = extract_text_from_scanned_pdf(file_bytes, groq_key)
         if ocr_text:
             return ocr_text
     return text

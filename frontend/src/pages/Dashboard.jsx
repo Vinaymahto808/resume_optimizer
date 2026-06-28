@@ -30,7 +30,7 @@ export default function Dashboard() {
   return (
     <div>
       {/* KPI Row */}
-      <div style={s.kpiRow}>
+      <div className="dash-kpi-grid" style={s.kpiRow}>
         <div className="ui-card" style={s.kpiCard}>
           <div style={s.kpiValue}>{totalScans}</div>
           <div style={s.kpiLabel}>Total Scans</div>

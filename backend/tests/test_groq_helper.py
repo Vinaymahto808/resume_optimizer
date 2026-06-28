@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, patch
 
-from app.gemini_helper import (
-    analyze_with_gemini, match_job_with_gemini, suggest_jobs_with_gemini,
+from app.groq_helper import (
+    analyze_with_groq, match_job_with_groq, suggest_jobs_with_groq,
     generate_career_roadmap, generate_portfolio_html, generate_analytics_suggestions,
     PROFILE_ANALYSIS_PROMPT, JOB_MATCH_PROMPT, AI_SUGGEST_JOBS_PROMPT,
     CAREER_ROADMAP_PROMPT, PORTFOLIO_GENERATOR_PROMPT, ANALYTICS_SUGGESTIONS_PROMPT,
@@ -42,81 +42,82 @@ class TestPromptsFormat:
         assert "profile_strength" in prompt
 
 
-class TestGeminiFunctions:
-    def _mock_genai(self, resp_text='{"result": "success"}'):
-        mock_genai = MagicMock()
-        mock_resp = MagicMock()
-        mock_resp.text = resp_text
-        mock_genai.GenerativeModel.return_value.generate_content.return_value = mock_resp
-        return mock_genai
+class TestGroqFunctions:
+    def _mock_openai(self, resp_text='{"result": "success"}'):
+        mock_openai = MagicMock()
+        mock_choice = MagicMock()
+        mock_choice.message.content = resp_text
+        mock_response = MagicMock()
+        mock_response.choices = [mock_choice]
+        mock_openai.OpenAI.return_value.chat.completions.create.return_value = mock_response
+        return mock_openai
 
-    def test_analyze_with_gemini(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = analyze_with_gemini("test profile", "api-key")
+    def test_analyze_with_groq(self):
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = analyze_with_groq("test profile", "api-key")
             assert result == {"result": "success"}
-            mock_genai.configure.assert_called_once_with(api_key="api-key")
 
-    def test_analyze_with_gemini_error(self):
-        mock_genai = MagicMock()
-        mock_genai.GenerativeModel.side_effect = Exception("API error")
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = analyze_with_gemini("test", "key")
+    def test_analyze_with_groq_error(self):
+        mock_openai = MagicMock()
+        mock_openai.OpenAI.side_effect = Exception("API error")
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = analyze_with_groq("test", "key")
             assert "error" in result
 
     def test_analyze_strips_code_fences(self):
-        mock_genai = self._mock_genai('```json\n{"key": "value"}\n```')
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = analyze_with_gemini("test", "key")
+        mock_openai = self._mock_openai('```json\n{"key": "value"}\n```')
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = analyze_with_groq("test", "key")
             assert result == {"key": "value"}
 
     def test_match_job_success(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = match_job_with_gemini("profile", "ML Engineer", "desc", "key")
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = match_job_with_groq("profile", "ML Engineer", "desc", "key")
             assert result == {"result": "success"}
 
     def test_match_job_error(self):
-        mock_genai = MagicMock()
-        mock_genai.GenerativeModel.return_value.generate_content.side_effect = Exception("error")
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = match_job_with_gemini("p", "t", "d", "k")
+        mock_openai = MagicMock()
+        mock_openai.OpenAI.return_value.chat.completions.create.side_effect = Exception("error")
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = match_job_with_groq("p", "t", "d", "k")
             assert "error" in result
 
     def test_suggest_jobs_success(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
-            result = suggest_jobs_with_gemini("profile", "key")
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
+            result = suggest_jobs_with_groq("profile", "key")
             assert result == {"result": "success"}
 
     def test_career_roadmap_success(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
             result = generate_career_roadmap("Data Scientist", "key")
             assert result == {"result": "success"}
 
     def test_career_roadmap_error(self):
-        mock_genai = MagicMock()
-        mock_genai.GenerativeModel.return_value.generate_content.side_effect = Exception("err")
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
+        mock_openai = MagicMock()
+        mock_openai.OpenAI.return_value.chat.completions.create.side_effect = Exception("err")
+        with patch.dict("sys.modules", {"openai": mock_openai}):
             result = generate_career_roadmap("DS", "k")
             assert "error" in result
 
     def test_portfolio_html_success(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
             result = generate_portfolio_html("resume text", "key")
             assert result == {"result": "success"}
 
     def test_portfolio_html_error(self):
-        mock_genai = MagicMock()
-        mock_genai.GenerativeModel.return_value.generate_content.side_effect = Exception("err")
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
+        mock_openai = MagicMock()
+        mock_openai.OpenAI.return_value.chat.completions.create.side_effect = Exception("err")
+        with patch.dict("sys.modules", {"openai": mock_openai}):
             result = generate_portfolio_html("r", "k")
             assert "error" in result
 
     def test_analytics_suggestions_success(self):
-        mock_genai = self._mock_genai()
-        with patch.dict("sys.modules", {"google.generativeai": mock_genai}):
+        mock_openai = self._mock_openai()
+        with patch.dict("sys.modules", {"openai": mock_openai}):
             result = generate_analytics_suggestions("profile", "key")
             assert result == {"result": "success"}

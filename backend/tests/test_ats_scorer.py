@@ -43,7 +43,7 @@ class TestExtractTextFromPdf:
             result = extract_text_from_pdf("/fake/path.pdf")
             assert result.startswith("[Error extracting text:")
 
-    def test_uses_gemini_ocr_when_text_too_short(self):
+    def test_uses_groq_ocr_when_text_too_short(self):
         mock_pdfplumber = MagicMock()
         mock_page = MagicMock()
         mock_page.extract_text.return_value = "short"
@@ -52,7 +52,7 @@ class TestExtractTextFromPdf:
             with patch("app.ats_scorer.extract_text_from_scanned_pdf") as mock_ocr:
                 mock_ocr.return_value = "OCR extracted long text"
                 with patch("app.ats_scorer.settings") as mock_settings:
-                    mock_settings.GEMINI_API_KEY = "test-key"
+                    mock_settings.GROQ_API_KEY = "test-key"
                     with patch("builtins.open", mock_open(read_data=b"file content")):
                         result = extract_text_from_pdf("/fake/path.pdf")
                         assert result == "OCR extracted long text"

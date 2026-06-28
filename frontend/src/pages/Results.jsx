@@ -207,9 +207,9 @@ export default function Results() {
       <NineteenPointCheck data={data.nineteen_point} />
 
       {/* Split Layout: Left Score | Right Keywords */}
-      <div style={s.splitRow}>
+      <div className="results-split" style={s.splitRow}>
         {/* Left: Score Breakdown */}
-        <div className="ui-card" style={s.leftPanel}>
+        <div className="ui-card results-left" style={s.leftPanel}>
           <RadialScore score={score} />
           <div style={{ textAlign: "center", marginBottom: 20 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text)" }}>{data.filename}</div>

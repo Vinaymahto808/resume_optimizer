@@ -186,6 +186,22 @@ Button not working? Paste this in your browser:<br>
 
 
 def reset_password(token: str, new_password: str, db: Session) -> User:
+    pw = new_password
+    issues = []
+    if len(pw) < 12:
+        issues.append("at least 12 characters")
+    if not re.search(r"[A-Z]", pw):
+        issues.append("an uppercase letter")
+    if not re.search(r"[a-z]", pw):
+        issues.append("a lowercase letter")
+    if not re.search(r"[0-9]", pw):
+        issues.append("a number")
+    if not re.search(r"[^A-Za-z0-9]", pw):
+        issues.append("a special character")
+    if re.search(r"\s", pw):
+        issues.append("no spaces")
+    if issues:
+        raise HTTPException(status_code=400, detail="Password must include " + ", ".join(issues) + ".")
     reset = db.query(PasswordResetToken).filter(
         PasswordResetToken.token == token,
         PasswordResetToken.used == False,

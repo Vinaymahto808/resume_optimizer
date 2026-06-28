@@ -22,7 +22,7 @@ services:
         value: https://ats-resume-checker.onrender.com
       - key: RESEND_API_KEY
         sync: false
-      - key: GEMINI_API_KEY
+      - key: GROQ_API_KEY
         sync: false
       - key: PAYPAL_CLIENT_ID
         sync: false

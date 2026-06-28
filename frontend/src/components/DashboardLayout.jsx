@@ -32,6 +32,7 @@ export default function DashboardLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const location = useLocation();
   const profileRef = useRef(null);
@@ -45,6 +46,10 @@ export default function DashboardLayout({ children }) {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  useEffect(() => {
+    setMobileSidebarOpen(false);
+  }, [location.pathname]);
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -63,8 +68,19 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div style={s.shell} data-theme="dark">
+      {/* Mobile sidebar backdrop */}
+      {mobileSidebarOpen && (
+        <div className="dash-mobile-backdrop nm" onClick={() => setMobileSidebarOpen(false)} />
+      )}
+
       {/* ── Sidebar ── */}
-      <aside style={{ ...s.sidebar, width: collapsed ? 64 : 220 }}>
+      <aside
+        className={`dash-sidebar ${mobileSidebarOpen ? "dash-sidebar--open" : ""}`}
+        style={{
+          ...s.sidebar,
+          width: collapsed ? 64 : 220,
+        }}
+      >
         {/* Brand */}
         <div style={s.brand}>
           <div style={s.brandLogo}>
@@ -122,22 +138,36 @@ export default function DashboardLayout({ children }) {
       {/* ── Main ── */}
       <div style={{ ...s.main, marginLeft: collapsed ? 64 : 220 }}>
         {/* Top bar */}
-        <header style={s.topbar}>
-          {/* Breadcrumbs */}
-          <nav style={s.breadcrumbs} aria-label="breadcrumb">
+        <header className="dash-topbar" style={s.topbar}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              className="nm dash-mobile-toggle"
+              onClick={() => setMobileSidebarOpen(true)}
+              style={s.mobileToggle}
+              type="button"
+              aria-label="Open sidebar"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </svg>
+            </button>
+            <nav style={s.breadcrumbs} aria-label="breadcrumb">
             {crumbs.map((crumb, i) => (
               <span key={i} style={s.breadcrumbWrap}>
                 {i > 0 && <span style={s.breadcrumbSep}>/</span>}
                 <span style={{ ...s.breadcrumb, ...(i === crumbs.length - 1 ? s.breadcrumbActive : {}) }}>
                   {crumb}
                 </span>
-              </span>
-            ))}
-          </nav>
+            </span>
+              ))}
+            </nav>
+          </div>
 
           <div style={s.topbarRight}>
             {/* Search */}
-            <div style={s.searchWrap}>
+            <div className="dash-search-wrap" style={s.searchWrap}>
               <svg style={s.searchIcon} width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.6" />
                 <path d="M11 11l3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -404,6 +434,15 @@ const s = {
     width: 7, height: 7, borderRadius: "50%",
     background: "#ef4444",
     border: "1.5px solid #050816",
+  },
+  mobileToggle: {
+    display: "none",
+    alignItems: "center", justifyContent: "center",
+    width: 34, height: 34, borderRadius: 8,
+    border: "1px solid rgba(148,163,184,0.12)",
+    background: "rgba(148,163,184,0.06)",
+    color: "var(--text-secondary)", cursor: "pointer",
+    flexShrink: 0,
   },
   avatarBtn: {
     display: "flex", alignItems: "center", gap: 7,

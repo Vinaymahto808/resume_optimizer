@@ -1,5 +1,9 @@
 from typing import Optional
 
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+TEXT_MODEL = "llama-3.3-70b-versatile"
+VISION_MODEL = "llama-3.2-90b-vision-preview"
+
 PROFILE_ANALYSIS_PROMPT = """You are a senior data science recruiter and LinkedIn profile expert with 15+ years of experience hiring for top tech companies.
 
 Analyze this LinkedIn profile and return a JSON with:
@@ -136,127 +140,6 @@ Return a JSON object with exactly these keys:
 
 Return ONLY valid JSON. No markdown, no code fences."""
 
-
-def generate_career_roadmap(target_role: str, api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = CAREER_ROADMAP_PROMPT.format(target_role=target_role)
-        response = model.generate_content(prompt)
-        import json, re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def generate_portfolio_html(resume_text: str, api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = PORTFOLIO_GENERATOR_PROMPT.format(resume_text=resume_text)
-        response = model.generate_content(prompt)
-        import json, re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def generate_analytics_suggestions(profile_text: str, api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = ANALYTICS_SUGGESTIONS_PROMPT.format(profile_text=profile_text)
-        response = model.generate_content(prompt)
-        import json, re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def analyze_with_gemini(profile_text: str, api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = PROFILE_ANALYSIS_PROMPT.format(profile_text=profile_text)
-        response = model.generate_content(prompt)
-        import json
-        import re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def match_job_with_gemini(profile_text: str, job_title: str, job_description: str,
-                          api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = JOB_MATCH_PROMPT.format(
-            profile_text=profile_text,
-            job_title=job_title,
-            job_description=job_description,
-        )
-        response = model.generate_content(prompt)
-        import json
-        import re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-def suggest_jobs_with_gemini(profile_text: str, api_key: str) -> Optional[dict]:
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        prompt = AI_SUGGEST_JOBS_PROMPT.format(profile_text=profile_text)
-        response = model.generate_content(prompt)
-        import json
-        import re
-        text = response.text.strip()
-        text = re.sub(r'^```json\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        text = re.sub(r'^```\s*', '', text)
-        text = re.sub(r'\s*```$', '', text)
-        return json.loads(text)
-    except Exception as e:
-        return {"error": str(e)}
-
-
-# ═══════════════════════════════════════════
-#  JD Analysis & Resume Optimization Prompts
-# ═══════════════════════════════════════════
-
 JD_ANALYSIS_PROMPT = """You are a senior technical recruiter with 15+ years of experience analyzing job descriptions. Analyze this JD and return a JSON object with:
 
 1. "required_skills": array of 8-15 specific technical and soft skills that are REQUIRED (must-have)
@@ -332,14 +215,18 @@ Return JSON:
 Return ONLY valid JSON. No markdown, no code fences."""
 
 
-def _call_gemini(prompt: str, api_key: str) -> Optional[dict]:
+def _call_groq(prompt: str, api_key: str) -> Optional[dict]:
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        response = model.generate_content(prompt)
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key, base_url=GROQ_BASE_URL)
+        response = client.chat.completions.create(
+            model=TEXT_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=2000,
+        )
         import json, re
-        text = response.text.strip()
+        text = response.choices[0].message.content.strip()
         text = re.sub(r'^```json\s*', '', text)
         text = re.sub(r'\s*```$', '', text)
         text = re.sub(r'^```\s*', '', text)
@@ -349,36 +236,90 @@ def _call_gemini(prompt: str, api_key: str) -> Optional[dict]:
         return {"error": str(e)}
 
 
-def analyze_jd_with_gemini(job_description: str, company_name: str, job_title: str, api_key: str) -> Optional[dict]:
+def generate_career_roadmap(target_role: str, api_key: str) -> Optional[dict]:
+    prompt = CAREER_ROADMAP_PROMPT.format(target_role=target_role)
+    return _call_groq(prompt, api_key)
+
+
+def generate_portfolio_html(resume_text: str, api_key: str) -> Optional[dict]:
+    prompt = PORTFOLIO_GENERATOR_PROMPT.format(resume_text=resume_text)
+    return _call_groq(prompt, api_key)
+
+
+def generate_analytics_suggestions(profile_text: str, api_key: str) -> Optional[dict]:
+    prompt = ANALYTICS_SUGGESTIONS_PROMPT.format(profile_text=profile_text)
+    return _call_groq(prompt, api_key)
+
+
+def analyze_with_groq(profile_text: str, api_key: str) -> Optional[dict]:
+    prompt = PROFILE_ANALYSIS_PROMPT.format(profile_text=profile_text)
+    return _call_groq(prompt, api_key)
+
+
+def match_job_with_groq(profile_text: str, job_title: str, job_description: str,
+                        api_key: str) -> Optional[dict]:
+    prompt = JOB_MATCH_PROMPT.format(
+        profile_text=profile_text,
+        job_title=job_title,
+        job_description=job_description,
+    )
+    return _call_groq(prompt, api_key)
+
+
+def suggest_jobs_with_groq(profile_text: str, api_key: str) -> Optional[dict]:
+    prompt = AI_SUGGEST_JOBS_PROMPT.format(profile_text=profile_text)
+    return _call_groq(prompt, api_key)
+
+
+def analyze_jd_with_groq(job_description: str, company_name: str, job_title: str, api_key: str) -> Optional[dict]:
     prompt = JD_ANALYSIS_PROMPT.format(
         job_description=job_description,
         company_name=company_name or "Unknown",
         job_title=job_title or "Unknown",
     )
-    return _call_gemini(prompt, api_key)
+    return _call_groq(prompt, api_key)
 
 
-def optimize_resume_with_gemini(resume_json: dict, job_description: str, api_key: str) -> Optional[dict]:
+def optimize_resume_with_groq(resume_json: dict, job_description: str, api_key: str) -> Optional[dict]:
     import json as _json
     prompt = RESUME_OPTIMIZE_PROMPT.format(
         resume_json=_json.dumps(resume_json, indent=2, default=str),
         job_description=job_description or "No specific job description provided.",
     )
-    return _call_gemini(prompt, api_key)
+    return _call_groq(prompt, api_key)
 
 
-def optimize_bullet_with_gemini(bullet_text: str, job_description: str, api_key: str) -> Optional[dict]:
+def optimize_bullet_with_groq(bullet_text: str, job_description: str, api_key: str) -> Optional[dict]:
     prompt = BULLET_OPTIMIZE_PROMPT.format(
         bullet_text=bullet_text,
         job_description=job_description or "General professional context",
     )
-    return _call_gemini(prompt, api_key)
+    return _call_groq(prompt, api_key)
 
 
-def generate_summary_with_gemini(resume_json: dict, target_role: str, api_key: str) -> Optional[dict]:
+def generate_summary_with_groq(resume_json: dict, target_role: str, api_key: str) -> Optional[dict]:
     import json as _json
     prompt = SUMMARY_GENERATE_PROMPT.format(
         resume_json=_json.dumps(resume_json, indent=2, default=str),
         target_role=target_role or "Professional",
     )
-    return _call_gemini(prompt, api_key)
+    return _call_groq(prompt, api_key)
+
+
+def ocr_with_groq(image_bytes: bytes, api_key: str) -> str:
+    import base64
+    from openai import OpenAI
+    client = OpenAI(api_key=api_key, base_url=GROQ_BASE_URL)
+    b64 = base64.b64encode(image_bytes).decode("utf-8")
+    response = client.chat.completions.create(
+        model=VISION_MODEL,
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Extract all text from this resume image. Preserve structure, sections, bullet points, and formatting as much as possible. Return only the raw text."},
+                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            ],
+        }],
+        max_tokens=2000,
+    )
+    return response.choices[0].message.content.strip() if response.choices else ""

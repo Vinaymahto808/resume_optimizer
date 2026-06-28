@@ -319,7 +319,7 @@ export default function Templates() {
       setAiResult(res.data?.optimized_resume || null);
       setAiSuggestions(res.data?.suggestions || []);
     } catch (e) {
-      setAiError("AI optimization failed. Check GEMINI_API_KEY in .env.");
+      setAiError("AI optimization failed. Check GROQ_API_KEY in .env.");
     } finally {
       setAiLoading(false);
     }
@@ -370,7 +370,7 @@ export default function Templates() {
           <p style={{ fontSize: "clamp(14px, 1vw, 16px)", color: "var(--text-secondary)", maxWidth: 620, margin: "0 auto 24px", lineHeight: 1.6 }}>
             Create beautifully typeset ATS-friendly resumes powered by LaTeX. Browse 14 premium templates, customize with AI, preview instantly, and download production-quality PDFs.
           </p>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="tmpl-hero-buttons" style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
             <button className="btn-primary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("customize"); }}>Customize a Template</button>
             <button className="btn-secondary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("company"); }}>Tailor for Company</button>
             <button className="btn-secondary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("ai"); }}>AI Optimize</button>

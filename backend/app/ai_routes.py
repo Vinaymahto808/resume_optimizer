@@ -2,8 +2,8 @@ import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from app.config import settings
-from app.gemini_helper import (
-    analyze_with_gemini, match_job_with_gemini, suggest_jobs_with_gemini,
+from app.groq_helper import (
+    analyze_with_groq, match_job_with_groq, suggest_jobs_with_groq,
     generate_career_roadmap, generate_portfolio_html, generate_analytics_suggestions,
 )
 
@@ -33,16 +33,16 @@ class AIAnalyticsRequest(BaseModel):
     profile_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
 
 def get_api_key():
-    key = getattr(settings, "GEMINI_API_KEY", "") or ""
+    key = getattr(settings, "GROQ_API_KEY", "") or ""
     if not key:
-        raise HTTPException(status_code=400, detail="GEMINI_API_KEY not configured in .env")
+        raise HTTPException(status_code=400, detail="GROQ_API_KEY not configured in .env")
     return key
 
 @router.post("/ai-analyze")
 def ai_analyze(req: AIAnalyzeRequest):
     try:
         api_key = get_api_key()
-        result = analyze_with_gemini(req.profile_text, api_key)
+        result = analyze_with_groq(req.profile_text, api_key)
         if result is None:
             raise HTTPException(status_code=500, detail="AI analysis failed. Check your API key.")
         return {"success": True, "data": result}
@@ -56,7 +56,7 @@ def ai_analyze(req: AIAnalyzeRequest):
 def ai_match(req: AIMatchRequest):
     try:
         api_key = get_api_key()
-        result = match_job_with_gemini(req.profile_text, req.job_title, req.job_description, api_key)
+        result = match_job_with_groq(req.profile_text, req.job_title, req.job_description, api_key)
         if result is None:
             raise HTTPException(status_code=500, detail="AI match failed. Check your API key.")
         return {"success": True, "data": result}
@@ -70,7 +70,7 @@ def ai_match(req: AIMatchRequest):
 def ai_suggest_jobs(req: AISuggestJobsRequest):
     try:
         api_key = get_api_key()
-        result = suggest_jobs_with_gemini(req.profile_text, api_key)
+        result = suggest_jobs_with_groq(req.profile_text, api_key)
         if result is None:
             raise HTTPException(status_code=500, detail="AI suggestion failed. Check your API key.")
         return {"success": True, "data": result}
@@ -147,8 +147,8 @@ class AIGenerateSummaryRequest(BaseModel):
 def ai_optimize_resume(req: AIOptimizeResumeRequest):
     try:
         api_key = get_api_key()
-        from app.gemini_helper import optimize_resume_with_gemini
-        result = optimize_resume_with_gemini(req.resume_data, req.job_description, api_key)
+        from app.groq_helper import optimize_resume_with_groq
+        result = optimize_resume_with_groq(req.resume_data, req.job_description, api_key)
         if result is None or "error" in result:
             raise HTTPException(status_code=500, detail=result.get("error", "Resume optimization failed."))
         return {"success": True, "data": result}
@@ -163,8 +163,8 @@ def ai_optimize_resume(req: AIOptimizeResumeRequest):
 def ai_optimize_bullet(req: AIOptimizeBulletRequest):
     try:
         api_key = get_api_key()
-        from app.gemini_helper import optimize_bullet_with_gemini
-        result = optimize_bullet_with_gemini(req.bullet_text, req.job_description, api_key)
+        from app.groq_helper import optimize_bullet_with_groq
+        result = optimize_bullet_with_groq(req.bullet_text, req.job_description, api_key)
         if result is None or "error" in result:
             raise HTTPException(status_code=500, detail=result.get("error", "Bullet optimization failed."))
         return {"success": True, "data": result}
@@ -179,8 +179,8 @@ def ai_optimize_bullet(req: AIOptimizeBulletRequest):
 def ai_generate_summary(req: AIGenerateSummaryRequest):
     try:
         api_key = get_api_key()
-        from app.gemini_helper import generate_summary_with_gemini
-        result = generate_summary_with_gemini(req.resume_data, req.target_role, api_key)
+        from app.groq_helper import generate_summary_with_groq
+        result = generate_summary_with_groq(req.resume_data, req.target_role, api_key)
         if result is None or "error" in result:
             raise HTTPException(status_code=500, detail=result.get("error", "Summary generation failed."))
         return {"success": True, "data": result}

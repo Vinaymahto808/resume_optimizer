@@ -403,13 +403,13 @@ class TestProfileRoutes:
 class TestAIRoutes:
     def test_ai_analyze_no_key(self, client):
         with patch("app.ai_routes.get_api_key") as mock_key:
-            mock_key.side_effect = HTTPException(status_code=400, detail="GEMINI_API_KEY not configured")
+            mock_key.side_effect = HTTPException(status_code=400, detail="GROQ_API_KEY not configured")
             response = client.post("/api/ai-analyze", json={
                 "profile_text": "python machine learning " * 5,
             })
             assert response.status_code == 400
 
-    @patch("app.ai_routes.analyze_with_gemini")
+    @patch("app.ai_routes.analyze_with_groq")
     @patch("app.ai_routes.get_api_key")
     def test_ai_analyze_success(self, mock_key, mock_analyze, client):
         mock_key.return_value = "test-api-key"
@@ -422,7 +422,7 @@ class TestAIRoutes:
         data = response.json()
         assert data["success"] is True
 
-    @patch("app.ai_routes.analyze_with_gemini")
+    @patch("app.ai_routes.analyze_with_groq")
     @patch("app.ai_routes.get_api_key")
     def test_ai_analyze_failure(self, mock_key, mock_analyze, client):
         mock_key.return_value = "test-api-key"
@@ -433,7 +433,7 @@ class TestAIRoutes:
         })
         assert response.status_code == 500
 
-    @patch("app.ai_routes.match_job_with_gemini")
+    @patch("app.ai_routes.match_job_with_groq")
     @patch("app.ai_routes.get_api_key")
     def test_ai_match_success(self, mock_key, mock_match, client):
         mock_key.return_value = "key"
@@ -447,7 +447,7 @@ class TestAIRoutes:
         assert response.status_code == 200
         assert response.json()["success"] is True
 
-    @patch("app.ai_routes.match_job_with_gemini")
+    @patch("app.ai_routes.match_job_with_groq")
     @patch("app.ai_routes.get_api_key")
     def test_ai_match_failure(self, mock_key, mock_match, client):
         mock_key.return_value = "key"
@@ -460,7 +460,7 @@ class TestAIRoutes:
         })
         assert response.status_code == 500
 
-    @patch("app.ai_routes.suggest_jobs_with_gemini")
+    @patch("app.ai_routes.suggest_jobs_with_groq")
     @patch("app.ai_routes.get_api_key")
     def test_ai_suggest_jobs(self, mock_key, mock_suggest, client):
         mock_key.return_value = "key"

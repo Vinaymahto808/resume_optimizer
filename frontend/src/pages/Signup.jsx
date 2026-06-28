@@ -58,7 +58,7 @@ export default function Signup() {
         "Upgrade later only if you want AI rewrites and deeper analysis.",
       ]}
     >
-      <form onSubmit={handleSubmit} className="ui-card" style={styles.card}>
+      <form onSubmit={handleSubmit} className="ui-card auth-card-mobile" style={styles.card}>
         <Link to="/" style={styles.logo}>
           <span style={{ color: "var(--text)" }}>Profile</span>
           <span style={styles.logoAccent}>Optimizer</span>

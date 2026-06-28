@@ -201,7 +201,7 @@ export default function ProfileAnalyzer() {
       {result && (
         <div style={styles.results}>
           {result.strength && (
-            <div style={styles.scoreRow}>
+            <div className="profile-score-row" style={styles.scoreRow}>
               <div style={styles.scoreCard}>
                 <div style={styles.scoreNum}>{result.strength.weighted_score}%</div>
                 <div style={styles.scoreLabel}>Overall Score</div>
@@ -251,7 +251,7 @@ export default function ProfileAnalyzer() {
             </div>
           )}
 
-          <div style={styles.splitGrid}>
+          <div className="profile-split-grid" style={styles.splitGrid}>
             {result.strength?.strengths?.length > 0 && (
               <div style={{ ...styles.card, borderTop: "3px solid var(--success)" }}>
                 <h3 style={{ ...styles.cardTitle, color: "var(--success)" }}>Strengths</h3>
@@ -354,7 +354,7 @@ export default function ProfileAnalyzer() {
                     </div>
                     <div style={{ ...styles.jobScore, color, borderColor: `${color}40` }}>{m.match_pct}%</div>
                   </div>
-                  <div style={styles.skillsRow}>
+                  <div className="profile-skills-row" style={styles.skillsRow}>
                     <div>
                       <p style={{ ...styles.skillsLabel, color: "var(--success)" }}>Matched</p>
                       <div style={styles.tagWrap}>

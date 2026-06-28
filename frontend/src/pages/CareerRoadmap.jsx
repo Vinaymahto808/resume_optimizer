@@ -17,7 +17,7 @@ export default function CareerRoadmap() {
     } catch (err) {
       setError(
         err.response?.data?.detail ||
-        "Roadmap generation failed. Make sure GEMINI_API_KEY is set."
+        "Roadmap generation failed. Make sure GROQ_API_KEY is set."
       );
     }
     setLoading(false);

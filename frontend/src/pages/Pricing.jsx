@@ -89,7 +89,7 @@ export default function Pricing() {
         Get the right tools to optimize your resume for ATS systems.
       </p>
 
-      <div style={styles.grid}>
+      <div className="pricing-grid" style={styles.grid}>
         {prices.map((p, idx) => {
           const isPopular = p.id === "basic";
           const isFree = p.id === "free";

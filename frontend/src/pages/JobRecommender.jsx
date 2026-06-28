@@ -101,7 +101,7 @@ export default function JobRecommender() {
         Upload your resume or paste your profile to find matching jobs from 10+ job portals.
       </p>
 
-      <div style={s.splitLayout}>
+      <div className="jobrec-split" style={s.splitLayout}>
         <div style={s.inputCol}>
           <div style={s.card}>
             <div style={s.tabs}>
@@ -210,7 +210,7 @@ export default function JobRecommender() {
 
       {matches.length > 0 && (
         <>
-          <div style={s.filterBar}>
+          <div className="jobrec-filter-bar" style={s.filterBar}>
             <span style={s.filterLabel}>Min Match: {minScore}%</span>
             <input
               type="range"
@@ -242,7 +242,7 @@ export default function JobRecommender() {
                     <div style={{ ...s.scoreBadge, borderColor: `${color}40`, color }}>{m.match_pct}%</div>
                   </div>
                   <p style={s.jobDesc}>{job.description?.slice(0, 200)}...</p>
-                  <div style={s.skillsRow}>
+                  <div className="jobrec-skills-row" style={s.skillsRow}>
                     <div style={s.skillsCol}>
                       <p style={s.skillsLabel}>Matched</p>
                       <div style={s.tagWrap}>

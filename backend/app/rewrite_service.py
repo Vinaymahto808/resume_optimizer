@@ -5,9 +5,7 @@ from typing import Optional
 from app.config import settings
 
 HAS_OPENAI = False
-HAS_GEMINI = False
 openai = None
-genai = None
 
 STRONG_VERBS = {
     "responsible for": ["Led", "Managed", "Owned"],
@@ -75,23 +73,20 @@ def _try_openai(prompt: str, system_prompt: str) -> Optional[dict]:
         return None
 
 
-def _try_gemini(prompt: str) -> Optional[dict]:
-    global genai, HAS_GEMINI
-    if not HAS_GEMINI:
-        try:
-            import google.generativeai as _g
-            genai = _g
-            HAS_GEMINI = True
-        except ImportError:
-            return None
+def _try_groq(prompt: str) -> Optional[dict]:
     try:
-        api_key = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY", "")
+        from openai import OpenAI
+        api_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY", "")
         if not api_key:
             return None
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
-        response = model.generate_content(prompt)
-        text = response.text.strip()
+        client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=500,
+        )
+        text = response.choices[0].message.content.strip()
         text = _clean_json_response(text)
         return json.loads(text)
     except Exception:
@@ -198,7 +193,7 @@ def _template_rewrite_bullet(original_text: str) -> dict:
 
 def rewrite_bullet(original_text: str, job_description: str = "", profile_context: str = "") -> dict:
     try:
-        if HAS_OPENAI or HAS_GEMINI:
+        if HAS_OPENAI:
             sys_prompt = (
                 "You are a senior resume writer. Rewrite the following bullet point "
                 "to be more impactful, using active voice, quantifying results where possible, "
@@ -220,15 +215,14 @@ def rewrite_bullet(original_text: str, job_description: str = "", profile_contex
                     "changes_made": result.get("changes_made", []),
                 }
 
-            gemini_prompt = f"{sys_prompt}\n\n{user_prompt}"
-            result = _try_gemini(gemini_prompt)
-            if result and "rewritten" in result:
-                return {
-                    "success": True,
-                    "original": original_text,
-                    "rewritten": result["rewritten"],
-                    "changes_made": result.get("changes_made", []),
-                }
+        groq_result = _try_groq(user_prompt if not job_description and not profile_context else f"System: {sys_prompt}\n\n{user_prompt}")
+        if groq_result and "rewritten" in groq_result:
+            return {
+                "success": True,
+                "original": original_text,
+                "rewritten": groq_result["rewritten"],
+                "changes_made": groq_result.get("changes_made", []),
+            }
 
         return _template_rewrite_bullet(original_text)
     except Exception as e:
@@ -297,17 +291,17 @@ def _template_rewrite_headline(profile_text: str, target_role: str = "") -> dict
 
 def rewrite_headline(profile_text: str, target_role: str = "") -> dict:
     try:
-        if HAS_OPENAI or HAS_GEMINI:
-            sys_prompt = (
-                "You are a senior resume writer. Generate a professional headline "
-                "that combines role, key skills, and value proposition. "
-                "Keep it under 220 characters. "
-                'Return JSON: {"rewritten": "...", "changes_made": ["..."]}'
-            )
-            user_prompt = f"Profile: {profile_text}"
-            if target_role:
-                user_prompt += f"\nTarget Role: {target_role}"
+        sys_prompt = (
+            "You are a senior resume writer. Generate a professional headline "
+            "that combines role, key skills, and value proposition. "
+            "Keep it under 220 characters. "
+            'Return JSON: {"rewritten": "...", "changes_made": ["..."]}'
+        )
+        user_prompt = f"Profile: {profile_text}"
+        if target_role:
+            user_prompt += f"\nTarget Role: {target_role}"
 
+        if HAS_OPENAI:
             result = _try_openai(user_prompt, sys_prompt)
             if result and "rewritten" in result:
                 return {
@@ -317,15 +311,14 @@ def rewrite_headline(profile_text: str, target_role: str = "") -> dict:
                     "changes_made": result.get("changes_made", []),
                 }
 
-            gemini_prompt = f"{sys_prompt}\n\n{user_prompt}"
-            result = _try_gemini(gemini_prompt)
-            if result and "rewritten" in result:
-                return {
-                    "success": True,
-                    "original": profile_text.split("\n")[0].strip(),
-                    "rewritten": result["rewritten"],
-                    "changes_made": result.get("changes_made", []),
-                }
+        groq_result = _try_groq(f"{sys_prompt}\n\n{user_prompt}")
+        if groq_result and "rewritten" in groq_result:
+            return {
+                "success": True,
+                "original": profile_text.split("\n")[0].strip(),
+                "rewritten": groq_result["rewritten"],
+                "changes_made": groq_result.get("changes_made", []),
+            }
 
         return _template_rewrite_headline(profile_text, target_role)
     except Exception as e:
@@ -401,16 +394,16 @@ def _template_rewrite_summary(profile_text: str, target_role: str = "") -> dict:
 
 def rewrite_summary(profile_text: str, target_role: str = "") -> dict:
     try:
-        if HAS_OPENAI or HAS_GEMINI:
-            sys_prompt = (
-                "You are a senior resume writer. Write a 3-4 sentence professional summary "
-                "that highlights experience, key skills, and value proposition. "
-                'Return JSON: {"rewritten": "...", "changes_made": ["..."]}'
-            )
-            user_prompt = f"Profile: {profile_text}"
-            if target_role:
-                user_prompt += f"\nTarget Role: {target_role}"
+        sys_prompt = (
+            "You are a senior resume writer. Write a 3-4 sentence professional summary "
+            "that highlights experience, key skills, and value proposition. "
+            'Return JSON: {"rewritten": "...", "changes_made": ["..."]}'
+        )
+        user_prompt = f"Profile: {profile_text}"
+        if target_role:
+            user_prompt += f"\nTarget Role: {target_role}"
 
+        if HAS_OPENAI:
             result = _try_openai(user_prompt, sys_prompt)
             if result and "rewritten" in result:
                 return {
@@ -420,15 +413,14 @@ def rewrite_summary(profile_text: str, target_role: str = "") -> dict:
                     "changes_made": result.get("changes_made", []),
                 }
 
-            gemini_prompt = f"{sys_prompt}\n\n{user_prompt}"
-            result = _try_gemini(gemini_prompt)
-            if result and "rewritten" in result:
-                return {
-                    "success": True,
-                    "original": profile_text.split("\n")[0].strip(),
-                    "rewritten": result["rewritten"],
-                    "changes_made": result.get("changes_made", []),
-                }
+        groq_result = _try_groq(f"{sys_prompt}\n\n{user_prompt}")
+        if groq_result and "rewritten" in groq_result:
+            return {
+                "success": True,
+                "original": profile_text.split("\n")[0].strip(),
+                "rewritten": groq_result["rewritten"],
+                "changes_made": groq_result.get("changes_made", []),
+            }
 
         return _template_rewrite_summary(profile_text, target_role)
     except Exception as e:

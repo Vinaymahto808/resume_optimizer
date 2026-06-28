@@ -138,7 +138,7 @@ pip install -r requirements.txt
 
 # Configure env
 cp .env.example .env
-# Edit .env — add GEMINI_API_KEY, STRIPE keys (optional for core flow)
+# Edit .env — add GROQ_API_KEY, STRIPE keys (optional for core flow)
 
 uvicorn main:app --reload
 # → http://localhost:8000
@@ -162,7 +162,7 @@ npm run dev
 | `CORS_ORIGINS` | No | `http://localhost:5173` | Comma-separated |
 | `STRIPE_SECRET_KEY` | For payments | — | Stripe API key |
 | `STRIPE_WEBHOOK_SECRET` | For payments | — | Stripe webhook secret |
-| `GEMINI_API_KEY` | For AI | — | Google AI Studio key |
+| `GROQ_API_KEY` | For AI | — | Groq API key (get at https://console.groq.com/keys) |
 
 ## API Endpoints
 
@@ -204,7 +204,7 @@ Or set up manually:
 - **API Web Service**: Python 3, `pip install -r backend/requirements.txt`, start `cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT`
 - **Frontend Static Site**: build `cd frontend && npm install && npm run build`, publish `frontend/dist`, rewrite `/*` → `/index.html`
 - **PostgreSQL**: Create via Render Dashboard, set as `DATABASE_URL`
-- **Env vars**: `SECRET_KEY`, `CORS_ORIGINS`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GEMINI_API_KEY`, `VITE_API_URL`
+- **Env vars**: `SECRET_KEY`, `CORS_ORIGINS`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `GROQ_API_KEY`, `VITE_API_URL`
 
 ### GoDaddy Domain
 

@@ -156,7 +156,7 @@ export default function PortfolioGenerator() {
     } catch (err) {
       setError(
         err.response?.data?.detail ||
-        "Portfolio generation failed. Make sure GEMINI_API_KEY is set."
+        "Portfolio generation failed. Make sure GROQ_API_KEY is set."
       );
     }
     setLoading(false);

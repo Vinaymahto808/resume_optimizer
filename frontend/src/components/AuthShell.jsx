@@ -11,8 +11,8 @@ export default function AuthShell({
 }) {
   return (
     <div style={styles.page}>
-      <div style={styles.wrap}>
-        <aside className="ui-card" style={styles.aside}>
+      <div className="auth-shell-grid" style={styles.wrap}>
+        <aside className="ui-card auth-shell-aside" style={styles.aside}>
           <div style={styles.asideWash} />
           <div style={styles.eyebrow}>{eyebrow}</div>
           <h1 style={styles.title}>{title}</h1>

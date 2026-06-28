@@ -99,7 +99,7 @@ export default function Scan() {
   return (
     <div style={styles.page}>
       <div style={styles.inner}>
-        <section className="scan-hero" style={styles.hero}>
+          <section className="scan-hero scan-hero-grid" style={styles.hero}>
           <div style={styles.heroCopy}>
             <div style={styles.eyebrow}>ATS Resume Scanner</div>
             <h2 style={styles.title}>Scan your resume and pick a template that looks sharp everywhere.</h2>

@@ -43,21 +43,27 @@ def _ocr_with_tesseract(image_bytes: bytes) -> str:
     return text.strip()
 
 
-def _ocr_with_gemini(image_bytes: bytes, api_key: str) -> str:
+def _ocr_with_groq(image_bytes: bytes, api_key: str) -> str:
     import base64
-    import google.generativeai as genai
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    from openai import OpenAI
+    client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
     b64 = base64.b64encode(image_bytes).decode("utf-8")
     prompt = (
         "Extract all text from this resume image. Preserve structure, sections, "
         "bullet points, and formatting as much as possible. Return only the raw text."
     )
-    response = model.generate_content([
-        prompt,
-        {"mime_type": "image/png", "data": b64},
-    ])
-    return response.text.strip() if response else ""
+    response = client.chat.completions.create(
+        model="llama-3.2-90b-vision-preview",
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": prompt},
+                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
+            ],
+        }],
+        max_tokens=2000,
+    )
+    return response.choices[0].message.content.strip() if response.choices else ""
 
 
 def _render_pdf_pages_as_images(file_bytes: bytes, max_pages: int = 3) -> list[bytes]:
@@ -75,8 +81,8 @@ def _render_pdf_pages_as_images(file_bytes: bytes, max_pages: int = 3) -> list[b
     return images
 
 
-def extract_text_from_scanned_pdf(file_bytes: bytes, gemini_api_key: str = "") -> str:
-    """Try OCR on scanned/image-based PDFs. Uses Tesseract first, falls back to Gemini Vision."""
+def extract_text_from_scanned_pdf(file_bytes: bytes, groq_api_key: str = "") -> str:
+    """Try OCR on scanned/image-based PDFs. Uses Tesseract first, falls back to Groq Vision."""
     texts = []
     pages = _render_pdf_pages_as_images(file_bytes)
     if not pages:
@@ -87,19 +93,19 @@ def extract_text_from_scanned_pdf(file_bytes: bytes, gemini_api_key: str = "") -
             text = _ocr_with_tesseract(img_bytes)
             if text:
                 texts.append(text)
-    elif gemini_api_key:
+    elif groq_api_key:
         for img_bytes in pages:
-            text = _ocr_with_gemini(img_bytes, gemini_api_key)
+            text = _ocr_with_groq(img_bytes, groq_api_key)
             if text:
                 texts.append(text)
     else:
-        logger.warning("No OCR engine available. Install tesseract or set GEMINI_API_KEY.")
+        logger.warning("No OCR engine available. Install tesseract or set GROQ_API_KEY.")
         return ""
 
     return "\n".join(texts).strip()
 
 
-def extract_text_from_pdf(file_bytes: bytes, gemini_api_key: str = "") -> str:
+def extract_text_from_pdf(file_bytes: bytes, groq_api_key: str = "") -> str:
     try:
         from pypdf import PdfReader
         reader = PdfReader(io.BytesIO(file_bytes))
@@ -111,7 +117,7 @@ def extract_text_from_pdf(file_bytes: bytes, gemini_api_key: str = "") -> str:
         text = text.strip()
         if len(text) < OCR_MIN_CHARS:
             logger.info(f"PDF returned only {len(text)} chars — trying OCR fallback")
-            ocr_text = extract_text_from_scanned_pdf(file_bytes, gemini_api_key)
+            ocr_text = extract_text_from_scanned_pdf(file_bytes, groq_api_key)
             return ocr_text or text
         return text
     except ImportError:
@@ -136,27 +142,27 @@ def extract_text_from_docx(file_bytes: bytes) -> str:
         return ""
 
 
-def extract_text_from_image(file_bytes: bytes, gemini_api_key: str = "") -> str:
+def extract_text_from_image(file_bytes: bytes, groq_api_key: str = "") -> str:
     """Extract text directly from image files (PNG, JPG, etc.) using OCR."""
     if _tesseract_available():
         text = _ocr_with_tesseract(file_bytes)
         if text:
             return text
-    if gemini_api_key:
-        text = _ocr_with_gemini(file_bytes, gemini_api_key)
+    if groq_api_key:
+        text = _ocr_with_groq(file_bytes, groq_api_key)
         if text:
             return text
     return ""
 
 
-def extract_text_from_resume(filename: str, file_bytes: bytes, ext: str = "", gemini_api_key: str = "") -> dict:
+def extract_text_from_resume(filename: str, file_bytes: bytes, ext: str = "", groq_api_key: str = "") -> dict:
     if not ext:
         ext = filename.lower().split(".")[-1] if "." in filename else ""
 
     image_exts = {"png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "tif"}
 
     if ext in image_exts:
-        text = extract_text_from_image(file_bytes, gemini_api_key)
+        text = extract_text_from_image(file_bytes, groq_api_key)
         if not text:
             return {"success": False, "error": "Could not extract text from image. Please upload a clear scan."}
         return {"success": True, "text": text, "char_count": len(text), "word_count": len(text.split()), "ocr": True}
@@ -169,7 +175,7 @@ def extract_text_from_resume(filename: str, file_bytes: bytes, ext: str = "", ge
         return {"success": False, "error": resolved}
 
     if resolved == "pdf":
-        text = extract_text_from_pdf(file_bytes, gemini_api_key)
+        text = extract_text_from_pdf(file_bytes, groq_api_key)
     elif resolved in ("doc", "docx"):
         text = extract_text_from_docx(file_bytes)
     else:

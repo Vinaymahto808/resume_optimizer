@@ -18,8 +18,8 @@ MAX_FILE_SIZE = 10 * 1024 * 1024
 ALLOWED_DOC_EXTS = {"pdf", "doc", "docx"}
 ALLOWED_IMAGE_EXTS = {"png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "tif"}
 
-def _get_gemini_key() -> str:
-    return getattr(settings, "GEMINI_API_KEY", "") or ""
+def _get_groq_key() -> str:
+    return getattr(settings, "GROQ_API_KEY", "") or ""
 
 class AnalyzeRequest(BaseModel):
     profile_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
@@ -81,8 +81,8 @@ async def legacy_upload_resume(file: UploadFile = File(...)):
         contents = await file.read()
         if len(contents) > MAX_FILE_SIZE:
             raise HTTPException(status_code=413, detail=f"File too large. Max size is {MAX_FILE_SIZE // (1024*1024)}MB.")
-        gemini_key = _get_gemini_key()
-        result = extract_text_from_resume(file.filename, contents, ext, gemini_key)
+        groq_key = _get_groq_key()
+        result = extract_text_from_resume(file.filename, contents, ext, groq_key)
         if not result.get("success"):
             raise HTTPException(status_code=400, detail=result.get("error", "Extraction failed"))
         return result

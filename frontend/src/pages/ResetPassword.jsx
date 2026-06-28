@@ -3,6 +3,17 @@ import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { auth } from "../api";
 import AuthShell from "../components/AuthShell";
 
+function validatePassword(pw) {
+  const checks = [];
+  if (pw.length < 12) checks.push("at least 12 characters");
+  if (!/[A-Z]/.test(pw)) checks.push("an uppercase letter");
+  if (!/[a-z]/.test(pw)) checks.push("a lowercase letter");
+  if (!/[0-9]/.test(pw)) checks.push("a number");
+  if (!/[^A-Za-z0-9]/.test(pw)) checks.push("a special character");
+  if (/\s/.test(pw)) checks.push("no spaces");
+  return checks;
+}
+
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -14,6 +25,11 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    const issues = validatePassword(password);
+    if (issues.length) {
+      setError("Password must include " + issues.join(", ") + ".");
+      return;
+    }
     try {
       await auth.resetPassword(token, password);
       setSuccess(true);
