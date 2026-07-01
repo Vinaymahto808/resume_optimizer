@@ -52,9 +52,18 @@ app.add_middleware(RequestTimingMiddleware)
 
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
+frontend_dist_path = Path(__file__).resolve().parent / "frontend" / "dist"
+if not frontend_dist_path.exists():
+    frontend_dist_path = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+FRONTEND_DIST = frontend_dist_path if (frontend_dist_path / "index.html").exists() else None
+if FRONTEND_DIST:
+    logger.info("Frontend dist found at %s", FRONTEND_DIST)
+
 
 @app.get("/")
 def root():
+    if FRONTEND_DIST:
+        return FileResponse(str(FRONTEND_DIST / "index.html"), media_type="text/html")
     return {
         "app": "ProfileOptimizer API",
         "version": "1.0.0",
@@ -140,19 +149,15 @@ app.include_router(latex_engine_router)
 app.include_router(analytics_router)
 app.include_router(template_gallery_router)
 
-frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
-if not frontend_dist.exists():
-    frontend_dist = Path(__file__).resolve().parent / "frontend" / "dist"
-if frontend_dist.exists() and (frontend_dist / "index.html").exists():
-    logger.info("Serving frontend from %s", frontend_dist)
-    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+if FRONTEND_DIST:
+    app.mount("/assets", StaticFiles(directory=str(FRONTEND_DIST / "assets")), name="assets")
 
     @app.get("/favicon.svg", include_in_schema=False)
     async def favicon():
-        return FileResponse(str(frontend_dist / "favicon.svg"))
+        return FileResponse(str(FRONTEND_DIST / "favicon.svg"))
 
     @app.get("/{full_path:path}", include_in_schema=False)
     async def serve_spa(full_path: str):
         if full_path.startswith(("api/", "docs", "openapi", "uploads", "assets/")):
             raise HTTPException(status_code=404)
-        return FileResponse(str(frontend_dist / "index.html"), media_type="text/html")
+        return FileResponse(str(FRONTEND_DIST / "index.html"), media_type="text/html")
