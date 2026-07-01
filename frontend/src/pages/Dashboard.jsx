@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { resumes, payments } from "../api";
+import { usePlan } from "../contexts/PlanContext";
+import { AdHorizontal, UpgradePrompt } from "../components/AdBanner";
 
 function StatusPill({ atsScore }) {
   if (atsScore === null || atsScore === undefined) {
@@ -12,6 +14,7 @@ function StatusPill({ atsScore }) {
 }
 
 export default function Dashboard() {
+  const { isPaid, planLoading } = usePlan();
   const [list, setList] = useState([]);
   const [sub, setSub] = useState(null);
 
@@ -119,6 +122,20 @@ export default function Dashboard() {
           <div style={s.kpiSub}>Excluding failed parsing</div>
         </div>
       </div>
+
+      {/* Ad placement for free users */}
+      {!planLoading && !isPaid && (
+        <div style={{ marginBottom: 20 }}>
+          <AdHorizontal />
+        </div>
+      )}
+
+      {/* Upgrade prompt for free users */}
+      {!planLoading && !isPaid && (
+        <div style={{ marginBottom: 20 }}>
+          <UpgradePrompt />
+        </div>
+      )}
 
       {/* Recent Resumes Table */}
       <div className="ui-card" style={s.tableCard}>

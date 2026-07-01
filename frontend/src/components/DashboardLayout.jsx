@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Navigate, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { usePlan } from "../contexts/PlanContext";
 
 const NAV_ITEMS = [
   { icon: "⊞", label: "Dashboard", path: "/dashboard" },
@@ -29,6 +30,7 @@ const BREADCRUMB_MAP = {
 
 export default function DashboardLayout({ children }) {
   const { user, loading, logout } = useAuth();
+  const { plan, isPaid } = usePlan();
   const [collapsed, setCollapsed] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -127,10 +129,14 @@ export default function DashboardLayout({ children }) {
         {!collapsed && (
           <div style={s.sidebarFooter}>
             <div style={s.sidebarPlan}>
-              <span style={s.planBadge}>FREE</span>
-              <span style={s.planText}>Upgrade to Pro</span>
+              <span style={{
+                ...s.planBadge,
+                background: isPaid ? "rgba(13,148,136,0.12)" : "var(--border)",
+                color: isPaid ? "var(--accent)" : "var(--text-muted)",
+              }}>{plan.toUpperCase()}</span>
+              <span style={s.planText}>{isPaid ? "Active" : "Upgrade to Pro"}</span>
             </div>
-            <Link to="/pricing" style={s.upgradeBtn}>Upgrade &rarr;</Link>
+            {!isPaid && <Link to="/pricing" style={s.upgradeBtn}>Upgrade &rarr;</Link>}
           </div>
         )}
       </aside>

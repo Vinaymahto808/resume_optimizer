@@ -684,12 +684,12 @@ export default function Home() {
             </div>
 
             <h1 className="hero-title-xl">
-              Land your dream job<br />
+              <span className="hero-title-main">Land your dream job</span><br />
               <span className="hero-title-gradient--new">with a perfect resume</span>
             </h1>
 
             <p className="hero-sub" style={{ fontSize: 18, maxWidth: 480, marginBottom: 36 }}>
-              Upload your resume and get an instant ATS score, 19-point audit, AI rewrite suggestions, and job matches — all in one place.
+              Free ATS resume score checker — upload your resume, get an instant ATS score, 19-point audit, AI suggestions, and job matches.
             </p>
 
             <div className="hero-actions">
@@ -949,7 +949,189 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ─── SECTION 4: FEATURES BENTO GRID ─── */}
+      {/* ─── SECTION 4: INTERACTIVE DASHBOARD ─── */}
+      <section ref={addSectionRef} className="scroll-fade interactive-dash-section" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-id-l" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M 36 0 L 0 0 0 36" fill="none" stroke="#0056B3" strokeWidth="0.5" /></pattern></defs>
+            <rect width="280" height="280" fill="url(#g-id-l)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-id-r" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" fill="none" stroke="#00875A" strokeWidth="0.5" /></pattern></defs>
+            <rect width="230" height="230" fill="url(#g-id-r)" />
+          </svg>
+        </div>
+
+        <div className="interactive-dash-inner">
+          {/* Left: Copy */}
+          <div className="interactive-dash-content">
+            <div className="section-eyebrow" style={{ color: "#0056B3", justifyContent: "flex-start" }}>
+              Everything you need
+            </div>
+            <h2 className="interactive-dash-title">
+              One tool. <span style={{ color: "#00875A" }}>Total resume clarity.</span>
+            </h2>
+            <p className="interactive-dash-sub">
+              From raw PDF to interview-ready in minutes. Flat modern UI design meets intelligent ATS parsing — giving you a clear roadmap to land more interviews.
+            </p>
+            <ul className="interactive-dash-bullets">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                ATS-friendly formatting checks
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Keyword gap analysis against job descriptions
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Real-time score &amp; actionable suggestions
+              </li>
+            </ul>
+            <div className="interactive-dash-actions">
+              <Link to="/scan" className="interactive-dash-btn" style={{ background: "#0056B3", color: "#fff" }}>
+                Upload Your Resume
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: Big SVG Graphic */}
+          <div className="interactive-dash-visual">
+            <svg viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "auto", display: "block" }}>
+              <defs>
+                <filter id="ds-shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" floodColor="#000000" floodOpacity="0.06"/></filter>
+                <filter id="ds-shadow-lg"><feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#000000" floodOpacity="0.08"/></filter>
+                <linearGradient id="ds-accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#0056B3"/><stop offset="100%" stopColor="#0066CC"/></linearGradient>
+                <linearGradient id="ds-green" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#00875A"/><stop offset="100%" stopColor="#00A36C"/></linearGradient>
+                <linearGradient id="ds-card-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#E2F4EE"/><stop offset="100%" stopColor="#D0EDE3"/></linearGradient>
+              </defs>
+
+              <rect x="20" y="20" width="560" height="460" rx="28" fill="url(#ds-card-bg)" />
+              <rect x="20" y="20" width="560" height="460" rx="28" stroke="#C8E0D6" strokeWidth="1" />
+
+              <g transform="translate(60, 40)" filter="url(#ds-shadow)">
+                <rect x="0" y="0" width="140" height="190" rx="6" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" />
+                <rect x="0" y="0" width="140" height="28" rx="6" fill="#0056B3" />
+                <rect x="12" y="38" width="80" height="4" rx="2" fill="#CBD5E0" />
+                <rect x="12" y="46" width="50" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="12" y="56" width="116" height="1" rx="0.5" fill="#F1F5F9" />
+                <rect x="12" y="64" width="40" height="3" rx="1.5" fill="#CBD5E0" />
+                <rect x="12" y="72" width="116" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="12" y="78" width="100" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="12" y="90" width="40" height="3" rx="1.5" fill="#CBD5E0" />
+                <rect x="12" y="98" width="116" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="12" y="104" width="80" height="3" rx="1.5" fill="#E2E8F0" />
+                <circle cx="118" cy="112" r="12" fill="#E2F4EE" />
+                <text x="118" y="116" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="7" fontWeight="700" fill="#00875A">92</text>
+              </g>
+
+              <g transform="translate(400, 30)" filter="url(#ds-shadow)">
+                <rect x="0" y="0" width="120" height="170" rx="6" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" />
+                <rect x="0" y="0" width="32" height="170" rx="6" fill="#E2F4EE" />
+                <rect x="40" y="14" width="60" height="4" rx="2" fill="#CBD5E0" />
+                <rect x="40" y="22" width="40" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="40" y="32" width="72" height="1" rx="0.5" fill="#F1F5F9" />
+                <rect x="40" y="40" width="70" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="40" y="46" width="50" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="40" y="58" width="70" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="40" y="64" width="60" height="3" rx="1.5" fill="#E2E8F0" />
+                <rect x="8" y="48" width="16" height="16" rx="8" fill="#00875A" opacity="0.15" />
+              </g>
+
+              <g transform="translate(140, 80)" filter="url(#ds-shadow-lg)">
+                <rect x="0" y="0" width="320" height="380" rx="8" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" />
+                <rect x="0" y="0" width="320" height="6" rx="8" fill="#00875A" />
+                <rect x="240" y="-14" width="64" height="28" rx="14" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" filter="url(#ds-shadow)" />
+                <circle cx="254" cy="0" r="8" fill="#00875A" />
+                <path d="M250 -2 L254 2 L259 -4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="268" y="3" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="700" fill="#00875A">ATS 95%</text>
+
+                <text x="24" y="44" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="800" fill="#1A202C">Vinay Kumar</text>
+                <text x="24" y="62" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="600" fill="#64748B">Full-Stack Engineer · Chennai, India</text>
+                <rect x="24" y="74" width="272" height="1" rx="0.5" fill="#E2E8F0" />
+
+                <rect x="24" y="86" width="48" height="6" rx="3" fill="#0056B3" />
+                <text x="24" y="104" fontFamily="Arial, sans-serif" fontSize="9" fill="#475569">Results-driven engineer with 5+ years of</text>
+                <text x="24" y="116" fontFamily="Arial, sans-serif" fontSize="9" fill="#475569">experience building scalable web applications.</text>
+
+                <rect x="24" y="132" width="272" height="1" rx="0.5" fill="#E2E8F0" />
+
+                <rect x="24" y="144" width="36" height="6" rx="3" fill="#0056B3" />
+                <rect x="24" y="158" width="60" height="16" rx="4" fill="#E2F4EE" />
+                <text x="30" y="169" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="600" fill="#00875A">React</text>
+                <rect x="90" y="158" width="60" height="16" rx="4" fill="#E2F4EE" />
+                <text x="96" y="169" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="600" fill="#00875A">Python</text>
+                <rect x="156" y="158" width="80" height="16" rx="4" fill="#E2F4EE" />
+                <text x="162" y="169" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="600" fill="#00875A">TypeScript</text>
+                <rect x="242" y="158" width="54" height="16" rx="4" fill="#E2F4EE" />
+                <text x="248" y="169" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="600" fill="#00875A">Node.js</text>
+
+                <rect x="24" y="184" width="272" height="1" rx="0.5" fill="#E2E8F0" />
+
+                <rect x="24" y="196" width="56" height="6" rx="3" fill="#0056B3" />
+                <circle cx="32" cy="216" r="4" fill="#0056B3" />
+                <text x="44" y="220" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#1A202C">Senior Frontend Engineer</text>
+                <text x="180" y="220" fontFamily="Arial, sans-serif" fontSize="8" fill="#94A3B8">2021 — Present</text>
+                <text x="44" y="234" fontFamily="Arial, sans-serif" fontSize="8" fill="#64748B">Led migration of legacy codebase to React 18, improving</text>
+                <text x="44" y="244" fontFamily="Arial, sans-serif" fontSize="8" fill="#64748B">page load speed by 40% and reducing bundle size by 60%.</text>
+
+                <circle cx="32" cy="262" r="4" fill="#0056B3" />
+                <text x="44" y="266" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#1A202C">Full-Stack Developer</text>
+                <text x="176" y="266" fontFamily="Arial, sans-serif" fontSize="8" fill="#94A3B8">2018 — 2021</text>
+                <text x="44" y="280" fontFamily="Arial, sans-serif" fontSize="8" fill="#64748B">Built RESTful APIs with Node.js and PostgreSQL serving</text>
+                <text x="44" y="290" fontFamily="Arial, sans-serif" fontSize="8" fill="#64748B">1M+ monthly requests with 99.9% uptime.</text>
+
+                <rect x="24" y="304" width="272" height="1" rx="0.5" fill="#E2E8F0" />
+
+                <rect x="24" y="316" width="52" height="6" rx="3" fill="#00875A" />
+                <text x="24" y="340" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#1A202C">B.Tech Computer Science</text>
+                <text x="170" y="340" fontFamily="Arial, sans-serif" fontSize="8" fill="#94A3B8">2014 — 2018</text>
+                <text x="24" y="354" fontFamily="Arial, sans-serif" fontSize="8" fill="#64748B">Indian Institute of Technology · CGPA: 8.6/10</text>
+
+                <rect x="24" y="370" width="272" height="1" rx="0.5" fill="#E2E8F0" />
+                <circle cx="32" cy="384" r="5" fill="#F59E0B" />
+                <text x="42" y="387" fontFamily="Arial, sans-serif" fontSize="7" fill="#F59E0B" fontWeight="600">2 issues found · Weak action verbs, missing quantifiers</text>
+              </g>
+
+              <g transform="translate(430, 120)" filter="url(#ds-shadow)">
+                <rect x="0" y="0" width="130" height="36" rx="18" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" />
+                <circle cx="22" cy="18" r="10" fill="#E2F4EE" />
+                <svg x="15" y="11" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" fill="#00875A" />
+                </svg>
+                <text x="44" y="22" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#1A202C">AI Optimized</text>
+              </g>
+
+              <g transform="translate(410, 380)" filter="url(#ds-shadow)">
+                <rect x="0" y="0" width="140" height="36" rx="18" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="0.5" />
+                <circle cx="22" cy="18" r="10" fill="#0056B3" />
+                <path d="M16 14 L20 18 L28 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" transform="translate(6, 4)" />
+                <text x="48" y="22" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#0056B3">27 Checks Passed</text>
+              </g>
+
+              <g transform="translate(70, 400)" filter="url(#ds-shadow)">
+                <rect x="0" y="0" width="100" height="28" rx="14" fill="#00875A" />
+                <path d="M10 13 L14 17 L20 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" transform="translate(8, 4)" />
+                <text x="42" y="17" fontFamily="Arial, sans-serif" fontSize="9" fontWeight="700" fill="#FFFFFF">ATS Ready</text>
+              </g>
+
+              <circle cx="168" cy="64" r="3" fill="#0056B3" opacity="0.3" />
+              <circle cx="300" cy="54" r="2" fill="#00875A" opacity="0.3" />
+              <circle cx="430" cy="68" r="2.5" fill="#0056B3" opacity="0.2" />
+              <circle cx="520" cy="100" r="1.5" fill="#00875A" opacity="0.25" />
+              <circle cx="68" cy="300" r="2" fill="#0056B3" opacity="0.2" />
+              <circle cx="520" cy="340" r="1.5" fill="#00875A" opacity="0.2" />
+
+              <circle cx="500" cy="48" r="1.5" fill="#0056B3" opacity="0.4" />
+              <circle cx="510" cy="42" r="1" fill="#00875A" opacity="0.3" />
+              <circle cx="80" cy="48" r="1.5" fill="#0056B3" opacity="0.3" />
+              <circle cx="90" cy="42" r="1" fill="#00875A" opacity="0.25" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SECTION 5: FEATURES BENTO GRID ─── */}
       <section ref={addSectionRef} className="scroll-fade features-section" style={{ position: "relative" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -962,11 +1144,11 @@ export default function Home() {
           </svg>
         </div>
         <div className="section-header">
-          <div className="section-eyebrow" style={{ justifyContent: "center" }}>Everything you need</div>
+          <div className="section-eyebrow" style={{ justifyContent: "center" }}>Core features</div>
           <h2 className="section-title-refined">
-            One tool. Total <span className="section-title-gradient">resume clarity.</span>
+            Everything you need to <span className="section-title-gradient">succeed.</span>
           </h2>
-          <p className="section-sub-refined">From raw PDF to interview-ready in minutes.</p>
+          <p className="section-sub-refined">Powerful tools to help you land your next role.</p>
         </div>
 
         <div className="features-bento">
@@ -1064,70 +1246,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 5: 19-POINT AUDIT ─── */}
-      <section ref={addSectionRef} className="scroll-fade checks-section" style={{ position: "relative", background: "var(--bg-soft), repeating-linear-gradient(-45deg, transparent 0px, transparent 40px, rgba(79,70,229,0.018) 40px, rgba(79,70,229,0.018) 41px)", padding: "100px 0" }}>
-        <div className="audit-glow" />
-        <div className="audit-bg-pattern" aria-hidden="true">
-          <svg className="audit-grid-svg audit-grid-svg--left" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="audit-grid-l" width="32" height="32" patternUnits="userSpaceOnUse">
-                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#4F46E5" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="300" height="300" fill="url(#audit-grid-l)" />
-          </svg>
-          <svg className="audit-grid-svg audit-grid-svg--right" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="audit-grid-r" width="36" height="36" patternUnits="userSpaceOnUse">
-                <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#10B981" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="250" height="250" fill="url(#audit-grid-r)" />
-          </svg>
-        </div>
-        <PdfDeco variant={4} className="pdf-deco--checks" />
-        <div className="audit-container">
 
-          <div className="audit-header">
-            <div className="audit-eyebrow">
-              <span className="audit-eyebrow-dot" />
-              Audit Engine · AI-Powered
-            </div>
 
-            <h2 className="audit-title">
-              <span className="audit-title-number">19</span>-point
-              <span className="audit-title-gradient"> resume check</span>
-            </h2>
-
-            <p className="audit-sub">We check for 19 crucial things across 5 categories</p>
-
-            <div className="audit-score-strip">
-              <div className="audit-score-badge">
-                <span className="audit-score-badge-value">{auditAvg}</span>
-                <span className="audit-score-badge-total">/100</span>
-              </div>
-              {categoryData.map((cat) => (
-                <span key={cat.name} className="audit-score-pill" style={{ background: `${cat.color}0c`, borderColor: `${cat.color}18`, color: cat.color }}>
-                  {cat.name} {cat.pct}%
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="audit-grid">
-            {categoryData.map((cat) => (
-              <CheckCard
-                key={cat.name}
-                cat={cat}
-                items={checklistItems.filter((i) => i.cat === cat.name)}
-              />
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─── SECTION 6: JOBS ─── */}
+      {/* ─── SECTION 7: JOBS ─── */}
       <section ref={addSectionRef} className="scroll-fade jobs-section" style={{ position: "relative", background: "var(--bg-card)" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1200,7 +1321,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 7: TESTIMONIALS ─── */}
+      {/* ─── SECTION 8: TESTIMONIALS ─── */}
       <section ref={addSectionRef} className="scroll-fade testimonials-section" style={{ position: "relative", background: "var(--bg-soft)" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1299,7 +1420,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 8: FAQ ─── */}
+      {/* ─── SECTION 9: FAQ ─── */}
       <section ref={addSectionRef} className="scroll-fade faq-section" style={{ position: "relative" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1330,7 +1451,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 9: FINAL CTA ─── */}
+      {/* ─── SECTION 10: FINAL CTA ─── */}
       <section ref={addSectionRef} className="scroll-fade cta-section-refined" style={{ position: "relative" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">

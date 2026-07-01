@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v1 } from "../api";
 import ProgressStepper from "../components/ProgressStepper";
+import { usePlan } from "../contexts/PlanContext";
+import { AdHorizontal, UpgradePrompt } from "../components/AdBanner";
 
 const templateCards = [
   {
@@ -36,6 +38,7 @@ const templateCards = [
 
 export default function Scan() {
   const navigate = useNavigate();
+  const { isPaid, planLoading } = usePlan();
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -168,8 +171,18 @@ export default function Scan() {
           </div>
         </section>
 
+        {/* Ad placement for free users */}
+        {!planLoading && !isPaid && (
+          <div style={{ marginTop: 24, marginBottom: 8 }}>
+            <AdHorizontal />
+            <div style={{ marginTop: 12 }}>
+              <UpgradePrompt compact />
+            </div>
+          </div>
+        )}
+
         <section style={styles.templatesSection}>
-          <div style={styles.sectionHead}>
+          <div className="scan-section-head" style={styles.sectionHead}>
             <div>
               <div style={styles.eyebrow}>Resume templates</div>
               <h3 style={styles.sectionTitle}>Professional templates ready for ATS and recruiter review</h3>

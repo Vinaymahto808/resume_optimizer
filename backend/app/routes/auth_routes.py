@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.database import get_db
-from app.models import User
+from app.models import User, Subscription, PlanTier, SubscriptionStatus
 from app.auth import (
     register_user, authenticate_user, create_access_token,
     get_current_user, UserCreate, UpdateProfileRequest,
@@ -19,6 +19,17 @@ logger = logging.getLogger(__name__)
 router = APIRouter(tags=["auth"])
 
 
+def _user_with_sub(user: User, db: Session) -> dict:
+    sub = db.query(Subscription).filter(Subscription.user_id == user.id).first()
+    return {
+        "id": user.id,
+        "email": user.email,
+        "full_name": user.full_name,
+        "plan": sub.plan.value if sub and sub.plan else PlanTier.FREE.value,
+        "subscription_status": sub.status.value if sub and sub.status else SubscriptionStatus.ACTIVE.value,
+    }
+
+
 @router.post("/api/auth/register")
 def register(data: UserCreate, db: Session = Depends(get_db)):
     user = register_user(data, db)
@@ -28,7 +39,7 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
         "access_token": access,
         "refresh_token": refresh,
         "token_type": "bearer",
-        "user": {"id": user.id, "email": user.email, "full_name": user.full_name},
+        "user": _user_with_sub(user, db),
     }
 
 
@@ -41,7 +52,7 @@ def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
         "access_token": access,
         "refresh_token": refresh,
         "token_type": "bearer",
-        "user": {"id": user.id, "email": user.email, "full_name": user.full_name},
+        "user": _user_with_sub(user, db),
     }
 
 
@@ -56,8 +67,8 @@ def refresh_token_endpoint(refresh_token: str, db: Session = Depends(get_db)):
 
 
 @router.get("/api/auth/me")
-def get_me(user: User = Depends(get_current_user)):
-    return {"id": user.id, "email": user.email, "full_name": user.full_name}
+def get_me(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return _user_with_sub(user, db)
 
 
 @router.put("/api/auth/me")
@@ -65,7 +76,7 @@ def update_profile(data: UpdateProfileRequest, user: User = Depends(get_current_
     user.full_name = data.full_name
     db.commit()
     db.refresh(user)
-    return {"id": user.id, "email": user.email, "full_name": user.full_name}
+    return _user_with_sub(user, db)
 
 
 @router.post("/api/auth/change-password")

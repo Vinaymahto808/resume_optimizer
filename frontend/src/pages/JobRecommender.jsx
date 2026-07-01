@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { v1, portals } from "../api";
+import { useResume } from "../contexts/ResumeContext";
 
 const ALL_PORTALS = [
   { name: "LinkedIn", color: "#0A66C2" },
@@ -99,6 +100,7 @@ function InternshipCard({ portal }) {
 }
 
 export default function JobRecommender() {
+  const { latestText } = useResume();
   const [searchParams, setSearchParams] = useSearchParams();
   const tabFromUrl = searchParams.get("tab");
   const [activeTab, setActiveTab] = useState(tabFromUrl === "internships" ? "internships" : "jobs");
@@ -108,6 +110,8 @@ export default function JobRecommender() {
   const [error, setError] = useState(null);
   const [selectedPortal, setSelectedPortal] = useState("All");
   const [remoteOnly, setRemoteOnly] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const [autoSubmitted, setAutoSubmitted] = useState(false);
   const [internshipPortals, setInternshipPortals] = useState(INTERNSHIP_PORTALS_FALLBACK);
   const fileRef = useRef(null);
 
@@ -116,6 +120,18 @@ export default function JobRecommender() {
       .then((data) => { if (data && data.length) setInternshipPortals(data); })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (latestText && !results && !loading && !autoSubmitted) {
+      setText(latestText);
+      setAutoSubmitted(true);
+      setLoading(true);
+      v1.matchJobs(latestText, 10, 30)
+        .then((res) => setResults(res.data))
+        .catch(() => setError("Failed to auto-match. Paste text and try again."))
+        .finally(() => setLoading(false));
+    }
+  }, [latestText]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -128,7 +144,7 @@ export default function JobRecommender() {
     setLoading(true);
     setError(null);
     try {
-      const res = await v1.matchJobs(text.trim());
+      const res = await v1.matchJobs(text.trim(), 10, 30);
       setResults(res.data);
     } catch (err) {
       setError(err.response?.data?.detail || "Failed to fetch recommendations.");
@@ -145,7 +161,7 @@ export default function JobRecommender() {
       formData.append("file", file);
       setLoading(true);
       setError(null);
-      const res = await v1.uploadAndMatchJobs(formData);
+      const res = await v1.uploadAndMatchJobs(formData, 10, 30);
       setResults(res.data);
     } catch (err) {
       setError(err.response?.data?.detail || "Upload failed.");
@@ -214,7 +230,7 @@ export default function JobRecommender() {
               </button>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
+            <div className="jr-input-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
               <div className="ui-card" style={{ padding: 24 }}>
                 <form onSubmit={handleSubmit}>
                   <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 10, color: "var(--text)" }}>
@@ -262,6 +278,20 @@ export default function JobRecommender() {
               </div>
             </div>
 
+            {autoSubmitted && results && !error && (
+              <div style={{
+                display: "flex", alignItems: "center", gap: 8,
+                background: "var(--accent-soft)", color: "var(--accent)",
+                padding: "10px 16px", borderRadius: "var(--radius-sm)",
+                fontSize: 13, marginBottom: 20, border: "1px solid rgba(13,148,136,0.2)",
+              }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                Using resume from your last scan &mdash; edit text below or upload a new file to re-match.
+              </div>
+            )}
+
             {error && (
               <div style={{
                 background: "var(--danger-soft)", color: "var(--danger)",
@@ -304,7 +334,23 @@ export default function JobRecommender() {
                         {bestMatch.matched_skills?.map((sk) => <SkillBadge key={sk} label={sk} matched />)}
                         {bestMatch.missing_skills?.map((sk) => <SkillBadge key={sk} label={sk} />)}
                       </div>
-                      <PortalBadge name={bestMatch.job.portal || bestMatch.job.source} />
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                        <PortalBadge name={bestMatch.job.portal || bestMatch.job.source} />
+                        {bestMatch.job.url && (
+                          <a href={bestMatch.job.url} target="_blank" rel="noopener noreferrer"
+                            style={{
+                              display: "inline-flex", alignItems: "center", gap: 4,
+                              padding: "4px 12px", borderRadius: 6, fontSize: 12, fontWeight: 600,
+                              background: "var(--accent-soft)", color: "var(--accent)",
+                              textDecoration: "none", border: "1px solid rgba(13,148,136,0.2)",
+                              transition: "all 0.15s",
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent-soft-hover)"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--accent-soft)"; }}>
+                            Apply <span style={{ fontSize: 14 }}>↗</span>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -315,7 +361,7 @@ export default function JobRecommender() {
                   </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {results.map((j, i) => (
+                  {results.slice(0, showAll ? results.length : 6).map((j, i) => (
                     <div key={i} className="hover-card" style={s.jobRow}>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
@@ -325,10 +371,21 @@ export default function JobRecommender() {
                         <div style={{ fontSize: 13, color: "var(--text-muted)", marginBottom: 8 }}>
                           {j.job.company} &middot; {j.job.location}
                         </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 8 }}>
                           {j.matched_skills?.slice(0, 5).map((sk) => <SkillBadge key={sk} label={sk} matched />)}
                           {j.missing_skills?.map((sk) => <SkillBadge key={sk} label={sk} />)}
                         </div>
+                        {j.job.url && (
+                          <a href={j.job.url} target="_blank" rel="noopener noreferrer"
+                            style={{
+                              display: "inline-flex", alignItems: "center", gap: 4,
+                              padding: "3px 10px", borderRadius: 5, fontSize: 11, fontWeight: 600,
+                              background: "var(--accent-soft)", color: "var(--accent)",
+                              textDecoration: "none",
+                            }}>
+                            Apply ↗
+                          </a>
+                        )}
                       </div>
                       <div style={{
                         padding: "4px 12px", borderRadius: 6, fontSize: 18, fontWeight: 800,
@@ -341,6 +398,21 @@ export default function JobRecommender() {
                     </div>
                   ))}
                 </div>
+
+                {results.length > 6 && (
+                  <button onClick={() => setShowAll(!showAll)}
+                    style={{
+                      display: "block", width: "100%", marginTop: 12, padding: "10px",
+                      borderRadius: 8, fontSize: 13, fontWeight: 600,
+                      background: "var(--bg-soft)", color: "var(--accent)",
+                      border: "1px solid var(--border)", cursor: "pointer",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent-soft)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-soft)"; }}>
+                    {showAll ? `Show Less` : `Show All ${results.length} Matches`}
+                  </button>
+                )}
               </>
             )}
 

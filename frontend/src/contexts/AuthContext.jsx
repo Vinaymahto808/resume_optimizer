@@ -11,18 +11,24 @@ export function AuthProvider({ children }) {
   });
   const [loading, setLoading] = useState(true);
 
+  const saveUser = (u) => {
+    setUser(u);
+    localStorage.setItem("user", JSON.stringify(u));
+    localStorage.setItem("plan", u.plan || "free");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       auth
         .me()
         .then((u) => {
-          setUser(u);
-          localStorage.setItem("user", JSON.stringify(u));
+          saveUser(u);
         })
         .catch(() => {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          localStorage.removeItem("plan");
           setUser(null);
         })
         .finally(() => setLoading(false));
@@ -34,8 +40,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const data = await auth.login({ username: email, password });
     localStorage.setItem("token", data.access_token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-    setUser(data.user);
+    saveUser(data.user);
     pushGTMEvent("login", { method: "email" });
     return data;
   };
@@ -43,8 +48,7 @@ export function AuthProvider({ children }) {
   const register = async (email, password, full_name) => {
     const data = await auth.register({ email, password, full_name });
     localStorage.setItem("token", data.access_token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-    setUser(data.user);
+    saveUser(data.user);
     pushGTMEvent("signup", { method: "email" });
     return data;
   };
@@ -52,6 +56,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("plan");
     setUser(null);
     pushGTMEvent("logout");
   };

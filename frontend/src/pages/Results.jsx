@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { resumes, v1 } from "../api";
 import { useResume } from "../contexts/ResumeContext";
+import { usePlan } from "../contexts/PlanContext";
+import { AdHorizontal, AdSidebar, UpgradePrompt } from "../components/AdBanner";
 
 const categoryIcons = {
   Content: "📄", Format: "📐", Skills: "💼", Sections: "📋", Style: "🎨",
@@ -162,6 +164,7 @@ function SkillTag({ label, matched }) {
 export default function Results() {
   const { id } = useParams();
   const { updateResumeText } = useResume();
+  const { isPaid, planLoading } = usePlan();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState(null);
@@ -230,7 +233,7 @@ export default function Results() {
         <NineteenPointCheck data={data.nineteen_point} />
 
         {/* Split Layout: Left Score | Right Content */}
-        <div style={s.splitRow}>
+        <div className="results-split" style={s.splitRow}>
           {/* Left: Score Breakdown */}
           <div style={s.leftPanel}>
             <RadialScore score={score} />
@@ -303,6 +306,13 @@ export default function Results() {
                 </div>
               ) : <p style={{ fontSize: 13, color: "var(--text-muted)" }}>No suggestions</p>}
             </div>
+
+            {/* Ad placement for free users */}
+            {!planLoading && !isPaid && (
+              <div style={{ marginBottom: 16 }}>
+                <AdSidebar style={{ minHeight: 200 }} />
+              </div>
+            )}
 
             {/* Keywords by Category */}
             {data.category_breakdown && (
@@ -406,6 +416,13 @@ export default function Results() {
                 </div>
               ) : !profileLoading ? <p style={{ fontSize: 13, color: "var(--text-muted)" }}>Analysis will appear here automatically</p> : null}
             </div>
+
+            {/* Upgrade prompt for free users */}
+            {!planLoading && !isPaid && (
+              <div style={{ marginTop: 16 }}>
+                <UpgradePrompt compact />
+              </div>
+            )}
 
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 8 }}>
               <Link to="/dashboard" className="btn-secondary" style={{ fontSize: 13, padding: "9px 22px" }}>Dashboard</Link>

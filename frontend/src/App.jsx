@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { PlanProvider } from "./contexts/PlanContext";
 import { ResumeProvider } from "./contexts/ResumeContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -46,6 +47,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PlanProvider>
         <GTMProvider>
         <ResumeProvider>
           <Routes>
@@ -78,6 +80,7 @@ export default function App() {
           </Routes>
         </ResumeProvider>
         </GTMProvider>
+        </PlanProvider>
       </AuthProvider>
     </BrowserRouter>
   );

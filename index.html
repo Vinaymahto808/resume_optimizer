@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #2D3748;
+        }
+
+        /* ─── Navigation ─── */
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #1a202c;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: #00875A;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #0056B3;
+        }
+
+        .nav-cta {
+            background-color: #0056B3;
+            color: #ffffff !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #004494;
+        }
+
+        /* ─── Hero Container ─── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* ─── Left Side Content ─── */
+        .content-side {
+            padding-right: 1rem;
+        }
+
+        .tagline {
+            color: #0056B3;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #1a202c;
+            margin-bottom: 1.25rem;
+        }
+
+        .highlight-mint {
+            color: #00875A;
+        }
+
+        .sub-desc {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .feature-bullets {
+            margin: 1.5rem 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .feature-bullets li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #2D3748;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .feature-bullets li svg {
+            flex-shrink: 0;
+        }
+
+        .cta-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: #0056B3;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.85rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #004494;
+        }
+
+        .cta-outline {
+            display: inline-block;
+            background: transparent;
+            color: #0056B3;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.8rem 1.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 2px solid #0056B3;
+            transition: all 0.2s ease;
+        }
+
+        .cta-outline:hover {
+            background-color: #f0f7ff;
+        }
+
+        /* ─── Right Side Dashboard ─── */
+        .dashboard-side {
+            background-color: #E2F4EE;
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            position: relative;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1.25rem;
+            left: 1.25rem;
+            background: #ffffff;
+            padding: 0.45rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            cursor: default;
+        }
+
+        .thumb-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 30%;
+            margin-top: 4rem;
+        }
+
+        .thumb {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            opacity: 0.8;
+            border: 2px solid transparent;
+        }
+
+        .thumb:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,86,179,0.12);
+            opacity: 1;
+        }
+
+        .thumb.active {
+            border-color: #0056B3;
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,86,179,0.15);
+        }
+
+        .main-resume {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 70%;
+            padding: 2rem;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            min-height: 280px;
+        }
+
+        .main-resume.swapping {
+            animation: cardSwap 0.4s ease;
+        }
+
+        @keyframes cardSwap {
+            0% { transform: scale(1) rotate(0deg); }
+            40% { transform: scale(0.92) rotate(-1.5deg); opacity: 0.6; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .resume-accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background-color: #00875A;
+            transition: background-color 0.3s;
+        }
+
+        .line {
+            background-color: #edf2f7;
+            border-radius: 3px;
+            margin-bottom: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .line.title { height: 16px; width: 50%; background-color: #cbd5e0; }
+        .line.subtitle { height: 10px; width: 35%; background-color: #e2e8f0; margin-bottom: 1.5rem; }
+        .line.para { height: 8px; width: 100%; }
+        .line.para.short { width: 75%; margin-bottom: 1.2rem; }
+        .line.para.mid { width: 88%; }
+
+        .resume-content {
+            transition: opacity 0.3s ease;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
+        }
+
+        .tag {
+            background: #E2F4EE;
+            color: #00875A;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .score-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.3rem;
+        }
+        .score-dot.green { background: #00875A; }
+        .score-dot.amber { background: #f59e0b; }
+
+        .thumb-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.4rem;
+        }
+
+        .thumb .mini-line {
+            height: 4px;
+            background: #edf2f7;
+            border-radius: 2px;
+            margin-bottom: 4px;
+        }
+        .thumb .mini-line:last-child { margin-bottom: 0; }
+
+        .badge-float {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            background: #ffffff;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #00875A;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            .content-side { padding-right: 0; }
+            .dashboard-side { justify-content: center; }
+            .feature-bullets { align-items: center; }
+            .cta-group { justify-content: center; }
+            .nav-links { display: none; }
+            h1 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-side {
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 1.25rem;
+            }
+            .thumb-stack {
+                flex-direction: row;
+                width: 100%;
+                margin-top: 2rem;
+            }
+            .thumb { flex: 1; }
+            .main-resume { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ Navigation ═══ -->
+    <nav class="navbar">
+        <div class="nav-logo">Resume<span>Scan</span></div>
+        <ul class="nav-links">
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#" class="nav-cta">Get Started</a></li>
+        </ul>
+    </nav>
+
+    <!-- ═══ Hero Section ═══ -->
+    <div class="container">
+
+        <!-- Left Copy -->
+        <div class="content-side">
+            <div class="tagline">Everything you need</div>
+            <h1>One tool. <span class="highlight-mint">Total resume clarity.</span></h1>
+            <p class="sub-desc">
+                From raw PDF to interview-ready in minutes. Flat modern UI design meets intelligent ATS parsing — giving you a clear roadmap to land more interviews.
+            </p>
+            <ul class="feature-bullets">
+                <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    ATS-friendly formatting checks
+                </li>
+                <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Keyword gap analysis against job descriptions
+                </li>
+                <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Real-time score &amp; actionable suggestions
+                </li>
+            </ul>
+            <div class="cta-group">
+                <a href="#" class="cta-btn">Upload Your Resume</a>
+                <a href="#" class="cta-outline">See Sample Report</a>
+            </div>
+        </div>
+
+        <!-- Right Dashboard -->
+        <div class="dashboard-side">
+
+            <!-- Checkmark badge -->
+            <div class="status-badge">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#00875A"/>
+                    <path d="M8.5 12.5L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Thumbnail Stack -->
+            <div class="thumb-stack" id="thumbStack">
+                <div class="thumb active" data-template="modern" onclick="swapResume('modern')">
+                    <div class="thumb-label">Modern</div>
+                    <div class="mini-line" style="width:55%;height:6px;background:#cbd5e0;border-radius:2px;margin-bottom:6px;"></div>
+                    <div class="mini-line" style="width:40%;height:4px;"></div>
+                    <div class="mini-line" style="width:85%;height:4px;"></div>
+                    <div class="mini-line" style="width:65%;height:4px;"></div>
+                </div>
+                <div class="thumb" data-template="classic" onclick="swapResume('classic')">
+                    <div class="thumb-label">Classic</div>
+                    <div class="mini-line" style="width:45%;height:6px;background:#cbd5e0;border-radius:2px;margin-bottom:6px;"></div>
+                    <div class="mini-line" style="width:70%;height:4px;"></div>
+                    <div class="mini-line" style="width:90%;height:4px;"></div>
+                    <div class="mini-line" style="width:55%;height:4px;"></div>
+                </div>
+                <div class="thumb" data-template="minimal" onclick="swapResume('minimal')">
+                    <div class="thumb-label">Minimal</div>
+                    <div class="mini-line" style="width:50%;height:6px;background:#cbd5e0;border-radius:2px;margin-bottom:6px;"></div>
+                    <div class="mini-line" style="width:60%;height:4px;"></div>
+                    <div class="mini-line" style="width:75%;height:4px;"></div>
+                    <div class="mini-line" style="width:50%;height:4px;"></div>
+                </div>
+            </div>
+
+            <!-- Main Resume Frame -->
+            <div class="main-resume" id="mainResume">
+                <div class="resume-accent-bar" id="accentBar"></div>
+                <div class="resume-content" id="resumeContent">
+                    <!-- Modern (default) -->
+                    <div id="template-modern">
+                        <div class="line title"></div>
+                        <div class="line subtitle"></div>
+                        <div class="line para"></div>
+                        <div class="line para"></div>
+                        <div class="line para short"></div>
+                        <div class="line title" style="width:30%;height:12px;margin-top:1.5rem;"></div>
+                        <div class="line para"></div>
+                        <div class="line para short"></div>
+                        <div class="tag-row">
+                            <span class="tag"><span class="score-dot green"></span>ATS Score 92%</span>
+                            <span class="tag"><span class="score-dot amber"></span>2 issues</span>
+                        </div>
+                    </div>
+                    <!-- Classic (hidden initially) -->
+                    <div id="template-classic" style="display:none;">
+                        <div class="line title" style="width:65%;"></div>
+                        <div class="line subtitle" style="width:45%;margin-bottom:2rem;"></div>
+                        <div style="display:flex;gap:1rem;margin-bottom:1rem;">
+                            <div style="width:25%;">
+                                <div class="line para"></div>
+                                <div class="line para short"></div>
+                            </div>
+                            <div style="width:75%;">
+                                <div class="line para"></div>
+                                <div class="line para"></div>
+                                <div class="line para short"></div>
+                            </div>
+                        </div>
+                        <div class="line title" style="width:25%;height:12px;margin-top:1rem;"></div>
+                        <div class="line para"></div>
+                        <div class="line para mid"></div>
+                        <div class="line para short"></div>
+                        <div class="tag-row">
+                            <span class="tag"><span class="score-dot green"></span>ATS Score 88%</span>
+                            <span class="tag"><span class="score-dot amber"></span>3 issues</span>
+                        </div>
+                    </div>
+                    <!-- Minimal (hidden initially) -->
+                    <div id="template-minimal" style="display:none;">
+                        <div style="text-align:center;margin-bottom:1.5rem;">
+                            <div class="line title" style="margin:0 auto 0.4rem;width:40%;"></div>
+                            <div class="line subtitle" style="margin:0 auto;width:30%;"></div>
+                        </div>
+                        <div style="border-top:2px solid #e2e8f0;padding-top:1rem;margin-bottom:0.8rem;"></div>
+                        <div class="line para"></div>
+                        <div class="line para mid"></div>
+                        <div class="line para short"></div>
+                        <div style="border-top:2px solid #e2e8f0;padding-top:1rem;margin:1.2rem 0 0.8rem;"></div>
+                        <div class="line para"></div>
+                        <div class="line para short"></div>
+                        <div class="tag-row" style="justify-content:center;">
+                            <span class="tag"><span class="score-dot green"></span>ATS Score 85%</span>
+                            <span class="tag"><span class="score-dot green"></span>0 issues</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="badge-float">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#00875A"/><path d="M8.5 12.5L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    AI Verified
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function swapResume(template) {
+            const content = document.getElementById('resumeContent');
+            const mainResume = document.getElementById('mainResume');
+            const accentBar = document.getElementById('accentBar');
+
+            // Toggle content visibility
+            ['modern', 'classic', 'minimal'].forEach(t => {
+                const el = document.getElementById('template-' + t);
+                if (t === template) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            // Swap accent bar color
+            if (template === 'modern') {
+                accentBar.style.backgroundColor = '#00875A';
+            } else if (template === 'classic') {
+                accentBar.style.backgroundColor = '#0056B3';
+            } else {
+                accentBar.style.backgroundColor = '#2D3748';
+            }
+
+            // Animate
+            mainResume.classList.remove('swapping');
+            void mainResume.offsetWidth; // force reflow
+            mainResume.classList.add('swapping');
+
+            // Update active thumb
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            document.querySelector('.thumb[data-template="' + template + '"]').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

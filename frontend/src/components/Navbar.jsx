@@ -10,7 +10,7 @@ import {
 import { portals } from "../api";
 
 const FALLBACK_NAV_ITEMS = [
-  { label: "Platform", icon: "Grid3X3", children: [
+  { label: "Tools", icon: "Grid3X3", children: [
     [
       { label: "ATS Resume Scanner", to: "/scan", icon: "Scan", desc: "Score your resume in seconds", badge: "Popular" },
       { label: "AI Resume Builder", to: "/templates", icon: "FileText", desc: "Build an ATS-friendly resume" },
@@ -29,7 +29,7 @@ const FALLBACK_NAV_ITEMS = [
       { label: "For Enterprise Teams", to: "/pricing", icon: "Building", desc: "Enterprise-grade ATS optimization" },
     ],
   ]},
-  { label: "Learning Hub", icon: "BookOpen", children: [
+  { label: "Templates", icon: "BookOpen", children: [
     [
       { label: "Career Blog", to: "/about", icon: "BookOpen", desc: "Advice & guides for job seekers" },
       { label: "Resume Templates", to: "/templates", icon: "Layout", desc: "Free ATS-friendly templates" },
@@ -86,16 +86,16 @@ function FlyoutDropdown({ item, activeDropdown, onEnter, onLeave, onClose }) {
         onClick={() => onClose(isOpen ? null : item.label)}
         className={cn(
           "flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60",
           isOpen
-            ? "text-blue-600 bg-blue-50/80"
-            : "text-slate-600 hover:text-blue-600 hover:bg-blue-50/50",
+            ? "text-teal-600 bg-teal-50/80"
+            : "text-slate-600 hover:text-teal-600 hover:bg-teal-50/50",
         )}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         {item.label}
-        <ChevronDown size={12} className={cn("transition-all duration-250 ease-out", isOpen ? "rotate-180 text-blue-500" : "text-slate-400")} />
+        <ChevronDown size={12} className={cn("transition-all duration-250 ease-out", isOpen ? "rotate-180 text-teal-500" : "text-slate-400")} />
       </button>
 
       <div className={cn(
@@ -112,19 +112,19 @@ function FlyoutDropdown({ item, activeDropdown, onEnter, onLeave, onClose }) {
                     const Icon = resolveIcon(child);
                     return (
                       <Link key={child.label} to={child.to} onClick={() => onClose(null)}
-                        className="group/child flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-blue-50"
+                        className="group/child flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-teal-50"
                       >
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 transition-all duration-150 group-hover/child:bg-blue-100 group-hover/child:text-blue-600">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 transition-all duration-150 group-hover/child:bg-teal-100 group-hover/child:text-teal-600">
                           <Icon size={16} />
                         </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-slate-700 group-hover/child:text-blue-700 transition-colors duration-150">{child.label}</span>
-                            {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
+                            <span className="text-sm font-semibold text-slate-700 group-hover/child:text-teal-700 transition-colors duration-150">{child.label}</span>
+                            {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-teal-600 to-teal-500 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
                           </div>
-                          <span className="block text-xs text-slate-400 group-hover/child:text-blue-500 transition-colors duration-150">{child.desc}</span>
+                          <span className="block text-xs text-slate-400 group-hover/child:text-teal-500 transition-colors duration-150">{child.desc}</span>
                         </div>
-                        <ChevronRight size={14} className="shrink-0 text-slate-300 transition-all duration-150 group-hover/child:translate-x-1 group-hover/child:text-blue-400" />
+                        <ChevronRight size={14} className="shrink-0 text-slate-300 transition-all duration-150 group-hover/child:translate-x-1 group-hover/child:text-teal-400" />
                       </Link>
                     );
                   })}
@@ -146,11 +146,11 @@ function MobileAccordion({ item, expanded, onToggle, onClose }) {
       <button onClick={() => onToggle(item.label)}
         className={cn(
           "flex w-full items-center justify-between px-5 py-3.5 text-sm font-semibold transition-all duration-200 border-b border-slate-100",
-          isExpanded ? "text-blue-700 bg-blue-50" : "text-slate-700 hover:text-blue-600 hover:bg-slate-50",
+          isExpanded ? "text-teal-700 bg-teal-50" : "text-slate-700 hover:text-teal-600 hover:bg-slate-50",
         )}
       >
         <span>{item.label}</span>
-        <ChevronDown size={14} className={cn("transition-all duration-250 ease-out", isExpanded ? "rotate-180 text-blue-500" : "text-slate-400")} />
+        <ChevronDown size={14} className={cn("transition-all duration-250 ease-out", isExpanded ? "rotate-180 text-teal-500" : "text-slate-400")} />
       </button>
       <div className="overflow-hidden transition-[max-height] duration-300 ease-in-out" style={{ maxHeight: isExpanded ? 800 : 0 }}>
         <div className="py-1 px-5 space-y-0.5">
@@ -158,15 +158,15 @@ function MobileAccordion({ item, expanded, onToggle, onClose }) {
             const Icon = resolveIcon(child);
             return (
               <Link key={child.label} to={child.to} onClick={onClose}
-                className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition-all duration-150 hover:bg-blue-50 hover:text-blue-700"
+                className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition-all duration-150 hover:bg-teal-50 hover:text-teal-700"
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-400 group-hover:bg-blue-100 group-hover:text-blue-600">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-400 group-hover:bg-teal-100 group-hover:text-teal-600">
                   <Icon size={13} />
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-semibold">{child.label}</span>
-                    {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
+                    {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-teal-600 to-teal-500 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
                   </div>
                   <span className="block text-[11px] text-slate-400 truncate">{child.desc}</span>
                 </div>
@@ -228,10 +228,10 @@ export default function Navbar() {
 
   return (
     <header ref={navRef} className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
       scrolled
-        ? "bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_1px_3px_rgba(15,23,42,0.06)]"
-        : "bg-white/95 border-b border-transparent",
+        ? "bg-white/70 backdrop-blur-2xl border-b border-slate-200/60 shadow-sm shadow-slate-900/5"
+        : "bg-transparent",
     )}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
         {/* Logo */}
@@ -240,7 +240,7 @@ export default function Navbar() {
             <Target size={15} className="transition-all duration-200 group-hover:rotate-12" />
           </div>
           <span className="text-base font-extrabold tracking-tight text-slate-900 transition-colors duration-200">
-            Profile<span className="text-blue-600">Optimizer</span>
+            Profile<span className="text-teal-600">Optimizer</span>
           </span>
         </Link>
 
@@ -253,10 +253,10 @@ export default function Navbar() {
               <Link key={item.to} to={item.to}
                 className={cn(
                   "flex items-center gap-1.5 px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60",
                   isActive(item.to)
-                    ? "text-blue-600 bg-blue-50/80"
-                    : "text-slate-600 hover:text-blue-600 hover:bg-blue-50/50",
+                    ? "text-teal-600 bg-teal-50/80"
+                    : "text-slate-600 hover:text-teal-600 hover:bg-teal-50/50",
                 )}
               >
                 {item.label}
@@ -268,12 +268,12 @@ export default function Navbar() {
         {/* Desktop Right */}
         <div className="hidden lg:flex items-center gap-4 shrink-0">
           <Link to="/login"
-            className="text-sm font-semibold text-slate-500 transition-all duration-200 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 rounded-lg px-3 py-2"
+            className="text-sm font-semibold text-slate-500 transition-all duration-200 hover:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 rounded-lg px-3 py-2"
           >
             Log In
           </Link>
           <Link to="/scan"
-            className="relative inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 hover:scale-[1.03] active:scale-[0.98] overflow-hidden group"
+            className="relative inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25 hover:scale-[1.03] active:scale-[0.98] overflow-hidden group"
           >
             <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-200" />
             <Scan size={15} />
@@ -284,7 +284,7 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button type="button" onClick={() => setMenuOpen((v) => !v)}
-          className="flex lg:hidden items-center justify-center h-9 w-9 rounded-lg text-slate-500 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+          className="flex lg:hidden items-center justify-center h-9 w-9 rounded-lg text-slate-500 transition-all duration-200 hover:bg-teal-50 hover:text-teal-600 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60"
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen} aria-controls="mobile-menu"
         >
@@ -293,13 +293,13 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={cn("lg:hidden fixed inset-0 z-[-1] transition-all duration-300", menuOpen ? "pointer-events-auto" : "pointer-events-none")} style={{ top: 0 }}>
+      <div className={cn("lg:hidden fixed inset-0 z-40 transition-all duration-300", menuOpen ? "pointer-events-auto" : "pointer-events-none")} style={{ top: 0 }}>
         <button type="button"
           className={cn("absolute inset-0 bg-slate-900/20 backdrop-blur-sm cursor-pointer transition-opacity duration-300", menuOpen ? "opacity-100" : "opacity-0")}
           onClick={() => setMenuOpen(false)} aria-label="Close menu"
         />
         <div className={cn(
-          "absolute top-0 right-0 h-full w-full max-w-sm bg-white border-l border-slate-200 shadow-xl flex flex-col transition-transform duration-300 ease-out",
+          "absolute top-0 right-0 h-full w-full max-w-sm max-md:max-w-[85vw] bg-white border-l border-slate-200 shadow-xl flex flex-col transition-transform duration-300 ease-out",
           menuOpen ? "translate-x-0" : "translate-x-full",
         )} role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <div className="flex items-center justify-between h-16 px-5 border-b border-slate-100 shrink-0">
@@ -307,7 +307,7 @@ export default function Navbar() {
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-slate-900 to-slate-800 text-white">
                 <Target size={13} />
               </div>
-              <span className="text-sm font-extrabold text-slate-900">Profile<span className="text-blue-600">Optimizer</span></span>
+              <span className="text-sm font-extrabold text-slate-900">Profile<span className="text-teal-600">Optimizer</span></span>
             </Link>
             <button type="button" onClick={() => setMenuOpen(false)}
               className="flex items-center justify-center h-8 w-8 rounded-lg text-slate-400 transition-all duration-200 hover:bg-slate-100 hover:text-slate-600" aria-label="Close menu">
@@ -323,7 +323,7 @@ export default function Navbar() {
                 <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)}
                   className={cn(
                     "flex items-center gap-3 px-5 py-3.5 text-sm font-semibold transition-all duration-200 border-b border-slate-100",
-                    isActive(item.to) ? "text-blue-700 bg-blue-50" : "text-slate-700 hover:text-blue-600 hover:bg-slate-50",
+                    isActive(item.to) ? "text-teal-700 bg-teal-50" : "text-slate-700 hover:text-teal-600 hover:bg-slate-50",
                   )}
                 >
                   {item.label}
@@ -333,12 +333,12 @@ export default function Navbar() {
           </div>
           <div className="shrink-0 px-5 py-4 border-t border-slate-100 space-y-3 bg-white">
             <Link to="/scan" onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.97]"
+              className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25 active:scale-[0.97]"
             >
               <Scan size={15} /> Get Your Free ATS Report <ArrowRight size={14} />
             </Link>
             <Link to="/login" onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
+              className="flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-teal-600 hover:bg-teal-50 transition-all duration-200"
             >
               Log In
             </Link>
