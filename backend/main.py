@@ -92,53 +92,38 @@ def get_nav_links():
     return NAV_LINKS
 
 NAV_LINKS = [
-    {"label": "Home", "to": "/", "icon": "Home"},
-    {
-        "label": "Tools",
-        "icon": "Grid3X3",
-        "children": [
-            [
-                {"label": "Resume Scanner", "to": "/scan", "icon": "Scan", "desc": "Instant ATS score & 19-point audit", "badge": "Popular"},
-                {"label": "Profile Analyzer", "to": "/profile-analyzer", "icon": "UserCheck", "desc": "LinkedIn & profile optimization"},
-                {"label": "Job Recommender", "to": "/job-recommender", "icon": "Briefcase", "desc": "Smart job matching engine"},
-            ],
-            [
-                {"label": "AI Deep Analysis", "to": "/ai-analysis", "icon": "Brain", "desc": "Advanced AI-powered insights"},
-                {"label": "Student Resume", "to": "/student-resume", "icon": "GraduationCap", "desc": "Resume builder for students"},
-                {"label": "Career Roadmap", "to": "/career-roadmap", "icon": "Compass", "desc": "Personalized career path"},
-            ],
+    {"label": "Platform", "icon": "Grid3X3", "children": [
+        [
+            {"label": "ATS Resume Scanner", "to": "/scan", "icon": "Scan", "desc": "Score your resume in seconds", "badge": "Popular"},
+            {"label": "AI Resume Builder", "to": "/templates", "icon": "FileText", "desc": "Build an ATS-friendly resume"},
+            {"label": "Cover Letter Optimizer", "to": "/profile-analyzer", "icon": "MessageSquare", "desc": "Generate tailored cover letters"},
         ],
-    },
-    {
-        "label": "Roadmap",
-        "icon": "LineChart",
-        "children": [
-            [
-                {"label": "Career Roadmap", "to": "/career-roadmap", "icon": "Compass", "desc": "Personalized career path planning"},
-                {"label": "Portfolio Generator", "to": "/portfolio-generator", "icon": "Palette", "desc": "Build a stunning portfolio"},
-                {"label": "Analytics Dashboard", "to": "/dashboard-analytics", "icon": "BarChart3", "desc": "Track application metrics"},
-            ],
-            [
-                {"label": "Dashboard", "to": "/dashboard", "icon": "Layout", "desc": "Your personal control center"},
-                {"label": "Resume Templates", "to": "/templates", "icon": "BookOpen", "desc": "Professional resume templates"},
-                {"label": "Pricing Plans", "to": "/pricing", "icon": "CreditCard", "desc": "Choose the right plan"},
-            ],
+        [
+            {"label": "LinkedIn Profile Audit", "to": "/profile-analyzer", "icon": "UserCheck", "desc": "Get noticed by recruiters"},
+            {"label": "Job Application Tracker", "to": "/dashboard", "icon": "BarChart3", "desc": "Track applications & interviews"},
+            {"label": "AI Deep Analysis", "to": "/ai-analysis", "icon": "Brain", "desc": "Advanced AI-powered insights"},
         ],
-    },
-    {
-        "label": "About",
-        "icon": "Info",
-        "children": [
-            [
-                {"label": "About Us", "to": "/about", "icon": "Info", "desc": "Our mission & team"},
-                {"label": "Contact", "to": "/contact", "icon": "MessageSquare", "desc": "Get in touch with us"},
-            ],
-            [
-                {"label": "Privacy Policy", "to": "/privacy", "icon": "Shield", "desc": "How we handle your data"},
-                {"label": "Terms of Service", "to": "/terms", "icon": "FileText", "desc": "Terms & conditions"},
-            ],
+    ]},
+    {"label": "Solutions", "icon": "Briefcase", "children": [
+        [
+            {"label": "For Job Seekers", "to": "/", "icon": "UserCheck", "desc": "Land 3x more interviews"},
+            {"label": "For Hiring Managers", "to": "/pricing", "icon": "Building2", "desc": "Streamline your hiring pipeline"},
+            {"label": "For Enterprise Teams", "to": "/pricing", "icon": "Building", "desc": "Enterprise-grade ATS optimization"},
         ],
-    },
+    ]},
+    {"label": "Learning Hub", "icon": "BookOpen", "children": [
+        [
+            {"label": "Career Blog", "to": "/about", "icon": "BookOpen", "desc": "Advice & guides for job seekers"},
+            {"label": "Resume Templates", "to": "/templates", "icon": "Layout", "desc": "Free ATS-friendly templates"},
+            {"label": "ATS Database", "to": "/about", "icon": "Database", "desc": "How ATS software works"},
+        ],
+        [
+            {"label": "Success Stories", "to": "/about", "icon": "Sparkles", "desc": "Real results from real users"},
+            {"label": "Resume Examples", "to": "/templates", "icon": "FileText", "desc": "Examples by job & industry"},
+            {"label": "Pricing Plans", "to": "/pricing", "icon": "CreditCard", "desc": "Choose the right plan"},
+        ],
+    ]},
+    {"label": "Pricing", "to": "/pricing", "icon": "CreditCard"},
 ]
 
 app.include_router(auth_router)
