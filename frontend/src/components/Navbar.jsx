@@ -240,7 +240,7 @@ export default function Navbar() {
             <Target size={15} className="transition-all duration-200 group-hover:rotate-12" />
           </div>
           <span className="text-base font-extrabold tracking-tight text-slate-900 transition-colors duration-200">
-            Talent<span className="text-blue-600">Align</span>
+            Profile<span className="text-blue-600">Optimizer</span>
           </span>
         </Link>
 
@@ -307,7 +307,7 @@ export default function Navbar() {
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-slate-900 to-slate-800 text-white">
                 <Target size={13} />
               </div>
-              <span className="text-sm font-extrabold text-slate-900">Talent<span className="text-blue-600">Align</span></span>
+              <span className="text-sm font-extrabold text-slate-900">Profile<span className="text-blue-600">Optimizer</span></span>
             </Link>
             <button type="button" onClick={() => setMenuOpen(false)}
               className="flex items-center justify-center h-8 w-8 rounded-lg text-slate-400 transition-all duration-200 hover:bg-slate-100 hover:text-slate-600" aria-label="Close menu">
