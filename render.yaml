@@ -15,7 +15,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: http://localhost:5173,http://localhost:8000,https://resume-optimizer-frontend.onrender.com,https://www.profileotimizer.online,https://profileotimizer.online
+        value: http://localhost:5173,http://localhost:8000,https://resume-optimizer-frontend.onrender.com,https://api.profileotimizer.online,https://www.profileotimizer.online,https://profileotimizer.online
       - key: RUN_ENV
         value: production
       - key: FRONTEND_URL
@@ -51,7 +51,7 @@ services:
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://resume-optimizer-cr4v.onrender.com
+        value: https://api.profileotimizer.online
       - key: VITE_GTM_ID
         value: GTM-PHXK9HX
     headers:
