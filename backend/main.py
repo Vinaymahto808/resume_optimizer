@@ -4,6 +4,8 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi import HTTPException
 from app.config import settings
 from app.database import engine, Base
 
@@ -22,7 +24,6 @@ from app.routes.auth_routes import router as auth_router
 
 from app.middleware.request_id import RequestIDMiddleware
 from app.middleware.timing import RequestTimingMiddleware
-from app.middleware.error_handler import ErrorHandlerMiddleware
 
 logging.basicConfig(
     level=logging.INFO,
@@ -48,7 +49,6 @@ app.add_middleware(
 )
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(RequestTimingMiddleware)
-app.add_middleware(ErrorHandlerMiddleware)
 
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
@@ -140,7 +140,19 @@ app.include_router(latex_engine_router)
 app.include_router(analytics_router)
 app.include_router(template_gallery_router)
 
-frontend_dist = Path(__file__).resolve().parent / "frontend" / "dist"
-if frontend_dist.exists():
+frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if not frontend_dist.exists():
+    frontend_dist = Path(__file__).resolve().parent / "frontend" / "dist"
+if frontend_dist.exists() and (frontend_dist / "index.html").exists():
     logger.info("Serving frontend from %s", frontend_dist)
-    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
+    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+
+    @app.get("/favicon.svg", include_in_schema=False)
+    async def favicon():
+        return FileResponse(str(frontend_dist / "favicon.svg"))
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str):
+        if full_path.startswith(("api/", "docs", "openapi", "uploads", "assets/")):
+            raise HTTPException(status_code=404)
+        return FileResponse(str(frontend_dist / "index.html"), media_type="text/html")
