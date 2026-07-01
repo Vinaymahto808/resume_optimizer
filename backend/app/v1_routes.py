@@ -12,6 +12,7 @@ from app.models import User, Resume, PlanTier, Subscription
 from app.auth import get_current_user
 from app.config import settings
 from app.ats_scorer import generate_dual_score_report, parse_resume
+from app.resume_parser import extract_text_from_resume
 from app.profile_analyzer import analyze_profile
 from app.job_recommender import recommend_jobs
 from app.linkedin_scraper import scrape_public_profile
@@ -241,6 +242,29 @@ def linkedin_ingest(req: LinkedInScrapeRequest):
         raise
     except Exception as e:
         logger.error(f"LinkedIn ingest error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/jobs/upload-match")
+async def jobs_upload_match(
+    file: UploadFile = File(...),
+    min_match: float = Query(10.0),
+    top_n: int = Query(12),
+):
+    try:
+        ext = os.path.splitext(file.filename or "")[1].lower()
+        content = await file.read()
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+        parsed = extract_text_from_resume(file.filename or "resume" + ext, content, ext.lstrip("."))
+        text = (parsed.get("text") or parsed.get("raw_text") or "").strip()
+        if not text:
+            raise HTTPException(status_code=400, detail="Could not extract text from file")
+        matches = recommend_jobs(text, min_match=min_match, top_n=top_n)
+        return {"success": True, "data": matches}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Job upload-match error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/jobs/match")

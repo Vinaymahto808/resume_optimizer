@@ -148,6 +148,10 @@ export const v1 = {
     API.post("/api/v1/jobs/match", {
       profile_text: text, min_match: minMatch, top_n: topN,
     }).then((r) => r.data),
+  uploadAndMatchJobs: (formData, minMatch = 10, topN = 12) =>
+    API.post(`/api/v1/jobs/upload-match?min_match=${minMatch}&top_n=${topN}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then((r) => r.data),
   analyzeJobs: (text, topN = 5) =>
     API.post("/api/v1/jobs/analyze", {
       profile_text: text, top_n: topN,
