@@ -221,6 +221,8 @@ export const portals = {
     API.get("/api/portals/jobs").then((r) => r.data),
   getInternshipPortals: () =>
     API.get("/api/portals/internships").then((r) => r.data),
+  getNavLinks: () =>
+    API.get("/api/nav").then((r) => r.data),
 };
 
 export const templateGallery = {
