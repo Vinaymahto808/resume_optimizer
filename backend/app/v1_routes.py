@@ -255,10 +255,15 @@ async def jobs_upload_match(
         content = await file.read()
         if len(content) > MAX_FILE_SIZE:
             raise HTTPException(status_code=400, detail="File too large (max 10MB)")
-        parsed = extract_text_from_resume(file.filename or "resume" + ext, content, ext.lstrip("."))
-        text = (parsed.get("text") or parsed.get("raw_text") or "").strip()
+        if ext == ".txt":
+            text = content.decode("utf-8", errors="replace").strip()
+        else:
+            parsed = extract_text_from_resume(file.filename or "resume" + ext, content, ext.lstrip("."))
+            if not parsed.get("success"):
+                raise HTTPException(status_code=400, detail=parsed.get("error", "Could not extract text from file"))
+            text = (parsed.get("text") or "").strip()
         if not text:
-            raise HTTPException(status_code=400, detail="Could not extract text from file")
+            raise HTTPException(status_code=400, detail="No text could be extracted from the file")
         matches = recommend_jobs(text, min_match=min_match, top_n=top_n)
         return {"success": True, "data": matches}
     except HTTPException:
