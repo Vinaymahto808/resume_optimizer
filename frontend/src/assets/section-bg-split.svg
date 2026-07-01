@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600">
+  <rect x="0" y="0" width="720" height="600" fill="#FF2D78" />
+  <rect x="720" y="0" width="720" height="600" fill="#2563EB" />
+
+  <g stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="0.8" fill="none">
+    <line x1="90" y1="0" x2="90" y2="600" />
+    <line x1="180" y1="0" x2="180" y2="600" />
+    <line x1="270" y1="0" x2="270" y2="600" />
+    <line x1="360" y1="0" x2="360" y2="600" />
+    <line x1="450" y1="0" x2="450" y2="600" />
+    <line x1="540" y1="0" x2="540" y2="600" />
+    <line x1="630" y1="0" x2="630" y2="600" />
+    <line x1="810" y1="0" x2="810" y2="600" />
+    <line x1="900" y1="0" x2="900" y2="600" />
+    <line x1="990" y1="0" x2="990" y2="600" />
+    <line x1="1080" y1="0" x2="1080" y2="600" />
+    <line x1="1170" y1="0" x2="1170" y2="600" />
+    <line x1="1260" y1="0" x2="1260" y2="600" />
+    <line x1="1350" y1="0" x2="1350" y2="600" />
+    <line x1="0" y1="75" x2="720" y2="75" />
+    <line x1="0" y1="150" x2="720" y2="150" />
+    <line x1="0" y1="225" x2="720" y2="225" />
+    <line x1="0" y1="300" x2="720" y2="300" />
+    <line x1="0" y1="375" x2="720" y2="375" />
+    <line x1="0" y1="450" x2="720" y2="450" />
+    <line x1="0" y1="525" x2="720" y2="525" />
+    <line x1="720" y1="75" x2="1440" y2="75" />
+    <line x1="720" y1="150" x2="1440" y2="150" />
+    <line x1="720" y1="225" x2="1440" y2="225" />
+    <line x1="720" y1="300" x2="1440" y2="300" />
+    <line x1="720" y1="375" x2="1440" y2="375" />
+    <line x1="720" y1="450" x2="1440" y2="450" />
+    <line x1="720" y1="525" x2="1440" y2="525" />
+  </g>
+
+  <g stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="0.6" fill="none">
+    <line x1="0" y1="0" x2="180" y2="600" />
+    <line x1="360" y1="0" x2="540" y2="600" />
+    <line x1="540" y1="0" x2="720" y2="600" />
+    <line x1="180" y1="0" x2="0" y2="600" />
+    <line x1="720" y1="0" x2="900" y2="600" />
+    <line x1="1080" y1="0" x2="1260" y2="600" />
+    <line x1="1260" y1="0" x2="1440" y2="600" />
+    <line x1="900" y1="0" x2="720" y2="600" />
+  </g>
+
+  <g fill="#FFFFFF" fill-opacity="0.10">
+    <polygon points="360,150 364,154 360,158 356,154" />
+    <polygon points="180,300 184,304 180,308 176,304" />
+    <polygon points="540,300 544,304 540,308 536,304" />
+    <polygon points="90,450 94,454 90,458 86,454" />
+    <polygon points="450,450 454,454 450,458 446,454" />
+    <polygon points="1080,150 1084,154 1080,158 1076,154" />
+    <polygon points="900,300 904,304 900,308 896,304" />
+    <polygon points="1260,300 1264,304 1260,308 1256,304" />
+    <polygon points="810,450 814,454 810,458 806,454" />
+    <polygon points="1170,450 1174,454 1170,458 1166,454" />
+  </g>
+
+  <g transform="translate(360, 300)" stroke="#FFFFFF" stroke-opacity="0.20" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 0,-30 C 28,-30 40,-15 28,0 C 16,15 0,8 0,0 C 0,-8 -16,-15 -28,0 C -40,15 -28,30 0,30" />
+    <path d="M 0,-30 C -28,-30 -40,-15 -28,0 C -16,15 0,8 0,0 C 0,-8 16,-15 28,0 C 40,15 28,30 0,30" />
+  </g>
+
+  <g transform="translate(1080, 300)" stroke="#FFFFFF" stroke-opacity="0.20" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M -28,-28 L 0,32 L 28,-28" />
+    <path d="M -28,-28 C -12,-8 12,-8 28,-28" />
+    <path d="M 28,-28 C 12,8 -12,8 -28,-28" />
+  </g>
+
+  <g fill="#FFFFFF" fill-opacity="0.06">
+    <circle cx="90" cy="300" r="1.8" />
+    <circle cx="630" cy="300" r="1.8" />
+    <circle cx="360" cy="75" r="1.8" />
+    <circle cx="360" cy="525" r="1.8" />
+    <circle cx="810" cy="300" r="1.8" />
+    <circle cx="1350" cy="300" r="1.8" />
+    <circle cx="1080" cy="75" r="1.8" />
+    <circle cx="1080" cy="525" r="1.8" />
+  </g>
+</svg>

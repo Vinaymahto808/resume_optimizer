@@ -329,51 +329,96 @@ export default function Templates() {
 
   return (
     <div>
-      {/* Hero */}
-      <div className="tmpl-hero" style={{
-        position: "relative", overflow: "hidden",
-        background: "radial-gradient(circle at 20% 30%, rgba(34,197,94,0.08), transparent 40%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.06), transparent 35%), radial-gradient(circle at 50% 80%, rgba(56,189,248,0.05), transparent 30%)",
-        padding: "clamp(32px, 4vw, 56px) 28px clamp(28px, 3vw, 40px)",
-        margin: -28, marginBottom: 0, borderBottom: "1px solid var(--border)",
-      }}>
-        <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-          {[18, 42, 62].map((p, i) => (
-            <div key={i} style={{
-              position: "absolute", top: `${p}%`, right: `${[8, 18, 5][i]}%`,
-              width: [80, 60, 40][i], opacity: 0.2 + i * 0.05,
-              transform: `rotate(${[6, -8, 12][i]}deg)`,
-              animation: `float ${5 + i * 0.5}s ease-in-out infinite ${i * 0.5}s`,
-              pointerEvents: "none",
-            }}>
-              <svg viewBox="0 0 60 78" width="100%" height="auto">
-                <rect x="1" y="1" width="58" height="76" rx="4" fill="rgba(10,15,28,0.7)" stroke="rgba(148,163,184,0.15)" strokeWidth="1"/>
-                <rect x="10" y="8" width="40" height="4" rx="2" fill="rgba(34,197,94,0.3)"/>
-                <rect x="10" y="18" width="30" height="2" rx="1" fill="rgba(148,163,184,0.1)"/>
-                <rect x="10" y="24" width="38" height="2" rx="1" fill="rgba(148,163,184,0.08)"/>
-                <rect x="10" y="30" width="28" height="2" rx="1" fill="rgba(148,163,184,0.08)"/>
-                <rect x="10" y="40" width="40" height="4" rx="2" fill="rgba(99,102,241,0.2)"/>
-                <rect x="10" y="50" width="38" height="2" rx="1" fill="rgba(148,163,184,0.08)"/>
-                <rect x="10" y="56" width="32" height="2" rx="1" fill="rgba(148,163,184,0.08)"/>
-                <rect x="10" y="62" width="36" height="2" rx="1" fill="rgba(148,163,184,0.08)"/>
-              </svg>
+      <div className="templates-hero">
+        <div className="templates-hero-bg" />
+        <div className="templates-hero-inner">
+          <div className="templates-hero-content">
+            <div className="hero-badge" style={{ marginBottom: 16 }}>
+              <span className="hero-badge-dot" />
+              LaTeX-Powered · ATS Optimized
             </div>
-          ))}
-        </div>
-        <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.2)", color: "var(--success)", padding: "4px 14px", borderRadius: 100, fontSize: 11, fontWeight: 700, marginBottom: 16, letterSpacing: "0.03em" }}>
-            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--success)", animation: "pulse-glow 2s infinite" }} />
-            LaTeX-Powered Resume Engine
+            <h1 className="hero-title" style={{ maxWidth: 500, marginBottom: 16 }}>
+              Professional Resume{" "}
+              <span className="hero-title-gradient">Templates</span>
+            </h1>
+            <p className="hero-sub" style={{ maxWidth: 480, margin: "0 0 28px" }}>
+              15 premium LaTeX templates. Customize with AI, preview instantly, download perfect PDFs.
+            </p>
+            <div className="hero-actions">
+              <button
+                className="btn-primary hero-btn-primary"
+                onClick={() => pdRef.current?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Browse Templates
+              </button>
+              <button
+                className="btn-secondary hero-btn-secondary"
+                onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("customize"); }}
+              >
+                Customize with AI
+              </button>
+              <button
+                className="btn-secondary hero-btn-secondary"
+                onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("company"); }}
+              >
+                Tailor for Company
+              </button>
+            </div>
           </div>
-          <h1 style={{ fontSize: "clamp(28px, 3.5vw, 42px)", fontWeight: 800, lineHeight: 1.1, letterSpacing: "-0.03em", color: "var(--text)", marginBottom: 12 }}>
-            Professional <span style={{ background: "var(--accent-gradient)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>LaTeX Resume</span> Templates
-          </h1>
-          <p style={{ fontSize: "clamp(14px, 1vw, 16px)", color: "var(--text-secondary)", maxWidth: 620, margin: "0 auto 24px", lineHeight: 1.6 }}>
-            Create beautifully typeset ATS-friendly resumes powered by LaTeX. Browse 14 premium templates, customize with AI, preview instantly, and download production-quality PDFs.
-          </p>
-          <div className="tmpl-hero-buttons" style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <button className="btn-primary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("customize"); }}>Customize a Template</button>
-            <button className="btn-secondary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("company"); }}>Tailor for Company</button>
-            <button className="btn-secondary" style={{ fontSize: 13, padding: "12px 24px" }} onClick={() => { pdRef.current?.scrollIntoView({ behavior: "smooth" }); setActiveTab("ai"); }}>AI Optimize</button>
+          <div className="templates-hero-visual">
+            <div className="templates-hero-cards">
+              {[
+                { name: "Classic", ats: 92, color: "var(--success)", bg: "rgba(16,185,129,0.12)", delay: "0s" },
+                { name: "Modern", ats: 95, color: "var(--accent)", bg: "rgba(79,70,229,0.12)", delay: "0.3s" },
+                { name: "Minimal", ats: 88, color: "var(--warning)", bg: "rgba(245,158,11,0.12)", delay: "0.6s" },
+              ].map((card, i) => (
+                <div key={card.name} className="templates-hero-card" style={{ animationDelay: card.delay }}>
+                  <div className="templates-hero-card-svg">
+                    <svg viewBox="0 0 60 78" width="100%" height="auto">
+                      <defs>
+                        <linearGradient id={`cardHdr${i}`} x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stopColor="#4F46E5" />
+                          <stop offset="100%" stopColor="#6366F1" />
+                        </linearGradient>
+                      </defs>
+                      <rect x="1" y="1" width="58" height="76" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1" />
+                      <rect x="8" y="8" width="44" height="5" rx="2" fill={`url(#cardHdr${i})`} />
+                      <rect x="8" y="18" width="34" height="2" rx="1" fill="#E2E8F0" />
+                      <rect x="8" y="24" width="40" height="2" rx="1" fill="#E2E8F0" />
+                      <rect x="8" y="30" width="28" height="2" rx="1" fill="#E2E8F0" />
+                      <rect x="8" y="40" width="44" height="4" rx="2" fill="rgba(79,70,229,0.12)" />
+                      <rect x="8" y="50" width="36" height="2" rx="1" fill="#E2E8F0" />
+                      <rect x="8" y="56" width="30" height="2" rx="1" fill="#E2E8F0" />
+                      <rect x="8" y="62" width="38" height="2" rx="1" fill="#E2E8F0" />
+                    </svg>
+                  </div>
+                  <div className="templates-hero-card-label">
+                    <span className="templates-hero-card-name">{card.name}</span>
+                    <span className="templates-hero-card-badge" style={{ background: card.bg, color: card.color }}>{card.ats}%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="templates-hero-stats">
+          <div className="templates-hero-stat">
+            <div className="templates-hero-stat-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            15 Templates
+          </div>
+          <div className="templates-hero-stat">
+            <div className="templates-hero-stat-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            LaTeX Quality
+          </div>
+          <div className="templates-hero-stat">
+            <div className="templates-hero-stat-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            ATS Optimized
           </div>
         </div>
       </div>
@@ -608,7 +653,6 @@ export default function Templates() {
             @media (max-width: 768px) {
               .tmpl-grid { grid-template-columns: 1fr !important; }
               .tmpl-split { grid-template-columns: 1fr !important; }
-              .tmpl-hero { margin: -16px !important; padding: 24px 16px !important; }
               .tmpl-filters-expanded { flex-direction: column !important; }
               .tmpl-filters-expanded select { width: 100% !important; min-width: unset !important; }
               .tmpl-tab-nav { overflow-x: auto !important; flex-wrap: nowrap !important; }

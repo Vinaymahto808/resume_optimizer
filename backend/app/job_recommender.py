@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 
 SAMPLE_JOBS = [
     {
@@ -962,6 +963,116 @@ MATCH_CATEGORIES = {
     "optimization": "ML & AI",
     "document processing": "ML & AI",
 }
+
+
+NEW_JOB_PORTALS = [
+    "simplyhired", "careerbuilder", "hired", "remotive",
+    "weworkremotely", "remote_co", "angellist", "otta",
+    "greenhouse", "lever", "shine", "timesjobs",
+    "freshersworld", "instahyre", "hirist", "iimjobs"
+]
+
+INTERNSHIP_PORTALS = [
+    "internshala", "letsintern", "hellointern", "internship_in",
+    "twenty19", "chegg_internships", "wayup", "handshake", "aftercollege"
+]
+
+PORTAL_BASE_URLS = {
+    # Jobs — existing
+    "linkedin":       "https://www.linkedin.com/jobs/search/?keywords=",
+    "indeed":         "https://www.indeed.com/jobs?q=",
+    "glassdoor":      "https://www.glassdoor.com/Job/jobs.htm?sc.keyword=",
+    "naukri":         "https://www.naukri.com/",
+    "wellfound":      "https://wellfound.com/jobs?query=",
+    "ziprecruiter":   "https://www.ziprecruiter.com/candidate/search?search=",
+    "dice":           "https://www.dice.com/jobs?q=",
+    "cutshort":       "https://cutshort.io/jobs?query=",
+    "monster":        "https://www.monster.com/jobs/search?q=",
+    # Jobs — new global
+    "simplyhired":    "https://www.simplyhired.com/search?q=",
+    "careerbuilder":  "https://www.careerbuilder.com/jobs?keywords=",
+    "hired":          "https://hired.com/job-search?search=",
+    "remotive":       "https://remotive.com/remote-jobs?search=",
+    "weworkremotely": "https://weworkremotely.com/remote-jobs/search?term=",
+    "remote_co":      "https://remote.co/remote-jobs/search/?search_keywords=",
+    "angellist":      "https://angel.co/jobs#find/f!%7B%22keywords%22%3A%5B",
+    "otta":           "https://otta.com/search/jobs?searchTerm=",
+    "greenhouse":     "https://www.greenhouse.io/job-boards",
+    "lever":          "https://jobs.lever.co/",
+    # Jobs — new India-specific
+    "shine":          "https://www.shine.com/job-search/",
+    "timesjobs":      "https://www.timesjobs.com/candidate/job-search.html?searchType=personalizedSearch&from=submit&txtKeywords=",
+    "freshersworld":  "https://www.freshersworld.com/jobs/jobsearch/",
+    "instahyre":      "https://www.instahyre.com/search-jobs/?query=",
+    "hirist":         "https://www.hirist.tech/search?q=",
+    "iimjobs":        "https://www.iimjobs.com/search/",
+    # Internships
+    "internshala":    "https://internshala.com/internships/keywords-",
+    "letsintern":     "https://www.letsintern.com/internships?search=",
+    "hellointern":    "https://hellointern.in/internships?search=",
+    "internship_in":  "https://internship.in/?s=",
+    "twenty19":       "https://www.twenty19.com/Internship/Search?search=",
+    "chegg_internships": "https://www.internships.com/search?searchTerms=",
+    "wayup":          "https://www.wayup.com/listing/jobs/?q=",
+    "handshake":      "https://joinhandshake.com/stu/jobs?query=",
+    "aftercollege":   "https://www.aftercollege.com/jobs/?q=",
+}
+
+JOB_PORTAL_META = {
+    "linkedin":       {"name":"LinkedIn",       "color":"#0A66C2", "url":"https://www.linkedin.com"},
+    "indeed":         {"name":"Indeed",         "color":"#0065B3", "url":"https://www.indeed.com"},
+    "glassdoor":      {"name":"Glassdoor",      "color":"#0CAA41", "url":"https://www.glassdoor.com"},
+    "naukri":         {"name":"Naukri.com",     "color":"#E55B2B", "url":"https://www.naukri.com"},
+    "wellfound":      {"name":"Wellfound",      "color":"#1A1A1A", "url":"https://wellfound.com"},
+    "ziprecruiter":   {"name":"ZipRecruiter",   "color":"#228BE6", "url":"https://www.ziprecruiter.com"},
+    "dice":           {"name":"Dice",           "color":"#FF6700", "url":"https://www.dice.com"},
+    "cutshort":       {"name":"CutShort",       "color":"#6C2BD9", "url":"https://cutshort.io"},
+    "monster":        {"name":"Monster",        "color":"#6A1B9A", "url":"https://www.monster.com"},
+    "simplyhired":    {"name":"SimplyHired",    "color":"#4285F4", "url":"https://www.simplyhired.com"},
+    "careerbuilder":  {"name":"CareerBuilder",  "color":"#0073AA", "url":"https://www.careerbuilder.com"},
+    "hired":          {"name":"Hired",          "color":"#0A0A0A", "url":"https://hired.com"},
+    "remotive":       {"name":"Remotive",       "color":"#16A34A", "url":"https://remotive.com",       "is_remote":True},
+    "weworkremotely": {"name":"We Work Remotely","color":"#1E3A5F","url":"https://weworkremotely.com", "is_remote":True},
+    "remote_co":      {"name":"Remote.co",      "color":"#7C3AED", "url":"https://remote.co",          "is_remote":True},
+    "angellist":      {"name":"AngelList Jobs", "color":"#1A1A1A", "url":"https://angel.co/jobs"},
+    "otta":           {"name":"Otta",           "color":"#FF5A1F", "url":"https://otta.com"},
+    "greenhouse":     {"name":"Greenhouse",     "color":"#3AAB6D", "url":"https://www.greenhouse.io"},
+    "lever":          {"name":"Lever",          "color":"#2D6CDF", "url":"https://www.lever.co"},
+    "shine":          {"name":"Shine.com",      "color":"#FF6B00", "url":"https://www.shine.com"},
+    "timesjobs":      {"name":"TimesJobs",      "color":"#E63946", "url":"https://www.timesjobs.com"},
+    "freshersworld":  {"name":"Freshersworld",  "color":"#F59E0B", "url":"https://www.freshersworld.com"},
+    "instahyre":      {"name":"Instahyre",      "color":"#6366F1", "url":"https://www.instahyre.com"},
+    "hirist":         {"name":"Hirist",         "color":"#0EA5E9", "url":"https://www.hirist.tech"},
+    "iimjobs":        {"name":"iimjobs",        "color":"#BE185D", "url":"https://www.iimjobs.com"},
+}
+
+INTERNSHIP_PORTAL_META = {
+    "internshala":       {"name":"Internshala",       "color":"#0077FF", "tag":"India's #1 internship platform", "url":"https://internshala.com"},
+    "letsintern":        {"name":"LetsIntern",        "color":"#FF6B35", "tag":"Verified internships",             "url":"https://www.letsintern.com"},
+    "hellointern":       {"name":"HelloIntern",       "color":"#10B981", "tag":"Free listings",                    "url":"https://hellointern.in"},
+    "internship_in":     {"name":"Internship.in",     "color":"#6366F1", "tag":"10,000+ openings",                 "url":"https://internship.in"},
+    "twenty19":          {"name":"Twenty19",          "color":"#F59E0B", "tag":"Student focused",                  "url":"https://www.twenty19.com"},
+    "chegg_internships": {"name":"Chegg Internships", "color":"#FF5A00", "tag":"100K+ listings",                   "url":"https://www.internships.com"},
+    "wayup":             {"name":"WayUp",             "color":"#5B4FCF", "tag":"Entry-level & internships",        "url":"https://www.wayup.com"},
+    "handshake":         {"name":"Handshake",         "color":"#E63F3F", "tag":"College recruiting",               "url":"https://joinhandshake.com"},
+    "aftercollege":      {"name":"AfterCollege",      "color":"#0369A1", "tag":"Campus to career",                 "url":"https://www.aftercollege.com"},
+}
+
+
+def build_search_url(portal: str, query: str) -> str:
+    base = PORTAL_BASE_URLS.get(portal, "")
+    if not base:
+        return ""
+    encoded = urllib.parse.quote_plus(query)
+    return base + encoded
+
+
+def get_all_job_portals() -> list[dict]:
+    return [{"id": k, **v} for k, v in JOB_PORTAL_META.items()]
+
+
+def get_internship_portals() -> list[dict]:
+    return [{"id": k, **v} for k, v in INTERNSHIP_PORTAL_META.items()]
 
 
 def compute_job_match(profile_text: str, job: dict) -> dict:

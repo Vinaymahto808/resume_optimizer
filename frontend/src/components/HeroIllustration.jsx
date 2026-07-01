@@ -6,169 +6,167 @@ export default function HeroIllustration() {
       xmlns="http://www.w3.org/2000/svg"
       style={{ width: "100%", height: "auto", maxWidth: 900, display: "block" }}
     >
-      {/* Background flat color blocks */}
-      <rect width="800" height="600" fill="#2563EB" />
-      <rect x="0" y="0" width="360" height="600" fill="#EC4899" />
-      <rect x="360" y="0" width="160" height="600" fill="#DB2777" />
-      <rect x="520" y="0" width="140" height="600" fill="#2563EB" opacity="0.7" />
+      {/* Background pastel split blocks */}
+      <rect width="800" height="600" fill="#EFF6FF" />
+      <rect width="360" height="600" fill="#FDF2F8" />
 
-      {/* Geometric accent shapes */}
-      <rect x="0" y="0" width="800" height="4" fill="#93C5FD" opacity="0.5" />
-      <rect x="0" y="596" width="800" height="4" fill="#93C5FD" opacity="0.3" />
-      <rect x="40" y="40" width="120" height="2" fill="#93C5FD" opacity="0.3" />
-      <rect x="640" y="40" width="120" height="2" fill="#93C5FD" opacity="0.3" />
-      <rect x="40" y="558" width="80" height="2" fill="#93C5FD" opacity="0.3" />
-      <rect x="680" y="558" width="80" height="2" fill="#93C5FD" opacity="0.3" />
+      {/* Transition accent band */}
+      <rect x="360" width="8" height="600" fill="#F472B6" opacity="0.08" />
 
-      {/* Decorative geometric diamond shapes */}
-      <rect x="80" y="100" width="16" height="16" rx="2" fill="#93C5FD" opacity="0.15" transform="rotate(45 88 108)" />
-      <rect x="704" y="100" width="16" height="16" rx="2" fill="#93C5FD" opacity="0.15" transform="rotate(45 712 108)" />
-      <rect x="80" y="484" width="12" height="12" rx="2" fill="#93C5FD" opacity="0.15" transform="rotate(45 86 490)" />
-      <rect x="708" y="484" width="12" height="12" rx="2" fill="#93C5FD" opacity="0.15" transform="rotate(45 714 490)" />
-
-      {/* Subtle grid dots */}
-      <g opacity="0.06">
-        {Array.from({ length: 12 }).map((_, xi) =>
-          Array.from({ length: 8 }).map((_, yi) => (
-            <circle key={`g-${xi}-${yi}`} cx={60 + xi * 60} cy={80 + yi * 60} r="1.5" fill="#FFFFFF" />
-          ))
-        )}
+      {/* Grid lines - left half */}
+      <g stroke="#EC4899" strokeOpacity="0.06" strokeWidth="0.8" fill="none">
+        <line x1="0" y1="0" x2="0" y2="600" /><line x1="60" y1="0" x2="60" y2="600" />
+        <line x1="120" y1="0" x2="120" y2="600" /><line x1="180" y1="0" x2="180" y2="600" />
+        <line x1="240" y1="0" x2="240" y2="600" /><line x1="300" y1="0" x2="300" y2="600" />
+        <line x1="0" y1="75" x2="360" y2="75" /><line x1="0" y1="150" x2="360" y2="150" />
+        <line x1="0" y1="225" x2="360" y2="225" /><line x1="0" y1="300" x2="360" y2="300" />
+        <line x1="0" y1="375" x2="360" y2="375" /><line x1="0" y1="450" x2="360" y2="450" />
+        <line x1="0" y1="525" x2="360" y2="525" />
       </g>
 
-      {/* Glowing lines - geometric connection lines */}
-      <line x1="120" y1="200" x2="280" y2="160" stroke="#93C5FD" strokeWidth="1" opacity="0.2" />
-      <line x1="120" y1="200" x2="200" y2="380" stroke="#F9A8D4" strokeWidth="1" opacity="0.2" />
-      <line x1="680" y1="200" x2="520" y2="160" stroke="#93C5FD" strokeWidth="1" opacity="0.2" />
-      <line x1="680" y1="200" x2="600" y2="380" stroke="#F9A8D4" strokeWidth="1" opacity="0.2" />
-      <line x1="280" y1="160" x2="520" y2="160" stroke="#93C5FD" strokeWidth="0.5" opacity="0.15" />
-      <line x1="200" y1="380" x2="600" y2="380" stroke="#93C5FD" strokeWidth="0.5" opacity="0.15" />
+      {/* Grid lines - right half */}
+      <g stroke="#3B82F6" strokeOpacity="0.06" strokeWidth="0.8" fill="none">
+        <line x1="440" y1="0" x2="440" y2="600" /><line x1="500" y1="0" x2="500" y2="600" />
+        <line x1="560" y1="0" x2="560" y2="600" /><line x1="620" y1="0" x2="620" y2="600" />
+        <line x1="680" y1="0" x2="680" y2="600" /><line x1="740" y1="0" x2="740" y2="600" />
+        <line x1="440" y1="75" x2="800" y2="75" /><line x1="440" y1="150" x2="800" y2="150" />
+        <line x1="440" y1="225" x2="800" y2="225" /><line x1="440" y1="300" x2="800" y2="300" />
+        <line x1="440" y1="375" x2="800" y2="375" /><line x1="440" y1="450" x2="800" y2="450" />
+        <line x1="440" y1="525" x2="800" y2="525" />
+      </g>
+
+      {/* Diagonal accents - left */}
+      <g stroke="#EC4899" strokeOpacity="0.05" strokeWidth="0.6" fill="none">
+        <line x1="0" y1="0" x2="120" y2="600" /><line x1="60" y1="0" x2="180" y2="600" />
+        <line x1="180" y1="0" x2="60" y2="600" /><line x1="300" y1="0" x2="180" y2="600" />
+      </g>
+
+      {/* Diagonal accents - right */}
+      <g stroke="#3B82F6" strokeOpacity="0.05" strokeWidth="0.6" fill="none">
+        <line x1="440" y1="0" x2="560" y2="600" /><line x1="500" y1="0" x2="620" y2="600" />
+        <line x1="620" y1="0" x2="500" y2="600" /><line x1="740" y1="0" x2="620" y2="600" />
+      </g>
+
+      {/* Diamond accents - left */}
+      <g fill="#EC4899" fillOpacity="0.10">
+        <polygon points="180,150 184,154 180,158 176,154" />
+        <polygon points="60,300 64,304 60,308 56,304" />
+        <polygon points="300,300 304,304 300,308 296,304" />
+        <polygon points="120,450 124,454 120,458 116,454" />
+        <polygon points="240,450 244,454 240,458 236,454" />
+        <polygon points="60,75 64,79 60,83 56,79" />
+        <polygon points="300,525 304,529 300,533 296,529" />
+      </g>
+
+      {/* Diamond accents - right */}
+      <g fill="#3B82F6" fillOpacity="0.10">
+        <polygon points="560,150 564,154 560,158 556,154" />
+        <polygon points="440,300 444,304 440,308 436,304" />
+        <polygon points="680,300 684,304 680,308 676,304" />
+        <polygon points="500,450 504,454 500,458 496,454" />
+        <polygon points="620,450 624,454 620,458 616,454" />
+        <polygon points="440,75 444,79 440,83 436,79" />
+        <polygon points="680,525 684,529 680,533 676,529" />
+      </g>
+
+      {/* Tiny circle accents - left */}
+      <g fill="#EC4899" fillOpacity="0.08">
+        <circle cx="60" cy="300" r="2" /><circle cx="300" cy="300" r="2" />
+        <circle cx="180" cy="75" r="1.5" /><circle cx="180" cy="525" r="1.5" />
+        <circle cx="60" cy="150" r="1" /><circle cx="300" cy="450" r="1" />
+      </g>
+
+      {/* Tiny circle accents - right */}
+      <g fill="#3B82F6" fillOpacity="0.08">
+        <circle cx="440" cy="300" r="2" /><circle cx="680" cy="300" r="2" />
+        <circle cx="560" cy="75" r="1.5" /><circle cx="560" cy="525" r="1.5" />
+        <circle cx="440" cy="150" r="1" /><circle cx="680" cy="450" r="1" />
+      </g>
+
+      {/* Cross marks - left */}
+      <g stroke="#EC4899" strokeOpacity="0.12" strokeWidth="0.7">
+        <path d="M 116,226 L 126,226 M 121,221 L 121,231" />
+        <path d="M 236,374 L 246,374 M 241,369 L 241,379" />
+        <path d="M 176,75 L 186,75 M 181,70 L 181,80" />
+      </g>
+
+      {/* Cross marks - right */}
+      <g stroke="#3B82F6" strokeOpacity="0.12" strokeWidth="0.7">
+        <path d="M 556,226 L 566,226 M 561,221 L 561,231" />
+        <path d="M 676,374 L 686,374 M 681,369 L 681,379" />
+        <path d="M 556,75 L 566,75 M 561,70 L 561,80" />
+      </g>
+
+      {/* Continuous-line knot icon - left half */}
+      <g transform="translate(180, 300)" stroke="#EC4899" strokeOpacity="0.20" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 0,-24 C 20,-24 30,-12 20,0 C 10,12 0,6 0,0 C 0,-6 -10,-12 -20,0 C -30,12 -20,24 0,24" />
+        <path d="M 0,-24 C -20,-24 -30,-12 -20,0 C -10,12 0,6 0,0 C 0,-6 10,-12 20,0 C 30,12 20,24 0,24" />
+      </g>
+
+      {/* Continuous-line knot icon - right half */}
+      <g transform="translate(560, 300)" stroke="#3B82F6" strokeOpacity="0.20" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M -22,-22 L 0,24 L 22,-22" />
+        <path d="M -22,-22 C -10,-6 10,-6 22,-22" />
+        <path d="M 22,-22 C 10,6 -10,6 -22,-22" />
+      </g>
 
       {/* White Card - AI Features (top center) */}
-      <g transform="translate(300, 80)">
+      <g transform="translate(300, 50)">
         <rect x="0" y="0" width="200" height="36" rx="18" fill="#FFFFFF" />
         <rect x="4" y="4" width="28" height="28" rx="14" fill="#EC4899" />
         <path d="M14 18l4 4 6-6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <text x="42" y="22" fill="#1e293b" fontSize="12" fontWeight="700" fontFamily="Inter, sans-serif">AI Resume Builder</text>
       </g>
 
-      {/* AI Brain Icon - abstract geometric (left center) */}
-      <g transform="translate(140, 200)">
-        {/* Outer brain shape */}
-        <path
-          d="M 60 20 Q 80 0 100 20 Q 120 40 110 60 Q 120 80 100 100 Q 80 120 60 100 Q 40 120 20 100 Q 0 80 10 60 Q 0 40 20 20 Q 40 0 60 20 Z"
-          fill="none"
-          stroke="#93C5FD"
-          strokeWidth="1.5"
-          opacity="0.6"
-        />
-        {/* Inner brain circuits */}
-        <path
-          d="M 60 30 Q 75 20 85 35 Q 95 50 85 60 Q 75 70 60 65 Q 45 70 35 60 Q 25 50 35 35 Q 45 20 60 30 Z"
-          fill="none"
-          stroke="#93C5FD"
-          strokeWidth="1.5"
-          opacity="0.4"
-        />
-        {/* Neural nodes */}
-        <circle cx="60" cy="20" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="110" cy="60" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="10" cy="60" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="60" cy="100" r="3" fill="#93C5FD" opacity="0.7" />
-        {/* Node connections */}
-        <line x1="60" y1="20" x2="110" y2="60" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="60" y1="20" x2="10" y2="60" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="110" y1="60" x2="60" y2="100" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="10" y1="60" x2="60" y2="100" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="110" y1="60" x2="60" y2="65" stroke="#F9A8D4" strokeWidth="0.5" opacity="0.3" />
-        <line x1="10" y1="60" x2="60" y2="65" stroke="#F9A8D4" strokeWidth="0.5" opacity="0.3" />
-        {/* Brain-resume merge line */}
-        <line x1="120" y1="60" x2="180" y2="80" stroke="#93C5FD" strokeWidth="1" opacity="0.5" strokeDasharray="3 3" />
-      </g>
-
-      {/* AI Brain Icon - abstract geometric (right center) */}
-      <g transform="translate(560, 200)">
-        <path
-          d="M 60 20 Q 80 0 100 20 Q 120 40 110 60 Q 120 80 100 100 Q 80 120 60 100 Q 40 120 20 100 Q 0 80 10 60 Q 0 40 20 20 Q 40 0 60 20 Z"
-          fill="none"
-          stroke="#93C5FD"
-          strokeWidth="1.5"
-          opacity="0.6"
-        />
-        <path
-          d="M 60 30 Q 75 20 85 35 Q 95 50 85 60 Q 75 70 60 65 Q 45 70 35 60 Q 25 50 35 35 Q 45 20 60 30 Z"
-          fill="none"
-          stroke="#93C5FD"
-          strokeWidth="1.5"
-          opacity="0.4"
-        />
-        <circle cx="60" cy="20" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="110" cy="60" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="10" cy="60" r="3" fill="#93C5FD" opacity="0.7" />
-        <circle cx="60" cy="100" r="3" fill="#93C5FD" opacity="0.7" />
-        <line x1="60" y1="20" x2="110" y2="60" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="60" y1="20" x2="10" y2="60" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="110" y1="60" x2="60" y2="100" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        <line x1="10" y1="60" x2="60" y2="100" stroke="#F9A8D4" strokeWidth="0.8" opacity="0.4" />
-        {/* Merge line to resume */}
-        <line x1="-20" y1="60" x2="-80" y2="80" stroke="#93C5FD" strokeWidth="1" opacity="0.5" strokeDasharray="3 3" />
-      </g>
-
       {/* Resume Document - Main Center */}
-      <g transform="translate(400, 290)">
-        <rect x="-100" y="-130" width="200" height="260" rx="8" fill="#FFFFFF" />
+      <g transform="translate(400, 270)">
+        <rect x="-110" y="-130" width="220" height="280" rx="8" fill="#FFFFFF" />
         {/* Resume header */}
-        <rect x="-100" y="-130" width="200" height="36" rx="8" fill="#2563EB" />
-        <rect x="-100" y="-94" width="200" height="2" fill="#2563EB" opacity="0.08" />
-        <text x="0" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800" fontFamily="Inter, sans-serif">AI-GENERATED RESUME</text>
+        <rect x="-110" y="-130" width="220" height="36" rx="8" fill="#EC4899" />
+        <rect x="-110" y="-94" width="220" height="2" fill="#EC4899" opacity="0.08" />
+        <text x="0" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800" fontFamily="Inter, sans-serif">PROFESSIONAL RESUME</text>
         {/* Resume content lines */}
-        <rect x="-80" y="-78" width="160" height="5" rx="2.5" fill="#1e293b" opacity="0.15" />
-        <rect x="-80" y="-65" width="100" height="5" rx="2.5" fill="#1e293b" opacity="0.08" />
-        <rect x="-80" y="-48" width="160" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="-42" width="140" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="-36" width="120" height="2" rx="1" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="-78" width="180" height="5" rx="2.5" fill="#1e293b" opacity="0.12" />
+        <rect x="-90" y="-65" width="120" height="5" rx="2.5" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="-48" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="-42" width="160" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="-36" width="140" height="2" rx="1" fill="#1e293b" opacity="0.05" />
         {/* Section: Skills */}
-        <rect x="-80" y="-24" width="40" height="10" rx="3" fill="#2563EB" />
-        <rect x="-80" y="-6" width="160" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="0" width="140" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="6" width="100" height="2" rx="1" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="-24" width="40" height="10" rx="3" fill="#EC4899" />
+        <rect x="-90" y="-6" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="0" width="160" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="6" width="120" height="2" rx="1" fill="#1e293b" opacity="0.05" />
         {/* Section: Experience */}
-        <rect x="-80" y="20" width="50" height="10" rx="3" fill="#3B82F6" />
-        <rect x="-80" y="38" width="160" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="44" width="130" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="58" width="160" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="64" width="120" height="2" rx="1" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="20" width="50" height="10" rx="3" fill="#3B82F6" />
+        <rect x="-90" y="38" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="44" width="150" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="58" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="64" width="140" height="2" rx="1" fill="#1e293b" opacity="0.05" />
         {/* Section: Education */}
-        <rect x="-80" y="78" width="48" height="10" rx="3" fill="#F472B6" />
-        <rect x="-80" y="96" width="160" height="2" rx="1" fill="#1e293b" opacity="0.06" />
-        <rect x="-80" y="102" width="110" height="2" rx="1" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="78" width="48" height="10" rx="3" fill="#F472B6" />
+        <rect x="-90" y="96" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="102" width="130" height="2" rx="1" fill="#1e293b" opacity="0.05" />
         {/* ATS Score badge */}
-        <rect x="60" y="-120" width="32" height="18" rx="4" fill="#2563EB" />
-        <text x="76" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="8" fontWeight="800" fontFamily="Inter, sans-serif">96</text>
+        <rect x="70" y="-120" width="32" height="18" rx="4" fill="#3B82F6" />
+        <text x="86" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="8" fontWeight="800" fontFamily="Inter, sans-serif">96</text>
       </g>
 
       {/* White Card - Features (bottom center) */}
       <g transform="translate(260, 480)">
         <rect x="0" y="0" width="280" height="44" rx="10" fill="#FFFFFF" />
-        {/* Feature pills */}
         <rect x="12" y="12" width="76" height="20" rx="10" fill="#EC4899" opacity="0.1" />
         <text x="28" y="25" fill="#EC4899" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">ATS Scoring</text>
-        <rect x="96" y="12" width="80" height="20" rx="10" fill="#2563EB" opacity="0.1" />
-        <text x="114" y="25" fill="#2563EB" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">AI Rewrite</text>
+        <rect x="96" y="12" width="80" height="20" rx="10" fill="#3B82F6" opacity="0.1" />
+        <text x="114" y="25" fill="#3B82F6" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">AI Rewrite</text>
         <rect x="184" y="12" width="84" height="20" rx="10" fill="#F472B6" opacity="0.1" />
         <text x="202" y="25" fill="#EC4899" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">Job Match</text>
       </g>
 
-      {/* Decorative glowing dots */}
-      <circle cx="50" cy="300" r="2" fill="#93C5FD" opacity="0.5" />
-      <circle cx="750" cy="300" r="2" fill="#93C5FD" opacity="0.5" />
-      <circle cx="50" cy="300" r="6" fill="#93C5FD" opacity="0.08" />
-      <circle cx="750" cy="300" r="6" fill="#93C5FD" opacity="0.08" />
-
       {/* Geometric corner accents */}
-      <path d="M 40 40 L 60 40 L 60 20" stroke="#93C5FD" strokeWidth="1.5" opacity="0.3" fill="none" />
-      <path d="M 760 40 L 740 40 L 740 20" stroke="#93C5FD" strokeWidth="1.5" opacity="0.3" fill="none" />
-      <path d="M 40 560 L 60 560 L 60 580" stroke="#93C5FD" strokeWidth="1.5" opacity="0.3" fill="none" />
-      <path d="M 760 560 L 740 560 L 740 580" stroke="#93C5FD" strokeWidth="1.5" opacity="0.3" fill="none" />
+      <path d="M 20 40 L 40 40 L 40 20" stroke="#EC4899" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 780 40 L 760 40 L 760 20" stroke="#3B82F6" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 20 560 L 40 560 L 40 580" stroke="#EC4899" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 780 560 L 760 560 L 760 580" stroke="#3B82F6" strokeWidth="1.5" opacity="0.25" fill="none" />
     </svg>
   );
 }

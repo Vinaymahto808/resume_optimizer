@@ -5,6 +5,25 @@
 - **Frontend**: React + Vite + Axios (`frontend/`)
 - **Ports**: Backend `localhost:8000`, Frontend `localhost:5173`
 
+## HeroSection Component (`frontend/src/components/HeroSection.jsx`, added 2026-06-29)
+- Standalone premium hero section replicating Enhancv resume checker design
+- **Navbar**: sticky translucent header, logo left, centered nav links (Resume/Cover Letter with dropdown chevrons, For Organizations, Pricing), "My Documents" emerald CTA button
+- **Two-column grid** (desktop) / stacked (mobile): left content + right analytics card
+- **Left column**: uppercase "RESUME CHECKER" badge, `"Is your resume good enough?"` headline with emerald gradient word, description paragraph with "27 crucial checks" highlight, drag-and-drop zone with "Upload Your Resume" button, privacy guarantee (lock icon), social proof (avatar stack, star rating, "5,289+ happy customers")
+- **Right column**: floating "Resume Score Report" card with SVG score ring (87%), 4 breakdown progress bars (Content Quality 82%, Keyword Match 74%, Formatting 94%, Section Completeness 100%), issues list (amber alert icon), "View Full Report" button, "AI Verified" floating badge
+- Uses only Tailwind CSS utility classes + lucide-react icons — no dependency on project CSS variables
+- `anim-in` Tailwind v4 animation classes for card entrance
+- z-index stacking: header 50, hero content below
+
+## Premium SVG Decorative Elements (added 2026-06-29)
+- **Floating PDF decorators** re-styled as realistic document pages: white bg (`#F8FAFC`), subtle border (`#E2E8F0`), gradient header bands, sidebars, score dots, content lines — each SVG is self-contained with its own `<defs>` for gradient URLs
+- **Hero decorative grid pattern**: two overlapping grid SVGs (indigo left, emerald right) using SVG `<pattern>` element, placed behind hero content
+- **Process section dots**: repeating dot pattern SVG in bottom-left
+- **Jobs section animated bubbles**: three `<circle>` elements with `<animate>` attribute for breathing effect (radius oscillation)
+- **CTA section glow rings**: concentric circles with `stroke` + optional `<animate>` for subtle expansion
+- All decorative elements use `pointer-events: none` and `aria-hidden="true"`, low opacity (0.03–0.06) for subtlety
+- Premium micro-classes: `.card-glow` (hover border glow via `::before` pseudo-element), `.process-step-shimmer` (animated gradient sweep on hover), `.hero-bg-pattern` (grid SVG container)
+
 ## Theme (Enhancv-Inspired Light, applied 2026-06-16)
 - Switched from dark coral → light mint/indigo
 - **CSS variables** in `frontend/src/index.css`:
@@ -48,15 +67,16 @@ Unified post-scan dashboard showing:
 - `profile.analyze(raw_text)` → `{success, data: {keywords, suggestions, optimized_headline, optimized_about}}`
 
 ## Key Backend Files
-- `backend/main.py` — all routes (health, auth, forgot/reset, resume, AI, payments)
+- `backend/main.py` — all routes (health, auth, forgot/reset, resume, AI, payments, template gallery)
 - `backend/app/auth.py` — registration/login/password-reset logic + validation
-- `backend/app/models.py` — User, Subscription, Resume, PasswordResetToken
+- `backend/app/models.py` — User, Subscription, Resume, PasswordResetToken, Template
 - `backend/app/resume_routes.py` — Upload/List/Get/Delete with ATS scoring (`GET` now recalculates breakdown)
 - `backend/app/ats_scorer.py` — 4-category ATS scoring (formatting, keywords, experience, compatibility)
 - `backend/app/profile_analyzer.py` — keyword analysis + headline/about generation + suggestions
 - `backend/app/job_recommender.py` — 50+ sample jobs from 13 portals + skill matching
 - `backend/app/profile_routes.py` — `/api/analyze`, `/api/recommend-jobs`, `/api/upload-resume`
 - `backend/app/ai_routes.py` — AI analysis endpoints
+- `backend/app/template_gallery_routes.py` — Database-backed template gallery API (`/api/v1/templates`)
 
 ## Key Frontend Files
 - `frontend/src/index.css` — CSS variables, button/input classes, body gradient bg

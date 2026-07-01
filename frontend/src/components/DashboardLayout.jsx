@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }) {
   const initials = user.email ? user.email.slice(0, 2).toUpperCase() : "U";
 
   return (
-    <div style={s.shell} data-theme="dark">
+    <div style={s.shell}>
       {/* Mobile sidebar backdrop */}
       {mobileSidebarOpen && (
         <div className="dash-mobile-backdrop nm" onClick={() => setMobileSidebarOpen(false)} />
@@ -85,11 +85,11 @@ export default function DashboardLayout({ children }) {
         <div style={s.brand}>
           <div style={s.brandLogo}>
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect width="22" height="22" rx="6" fill="#2563EB" />
+              <rect width="22" height="22" rx="6" fill="var(--accent)" />
               <path d="M6 11h10M11 6v10" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
             </svg>
           </div>
-          {!collapsed && <span style={s.brandName}>ResumeAI</span>}
+          {!collapsed && <span style={s.brandName}>ProfileOptimizer</span>}
         </div>
 
         {/* Collapse toggle */}
@@ -130,7 +130,7 @@ export default function DashboardLayout({ children }) {
               <span style={s.planBadge}>FREE</span>
               <span style={s.planText}>Upgrade to Pro</span>
             </div>
-            <Link to="/pricing" style={s.upgradeBtn}>Upgrade →</Link>
+            <Link to="/pricing" style={s.upgradeBtn}>Upgrade &rarr;</Link>
           </div>
         )}
       </aside>
@@ -172,8 +172,8 @@ export default function DashboardLayout({ children }) {
                 <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.6" />
                 <path d="M11 11l3 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
-              <input style={s.searchInput} placeholder="Search resumes, jobs…" />
-              <span style={s.searchShortcut}>⌘K</span>
+              <input style={s.searchInput} placeholder="Search resumes, jobs&hellip;" />
+              <span style={s.searchShortcut}>&#8984;K</span>
             </div>
 
             {/* Notifications */}
@@ -189,12 +189,12 @@ export default function DashboardLayout({ children }) {
                 <div style={s.dropdown}>
                   <div style={s.dropdownHeader}>Notifications</div>
                   {[
-                    { icon: "✦", text: "AI analysis complete on SWE_Resume.pdf", time: "2m ago", accent: "#2563EB" },
-                    { icon: "⬆", text: "Resume scored 87/100 — great work!", time: "1h ago", accent: "#22c55e" },
+                    { icon: "✦", text: "AI analysis complete on SWE_Resume.pdf", time: "2m ago", accent: "#4f46e5" },
+                    { icon: "⬆", text: "Resume scored 87/100 &mdash; great work!", time: "1h ago", accent: "#10b981" },
                     { icon: "◉", text: "3 new job matches found for your profile", time: "3h ago", accent: "#f59e0b" },
                   ].map((n, i) => (
                     <div key={i} style={s.notifItem}>
-                      <span style={{ ...s.notifItemIcon, background: n.accent + "22", color: n.accent }}>{n.icon}</span>
+                      <span style={{ ...s.notifItemIcon, background: n.accent + "16", color: n.accent }}>{n.icon}</span>
                       <div style={s.notifItemBody}>
                         <div style={s.notifItemText}>{n.text}</div>
                         <div style={s.notifItemTime}>{n.time}</div>
@@ -238,7 +238,7 @@ export default function DashboardLayout({ children }) {
                     style={{ ...s.dropdownItem, color: "var(--danger)" }}
                     onClick={() => { logout && logout(); showToast("Signed out", "info"); }}
                   >
-                    <span style={s.dropdownItemIcon}>↩</span>
+                    <span style={s.dropdownItemIcon}>&#8617;</span>
                     Sign out
                   </button>
                 </div>
@@ -257,11 +257,11 @@ export default function DashboardLayout({ children }) {
       {toast && (
         <div style={{
           ...s.toast,
-          background: toast.type === "success" ? "rgba(34,197,94,0.18)" : "rgba(56,189,248,0.18)",
-          borderColor: toast.type === "success" ? "rgba(34,197,94,0.3)" : "rgba(56,189,248,0.3)",
+          background: toast.type === "success" ? "rgba(16,185,129,0.12)" : "rgba(79,70,229,0.12)",
+          borderColor: toast.type === "success" ? "rgba(16,185,129,0.2)" : "rgba(79,70,229,0.2)",
         }}>
-          <span style={{ color: toast.type === "success" ? "#22c55e" : "#38bdf8" }}>
-            {toast.type === "success" ? "✓" : "ℹ"}
+          <span style={{ color: toast.type === "success" ? "var(--success)" : "var(--accent)" }}>
+            {toast.type === "success" ? "&#10003;" : "&#8505;"}
           </span>
           {toast.msg}
         </div>
@@ -285,8 +285,8 @@ const s = {
   },
   spinner: {
     width: 32, height: 32, borderRadius: "50%",
-    border: "3px solid rgba(148,163,184,0.15)",
-    borderTopColor: "#2563EB",
+    border: "3px solid var(--border)",
+    borderTopColor: "var(--accent)",
     animation: "spin 0.7s linear infinite",
   },
 
@@ -294,16 +294,15 @@ const s = {
   sidebar: {
     position: "fixed", top: 0, left: 0, bottom: 0, zIndex: 50,
     display: "flex", flexDirection: "column",
-    background: "rgba(8, 12, 22, 0.98)",
-    borderRight: "1px solid rgba(148,163,184,0.1)",
-    backdropFilter: "blur(20px)",
+    background: "var(--bg-card)",
+    borderRight: "1px solid var(--border)",
     transition: TRANSITION,
     overflow: "hidden",
   },
   brand: {
     display: "flex", alignItems: "center", gap: 10,
     padding: "20px 16px 16px",
-    borderBottom: "1px solid rgba(148,163,184,0.08)",
+    borderBottom: "1px solid var(--border)",
     flexShrink: 0,
   },
   brandLogo: {
@@ -317,8 +316,8 @@ const s = {
   collapseBtn: {
     display: "flex", alignItems: "center", justifyContent: "center",
     width: 28, height: 28, borderRadius: 8,
-    border: "1px solid rgba(148,163,184,0.12)",
-    background: "rgba(148,163,184,0.06)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-soft)",
     color: "var(--text-muted)",
     cursor: "pointer",
     margin: "8px auto",
@@ -342,38 +341,38 @@ const s = {
     whiteSpace: "nowrap",
   },
   navItemActive: {
-    background: "rgba(37,99,235,0.14)",
-    color: "#93c5fd",
+    background: "var(--accent-soft)",
+    color: "var(--accent)",
   },
   navIcon: { fontSize: 14, flexShrink: 0, width: 18, textAlign: "center" },
-  navIconActive: { color: "#3b82f6" },
+  navIconActive: { color: "var(--accent)" },
   navLabel: { flex: 1 },
   navDot: {
     width: 5, height: 5, borderRadius: "50%",
-    background: "#3b82f6", flexShrink: 0,
+    background: "var(--accent)", flexShrink: 0,
   },
   sidebarFooter: {
     padding: "12px 12px 20px",
-    borderTop: "1px solid rgba(148,163,184,0.08)",
+    borderTop: "1px solid var(--border)",
     flexShrink: 0,
   },
   sidebarPlan: {
     display: "flex", alignItems: "center", gap: 8,
     padding: "8px 10px", borderRadius: 8,
-    background: "rgba(148,163,184,0.06)",
-    border: "1px solid rgba(148,163,184,0.1)",
+    background: "var(--bg-soft)",
+    border: "1px solid var(--border)",
     marginBottom: 8,
   },
   planBadge: {
     fontSize: 9, fontWeight: 800, padding: "2px 6px",
-    borderRadius: 4, background: "rgba(148,163,184,0.14)",
+    borderRadius: 4, background: "var(--border)",
     color: "var(--text-muted)", letterSpacing: "0.08em",
   },
   planText: { fontSize: 11, color: "var(--text-secondary)", fontWeight: 500 },
   upgradeBtn: {
     display: "block", width: "100%", padding: "8px",
     borderRadius: 8, textAlign: "center", fontSize: 12, fontWeight: 700,
-    background: "linear-gradient(135deg,#2563EB,#7c3aed)",
+    background: "var(--accent-gradient)",
     color: "#fff", textDecoration: "none",
     transition: TRANSITION,
   },
@@ -389,8 +388,8 @@ const s = {
     position: "sticky", top: 0, zIndex: 40,
     display: "flex", alignItems: "center", justifyContent: "space-between",
     padding: "0 28px", height: 60, flexShrink: 0,
-    background: "rgba(5,8,22,0.88)",
-    borderBottom: "1px solid rgba(148,163,184,0.08)",
+    background: "rgba(255,255,255,0.88)",
+    borderBottom: "1px solid var(--border)",
     backdropFilter: "blur(20px)",
     gap: 16,
   },
@@ -404,8 +403,8 @@ const s = {
   searchWrap: {
     display: "flex", alignItems: "center", gap: 8,
     padding: "7px 12px", borderRadius: 10,
-    border: "1px solid rgba(148,163,184,0.12)",
-    background: "rgba(148,163,184,0.06)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-soft)",
     width: 240,
   },
   searchIcon: { color: "var(--text-muted)", flexShrink: 0 },
@@ -416,7 +415,7 @@ const s = {
   },
   searchShortcut: {
     fontSize: 10, fontWeight: 600, padding: "2px 6px",
-    borderRadius: 4, background: "rgba(148,163,184,0.1)",
+    borderRadius: 4, background: "var(--bg-secondary)",
     color: "var(--text-muted)", whiteSpace: "nowrap",
   },
 
@@ -424,8 +423,8 @@ const s = {
   iconBtn: {
     position: "relative", display: "flex", alignItems: "center", justifyContent: "center",
     width: 36, height: 36, borderRadius: 9,
-    border: "1px solid rgba(148,163,184,0.12)",
-    background: "rgba(148,163,184,0.06)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-soft)",
     color: "var(--text-secondary)", cursor: "pointer",
     transition: TRANSITION,
   },
@@ -433,28 +432,28 @@ const s = {
     position: "absolute", top: 7, right: 8,
     width: 7, height: 7, borderRadius: "50%",
     background: "#ef4444",
-    border: "1.5px solid #050816",
+    border: "1.5px solid #fff",
   },
   mobileToggle: {
     display: "none",
     alignItems: "center", justifyContent: "center",
     width: 34, height: 34, borderRadius: 8,
-    border: "1px solid rgba(148,163,184,0.12)",
-    background: "rgba(148,163,184,0.06)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-soft)",
     color: "var(--text-secondary)", cursor: "pointer",
     flexShrink: 0,
   },
   avatarBtn: {
     display: "flex", alignItems: "center", gap: 7,
     padding: "5px 10px 5px 5px", borderRadius: 9,
-    border: "1px solid rgba(148,163,184,0.12)",
-    background: "rgba(148,163,184,0.06)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-soft)",
     color: "var(--text-secondary)", cursor: "pointer",
     transition: TRANSITION,
   },
   avatar: {
     width: 28, height: 28, borderRadius: 8,
-    background: "linear-gradient(135deg,#2563EB,#7c3aed)",
+    background: "var(--accent-gradient)",
     color: "#fff", fontSize: 11, fontWeight: 700,
     display: "flex", alignItems: "center", justifyContent: "center",
     flexShrink: 0,
@@ -464,11 +463,10 @@ const s = {
   dropdown: {
     position: "absolute", top: "calc(100% + 8px)",
     right: 0, minWidth: 240, zIndex: 200,
-    background: "rgba(10,15,28,0.98)",
-    border: "1px solid rgba(148,163,184,0.14)",
+    background: "var(--bg-card)",
+    border: "1px solid var(--border)",
     borderRadius: 12,
-    boxShadow: "0 24px 64px rgba(2,6,23,0.5)",
-    backdropFilter: "blur(20px)",
+    boxShadow: "var(--shadow-md)",
     overflow: "hidden",
   },
   dropdownHeader: {
@@ -478,8 +476,8 @@ const s = {
   },
   dropdownFooter: {
     padding: "10px 14px",
-    fontSize: 12, color: "#3b82f6", fontWeight: 600,
-    borderTop: "1px solid rgba(148,163,184,0.08)",
+    fontSize: 12, color: "var(--accent)", fontWeight: 600,
+    borderTop: "1px solid var(--border)",
     cursor: "pointer",
     textAlign: "center",
   },
@@ -492,14 +490,14 @@ const s = {
     transition: TRANSITION,
   },
   dropdownItemIcon: { fontSize: 14, width: 18, textAlign: "center" },
-  dropdownDivider: { height: 1, background: "rgba(148,163,184,0.08)", margin: "4px 0" },
+  dropdownDivider: { height: 1, background: "var(--border)", margin: "4px 0" },
   profileInfo: {
     display: "flex", alignItems: "center", gap: 10,
     padding: "12px 14px",
   },
   profileAvatar: {
     width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-    background: "linear-gradient(135deg,#2563EB,#7c3aed)",
+    background: "var(--accent-gradient)",
     color: "#fff", fontSize: 13, fontWeight: 700,
     display: "flex", alignItems: "center", justifyContent: "center",
   },
@@ -533,7 +531,7 @@ const s = {
     border: "1px solid",
     backdropFilter: "blur(16px)",
     fontSize: 13, fontWeight: 500, color: "var(--text)",
-    boxShadow: "0 8px 24px rgba(2,6,23,0.3)",
+    boxShadow: "var(--shadow-md)",
     animation: "slideUp 0.3s ease",
   },
 };

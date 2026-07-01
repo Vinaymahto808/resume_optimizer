@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import engine, Base
 
+from app.job_recommender import get_all_job_portals, get_internship_portals
 from app.paypal_integration import router as payments_router
 from app.resume_routes import router as resume_router
 from app.template_routes import router as template_router
@@ -12,7 +13,9 @@ from app.profile_routes import router as profile_router
 from app.ai_routes import router as ai_router
 from app.v1_routes import router as v1_router
 from app.latex_routes import router as latex_router
+from app.latex_engine.routes import router as latex_engine_router
 from app.analytics_routes import router as analytics_router
+from app.template_gallery_routes import router as template_gallery_router
 from app.routes.auth_routes import router as auth_router
 
 from app.middleware.request_id import RequestIDMiddleware
@@ -76,6 +79,14 @@ def health():
     }
 
 
+@app.get("/api/portals/jobs")
+def list_job_portals():
+    return get_all_job_portals()
+
+@app.get("/api/portals/internships")
+def list_internship_portals():
+    return get_internship_portals()
+
 app.include_router(auth_router)
 app.include_router(payments_router)
 app.include_router(resume_router)
@@ -84,4 +95,6 @@ app.include_router(profile_router)
 app.include_router(ai_router)
 app.include_router(v1_router)
 app.include_router(latex_router)
+app.include_router(latex_engine_router)
 app.include_router(analytics_router)
+app.include_router(template_gallery_router)

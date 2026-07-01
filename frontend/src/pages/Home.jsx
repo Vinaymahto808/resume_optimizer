@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useRef, useEffect, useCallback } from "react";
-import HeroIllustration from "../components/HeroIllustration";
 
 const checklistItems = [
   { cat: "Content", label: "ATS parse rate" },
@@ -32,8 +31,8 @@ const testimonials = [
 ];
 
 const initials = ["JC", "DK", "PR"];
-const avatarColors = ["rgba(37,99,235,0.12)", "rgba(236,72,153,0.12)", "rgba(245,158,11,0.12)"];
-const avatarTextColors = ["#2563EB", "#818cf8", "#f59e0b"];
+const avatarColors = ["rgba(79, 70, 229, 0.10)", "rgba(16, 185, 129, 0.10)", "rgba(245, 158, 11, 0.10)"];
+const avatarTextColors = ["#4F46E5", "#10B981", "#F59E0B"];
 
 const faqs = [
   { q: "What is a resume checker?", a: "Evaluates your resume for ATS formatting, keyword relevance, grammar, and content quality. We assess consistency, suggest improvements, and help meet professional standards." },
@@ -45,14 +44,15 @@ const faqs = [
 ];
 
 const categoryData = [
-  { name: "Content", color: "#2563EB", pct: 83, checks: 6, icon: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8" },
-  { name: "Format", color: "#4f46e5", pct: 67, checks: 3, icon: "M4 6h16 M4 12h16 M4 18h16" },
-  { name: "Skills", color: "#3B82F6", pct: 50, checks: 2, icon: "M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4 M12 14c-4 0-6 2-6 4v2h12v-2c0-2-2-4-6-4" },
-  { name: "Sections", color: "#8b5cf6", pct: 100, checks: 3, icon: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2 M8 2h8v4H8z" },
-  { name: "Style", color: "#f59e0b", pct: 60, checks: 5, icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" },
+  { name: "Content", color: "#4F46E5", pct: 83, checks: 6, icon: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8", gradient: "linear-gradient(135deg, #4F46E5, #6366F1)" },
+  { name: "Format", color: "#10B981", pct: 67, checks: 3, icon: "M4 6h16 M4 12h16 M4 18h16", gradient: "linear-gradient(135deg, #10B981, #34D399)" },
+  { name: "Skills", color: "#4F46E5", pct: 50, checks: 2, icon: "M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4 M12 14c-4 0-6 2-6 4v2h12v-2c0-2-2-4-6-4", gradient: "linear-gradient(135deg, #4F46E5, #818CF8)" },
+  { name: "Sections", color: "#10B981", pct: 100, checks: 3, icon: "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2 M8 2h8v4H8z", gradient: "linear-gradient(135deg, #10B981, #6EE7B7)" },
+  { name: "Style", color: "#F59E0B", pct: 60, checks: 5, icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z", gradient: "linear-gradient(135deg, #F59E0B, #FBBF24)" },
 ];
 
 const portalList = [
+  // Job portals — existing 9
   { name: "LinkedIn", color: "#0a66c2" },
   { name: "Indeed", color: "#0065b3" },
   { name: "Glassdoor", color: "#0ea15b" },
@@ -62,6 +62,36 @@ const portalList = [
   { name: "Dice", color: "#ff6700" },
   { name: "CutShort", color: "#6c2bd9" },
   { name: "Monster", color: "#6a1b9a" },
+  // Job portals — new global (10)
+  { name: "SimplyHired", color: "#4285F4" },
+  { name: "CareerBuilder", color: "#0073AA" },
+  { name: "Hired", color: "#0A0A0A" },
+  { name: "Remotive", color: "#16A34A" },
+  { name: "We Work Remotely", color: "#1E3A5F" },
+  { name: "Remote.co", color: "#7C3AED" },
+  { name: "AngelList Jobs", color: "#1A1A1A" },
+  { name: "Otta", color: "#FF5A1F" },
+  { name: "Greenhouse", color: "#3AAB6D" },
+  { name: "Lever", color: "#2D6CDF" },
+  // Job portals — new India-specific (6)
+  { name: "Shine.com", color: "#FF6B00" },
+  { name: "TimesJobs", color: "#E63946" },
+  { name: "Freshersworld", color: "#F59E0B" },
+  { name: "Instahyre", color: "#6366F1" },
+  { name: "Hirist", color: "#0EA5E9" },
+  { name: "iimjobs", color: "#BE185D" },
+];
+
+const internshipPortalList = [
+  { name: "Internshala", color: "#0077FF" },
+  { name: "LetsIntern", color: "#FF6B35" },
+  { name: "HelloIntern", color: "#10B981" },
+  { name: "Internship.in", color: "#6366F1" },
+  { name: "Twenty19", color: "#F59E0B" },
+  { name: "Chegg Internships", color: "#FF5A00" },
+  { name: "WayUp", color: "#5B4FCF" },
+  { name: "Handshake", color: "#E63F3F" },
+  { name: "AfterCollege", color: "#0369A1" },
 ];
 
 const jobsData = [
@@ -77,7 +107,7 @@ function StarRating() {
   return (
     <div className="hero-stars">
       {[1, 2, 3, 4, 5].map((i) => (
-        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" strokeWidth="1">
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="1">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ))}
@@ -86,29 +116,30 @@ function StarRating() {
   );
 }
 
-function FaqItem({ q, a }) {
+function FaqItem({ q, a, idx }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="faq-item">
+    <div className={`faq-item ${open ? "faq-item--open" : ""}`}>
       <button className="faq-trigger" onClick={() => setOpen(!open)} type="button" aria-expanded={open}>
-        <span>{q}</span>
+        <span className="faq-number">{String(idx + 1).padStart(2, "0")}</span>
+        <span className="faq-trigger-text">{q}</span>
         <span className={`faq-toggle ${open ? "open" : ""}`}>+</span>
       </button>
-      {open && <div className="faq-answer">{a}</div>}
+      <div className="faq-answer">{a}</div>
     </div>
   );
 }
 
 function JobCard({ job }) {
-  const matchColor = (pct) => pct >= 85 ? "#2563EB" : pct >= 72 ? "#f59e0b" : "#f87171";
-  const matchBg = (pct) => pct >= 85 ? "rgba(52,211,153,0.10)" : pct >= 72 ? "rgba(245,158,11,0.10)" : "rgba(248,113,113,0.10)";
+  const matchColor = (pct) => pct >= 85 ? "#4F46E5" : pct >= 72 ? "#F59E0B" : "#EF4444";
+  const matchBg = (pct) => pct >= 85 ? "rgba(79,70,229,0.10)" : pct >= 72 ? "rgba(245,158,11,0.10)" : "rgba(239,68,68,0.10)";
   const mColor = matchColor(job.match);
   const mBg = matchBg(job.match);
   const visibleSkills = job.skills.slice(0, 3);
   const extra = job.skills.length - 3;
 
   return (
-    <div className="job-card">
+    <div className="job-card" style={{ borderLeft: `3px solid ${mColor}`, borderRadius: "0 var(--radius) var(--radius) 0" }}>
       <div className="job-card-top">
         <div className="job-card-company">
           <div className="job-card-icon">{job.company[0]}</div>
@@ -139,65 +170,63 @@ function JobCard({ job }) {
   );
 }
 
-function CheckCard({ cat, items, isOpen, onToggle }) {
+function CheckCard({ cat, items }) {
   const status = cat.pct >= 80 ? "Good" : cat.pct >= 50 ? "Fair" : "Needs Work";
   const statusColors = cat.pct >= 80
-    ? { text: "#2563EB", bg: "rgba(37,99,235,0.10)" }
+    ? { text: "var(--success)", bg: "var(--success-soft)" }
     : cat.pct >= 50
-    ? { text: "#f59e0b", bg: "rgba(245,158,11,0.10)" }
-    : { text: "#f87171", bg: "rgba(248,113,113,0.10)" };
+    ? { text: "var(--warning)", bg: "var(--warning-soft)" }
+    : { text: "var(--danger)", bg: "var(--danger-soft)" };
 
   return (
-    <div className="check-card">
-      {/* Background SVG pattern */}
-      <svg className="check-card-bg" width="200" height="200" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+    <div className="audit-card" style={{ "--audit-color": cat.color }}>
+      <div className="audit-card-accent" style={{ background: cat.gradient }} />
+      <svg className="audit-card-bg" width="200" height="200" viewBox="0 0 200 200" fill="none" aria-hidden="true">
         <circle cx="160" cy="40" r="80" stroke={cat.color} strokeWidth="0.5" opacity="0.06" />
         <circle cx="180" cy="60" r="50" stroke={cat.color} strokeWidth="0.5" opacity="0.04" />
-        <rect x="140" y="100" width="60" height="60" rx="4" stroke={cat.color} strokeWidth="0.5" opacity="0.05" transform="rotate(15 170 130)" />
-        <line x1="120" y1="160" x2="200" y2="160" stroke={cat.color} strokeWidth="0.5" opacity="0.04" />
-        <line x1="120" y1="170" x2="180" y2="170" stroke={cat.color} strokeWidth="0.5" opacity="0.03" />
       </svg>
-      <div className="check-card-head">
-        <div className="check-card-left">
-          <div className="check-card-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={cat.color} strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
-              <path d={cat.icon.split(" M").join(" M")} />
-            </svg>
-            {cat.name}
-          </div>
-          <div className="check-card-meta">
-            <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{cat.checks} checks</span>
-            <span className="check-card-status" style={{ color: statusColors.text, background: statusColors.bg }}>{status}</span>
-          </div>
+
+      <div className="audit-card-header">
+        <div className="audit-card-icon" style={{ color: cat.color, background: `${cat.color}12` }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d={cat.icon} />
+          </svg>
         </div>
-        <div className="check-card-pct">{cat.pct}%</div>
+        <div className="audit-card-info">
+          <span className="audit-card-name">{cat.name}</span>
+          <span className="audit-card-count">{cat.checks} checks</span>
+        </div>
+        <div className="audit-card-pct" style={{ color: cat.color }}>{cat.pct}%</div>
       </div>
-      <div className="check-card-bar">
-        <div className="check-card-bar-fill" style={{ width: `${cat.pct}%`, background: cat.color }} />
+
+      <div className="audit-card-bar-wrap">
+        <div className="audit-card-bar">
+          <div className="audit-card-bar-fill" style={{ width: `${cat.pct}%`, background: cat.gradient }} />
+        </div>
+        <span className="audit-card-status" style={{ color: statusColors.text, background: statusColors.bg }}>{status}</span>
       </div>
-      <div className="check-card-items">
-        <ul className="check-card-list">
-          {items.map((item, i) => (
-            <li key={i}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={cat.color} strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0, marginTop: 1 }}>
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>{item.label}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <ul className="audit-card-list">
+        {items.map((item, i) => (
+          <li key={i}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={cat.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>{item.label}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 const pdfVariants = [
-  { id: "classic", label: "Classic", badge: "ATS 92", badgeColor: "#2563EB" },
-  { id: "modern", label: "Modern", badge: "ATS 88", badgeColor: "#EC4899" },
-  { id: "creative", label: "Creative", badge: "ATS 95", badgeColor: "#F472B6" },
-  { id: "technical", label: "Technical", badge: "ATS 90", badgeColor: "#3B82F6" },
-  { id: "minimal", label: "Minimal", badge: "ATS 85", badgeColor: "#2563EB" },
-  { id: "executive", label: "Executive", badge: "ATS 96", badgeColor: "#EC4899" },
+  { id: "classic", label: "Classic", badge: "ATS 92", badgeColor: "#4F46E5" },
+  { id: "modern", label: "Modern", badge: "ATS 88", badgeColor: "#10B981" },
+  { id: "creative", label: "Creative", badge: "ATS 95", badgeColor: "#F59E0B" },
+  { id: "technical", label: "Technical", badge: "ATS 90", badgeColor: "#4F46E5" },
+  { id: "minimal", label: "Minimal", badge: "ATS 85", badgeColor: "#10B981" },
+  { id: "executive", label: "Executive", badge: "ATS 96", badgeColor: "#4F46E5" },
 ];
 
 function PdfDeco({ variant, className }) {
@@ -221,7 +250,7 @@ function PdfSvgInner({ variant }) {
   const svgs = [
     <svg width="100%" height="100%" viewBox="0 0 180 240" fill="none" preserveAspectRatio="xMidYMid meet">
       <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-      <rect x="16" y="14" width="60" height="4" rx="2" fill="rgba(37,99,235,0.5)" />
+      <rect x="16" y="14" width="60" height="4" rx="2" fill="rgba(79,70,229,0.5)" />
       <rect x="16" y="22" width="80" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
       <rect x="16" y="30" width="50" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
       <rect x="16" y="46" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
@@ -240,9 +269,9 @@ function PdfSvgInner({ variant }) {
     </svg>,
     <svg width="100%" height="100%" viewBox="0 0 180 240" fill="none" preserveAspectRatio="xMidYMid meet">
       <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-      <rect x="0" y="0" width="52" height="240" fill="rgba(236,72,153,0.08)" />
-      <rect x="8" y="16" width="36" height="36" rx="18" fill="rgba(236,72,153,0.15)" />
-      <rect x="16" y="26" width="20" height="16" rx="4" fill="rgba(236,72,153,0.3)" />
+      <rect x="0" y="0" width="52" height="240" fill="rgba(79,70,229,0.08)" />
+      <rect x="8" y="16" width="36" height="36" rx="18" fill="rgba(79,70,229,0.15)" />
+      <rect x="16" y="26" width="20" height="16" rx="4" fill="rgba(79,70,229,0.3)" />
       <rect x="10" y="62" width="32" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
       <rect x="10" y="68" width="24" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
       <rect x="10" y="76" width="28" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
@@ -251,7 +280,7 @@ function PdfSvgInner({ variant }) {
       <rect x="10" y="102" width="24" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
       <rect x="10" y="116" width="28" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
       <rect x="10" y="122" width="20" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
-      <rect x="62" y="14" width="60" height="4" rx="2" fill="rgba(37,99,235,0.5)" />
+      <rect x="62" y="14" width="60" height="4" rx="2" fill="rgba(79,70,229,0.5)" />
       <rect x="62" y="22" width="80" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
       <rect x="62" y="30" width="50" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
       <rect x="62" y="46" width="108" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
@@ -268,8 +297,8 @@ function PdfSvgInner({ variant }) {
     </svg>,
     <svg width="100%" height="100%" viewBox="0 0 180 240" fill="none" preserveAspectRatio="xMidYMid meet">
       <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-      <rect x="0" y="0" width="180" height="44" fill="rgba(52,211,153,0.08)" />
-      <rect x="16" y="12" width="40" height="4" rx="2" fill="rgba(37,99,235,0.5)" />
+      <rect x="0" y="0" width="180" height="44" fill="rgba(16,185,129,0.08)" />
+      <rect x="16" y="12" width="40" height="4" rx="2" fill="rgba(79,70,229,0.5)" />
       <rect x="16" y="20" width="70" height="2" rx="1" fill="rgba(148,163,184,0.25)" />
       <rect x="16" y="26" width="50" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
       <rect x="140" y="12" width="28" height="4" rx="2" fill="rgba(245,158,11,0.3)" />
@@ -284,18 +313,18 @@ function PdfSvgInner({ variant }) {
       <rect x="16" y="129" width="60" height="3" rx="1.5" fill="rgba(245,158,11,0.4)" />
       <rect x="16" y="138" width="148" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
       <rect x="16" y="144" width="80" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
-      <circle cx="160" cy="62" r="12" fill="rgba(52,211,153,0.06)" />
-      <circle cx="160" cy="62" r="6" fill="rgba(52,211,153,0.12)" />
+      <circle cx="160" cy="62" r="12" fill="rgba(16,185,129,0.06)" />
+      <circle cx="160" cy="62" r="6" fill="rgba(16,185,129,0.12)" />
     </svg>,
     <svg width="100%" height="100%" viewBox="0 0 180 240" fill="none" preserveAspectRatio="xMidYMid meet">
       <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-      <rect x="16" y="12" width="50" height="4" rx="2" fill="rgba(139,92,246,0.5)" />
+      <rect x="16" y="12" width="50" height="4" rx="2" fill="rgba(79,70,229,0.5)" />
       <rect x="16" y="20" width="100" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
       <rect x="16" y="32" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
-      <rect x="16" y="40" width="40" height="16" rx="3" fill="rgba(139,92,246,0.08)" />
-      <rect x="62" y="40" width="40" height="16" rx="3" fill="rgba(52,211,153,0.08)" />
+      <rect x="16" y="40" width="40" height="16" rx="3" fill="rgba(79,70,229,0.08)" />
+      <rect x="62" y="40" width="40" height="16" rx="3" fill="rgba(16,185,129,0.08)" />
       <rect x="108" y="40" width="40" height="16" rx="3" fill="rgba(245,158,11,0.08)" />
-      <rect x="16" y="64" width="40" height="16" rx="3" fill="rgba(59,130,246,0.08)" />
+      <rect x="16" y="64" width="40" height="16" rx="3" fill="rgba(79,70,229,0.08)" />
       <rect x="62" y="64" width="40" height="16" rx="3" fill="rgba(239,68,68,0.08)" />
       <rect x="16" y="90" width="60" height="3" rx="1.5" fill="rgba(148,163,184,0.25)" />
       <rect x="16" y="100" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
@@ -353,6 +382,138 @@ function PdfSvgInner({ variant }) {
   return svgs[variant] || svgs[0];
 }
 
+function HeroIllustration() {
+  return (
+    <svg
+      viewBox="0 0 800 600"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: "100%", height: "100%", display: "block" }}
+    >
+      <rect width="800" height="600" fill="#EFF6FF" />
+      <rect width="360" height="600" fill="#FDF2F8" />
+      <rect x="360" width="8" height="600" fill="#F472B6" opacity="0.08" />
+      <g stroke="#EC4899" strokeOpacity="0.06" strokeWidth="0.8" fill="none">
+        <line x1="0" y1="0" x2="0" y2="600" /><line x1="60" y1="0" x2="60" y2="600" />
+        <line x1="120" y1="0" x2="120" y2="600" /><line x1="180" y1="0" x2="180" y2="600" />
+        <line x1="240" y1="0" x2="240" y2="600" /><line x1="300" y1="0" x2="300" y2="600" />
+        <line x1="0" y1="75" x2="360" y2="75" /><line x1="0" y1="150" x2="360" y2="150" />
+        <line x1="0" y1="225" x2="360" y2="225" /><line x1="0" y1="300" x2="360" y2="300" />
+        <line x1="0" y1="375" x2="360" y2="375" /><line x1="0" y1="450" x2="360" y2="450" />
+        <line x1="0" y1="525" x2="360" y2="525" />
+      </g>
+      <g stroke="#3B82F6" strokeOpacity="0.06" strokeWidth="0.8" fill="none">
+        <line x1="440" y1="0" x2="440" y2="600" /><line x1="500" y1="0" x2="500" y2="600" />
+        <line x1="560" y1="0" x2="560" y2="600" /><line x1="620" y1="0" x2="620" y2="600" />
+        <line x1="680" y1="0" x2="680" y2="600" /><line x1="740" y1="0" x2="740" y2="600" />
+        <line x1="440" y1="75" x2="800" y2="75" /><line x1="440" y1="150" x2="800" y2="150" />
+        <line x1="440" y1="225" x2="800" y2="225" /><line x1="440" y1="300" x2="800" y2="300" />
+        <line x1="440" y1="375" x2="800" y2="375" /><line x1="440" y1="450" x2="800" y2="450" />
+        <line x1="440" y1="525" x2="800" y2="525" />
+      </g>
+      <g stroke="#EC4899" strokeOpacity="0.05" strokeWidth="0.6" fill="none">
+        <line x1="0" y1="0" x2="120" y2="600" /><line x1="60" y1="0" x2="180" y2="600" />
+        <line x1="180" y1="0" x2="60" y2="600" /><line x1="300" y1="0" x2="180" y2="600" />
+      </g>
+      <g stroke="#3B82F6" strokeOpacity="0.05" strokeWidth="0.6" fill="none">
+        <line x1="440" y1="0" x2="560" y2="600" /><line x1="500" y1="0" x2="620" y2="600" />
+        <line x1="620" y1="0" x2="500" y2="600" /><line x1="740" y1="0" x2="620" y2="600" />
+      </g>
+      <g fill="#EC4899" fillOpacity="0.10">
+        <polygon points="180,150 184,154 180,158 176,154" />
+        <polygon points="60,300 64,304 60,308 56,304" />
+        <polygon points="300,300 304,304 300,308 296,304" />
+        <polygon points="120,450 124,454 120,458 116,454" />
+        <polygon points="240,450 244,454 240,458 236,454" />
+        <polygon points="60,75 64,79 60,83 56,79" />
+        <polygon points="300,525 304,529 300,533 296,529" />
+      </g>
+      <g fill="#3B82F6" fillOpacity="0.10">
+        <polygon points="560,150 564,154 560,158 556,154" />
+        <polygon points="440,300 444,304 440,308 436,304" />
+        <polygon points="680,300 684,304 680,308 676,304" />
+        <polygon points="500,450 504,454 500,458 496,454" />
+        <polygon points="620,450 624,454 620,458 616,454" />
+        <polygon points="440,75 444,79 440,83 436,79" />
+        <polygon points="680,525 684,529 680,533 676,529" />
+      </g>
+      <g fill="#EC4899" fillOpacity="0.08">
+        <circle cx="60" cy="300" r="2" /><circle cx="300" cy="300" r="2" />
+        <circle cx="180" cy="75" r="1.5" /><circle cx="180" cy="525" r="1.5" />
+        <circle cx="60" cy="150" r="1" /><circle cx="300" cy="450" r="1" />
+      </g>
+      <g fill="#3B82F6" fillOpacity="0.08">
+        <circle cx="440" cy="300" r="2" /><circle cx="680" cy="300" r="2" />
+        <circle cx="560" cy="75" r="1.5" /><circle cx="560" cy="525" r="1.5" />
+        <circle cx="440" cy="150" r="1" /><circle cx="680" cy="450" r="1" />
+      </g>
+      <g stroke="#EC4899" strokeOpacity="0.12" strokeWidth="0.7">
+        <path d="M 116,226 L 126,226 M 121,221 L 121,231" />
+        <path d="M 236,374 L 246,374 M 241,369 L 241,379" />
+        <path d="M 176,75 L 186,75 M 181,70 L 181,80" />
+      </g>
+      <g stroke="#3B82F6" strokeOpacity="0.12" strokeWidth="0.7">
+        <path d="M 556,226 L 566,226 M 561,221 L 561,231" />
+        <path d="M 676,374 L 686,374 M 681,369 L 681,379" />
+        <path d="M 556,75 L 566,75 M 561,70 L 561,80" />
+      </g>
+      <g transform="translate(180, 300)" stroke="#EC4899" strokeOpacity="0.20" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 0,-24 C 20,-24 30,-12 20,0 C 10,12 0,6 0,0 C 0,-6 -10,-12 -20,0 C -30,12 -20,24 0,24" />
+        <path d="M 0,-24 C -20,-24 -30,-12 -20,0 C -10,12 0,6 0,0 C 0,-6 10,-12 20,0 C 30,12 20,24 0,24" />
+      </g>
+      <g transform="translate(560, 300)" stroke="#3B82F6" strokeOpacity="0.20" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M -22,-22 L 0,24 L 22,-22" />
+        <path d="M -22,-22 C -10,-6 10,-6 22,-22" />
+        <path d="M 22,-22 C 10,6 -10,6 -22,-22" />
+      </g>
+      <g transform="translate(300, 50)">
+        <rect x="0" y="0" width="200" height="36" rx="18" fill="#FFFFFF" />
+        <rect x="4" y="4" width="28" height="28" rx="14" fill="#EC4899" />
+        <path d="M14 18l4 4 6-6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="42" y="22" fill="#1e293b" fontSize="12" fontWeight="700" fontFamily="Inter, sans-serif">AI Resume Builder</text>
+      </g>
+      <g transform="translate(400, 270)">
+        <rect x="-110" y="-130" width="220" height="280" rx="8" fill="#FFFFFF" />
+        <rect x="-110" y="-130" width="220" height="36" rx="8" fill="#EC4899" />
+        <rect x="-110" y="-94" width="220" height="2" fill="#EC4899" opacity="0.08" />
+        <text x="0" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800" fontFamily="Inter, sans-serif">PROFESSIONAL RESUME</text>
+        <rect x="-90" y="-78" width="180" height="5" rx="2.5" fill="#1e293b" opacity="0.12" />
+        <rect x="-90" y="-65" width="120" height="5" rx="2.5" fill="#1e293b" opacity="0.06" />
+        <rect x="-90" y="-48" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="-42" width="160" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="-36" width="140" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="-24" width="40" height="10" rx="3" fill="#EC4899" />
+        <rect x="-90" y="-6" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="0" width="160" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="6" width="120" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="20" width="50" height="10" rx="3" fill="#3B82F6" />
+        <rect x="-90" y="38" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="44" width="150" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="58" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="64" width="140" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="78" width="48" height="10" rx="3" fill="#F472B6" />
+        <rect x="-90" y="96" width="180" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="-90" y="102" width="130" height="2" rx="1" fill="#1e293b" opacity="0.05" />
+        <rect x="70" y="-120" width="32" height="18" rx="4" fill="#3B82F6" />
+        <text x="86" y="-108" textAnchor="middle" fill="#FFFFFF" fontSize="8" fontWeight="800" fontFamily="Inter, sans-serif">96</text>
+      </g>
+      <g transform="translate(260, 480)">
+        <rect x="0" y="0" width="280" height="44" rx="10" fill="#FFFFFF" />
+        <rect x="12" y="12" width="76" height="20" rx="10" fill="#EC4899" opacity="0.1" />
+        <text x="28" y="25" fill="#EC4899" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">ATS Scoring</text>
+        <rect x="96" y="12" width="80" height="20" rx="10" fill="#3B82F6" opacity="0.1" />
+        <text x="114" y="25" fill="#3B82F6" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">AI Rewrite</text>
+        <rect x="184" y="12" width="84" height="20" rx="10" fill="#F472B6" opacity="0.1" />
+        <text x="202" y="25" fill="#EC4899" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">Job Match</text>
+      </g>
+      <path d="M 20 40 L 40 40 L 40 20" stroke="#EC4899" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 780 40 L 760 40 L 760 20" stroke="#3B82F6" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 20 560 L 40 560 L 40 580" stroke="#EC4899" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 780 560 L 760 560 L 760 580" stroke="#3B82F6" strokeWidth="1.5" opacity="0.25" fill="none" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const { user } = useAuth();
   const sectionRefs = useRef([]);
@@ -367,447 +528,898 @@ export default function Home() {
   }, []);
 
   const ctaTo = user ? "/scan" : "/signup";
-  const ctaLabel = user ? "Upload Your Resume" : "Get Started — It's Free";
+  const ctaLabel = user ? "Upload Your Resume" : "Get Your Free Score";
+  const auditAvg = Math.round(categoryData.reduce((s, c) => s + c.pct, 0) / categoryData.length);
 
   return (
     <div className="landing">
 
-      {/* HERO */}
-      <section ref={addSectionRef} className="scroll-fade hero-refined">
-        <div className="hero-orb hero-orb--1" />
-        <div className="hero-orb hero-orb--2" />
-        <div className="hero-orb hero-orb--3" />
-
-        {/* Overlapping background corporate illustration */}
-        <div className="hero-bg-illustration" aria-hidden="true">
+      {/* ─── SECTION 1: HERO ─── */}
+      <section ref={addSectionRef} className="scroll-fade hero-refined" style={{ position: "relative" }}>
+        <div className="hero-bg-illustration-full" aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", opacity: 0.35, overflow: "hidden" }}>
           <HeroIllustration />
         </div>
+        <div className="hero-dot-grid-bg" />
+        <div className="hero-orb hero-orb--1" style={{ opacity: 0.1 }} />
+        <div className="hero-orb hero-orb--2" style={{ opacity: 0.1 }} />
+        <div className="hero-bg-pattern" aria-hidden="true">
+          <svg className="grid-left" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-l" width="24" height="24" patternUnits="userSpaceOnUse">
+                <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#4F46E5" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="300" height="300" fill="url(#grid-l)" />
+          </svg>
+          <svg className="grid-right" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-r" width="28" height="28" patternUnits="userSpaceOnUse">
+                <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#10B981" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="250" height="250" fill="url(#grid-r)" />
+          </svg>
+        </div>
 
-        {/* Floating PDF decorators */}
+        <div className="hero-bg-illustration" aria-hidden="true">
+          <svg viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hi-g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.03" />
+                <stop offset="100%" stopColor="#6366F1" stopOpacity="0.01" />
+              </linearGradient>
+              <linearGradient id="hi-g2" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stopColor="#10B981" stopOpacity="0.025" />
+                <stop offset="100%" stopColor="#34D399" stopOpacity="0.01" />
+              </linearGradient>
+              <linearGradient id="hi-g3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.04" />
+                <stop offset="100%" stopColor="#4F46E5" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path d="M0 600 Q180 500 360 550 Q540 600 720 480 Q900 360 1080 420 Q1260 480 1440 380 L1440 800 L0 800 Z" fill="url(#hi-g1)" />
+            <path d="M0 700 Q240 580 480 620 Q720 660 960 540 Q1200 420 1440 480 L1440 800 L0 800 Z" fill="url(#hi-g2)" />
+            <ellipse cx="160" cy="200" rx="280" ry="280" fill="url(#hi-g3)" />
+            <ellipse cx="1280" cy="300" rx="200" ry="200" fill="url(#hi-g3)" />
+            <circle cx="120" cy="180" r="6" fill="#4F46E5" opacity="0.06" />
+            <circle cx="280" cy="120" r="3" fill="#10B981" opacity="0.08" />
+            <circle cx="1100" cy="160" r="5" fill="#4F46E5" opacity="0.06" />
+            <circle cx="1320" cy="240" r="4" fill="#10B981" opacity="0.07" />
+            <circle cx="720" cy="100" r="8" fill="#4F46E5" opacity="0.04" />
+            <circle cx="860" cy="180" r="3" fill="#10B981" opacity="0.06" />
+            <circle cx="400" cy="260" r="4" fill="#4F46E5" opacity="0.05" />
+            <circle cx="580" cy="140" r="2" fill="#10B981" opacity="0.08" />
+          </svg>
+        </div>
+
         <div className="pdf-float pdf-float--1" aria-hidden="true">
           <svg width="100" height="133" viewBox="0 0 180 240" fill="none">
-            <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-            <rect x="16" y="14" width="60" height="4" rx="2" fill="rgba(37,99,235,0.5)" />
-            <rect x="16" y="22" width="80" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
-            <rect x="16" y="30" width="50" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
-            <rect x="16" y="46" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="54" width="40" height="2" rx="1" fill="rgba(148,163,184,0.25)" />
-            <rect x="16" y="62" width="148" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="68" width="100" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="82" width="40" height="2" rx="1" fill="rgba(148,163,184,0.25)" />
-            <rect x="16" y="90" width="148" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="96" width="80" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
+            <defs>
+              <linearGradient id="pdf1-g-i" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#4F46E5" />
+                <stop offset="100%" stopColor="#6366F1" />
+              </linearGradient>
+              <linearGradient id="pdf1-g-e" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#10B981" />
+                <stop offset="100%" stopColor="#34D399" />
+              </linearGradient>
+            </defs>
+            <rect width="180" height="240" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5" />
+            <path d="M 0,4 Q 90,-4 180,4 L 180,24 L 0,24 Z" fill="url(#pdf1-g-i)" opacity="0.06" />
+            <rect x="16" y="34" width="50" height="5" rx="2.5" fill="url(#pdf1-g-i)" opacity="0.6" />
+            <rect x="16" y="44" width="80" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="16" y="50" width="60" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="16" y="62" width="148" height="1" rx="0.5" fill="#E2E8F0" />
+            <rect x="16" y="72" width="90" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="16" y="78" width="148" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="16" y="84" width="120" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="16" y="98" width="90" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="16" y="104" width="148" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="16" y="110" width="100" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <circle cx="152" cy="38" r="16" fill="url(#pdf1-g-e)" opacity="0.08" />
+            <circle cx="152" cy="38" r="8" fill="url(#pdf1-g-e)" opacity="0.12" />
           </svg>
         </div>
         <div className="pdf-float pdf-float--2" aria-hidden="true">
           <svg width="85" height="113" viewBox="0 0 180 240" fill="none">
-            <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-            <rect x="0" y="0" width="52" height="240" fill="rgba(236,72,153,0.08)" />
-            <rect x="8" y="16" width="36" height="36" rx="18" fill="rgba(236,72,153,0.15)" />
-            <rect x="10" y="62" width="32" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
-            <rect x="10" y="70" width="24" height="2" rx="1" fill="rgba(148,163,184,0.15)" />
-            <rect x="10" y="84" width="32" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
-            <rect x="62" y="14" width="60" height="4" rx="2" fill="rgba(37,99,235,0.5)" />
-            <rect x="62" y="22" width="80" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
-            <rect x="62" y="46" width="108" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
-            <rect x="62" y="54" width="40" height="2" rx="1" fill="rgba(148,163,184,0.25)" />
-            <rect x="62" y="62" width="108" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
-            <rect x="62" y="68" width="70" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
+            <defs>
+              <linearGradient id="pdf2-g-i" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#4F46E5" />
+                <stop offset="100%" stopColor="#6366F1" />
+              </linearGradient>
+            </defs>
+            <rect width="180" height="240" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5" />
+            <rect x="0" y="0" width="48" height="240" fill="url(#pdf2-g-i)" opacity="0.04" />
+            <rect x="8" y="16" width="32" height="32" rx="16" fill="url(#pdf2-g-i)" opacity="0.12" />
+            <rect x="14" y="24" width="20" height="16" rx="4" fill="url(#pdf2-g-i)" opacity="0.25" />
+            <rect x="10" y="58" width="28" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="10" y="64" width="22" height="2" rx="1" fill="#94A3B8" opacity="0.15" />
+            <rect x="10" y="74" width="28" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="60" y="14" width="60" height="5" rx="2.5" fill="url(#pdf2-g-i)" opacity="0.6" />
+            <rect x="60" y="24" width="90" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="60" y="30" width="70" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="60" y="44" width="110" height="1" rx="0.5" fill="#E2E8F0" />
+            <rect x="60" y="52" width="50" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="60" y="58" width="110" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="60" y="64" width="90" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="10" y="84" width="28" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="60" y="84" width="50" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="60" y="90" width="110" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
           </svg>
         </div>
         <div className="pdf-float pdf-float--3" aria-hidden="true">
           <svg width="70" height="93" viewBox="0 0 180 240" fill="none">
-            <rect width="180" height="240" rx="4" fill="rgba(148,163,184,0.04)" />
-            <rect x="16" y="12" width="50" height="4" rx="2" fill="rgba(139,92,246,0.5)" />
-            <rect x="16" y="20" width="100" height="2" rx="1" fill="rgba(148,163,184,0.2)" />
-            <rect x="16" y="32" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="40" width="40" height="16" rx="3" fill="rgba(139,92,246,0.08)" />
-            <rect x="62" y="40" width="40" height="16" rx="3" fill="rgba(52,211,153,0.08)" />
-            <rect x="16" y="64" width="40" height="16" rx="3" fill="rgba(59,130,246,0.08)" />
-            <rect x="62" y="64" width="40" height="16" rx="3" fill="rgba(239,68,68,0.08)" />
-            <rect x="16" y="90" width="60" height="3" rx="1.5" fill="rgba(148,163,184,0.25)" />
-            <rect x="16" y="100" width="148" height="1" rx="0.5" fill="rgba(148,163,184,0.08)" />
-            <rect x="16" y="108" width="148" height="2" rx="1" fill="rgba(148,163,184,0.08)" />
+            <defs>
+              <linearGradient id="pdf3-g-i" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#4F46E5" />
+                <stop offset="100%" stopColor="#6366F1" />
+              </linearGradient>
+              <linearGradient id="pdf3-g-e" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#10B981" />
+                <stop offset="100%" stopColor="#34D399" />
+              </linearGradient>
+            </defs>
+            <rect width="180" height="240" rx="4" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="0.5" />
+            <rect x="0" y="0" width="180" height="44" fill="url(#pdf3-g-e)" opacity="0.04" />
+            <rect x="14" y="12" width="40" height="5" rx="2.5" fill="url(#pdf3-g-i)" opacity="0.6" />
+            <rect x="14" y="22" width="80" height="2" rx="1" fill="#94A3B8" opacity="0.3" />
+            <rect x="14" y="28" width="50" height="2" rx="1" fill="#94A3B8" opacity="0.2" />
+            <rect x="14" y="52" width="60" height="3" rx="1.5" fill="#F59E0B" opacity="0.3" />
+            <rect x="14" y="60" width="148" height="1" rx="0.5" fill="#E2E8F0" />
+            <rect x="14" y="66" width="148" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="14" y="72" width="100" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="14" y="86" width="60" height="3" rx="1.5" fill="#F59E0B" opacity="0.3" />
+            <rect x="14" y="94" width="148" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
+            <rect x="14" y="100" width="110" height="2" rx="1" fill="#94A3B8" opacity="0.1" />
           </svg>
         </div>
 
         <div className="hero-inner">
+          {/* LEFT COLUMN — Content */}
           <div className="hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
-              Smart ATS + Resume Optimization
+            <div className="hero-announcement">
+              <span className="hero-announcement-dot" />
+              Introducing AI Resume Score
+              <span style={{ color: "#4F46E5", fontWeight: 700, marginLeft: 4 }}>→ Try it free</span>
             </div>
-            <h1 className="hero-title">
-              Make every resume{" "}
-              <span className="hero-title-gradient">ATS-ready</span>,
-              recruiter-friendly, and job-targeted.
+
+            <h1 className="hero-title-xl">
+              Land your dream job<br />
+              <span className="hero-title-gradient--new">with a perfect resume</span>
             </h1>
-            <p className="hero-sub">
-              One calm workspace for resume checks, LinkedIn optimization, and job matching.
+
+            <p className="hero-sub" style={{ fontSize: 18, maxWidth: 480, marginBottom: 36 }}>
+              Upload your resume and get an instant ATS score, 19-point audit, AI rewrite suggestions, and job matches — all in one place.
             </p>
+
             <div className="hero-actions">
-              <Link to={ctaTo} className="btn-primary hero-btn-primary">
-                {ctaLabel}
+              <Link to={ctaTo} className="btn-primary hero-btn-primary shimmer-btn" style={{ position: "relative", zIndex: 0, fontSize: 16, padding: "15px 32px", borderRadius: 12 }}>
+                {ctaLabel} →
+              </Link>
+              <Link to="/scan" className="hero-btn-secondary" style={{ fontSize: 16, padding: "15px 28px", borderRadius: 12, border: "1.5px solid var(--border)", background: "transparent", color: "var(--text)", fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                Watch Demo ▶
               </Link>
             </div>
-            <div className="hero-social-proof">
+
+            <div className="hero-trust-row">
+              <span>🔒 End-to-end encrypted</span>
+              <span style={{ opacity: 0.3 }}>·</span>
+              <span>⚡ Results in 30 seconds</span>
+              <span style={{ opacity: 0.3 }}>·</span>
+              <span>✓ No credit card required</span>
+            </div>
+
+            <div className="hero-social-proof-row">
               <StarRating />
+              <span className="hero-social-proof-text">Trusted by 3,000+ job seekers</span>
             </div>
           </div>
 
-          <div className="hero-visual" style={{ position: "relative" }}>
-            {/* Floating glassmorphism badge — ATS Score */}
-            <div className="hero-resume-badge hero-resume-badge--tl">
-              <span className="hero-resume-badge-dot" style={{ background: "#2563EB" }} />
-              <span>ATS Score</span>
-              <strong style={{ color: "#2563EB", marginLeft: 4 }}>95%</strong>
+          {/* RIGHT COLUMN — Visual */}
+          <div className="hero-visual">
+            <div className="hero-visual-frame">
+              <div className="hero-visual-glow" />
+
+              <div className="hero-resume-badge hero-resume-badge--tl" style={{ zIndex: 5 }}>
+                <span className="hero-resume-badge-dot" style={{ background: "var(--accent)" }} />
+                <span>✦ ATS Score</span>
+                <strong style={{ color: "var(--accent)", marginLeft: 4 }}>95%</strong>
+              </div>
+
+              <div className="hero-resume-badge" style={{ top: 12, right: -8, zIndex: 5, animation: "float 5s ease-in-out infinite 0.8s" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                  <polyline points="18 15 12 9 6 15" />
+                </svg>
+                <span>↑ 3x more callbacks</span>
+              </div>
+
+              <div className="hero-resume-doc-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 450 500"
+                  width="100%"
+                  height="100%"
+                  style={{ background: "transparent", display: "block" }}
+                  aria-label="Resume document preview with ATS score visualization"
+                >
+                  <defs>
+                    <filter id="card-drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
+                      <feDropShadow dx="2" dy="5" stdDeviation="6" floodColor="#000000" floodOpacity="0.08" />
+                    </filter>
+                    <linearGradient id="g-indigo" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#4F46E5" />
+                      <stop offset="100%" stopColor="#6366F1" />
+                    </linearGradient>
+                    <linearGradient id="g-emerald" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#10B981" />
+                      <stop offset="100%" stopColor="#34D399" />
+                    </linearGradient>
+                    <linearGradient id="g-amber" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#F59E0B" />
+                      <stop offset="100%" stopColor="#FBBF24" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Connector lines */}
+                  <g fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4">
+                    <path d="M 120,55 C 105,35 120,15 105,-5" stroke="url(#g-indigo)" strokeWidth="1.8" />
+                    <path d="M 130,60 C 115,40 130,20 115,0" stroke="url(#g-indigo)" strokeWidth="1.4" />
+                    <path d="M 140,65 C 125,45 140,25 125,5" stroke="url(#g-indigo)" strokeWidth="1" />
+                    <path d="M 410,140 C 425,160 420,190 435,210" stroke="url(#g-emerald)" strokeWidth="1.2" />
+                    <path d="M 120,390 C 110,410 120,430 110,450" stroke="url(#g-indigo)" strokeWidth="1.4" />
+                  </g>
+
+                  <g transform="translate(140, 40)">
+                    <rect width="260" height="390" rx="6" fill="#ffffff" filter="url(#card-drop-shadow)" />
+                    <path d="M 0,6 Q 130,-4 260,6 L 260,28 L 0,28 Z" fill="url(#g-indigo)" opacity="0.06" />
+                    <g transform="translate(130, 18)">
+                      <rect x="-48" y="-9" width="96" height="18" rx="9" fill="url(#g-indigo)" opacity="0.95" />
+                      <path d="M -35,-3 L -32,-3 L -31,-6 L -30,-3 L -27,-3 L -29.5,-1 L -28.5,2 L -31,0 L -33.5,2 L -32.5,-1 Z" fill="#ffffff" />
+                      <text x="-22" y="3" fontFamily="Arial, sans-serif" fontSize="7" fontWeight="bold" fill="#ffffff" letterSpacing="1">AI SCORE 95%</text>
+                    </g>
+                    <g transform="translate(220, 16)">
+                      <circle cx="18" cy="18" r="16" fill="#ffffff" stroke="url(#g-emerald)" strokeWidth="2" opacity="0.9" />
+                      <circle cx="18" cy="18" r="16" fill="none" stroke="url(#g-emerald)" strokeWidth="2" strokeLinecap="round"
+                        strokeDasharray="100" strokeDashoffset="15" transform="rotate(-90 18 18)" opacity="0.25" />
+                      <text x="18" y="21" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="9" fontWeight="900" fill="#10B981">95</text>
+                    </g>
+                    <g transform="translate(20, 52)">
+                      <line x1="0" y1="-8" x2="220" y2="-8" stroke="var(--border)" strokeWidth="1" opacity="0.5" />
+                      <text x="0" y="7" fontFamily="'Inter', Arial, sans-serif" fontSize="13" fontWeight="800" fill="#0F172A" letterSpacing="-0.3">VINAY KUMAR</text>
+                      <g transform="translate(0, 18)" fill="#64748b" fontFamily="'Inter', Arial, sans-serif" fontSize="6" fontWeight="600">
+                        <rect x="0" y="0" width="4" height="4" rx="1" fill="url(#g-indigo)" />
+                        <text x="9" y="4">Full-Stack Engineer</text>
+                        <rect x="115" y="0" width="4" height="4" rx="1" fill="url(#g-indigo)" />
+                        <text x="124" y="4">Chennai, India</text>
+                        <rect x="0" y="8" width="4" height="4" rx="1" fill="url(#g-emerald)" />
+                        <text x="9" y="12">google@example.com</text>
+                        <rect x="115" y="8" width="4" height="4" rx="1" fill="url(#g-emerald)" />
+                        <text x="124" y="12">+91 98765 43210</text>
+                      </g>
+                    </g>
+                    <g transform="translate(20, 100)">
+                      <rect x="0" y="0" width="36" height="8" rx="2" fill="url(#g-indigo)" />
+                      <text x="5" y="6.5" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="800" fill="#ffffff" letterSpacing="0.5">SUMMARY</text>
+                      <line x1="44" y1="4" x2="220" y2="4" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                      <line x1="44" y1="10" x2="200" y2="10" stroke="#64748b" strokeWidth="1.8" strokeLinecap="round" />
+                      <line x1="44" y1="16" x2="215" y2="16" stroke="#64748b" strokeWidth="1.8" strokeLinecap="round" />
+                      <line x1="44" y1="22" x2="165" y2="22" stroke="#94a3b8" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    <g transform="translate(20, 140)">
+                      <rect x="0" y="0" width="28" height="8" rx="2" fill="url(#g-indigo)" />
+                      <text x="5" y="6.5" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="800" fill="#1e293b" letterSpacing="0.3">SKILLS</text>
+                      <line x1="36" y1="4" x2="100" y2="4" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                      <line x1="140" y1="4" x2="200" y2="4" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                      <line x1="36" y1="12" x2="90" y2="12" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                      <line x1="140" y1="12" x2="180" y2="12" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                      <line x1="36" y1="20" x2="110" y2="20" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                      <line x1="140" y1="20" x2="160" y2="20" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                    </g>
+                    <g transform="translate(20, 180)">
+                      <rect x="0" y="0" width="48" height="8" rx="2" fill="url(#g-indigo)" />
+                      <text x="5" y="6.5" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="800" fill="#ffffff" letterSpacing="0.3">EXPERIENCE</text>
+                      <line x1="56" y1="4" x2="130" y2="4" stroke="#0F172A" strokeWidth="2.5" strokeLinecap="round" />
+                      <line x1="170" y1="4" x2="220" y2="4" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="3" cy="14" r="1.8" fill="url(#g-indigo)" />
+                      <line x1="10" y1="14" x2="215" y2="14" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                      <circle cx="3" cy="22" r="1.8" fill="url(#g-indigo)" />
+                      <line x1="10" y1="22" x2="220" y2="22" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                      <circle cx="3" cy="30" r="1.8" fill="#94a3b8" />
+                      <line x1="10" y1="30" x2="190" y2="30" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                      <line x1="0" y1="40" x2="80" y2="40" stroke="#0F172A" strokeWidth="2.5" strokeLinecap="round" />
+                      <line x1="170" y1="40" x2="220" y2="40" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="3" cy="50" r="1.8" fill="url(#g-indigo)" />
+                      <line x1="10" y1="50" x2="210" y2="50" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                      <circle cx="3" cy="58" r="1.8" fill="#94a3b8" />
+                      <line x1="10" y1="58" x2="195" y2="58" stroke="#64748b" strokeWidth="1.5" strokeLinecap="round" />
+                    </g>
+                    <g transform="translate(20, 260)">
+                      <rect x="0" y="0" width="44" height="8" rx="2" fill="url(#g-emerald)" />
+                      <text x="5" y="6.5" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="800" fill="#ffffff" letterSpacing="0.3">EDUCATION</text>
+                      <line x1="52" y1="4" x2="140" y2="4" stroke="#0F172A" strokeWidth="2.2" strokeLinecap="round" />
+                      <line x1="180" y1="4" x2="220" y2="4" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="52" y1="12" x2="175" y2="12" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    <g transform="translate(20, 300)">
+                      <rect x="0" y="0" width="44" height="8" rx="2" fill="url(#g-emerald)" />
+                      <text x="5" y="6.5" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="800" fill="#1e293b" letterSpacing="0.3">LANGUAGES</text>
+                      <line x1="52" y1="4" x2="80" y2="4" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
+                      <g transform="translate(52, 12)">
+                        <circle cx="0" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="7" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="14" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="21" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="28" cy="0" r="2.2" fill="#cbd5e1" />
+                      </g>
+                      <line x1="140" y1="4" x2="160" y2="4" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
+                      <g transform="translate(140, 12)">
+                        <circle cx="0" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="7" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="14" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="21" cy="0" r="2.2" fill="url(#g-emerald)" />
+                        <circle cx="28" cy="0" r="2.2" fill="url(#g-emerald)" />
+                      </g>
+                    </g>
+                    <g transform="translate(20, 345)">
+                      <line x1="0" y1="0" x2="220" y2="0" stroke="#f1f5f9" strokeWidth="1.5" />
+                      <circle cx="40" cy="12" r="6" fill="#ef4444" opacity="0.85" />
+                      <line x1="37.5" y1="12" x2="42.5" y2="12" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+                      <text x="52" y="15" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="600" fill="#ef4444">Weak verb usage</text>
+                      <circle cx="120" cy="12" r="6" fill="url(#g-emerald)" opacity="0.85" />
+                      <path d="M 117.5,12 L 119.5,14 L 123,10.5" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      <text x="132" y="15" fontFamily="'Inter', Arial, sans-serif" fontSize="5" fontWeight="600" fill="#10B981">Contact OK</text>
+                      <circle cx="190" cy="12" r="3" fill="url(#g-emerald)" />
+                      <circle cx="200" cy="12" r="3" fill="#94a3b8" opacity="0.4" />
+                      <circle cx="210" cy="12" r="3" fill="#94a3b8" opacity="0.4" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <div className="hero-resume-badge hero-resume-badge--br" style={{ zIndex: 5 }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>✓ AI Optimized</span>
+              </div>
             </div>
-            {/* Floating badge — AI Enhanced */}
-            <div className="hero-resume-badge hero-resume-badge--br">
-              <span style={{ fontSize: 13, color: "#F472B6" }}>◇</span>
-              <span>AI Powered</span>
+          </div>
+        </div>
+
+        <div style={{ position: "absolute", bottom: 0, left: "10%", right: "10%", height: 1, background: "linear-gradient(90deg, transparent, #4F46E5, transparent)", pointerEvents: "none" }} />
+      </section>
+
+      {/* ─── SECTION 2: LOGO/BRAND MARQUEE ─── */}
+      <div ref={addSectionRef} className="scroll-fade marquee-strip" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s2" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="300" height="300" fill="url(#g-s2)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s2r" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="250" height="250" fill="url(#g-s2r)" />
+          </svg>
+        </div>
+        <div className="marquee-inner">
+          <span className="marquee-label">Matches jobs from 25 portals</span>
+          <div className="marquee-track">
+            <div className="marquee-track-inner">
+              {[...portalList, ...portalList].map((p, i) => (
+                <span key={i} className="marquee-chip" style={{ color: p.color, background: `${p.color}0c`, borderColor: `${p.color}18` }}>
+                  <span className="marquee-chip-dot" style={{ background: p.color }} />
+                  {p.name}
+                </span>
+              ))}
             </div>
+          </div>
+        </div>
+      </div>
 
-            {/* Resume Document SVG */}
-            <div className="hero-resume-doc-wrap">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 450 500"
-                width="100%"
-                height="100%"
-                style={{ background: "transparent", display: "block" }}
-                aria-label="Resume document preview"
-              >
-                {/* Definitions */}
-                <defs>
-                  <filter id="card-drop-shadow" x="-10%" y="-10%" width="130%" height="130%">
-                    <feDropShadow dx="2" dy="5" stdDeviation="6" floodColor="#000000" floodOpacity="0.08" />
-                  </filter>
-                  <filter id="avatar-drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="1" dy="3" stdDeviation="4" floodColor="#000000" floodOpacity="0.15" />
-                  </filter>
-                </defs>
+      {/* ─── SECTION 3: STATS BAR ─── */}
+      <div ref={addSectionRef} className="scroll-fade stats-bar" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s3" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="300" height="300" fill="url(#g-s3)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s3r" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M 34 0 L 0 0 0 34" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="250" height="250" fill="url(#g-s3r)" />
+          </svg>
+        </div>
+        <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 2, background: "linear-gradient(90deg, transparent, #4F46E5, transparent)", pointerEvents: "none" }} />
+        <div className="stats-bar-inner">
+          {[
+            { val: "50K+", label: "Resumes scanned", icon: <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6" />, color: "#4F46E5" },
+            { val: "94%", label: "Average ATS score lift", icon: <path d="M23 6l-9.5 9.5-5-5L1 18 M17 6h6v6" />, color: "#10B981" },
+            { val: "25", label: "Job portals integrated", icon: <><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></>, color: "#4F46E5" },
+            { val: "3K+", label: "Happy job seekers", icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75" />, color: "#F59E0B" },
+          ].map((item, i) => (
+            <div key={i} className="stats-bar-item" style={{ gap: 4, padding: "16px 20px" }}>
+              <div className="stats-bar-item-icon" style={{ background: `${item.color}0c` }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={item.color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  {item.icon}
+                </svg>
+              </div>
+              <div className="stats-bar-value"><span>{item.val}</span></div>
+              <div className="stats-bar-label">{item.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-                {/* Background decorative lines */}
-                <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M 125,55 C 110,35 125,15 110,-5" stroke="#F472B6" strokeWidth="2" />
-                  <path d="M 135,60 C 120,40 135,20 120,0" stroke="#F472B6" strokeWidth="2" />
-                  <path d="M 145,65 C 130,45 145,25 130,5" stroke="#2563EB" strokeWidth="1.5" />
-                  <path d="M 155,70 C 140,50 155,30 140,10" stroke="#F472B6" strokeWidth="1" />
-                  <path d="M 410,130 C 425,150 420,180 435,200" stroke="#EC4899" strokeWidth="1.5" />
-                  <path d="M 415,140 C 430,160 425,190 440,210" stroke="#2563EB" strokeWidth="1" />
-                  <path d="M 120,380 C 110,400 120,420 110,440" stroke="#F472B6" strokeWidth="2" />
-                  <path d="M 128,385 C 118,405 128,425 118,445" stroke="#EC4899" strokeWidth="1.5" />
-                </g>
+      {/* ─── SECTION 4: FEATURES BENTO GRID ─── */}
+      <section ref={addSectionRef} className="scroll-fade features-section" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s4" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M 36 0 L 0 0 0 36" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="280" height="280" fill="url(#g-s4)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s4r" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="230" height="230" fill="url(#g-s4r)" />
+          </svg>
+        </div>
+        <div className="section-header">
+          <div className="section-eyebrow" style={{ justifyContent: "center" }}>Everything you need</div>
+          <h2 className="section-title-refined">
+            One tool. Total <span className="section-title-gradient">resume clarity.</span>
+          </h2>
+          <p className="section-sub-refined">From raw PDF to interview-ready in minutes.</p>
+        </div>
 
-                {/* Main resume document */}
-                <g transform="translate(140, 40)">
-                  {/* White document base */}
-                  <rect width="260" height="380" rx="4" fill="#ffffff" filter="url(#card-drop-shadow)" />
-
-                  {/* AI header accent banner */}
-                  <path d="M 0,4 Q 130,-5 260,4 L 260,22 L 0,22 Z" fill="#EC4899" opacity="0.12" />
-                  <g transform="translate(130, 14)">
-                    <rect x="-45" y="-8" width="90" height="15" rx="7.5" fill="#EC4899" />
-                    <path d="M -32,-2 L -29,-2 L -28,-5 L -27,-2 L -24,-2 L -26.5,0 L -25.5,3 L -28,1 L -30.5,3 L -29.5,0 Z" fill="#ffffff" />
-                    <text x="-20" y="3" fontFamily="Arial, sans-serif" fontSize="8" fontWeight="bold" fill="#ffffff" letterSpacing="0.5">AI Optimized</text>
-                  </g>
-
-                  {/* Header — name & contact */}
-                  <g transform="translate(20, 45)">
-                    <line x1="0" y1="-12" x2="220" y2="-12" stroke="#e2e8f0" strokeWidth="1" />
-                    <text x="0" y="5" fontFamily="Arial, sans-serif" fontSize="11" fontWeight="900" fill="#1e293b" letterSpacing="0.3">VINAY KUMAR</text>
-                    <g transform="translate(0, 14)" fill="#64748b" fontFamily="Arial, sans-serif" fontSize="5.5" fontWeight="bold">
-                      <rect x="0" y="0" width="4" height="4" rx="1" fill="#EC4899" />
-                      <text x="8" y="4">Chennai, India 600015</text>
-                      <rect x="0" y="7" width="4" height="4" rx="1" fill="#2563EB" />
-                      <text x="8" y="11">+91 9840000000</text>
-                      <rect x="0" y="14" width="4" height="4" rx="1" fill="#F472B6" />
-                      <text x="8" y="18">example@example.com</text>
-                    </g>
-                  </g>
-
-                  {/* Summary */}
-                  <g transform="translate(20, 95)">
-                    <rect x="0" y="0" width="32" height="7" rx="1.5" fill="#EC4899" />
-                    <text x="4" y="6" fontFamily="Arial, sans-serif" fontSize="4.5" fontWeight="900" fill="#ffffff">SUMMARY</text>
-                    <line x1="40" y1="3" x2="220" y2="3" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="40" y1="8" x2="215" y2="8" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="40" y1="13" x2="220" y2="13" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="40" y1="18" x2="160" y2="18" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Skills */}
-                  <g transform="translate(20, 130)">
-                    <rect x="0" y="0" width="24" height="7" rx="1.5" fill="#2563EB" />
-                    <text x="4" y="6" fontFamily="Arial, sans-serif" fontSize="4.5" fontWeight="900" fill="#1e293b">SKILLS</text>
-                    <line x1="40" y1="4" x2="75" y2="4" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="125" y1="4" x2="175" y2="4" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="40" y1="11" x2="85" y2="11" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="125" y1="11" x2="165" y2="11" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="40" y1="18" x2="95" y2="18" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                    <line x1="125" y1="18" x2="150" y2="18" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
-                  </g>
-
-                  {/* Experience */}
-                  <g transform="translate(20, 165)">
-                    <rect x="0" y="0" width="36" height="7" rx="1.5" fill="#3B82F6" />
-                    <text x="4" y="6" fontFamily="Arial, sans-serif" fontSize="4.5" fontWeight="900" fill="#ffffff">EXPERIENCE</text>
-                    <line x1="40" y1="4" x2="110" y2="4" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="170" y1="4" x2="220" y2="4" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="43" cy="12" r="1.5" fill="#94a3b8" />
-                    <line x1="50" y1="12" x2="215" y2="12" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="43" cy="19" r="1.5" fill="#94a3b8" />
-                    <line x1="50" y1="19" x2="220" y2="19" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="43" cy="26" r="1.5" fill="#94a3b8" />
-                    <line x1="50" y1="26" x2="200" y2="26" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="40" y1="37" x2="100" y2="37" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="170" y1="37" x2="220" y2="37" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="43" cy="45" r="1.5" fill="#94a3b8" />
-                    <line x1="50" y1="45" x2="210" y2="45" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="43" cy="52" r="1.5" fill="#94a3b8" />
-                    <line x1="50" y1="52" x2="195" y2="52" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Education */}
-                  <g transform="translate(20, 240)">
-                    <rect x="0" y="0" width="48" height="7" rx="1.5" fill="#DB2777" />
-                    <text x="4" y="6" fontFamily="Arial, sans-serif" fontSize="4.5" fontWeight="900" fill="#ffffff">EDUCATION AND TRAINING</text>
-                    <line x1="60" y1="4" x2="150" y2="4" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="180" y1="4" x2="220" y2="4" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="60" y1="11" x2="170" y2="11" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
-                  </g>
-
-                  {/* Languages */}
-                  <g transform="translate(20, 275)">
-                    <rect x="0" y="0" width="36" height="7" rx="1.5" fill="#F472B6" />
-                    <text x="4" y="6" fontFamily="Arial, sans-serif" fontSize="4.5" fontWeight="900" fill="#1e293b">LANGUAGES</text>
-                    <line x1="45" y1="4" x2="70" y2="4" stroke="#475569" strokeWidth="2.5" strokeLinecap="round" />
-                    <g transform="translate(45, 10)">
-                      <circle cx="0" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="6" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="12" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="18" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="24" cy="0" r="2" fill="#cbd5e1" />
-                    </g>
-                    <line x1="125" y1="4" x2="145" y2="4" stroke="#475569" strokeWidth="2.5" strokeLinecap="round" />
-                    <g transform="translate(125, 10)">
-                      <circle cx="0" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="6" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="12" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="18" cy="0" r="2" fill="#F472B6" />
-                      <circle cx="24" cy="0" r="2" fill="#F472B6" />
-                    </g>
-                  </g>
-
-                  {/* Document footer controls */}
-                  <g transform="translate(20, 325)">
-                    <line x1="0" y1="0" x2="220" y2="0" stroke="#f1f5f9" strokeWidth="1.5" />
-                    <circle cx="140" cy="18" r="8" fill="#ef4444" />
-                    <path d="M 137,18 L 143,18" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="162" cy="18" r="8" fill="#2563EB" />
-                    <path d="M 158,18 L 161,21 L 167,15" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="184" cy="18" r="3" fill="#EC4899" />
-                    <circle cx="194" cy="18" r="3" fill="#94a3b8" opacity="0.5" />
-                    <circle cx="204" cy="18" r="3" fill="#94a3b8" opacity="0.5" />
-                  </g>
-                </g>
+        <div className="features-bento">
+          {/* Card A — ATS Score Engine */}
+          <div className="bento-card bento-card--large" style={{ background: "var(--bg-card)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "radial-gradient(circle at 0 0, rgba(79,70,229,0.03), transparent 70%)", pointerEvents: "none" }} />
+            <div>
+              <span className="bento-card-tag" style={{ background: "rgba(79,70,229,0.08)", color: "#4F46E5" }}>Core Feature</span>
+              <h3 className="bento-card-title" style={{ fontSize: 20 }}>Instant ATS Score</h3>
+              <p className="bento-card-body">Get a score out of 100 across 19 checks the moment you upload.</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 16 }}>
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                <circle cx="60" cy="60" r="52" stroke="#E2E8F0" strokeWidth="6" />
+                <circle cx="60" cy="60" r="52" stroke="#4F46E5" strokeWidth="6" strokeLinecap="round"
+                  strokeDasharray="327" strokeDashoffset="65" transform="rotate(-90 60 60)" opacity="0.85" />
+                <text x="60" y="56" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="28" fontWeight="800" fill="#0F172A">87</text>
+                <text x="60" y="72" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" fill="#94A3B8">/100</text>
               </svg>
             </div>
+            <div className="bento-accent-line" />
+          </div>
+
+          {/* Card B — AI Rewrite */}
+          <div className="bento-card bento-card--medium" style={{ background: "rgba(79,70,229,0.02)" }}>
+            <div className="bento-card-icon" style={{ background: "rgba(79,70,229,0.08)", color: "#4F46E5" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" />
+              </svg>
+            </div>
+            <h3 className="bento-card-title">AI Rewrite Suggestions</h3>
+            <p className="bento-card-body">Turn weak bullets into quantified achievements.</p>
+            <div className="bento-accent-line" />
+          </div>
+
+          {/* Card C — Job Matching */}
+          <div className="bento-card bento-card--medium" style={{ background: "rgba(16,185,129,0.02)" }}>
+            <div className="bento-card-icon" style={{ background: "rgba(16,185,129,0.08)", color: "#10B981" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <rect x="2" y="7" width="18" height="14" rx="2" ry="2" /><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            </div>
+            <h3 className="bento-card-title">Job Matching</h3>
+            <p className="bento-card-body">Matched against 50,000+ live listings across 9 portals.</p>
+            <div className="bento-accent-line" />
+          </div>
+
+          {/* Card D — Templates */}
+          <div className="bento-card bento-card--tall">
+            <h3 className="bento-card-title">15 LaTeX Templates</h3>
+            <p className="bento-card-body">ATS-optimized designs. One-click PDF download.</p>
+            <div className="bento-tpl-stack">
+              <div className="bento-tpl-item" style={{ width: 60, transform: "rotate(-6deg)" }}>
+                <div style={{ padding: 6, display: "flex", justifyContent: "center", alignItems: "center", aspectRatio: "3/4" }}>
+                  <PdfSvgInner variant={0} />
+                </div>
+              </div>
+              <div className="bento-tpl-item" style={{ width: 60, transform: "rotate(2deg)", marginLeft: -20 }}>
+                <div style={{ padding: 6, display: "flex", justifyContent: "center", alignItems: "center", aspectRatio: "3/4" }}>
+                  <PdfSvgInner variant={1} />
+                </div>
+              </div>
+              <div className="bento-tpl-item" style={{ width: 60, transform: "rotate(8deg)", marginLeft: -20 }}>
+                <div style={{ padding: 6, display: "flex", justifyContent: "center", alignItems: "center", aspectRatio: "3/4" }}>
+                  <PdfSvgInner variant={2} />
+                </div>
+              </div>
+            </div>
+            <div className="bento-accent-line" style={{ background: "linear-gradient(90deg, #F59E0B, #FBBF24)" }} />
+          </div>
+
+          {/* Card E — LinkedIn Analysis */}
+          <div className="bento-card bento-card--small">
+            <div className="bento-card-icon" style={{ background: "rgba(10,102,194,0.08)", color: "#0a66c2" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </div>
+            <h3 className="bento-card-title">LinkedIn Optimizer</h3>
+            <p className="bento-card-body">Score and fix your LinkedIn profile alongside your resume.</p>
+            <div className="bento-accent-line" />
+          </div>
+
+          {/* Card F — Privacy */}
+          <div className="bento-card bento-card--small">
+            <div className="bento-card-icon" style={{ background: "rgba(16,185,129,0.08)", color: "#10B981" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h3 className="bento-card-title">Private by Default</h3>
+            <p className="bento-card-body">Your resume is never stored or used for training.</p>
+            <div className="bento-accent-line" />
           </div>
         </div>
       </section>
 
-      {/* PROCESS STEPS */}
-      <section ref={addSectionRef} className="scroll-fade process-section" style={{ position: "relative" }}>
-        <PdfDeco variant={0} className="pdf-deco--process" />
-        <div className="section-header">
-          <div className="section-eyebrow">How it works</div>
-          <h2 className="section-title-refined">
-            Three steps to a <span className="section-title-gradient">stronger resume</span>
-          </h2>
+      {/* ─── SECTION 5: 19-POINT AUDIT ─── */}
+      <section ref={addSectionRef} className="scroll-fade checks-section" style={{ position: "relative", background: "var(--bg-soft), repeating-linear-gradient(-45deg, transparent 0px, transparent 40px, rgba(79,70,229,0.018) 40px, rgba(79,70,229,0.018) 41px)", padding: "100px 0" }}>
+        <div className="audit-glow" />
+        <div className="audit-bg-pattern" aria-hidden="true">
+          <svg className="audit-grid-svg audit-grid-svg--left" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="audit-grid-l" width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#4F46E5" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="300" height="300" fill="url(#audit-grid-l)" />
+          </svg>
+          <svg className="audit-grid-svg audit-grid-svg--right" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="audit-grid-r" width="36" height="36" patternUnits="userSpaceOnUse">
+                <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#10B981" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="250" height="250" fill="url(#audit-grid-r)" />
+          </svg>
         </div>
-        <div className="process-grid">
-          {[
-            { num: "01", title: "Upload & Parse", desc: "NLP engine reads your resume as an ATS would — extracting sections, bullets, and keywords.",
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> },
-            { num: "02", title: "19-Point Audit", desc: "Machine checks format compliance, keyword density, section completeness. Human review for active voice, impact, grammar.",
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> },
-            { num: "03", title: "Score & Optimize", desc: "Unified score with per-category breakdowns, AI rewrite suggestions, and matched job listings.",
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg> },
-          ].map((step, i) => (
-            <div key={i} className="process-step">
-              <div className="process-step-card">
-                <div className="process-step-header">
-                  <div className="process-step-icon">{step.icon}</div>
-                  <span className="process-step-label">{step.num}</span>
-                </div>
-                <h3 className="process-step-title">{step.title}</h3>
-                <p className="process-step-desc">{step.desc}</p>
-              </div>
-              {i < 2 && (
-                <div className="process-step-arrow">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 19-POINT CHECKS */}
-      <section ref={addSectionRef} className="scroll-fade checks-section" style={{ position: "relative" }}>
         <PdfDeco variant={4} className="pdf-deco--checks" />
+        <div className="audit-container">
 
-        <div className="section-header">
-          <div className="section-eyebrow">Audit</div>
-          <h2 className="section-title-refined" style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
-            19-point <span className="section-title-gradient">resume check</span>
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" style={{ flexShrink: 0 }}>
-              <defs>
-                <linearGradient id="checkGlow" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#2563EB" />
-                  <stop offset="100%" stopColor="#4F46E5" />
-                </linearGradient>
-                <linearGradient id="docGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#EFF6FF" />
-                  <stop offset="100%" stopColor="#DBEAFE" />
-                </linearGradient>
-              </defs>
-              {/* Document body */}
-              <g>
-                <rect x="6" y="4" width="24" height="28" rx="4" fill="url(#docGrad)" stroke="#93C5FD" strokeWidth="0.8" />
-                {/* ATS scan lines */}
-                <rect x="10" y="9" width="16" height="2" rx="1" fill="#93C5FD" opacity="0.5">
-                  <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite" />
-                </rect>
-                <rect x="10" y="13" width="12" height="2" rx="1" fill="#93C5FD" opacity="0.4">
-                  <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.4s" repeatCount="indefinite" />
-                </rect>
-                <rect x="10" y="18" width="14" height="2" rx="1" fill="#93C5FD" opacity="0.45">
-                  <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2.8s" repeatCount="indefinite" />
-                </rect>
-                <rect x="10" y="22" width="8" height="2" rx="1" fill="#93C5FD" opacity="0.35">
-                  <animate attributeName="opacity" values="0.5;0.15;0.5" dur="2.2s" repeatCount="indefinite" />
-                </rect>
-              </g>
-              {/* Badge circle */}
-              <circle cx="27" cy="8" r="9" fill="#FFFFFF" stroke="url(#checkGlow)" strokeWidth="1.5" opacity="0.95">
-                <animate attributeName="r" values="9;10;9" dur="3s" repeatCount="indefinite" />
-              </circle>
-              {/* Checkmark in badge */}
-              <path d="M23 8.5l2.5 2.5 5-5" stroke="url(#checkGlow)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none">
-                <animate attributeName="stroke-dasharray" values="0 30;30 0" dur="1.5s" repeatCount="indefinite" />
-              </path>
-            </svg>
-          </h2>
-          <p className="section-sub-refined">We check for 19 crucial things across 5 categories</p>
-        </div>
-        <div className="checks-grid">
-          {categoryData.map((cat) => (
-            <CheckCard
-              key={cat.name}
-              cat={cat}
-              items={checklistItems.filter((i) => i.cat === cat.name)}
-            />
-          ))}
+          <div className="audit-header">
+            <div className="audit-eyebrow">
+              <span className="audit-eyebrow-dot" />
+              Audit Engine · AI-Powered
+            </div>
+
+            <h2 className="audit-title">
+              <span className="audit-title-number">19</span>-point
+              <span className="audit-title-gradient"> resume check</span>
+            </h2>
+
+            <p className="audit-sub">We check for 19 crucial things across 5 categories</p>
+
+            <div className="audit-score-strip">
+              <div className="audit-score-badge">
+                <span className="audit-score-badge-value">{auditAvg}</span>
+                <span className="audit-score-badge-total">/100</span>
+              </div>
+              {categoryData.map((cat) => (
+                <span key={cat.name} className="audit-score-pill" style={{ background: `${cat.color}0c`, borderColor: `${cat.color}18`, color: cat.color }}>
+                  {cat.name} {cat.pct}%
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="audit-grid">
+            {categoryData.map((cat) => (
+              <CheckCard
+                key={cat.name}
+                cat={cat}
+                items={checklistItems.filter((i) => i.cat === cat.name)}
+              />
+            ))}
+          </div>
+
         </div>
       </section>
 
-      {/* JOBS */}
-      <section ref={addSectionRef} className="scroll-fade jobs-section">
+      {/* ─── SECTION 6: JOBS ─── */}
+      <section ref={addSectionRef} className="scroll-fade jobs-section" style={{ position: "relative", background: "var(--bg-card)" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s6" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M 22 0 L 0 0 0 22" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="320" height="320" fill="url(#g-s6)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s6r" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M 32 0 L 0 0 0 32" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="260" height="260" fill="url(#g-s6r)" />
+          </svg>
+        </div>
+        <svg style={{ position: "absolute", right: "5%", top: "10%", pointerEvents: "none", opacity: 0.04 }} width="100" height="200" viewBox="0 0 100 200" fill="none" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" fill="#4F46E5"><animate attributeName="r" values="40;45;40" dur="4s" repeatCount="indefinite" /></circle>
+          <circle cx="80" cy="150" r="20" fill="#10B981"><animate attributeName="r" values="20;24;20" dur="3s" repeatCount="indefinite" /></circle>
+          <circle cx="20" cy="120" r="15" fill="#4F46E5"><animate attributeName="r" values="15;18;15" dur="5s" repeatCount="indefinite" /></circle>
+        </svg>
         <PdfDeco variant={3} className="pdf-deco--jobs" />
         <div className="section-header">
-          <div className="section-eyebrow">Job matching</div>
-          <h2 className="section-title-refined">
-            Jobs matched to <span className="section-title-gradient">your profile</span>
-          </h2>
+          <div className="section-eyebrow" style={{ justifyContent: "center" }}>Job matching</div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4 }}>
+            <h2 className="section-title-refined" style={{ marginBottom: 0 }}>
+              Jobs matched to <span className="section-title-gradient">your profile</span>
+            </h2>
+            <span className="live-chip">
+              <span className="live-chip-dot" />
+              50,000+ listings
+            </span>
+          </div>
           <p className="section-sub-refined">
-            Your profile is embedded and matched against <strong>50,000+ live job descriptions</strong> scraped from 9 portals.
+            Your profile is embedded and matched against <strong>50,000+ live job descriptions</strong> scraped from 25 portals.
           </p>
         </div>
-        <div className="portal-row">
-          {portalList.map((p) => (
-            <span key={p.name} className="portal-chip" style={{ color: p.color, background: `${p.color}0c`, borderColor: `${p.color}18` }}>{p.name}</span>
-          ))}
+
+        {/* Portal marquee strip — 2 rows */}
+        <div className="portal-marquee-wrap">
+          <div className="portal-label-row">
+            <span>Matching jobs from 25 portals</span>
+            <span>🎓 + 9 internship platforms</span>
+          </div>
+          <div className="portal-marquee-track portal-marquee-track--left">
+            {[...portalList, ...portalList].map((p, i) => (
+              <span key={i} className="marquee-chip" style={{ color: p.color, background: `${p.color}0c`, borderColor: `${p.color}18` }}>
+                <span className="marquee-chip-dot" style={{ background: p.color }} />
+                {p.name}
+              </span>
+            ))}
+          </div>
+          <div className="portal-marquee-track portal-marquee-track--right">
+            {[...internshipPortalList, ...internshipPortalList].map((p, i) => (
+              <span key={i} className="marquee-chip" style={{ color: p.color, background: `${p.color}0c`, borderColor: `${p.color}18` }}>
+                <span className="marquee-chip-dot" style={{ background: p.color }} />
+                🎓 {p.name}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="jobs-grid">
+
+        <div className="jobs-grid" style={{ gridTemplateColumns: "repeat(2, 1fr)", maxWidth: 860, margin: "0 auto", padding: "0 24px" }}>
           {jobsData.map((job, i) => (
             <JobCard key={i} job={job} />
           ))}
         </div>
-        <div className="jobs-cta-wrap">
+        <div className="jobs-cta-wrap" style={{ flexDirection: "column", gap: 8 }}>
           <Link to="/job-recommender" className="btn-primary" style={{ fontSize: 15, padding: "13px 32px", borderRadius: 10 }}>
-            View All Jobs
+            View All Jobs →
+          </Link>
+          <Link to="/job-recommender?tab=internships" style={{ fontSize: 14, color: "var(--accent)", fontWeight: 600, display: "block", textAlign: "center", marginTop: 8 }}>
+            🎓 Browse free internship portals →
           </Link>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section ref={addSectionRef} className="scroll-fade testimonials-section" style={{ position: "relative" }}>
+      {/* ─── SECTION 7: TESTIMONIALS ─── */}
+      <section ref={addSectionRef} className="scroll-fade testimonials-section" style={{ position: "relative", background: "var(--bg-soft)" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s7" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="300" height="300" fill="url(#g-s7)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s7r" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="240" height="240" fill="url(#g-s7r)" />
+          </svg>
+        </div>
         <PdfDeco variant={5} className="pdf-deco--testimonials" />
         <div className="testimonials-inner">
           <div className="section-header">
-            <div className="section-eyebrow">Testimonials</div>
+            <div className="section-eyebrow" style={{ justifyContent: "center" }}>Testimonials</div>
             <h2 className="section-title-refined">Loved by job seekers</h2>
           </div>
-          <div className="testimonials-grid">
-            {testimonials.map((t, i) => {
-              const quote = t.text.replace(t.metric, "");
-              return (
-                <div key={i} className="testimonial-card">
-                  <div className="testimonial-top">
-                    <div className="testimonial-avatar" style={{ background: avatarColors[i], color: avatarTextColors[i] }}>
-                      {initials[i]}
-                    </div>
-                    <div className="testimonial-quote-icon">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H9.983v10H0z" /></svg>
-                    </div>
-                  </div>
-                  <p className="testimonial-text">"{quote}"</p>
-                  <div className="testimonial-result">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2.5" strokeLinecap="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                    <span>Key result: <strong>{t.metric}</strong></span>
-                  </div>
-                  <div>
-                    <div className="testimonial-name">{t.name}</div>
-                    <div className="testimonial-role">{t.role}</div>
-                  </div>
+
+          <div className="testimonials-featured-grid">
+            {/* Hero card → Jenica */}
+            <div className="testimonials-hero-card" style={{ position: "relative", borderLeft: "4px solid #4F46E5", borderRadius: "var(--radius)" }}>
+              <div style={{ position: "absolute", top: 16, left: 16, fontSize: 80, fontWeight: 800, color: "#4F46E5", opacity: 0.06, lineHeight: 1, pointerEvents: "none", fontFamily: "Georgia, serif" }}>"</div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                <div className="testimonial-avatar" style={{ background: avatarColors[0], color: avatarTextColors[0] }}>
+                  {initials[0]}
                 </div>
-              );
-            })}
+                <div className="hero-stars">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="1">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="testimonial-text" style={{ fontSize: 16, fontStyle: "italic", lineHeight: 1.8, color: "var(--text)" }}>
+                "ProfileOptimizer has changed my life: One week & four interviews later, I will be making 150% more doing the job I chose."
+              </p>
+              <div style={{ fontSize: 26, fontWeight: 800, color: "#4F46E5", marginBottom: 12, letterSpacing: "-0.03em" }}>
+                150% more salary
+              </div>
+              <div style={{ marginTop: "auto" }}>
+                <div className="testimonial-name" style={{ fontSize: 15 }}>Jenica</div>
+                <div className="testimonial-role" style={{ fontSize: 13 }}>Solutions Engineer</div>
+              </div>
+            </div>
+
+            {/* Right stack */}
+            <div className="testimonials-featured-right">
+              {testimonials.slice(1).map((t, idx) => {
+                const i = idx + 1;
+                const quote = t.text.replace(t.metric, "");
+                return (
+                  <div key={i} className="testimonials-compact-card">
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <div className="testimonial-avatar" style={{ background: avatarColors[i], color: avatarTextColors[i], width: 36, height: 36, fontSize: 12 }}>
+                        {initials[i]}
+                      </div>
+                      <div>
+                        <div className="testimonial-name" style={{ fontSize: 13 }}>{t.name}</div>
+                        <div className="testimonial-role" style={{ fontSize: 11 }}>{t.role}</div>
+                      </div>
+                    </div>
+                    <p className="testimonial-text" style={{ fontSize: 13 }}>"{quote}"</p>
+                    <div className="testimonial-result" style={{ padding: "6px 10px", fontSize: 12, alignSelf: "flex-start" }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2.5" strokeLinecap="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>Result: <strong>{t.metric}</strong></span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="testimonials-social-proof">
+            <div className="testimonials-avatars">
+              {initials.map((init, i) => (
+                <div key={i} className="testimonials-avatar-item" style={{ backgroundColor: avatarColors[i], color: avatarTextColors[i] }}>
+                  {init}
+                </div>
+              ))}
+              <span className="testimonials-total" style={{ marginLeft: 16 }}>
+                <strong style={{ color: "var(--text)" }}>3,000+</strong> professionals optimized their resume
+              </span>
+            </div>
+            <div className="hero-stars">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="1">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              ))}
+              <span className="hero-stars-label" style={{ fontSize: 13 }}>4.5 · 3,000+ scans</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section ref={addSectionRef} className="scroll-fade faq-section">
+      {/* ─── SECTION 8: FAQ ─── */}
+      <section ref={addSectionRef} className="scroll-fade faq-section" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s8" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="280" height="280" fill="url(#g-s8)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s8r" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="220" height="220" fill="url(#g-s8r)" />
+          </svg>
+        </div>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(circle, rgba(79,70,229,0.04) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="section-header">
-          <div className="section-eyebrow">FAQ</div>
+          <div className="section-eyebrow" style={{ justifyContent: "center" }}>FAQ</div>
           <h2 className="section-title-refined">
             Frequently asked <span className="section-title-gradient">questions</span>
           </h2>
         </div>
-        <div className="faq-list">
+        <div className="faq-two-col">
           {faqs.map((item, i) => (
-            <FaqItem key={i} q={item.q} a={item.a} />
+            <FaqItem key={i} q={item.q} a={item.a} idx={i} />
           ))}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 32 }}>
+          <Link to="#" style={{ color: "#4F46E5", fontSize: 14, fontWeight: 600, textDecoration: "none" }} onClick={(e) => { e.preventDefault(); window.location.href = "mailto:support@profileoptimizer.com"; }}>
+            Still have questions? Chat with us →
+          </Link>
         </div>
       </section>
 
-      {/* CTA */}
-      <section ref={addSectionRef} className="scroll-fade cta-section-refined">
+      {/* ─── SECTION 9: FINAL CTA ─── */}
+      <section ref={addSectionRef} className="scroll-fade cta-section-refined" style={{ position: "relative" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s9" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="260" height="260" fill="url(#g-s9)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-s9r" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="200" height="200" fill="url(#g-s9r)" />
+          </svg>
+        </div>
+        <svg style={{ position: "absolute", left: "10%", top: "20%", pointerEvents: "none", opacity: 0.06 }} width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <circle cx="60" cy="60" r="50" stroke="#4F46E5" strokeWidth="1" />
+          <circle cx="60" cy="60" r="40" stroke="#4F46E5" strokeWidth="0.5" />
+          <circle cx="60" cy="60" r="30" stroke="#10B981" strokeWidth="0.3" />
+        </svg>
+        <svg style={{ position: "absolute", right: "8%", bottom: "25%", pointerEvents: "none", opacity: 0.05 }} width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+          <circle cx="40" cy="40" r="30" stroke="#10B981" strokeWidth="1">
+            <animate attributeName="r" values="30;35;30" dur="5s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="40" cy="40" r="20" stroke="#10B981" strokeWidth="0.5">
+            <animate attributeName="r" values="20;24;20" dur="4s" repeatCount="indefinite" />
+          </circle>
+        </svg>
         <PdfDeco variant={2} className="pdf-deco--cta" />
-        <div className="cta-inner">
-          <h2 className="cta-title-refined">Get your resume score now</h2>
-          <p className="cta-sub-refined">
-            Get a personalized report with an actionable task list — and turn applications into callbacks.
-          </p>
-          <Link to={ctaTo} className="btn-primary" style={{ display: "inline-flex", fontSize: 16, padding: "15px 36px", borderRadius: 10 }}>
-            {user ? "Scan Now" : "Upload Your Resume"}
-          </Link>
+
+        <div className="cta-split">
+          <div className="cta-split-left">
+            <h2 className="cta-split-title">Ready to land your dream job?</h2>
+            <p className="cta-split-sub" style={{ maxWidth: 440 }}>
+              Join 3,000+ job seekers who turned their resume into callbacks.
+            </p>
+            <div className="cta-split-actions">
+              <Link to={ctaTo} className="cta-btn-primary shimmer-btn" style={{ position: "relative", overflow: "hidden" }}>
+                {user ? "Scan My Resume Free →" : "Scan My Resume Free →"}
+              </Link>
+            </div>
+            <div className="cta-trust-row">
+              <span>✓ Free forever</span>
+              <span>·</span>
+              <span>✓ No signup needed</span>
+              <span>·</span>
+              <span>✓ Instant results</span>
+            </div>
+          </div>
+
+          <div className="cta-split-right">
+            <div className="cta-score-card">
+              <div className="cta-score-number">
+                95<span style={{ fontSize: 20, fontWeight: 500, color: "#64748B", verticalAlign: "super" }}>/100</span>
+              </div>
+              <div className="cta-score-label">Your ATS Score</div>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 10px", borderRadius: 100, background: "rgba(16,185,129,0.12)", color: "#10B981", fontSize: 12, fontWeight: 700, marginBottom: 16 }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
+                </svg>
+                +23 from last scan
+              </div>
+              <div className="cta-score-bars">
+                <div className="cta-score-bar-item">
+                  <div className="cta-score-bar-head">
+                    <span>Content Quality</span>
+                    <span>82%</span>
+                  </div>
+                  <div className="cta-score-bar-track">
+                    <div className="cta-score-bar-fill" style={{ width: "82%", background: "#4F46E5" }} />
+                  </div>
+                </div>
+                <div className="cta-score-bar-item">
+                  <div className="cta-score-bar-head">
+                    <span>Formatting</span>
+                    <span>94%</span>
+                  </div>
+                  <div className="cta-score-bar-track">
+                    <div className="cta-score-bar-fill" style={{ width: "94%", background: "#10B981" }} />
+                  </div>
+                </div>
+                <div className="cta-score-bar-item">
+                  <div className="cta-score-bar-head">
+                    <span>Keyword Match</span>
+                    <span>74%</span>
+                  </div>
+                  <div className="cta-score-bar-track">
+                    <div className="cta-score-bar-fill" style={{ width: "74%", background: "#F59E0B" }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -211,3 +211,16 @@ export const latex = {
   aiOptimize: (data) =>
     API.post("/api/latex-templates/ai-optimize", data).then((r) => r.data),
 };
+
+export const portals = {
+  getJobPortals: () =>
+    API.get("/api/portals/jobs").then((r) => r.data),
+  getInternshipPortals: () =>
+    API.get("/api/portals/internships").then((r) => r.data),
+};
+
+export const templateGallery = {
+  list: (params) => API.get("/api/v1/templates", { params }).then((r) => r.data),
+  get: (slug) => API.get(`/api/v1/templates/${slug}`).then((r) => r.data),
+  categories: () => API.get("/api/v1/templates/meta/categories").then((r) => r.data),
+};

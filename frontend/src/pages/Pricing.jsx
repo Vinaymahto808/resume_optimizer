@@ -7,7 +7,7 @@ const FALLBACK_PLANS = [
   {
     id: "free",
     name: "Free",
-    description: "Basic ATS scan to get started",
+    description: "Perfect to get a feel for the platform",
     price_id: "free",
     amount: 0,
     features: [
@@ -19,14 +19,14 @@ const FALLBACK_PLANS = [
   {
     id: "basic",
     name: "Basic",
-    description: "Unlimited scans + essential checks",
+    description: "Everything you need for a strong job search",
     price_id: "price_basic_monthly",
     amount: 500,
     features: [
       "Unlimited resume scans",
       "Detailed ATS breakdown (19 checks)",
       "Keyword & skill analysis",
-      "Resume templates",
+      "Professional resume templates",
       "Email support",
     ],
   },
@@ -40,11 +40,22 @@ const FALLBACK_PLANS = [
       "Everything in Basic",
       "AI rewrite suggestions",
       "LinkedIn profile analysis",
-      "Job matching (9 portals)",
+      "Job matching across 9 portals",
+      "Career roadmap generator",
       "Priority support",
     ],
   },
 ];
+
+function CheckIcon() {
+  return (
+    <div className="pricing-feature-icon">
+      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="2 6 5 9 10 3" />
+      </svg>
+    </div>
+  );
+}
 
 export default function Pricing() {
   const { user } = useAuth();
@@ -58,10 +69,7 @@ export default function Pricing() {
   }, []);
 
   const handleSubscribe = async (priceId) => {
-    if (!user) {
-      navigate("/signup");
-      return;
-    }
+    if (!user) { navigate("/signup"); return; }
     setLoading(true);
     setLoadingId(priceId);
     try {
@@ -70,150 +78,84 @@ export default function Pricing() {
         success_url: `${window.location.origin}/dashboard`,
         cancel_url: `${window.location.origin}/pricing`,
       });
-      if (result.url) {
-        window.location.href = result.url;
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Payment failed. Check your credentials.");
+      if (result.url) window.location.href = result.url;
+    } catch {
+      alert("Payment failed. Please try again.");
     }
     setLoading(false);
     setLoadingId(null);
   };
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.bgGlow} />
-      <h2 style={styles.title}>Choose Your Plan</h2>
-      <p style={styles.subtitle}>
-        Get the right tools to optimize your resume for ATS systems.
-      </p>
+    <div className="pricing-page">
+      <div className="pricing-header">
+        <div className="pricing-eyebrow">Simple Pricing</div>
+        <h1 className="pricing-title">
+          Pick a plan, <span>land the job</span>
+        </h1>
+        <p className="pricing-subtitle">
+          No surprise fees. Cancel anytime. Start free and upgrade when you're ready.
+        </p>
+      </div>
 
-      <div className="pricing-grid" style={styles.grid}>
-        {prices.map((p, idx) => {
+      <div className="pricing-cards">
+        {prices.map((p) => {
           const isPopular = p.id === "basic";
           const isFree = p.id === "free";
+          const isLoading = loading && loadingId === p.price_id;
+
           return (
             <div
               key={p.id}
-              className="hover-card proximity-glow ui-card"
-              style={{
-                ...styles.card,
-                borderColor: isPopular ? "var(--accent)" : "var(--border)",
-              }}
+              className={`pricing-card${isPopular ? " pricing-card--popular" : ""}`}
             >
-              {isPopular && <div style={styles.popular}>Most Popular</div>}
-              <h3 style={styles.planName}>{p.name}</h3>
-              <div style={styles.price}>
-                {p.amount === 0 ? (
-                  <span style={styles.amount}>Free</span>
-                ) : (
-                  <>
-                    <span style={styles.amount}>
-                      ${(p.amount / 100).toFixed(0)}
-                    </span>
-                    <span style={styles.period}>/month</span>
-                  </>
-                )}
+              {isPopular && <div className="pricing-card-badge">Most Popular</div>}
+
+              <div className="pricing-card-header">
+                <div className={`pricing-plan-name${isPopular ? " pricing-plan-name--popular" : ""}`}>
+                  {p.name}
+                </div>
+                <div className="pricing-amount-row">
+                  {p.amount > 0 && <span className="pricing-currency">$</span>}
+                  <span className="pricing-amount">
+                    {p.amount === 0 ? "Free" : (p.amount / 100).toFixed(0)}
+                  </span>
+                  {p.amount > 0 && <span className="pricing-period">/mo</span>}
+                </div>
+                <p className="pricing-desc">{p.description}</p>
               </div>
-              <p style={styles.desc}>{p.description}</p>
-              <ul style={styles.features}>
+
+              <ul className="pricing-features" style={{ marginTop: 8 }}>
                 {(p.features || []).map((f, i) => (
-                  <li key={i} style={styles.feature}>
-                    {f}
+                  <li key={i} className="pricing-feature">
+                    <CheckIcon />
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
+
               <button
-                className={isFree ? "btn-secondary" : "btn-primary"}
-                style={styles.btn}
+                className={`pricing-btn ${isPopular || !isFree ? "pricing-btn--primary" : "pricing-btn--secondary"}`}
                 onClick={() => handleSubscribe(p.price_id)}
                 disabled={loading}
               >
-                {loading && loadingId === p.price_id
-                  ? "Processing..."
+                {isLoading
+                  ? "Processing…"
                   : isFree
-                  ? "Get Started"
-                  : "Subscribe"}
+                  ? "Get started free"
+                  : `Get ${p.name}`}
               </button>
             </div>
           );
         })}
       </div>
+
+      <p className="pricing-guarantee">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        30-day money-back guarantee · No credit card for Free plan
+      </p>
     </div>
   );
 }
-
-const styles = {
-  wrapper: {
-    maxWidth: 1000,
-    margin: "0 auto",
-    padding: "40px 24px",
-    position: "relative",
-  },
-  bgGlow: {
-    position: "absolute",
-    top: "20%",
-    left: "50%",
-    width: 600,
-    height: 600,
-    background:
-      "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 60%)",
-    transform: "translate(-50%, -50%)",
-    pointerEvents: "none",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 32,
-    fontWeight: 800,
-    color: "var(--text)",
-    position: "relative",
-  },
-  subtitle: {
-    textAlign: "center",
-    color: "var(--text-secondary)",
-    fontSize: 16,
-    marginBottom: 32,
-    position: "relative",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: 24,
-    position: "relative",
-  },
-  card: {
-    background: "var(--bg-card)",
-    borderRadius: "var(--radius)",
-    padding: 32,
-    border: "1px solid var(--border)",
-    display: "flex",
-    flexDirection: "column",
-    position: "relative",
-  },
-  popular: {
-    position: "absolute",
-    top: -12,
-    left: "50%",
-    transform: "translateX(-50%)",
-    background: "var(--accent)",
-    color: "#fff",
-    fontSize: 11,
-    fontWeight: 700,
-    padding: "3px 14px",
-    borderRadius: 20,
-  },
-  planName: { fontSize: 22, fontWeight: 700, marginBottom: 8 },
-  price: { marginBottom: 12 },
-  amount: { fontSize: 40, fontWeight: 800, color: "var(--accent)" },
-  period: { fontSize: 16, color: "var(--text-muted)", marginLeft: 4 },
-  desc: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 20 },
-  features: { listStyle: "none", padding: 0, flex: 1 },
-  feature: {
-    padding: "6px 0",
-    fontSize: 14,
-    color: "var(--text-secondary)",
-    borderBottom: "1px solid var(--border)",
-  },
-  btn: { width: "100%", marginTop: 20, textAlign: "center" },
-};

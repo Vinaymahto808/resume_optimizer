@@ -1,57 +1,24 @@
 export default function PrivacyPolicy() {
   return (
-    <div className="landing" style={{ minHeight: "100vh" }}>
-      <section style={{ padding: "80px 24px", background: "#F8FAFC" }}>
+    <div className="landing" style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#2563EB", marginBottom: 12 }}>
-              <span style={{ width: 20, height: 2, borderRadius: 2, background: "#2563EB" }} />
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--accent)", marginBottom: 12 }}>
+              <span style={{ width: 20, height: 2, borderRadius: 2, background: "var(--accent)" }} />
               Legal
             </div>
-            <h1 style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.15, color: "#0F172A", marginBottom: 12 }}>
+            <h1 style={{ fontSize: "clamp(28px, 3.5vw, 38px)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.2, color: "var(--text)", marginBottom: 12 }}>
               Privacy Policy
             </h1>
-            <p style={{ fontSize: 14, color: "#64748B" }}>Last updated: June 26, 2026</p>
+            <p style={{ fontSize: 14, color: "var(--text-muted)" }}>Last updated: January 2026</p>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-            {[
-              {
-                title: "Information we collect",
-                content: "When you upload a resume, we process its text content to generate ATS scores, keyword analysis, and improvement suggestions. We store your uploaded file and the resulting analysis so you can revisit past results. If you create an account, we store your email address and a securely-hashed password."
-              },
-              {
-                title: "How we use your information",
-                content: "Your resume text is used exclusively to power the ATS scoring engine, keyword analysis, job matching, and AI-powered suggestions. We do not train machine learning models on your resume data. We do not sell or share your personal information with third parties for their own marketing purposes."
-              },
-              {
-                title: "Data retention & deletion",
-                content: "Your resume data is stored until you delete it. You can delete individual scans from your dashboard, or delete your entire account — all associated data is permanently removed within 30 days. Account deletion is self-service from your settings page."
-              },
-              {
-                title: "Cookies",
-                content: "We use essential cookies for authentication and session management. We do not use tracking cookies or third-party analytics cookies. You can disable cookies in your browser, but some features may not work correctly."
-              },
-              {
-                title: "Third-party services",
-                content: "We use Stripe for payment processing — Stripe receives your payment information and billing details according to their own privacy policy. We use Google Gemini API for AI-powered suggestions; the minimum necessary text is sent for analysis and is not stored by Google for training purposes."
-              },
-              {
-                title: "Security",
-                content: "All connections are encrypted via TLS 1.3. Passwords are hashed using bcrypt. We regularly audit our dependencies for vulnerabilities. Despite these measures, no online service is 100% secure."
-              },
-              {
-                title: "Changes to this policy",
-                content: "We may update this policy from time to time. Material changes will be notified via email if you have an account, or via a notice on our website. Continued use after changes constitutes acceptance."
-              },
-              {
-                title: "Contact",
-                content: "Questions about this policy? Email us at support@profileoptimizer.app."
-              },
-            ].map((s) => (
-              <div key={s.title}>
-                <h2 style={{ fontSize: 17, fontWeight: 700, color: "#0F172A", marginBottom: 8 }}>{s.title}</h2>
-                <p style={{ fontSize: 14, color: "#475569", lineHeight: 1.7 }}>{s.content}</p>
+            {sections.map((section, i) => (
+              <div key={i}>
+                <h2 style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>{section.title}</h2>
+                <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.7 }}>{section.content}</p>
               </div>
             ))}
           </div>
@@ -60,3 +27,42 @@ export default function PrivacyPolicy() {
     </div>
   );
 }
+
+const sections = [
+  {
+    title: "What We Collect",
+    content: "We collect data you provide: your name, email address, and resume content you upload. We also collect basic usage data (page views, feature usage) to improve the service. We do not collect sensitive personal data beyond what you choose to include in your resume.",
+  },
+  {
+    title: "How We Use Your Data",
+    content: "Your resume content is used to: generate ATS scores and breakdowns, analyze keywords and skills, match you with relevant job openings, and generate improvement suggestions. We do not use your data to train AI models or share it with third parties for advertising.",
+  },
+  {
+    title: "Data Storage & Security",
+    content: "Your data is stored securely using industry-standard encryption (AES-256 at rest, TLS 1.3 in transit). We retain your resume data for as long as your account is active. You can delete your account and all associated data at any time from your account settings.",
+  },
+  {
+    title: "Data Sharing",
+    content: "We do not sell your personal data. We may share anonymized, aggregated data for analytics purposes. We may disclose data if required by law or to protect our legal rights. Job matching features use only keywords extracted from your resume, not the full document.",
+  },
+  {
+    title: "Your Rights",
+    content: "You have the right to: access your data, correct inaccurate data, delete your data and account, export your data in a portable format, and withdraw consent at any time. To exercise these rights, visit your account settings or contact support@profileoptimizer.app.",
+  },
+  {
+    title: "Cookies",
+    content: "We use essential cookies for authentication and basic functionality. We also use analytics cookies to understand how the service is used. You can disable cookies in your browser settings, though some features may not function properly.",
+  },
+  {
+    title: "Third-Party Services",
+    content: "We use Stripe for payment processing and standard cloud hosting providers. These services have their own privacy policies and data handling practices. We do not control and are not responsible for their data practices.",
+  },
+  {
+    title: "Changes to This Policy",
+    content: "We may update this policy from time to time. Material changes will be notified via email or through the service. Continued use after changes constitutes acceptance of the updated policy.",
+  },
+  {
+    title: "Contact",
+    content: "For privacy-related questions, contact privacy@profileoptimizer.app or write to our data protection officer at the registered address listed on our website.",
+  },
+];

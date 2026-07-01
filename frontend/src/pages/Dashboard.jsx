@@ -28,9 +28,81 @@ export default function Dashboard() {
     : null;
 
   return (
-    <div>
+    <div style={s.page}>
+      <style>{`
+        .dash-kpi {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          margin-bottom: 28px;
+        }
+
+        .dash-table-head {
+          display: flex;
+          padding: 12px 20px;
+          font-size: 11px;
+          font-weight: 600;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          border-bottom: 1px solid var(--border);
+          background: rgba(148,163,184,0.03);
+        }
+
+        .dash-table-head span { flex: 1; text-align: left; }
+
+        .dash-table-row {
+          display: flex;
+          align-items: center;
+          padding: 14px 20px;
+          text-decoration: none;
+          color: inherit;
+          border-bottom: 1px solid var(--border);
+          transition: background 0.12s;
+        }
+        .dash-table-row:hover { background: rgba(148,163,184,0.04); }
+        .dash-table-row:last-child { border-bottom: 0; }
+
+        .dash-table-row span { flex: 1; }
+
+        @media (max-width: 768px) {
+          .dash-kpi {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+          }
+
+          .dash-table-head { display: none; }
+
+          .dash-table-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+            padding: 14px 16px;
+          }
+
+          .dash-table-row span {
+            flex: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .dash-table-row span::before {
+            content: attr(data-label);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            min-width: 70px;
+            flex-shrink: 0;
+          }
+        }
+      `}</style>
+
       {/* KPI Row */}
-      <div className="dash-kpi-grid" style={s.kpiRow}>
+      <div className="dash-kpi">
         <div className="ui-card" style={s.kpiCard}>
           <div style={s.kpiValue}>{totalScans}</div>
           <div style={s.kpiLabel}>Total Scans</div>
@@ -51,12 +123,12 @@ export default function Dashboard() {
       {/* Recent Resumes Table */}
       <div className="ui-card" style={s.tableCard}>
         <div style={s.tableTitle}>Recent Resumes</div>
-        <div style={s.table}>
-          <div style={s.tableHead}>
-            <span style={s.th}>Filename</span>
-            <span style={s.th}>Score</span>
-            <span style={s.th}>Date</span>
-            <span style={s.th}>Status</span>
+        <div>
+          <div className="dash-table-head">
+            <span>Filename</span>
+            <span>Score</span>
+            <span>Date</span>
+            <span>Status</span>
           </div>
           {list.length === 0 ? (
             <div style={s.empty}>
@@ -66,16 +138,22 @@ export default function Dashboard() {
             </div>
           ) : (
             list.map((r) => {
-              const s = r.ats_score || 0;
-              const scoreColor = s >= 80 ? "var(--success)" : s >= 50 ? "var(--warning)" : "var(--danger)";
+              const score = r.ats_score || 0;
+              const scoreColor = score >= 80 ? "var(--success)" : score >= 50 ? "var(--warning)" : "var(--danger)";
               return (
-                <Link key={r.id} to={`/results/${r.id}`} style={s.row}>
-                  <span style={s.filename}>{r.filename}</span>
-                  <span style={{ ...s.score, color: scoreColor }}>{s}/100</span>
-                  <span style={s.date}>
+                <Link key={r.id} to={`/results/${r.id}`} className="dash-table-row">
+                  <span data-label="Filename" style={{ fontWeight: 500, fontSize: 14, color: "var(--text)" }}>
+                    {r.filename}
+                  </span>
+                  <span data-label="Score" style={{ fontWeight: 700, fontSize: 14, color: scoreColor }}>
+                    {score}/100
+                  </span>
+                  <span data-label="Date" style={{ fontSize: 13, color: "var(--text-muted)" }}>
                     {r.created_at ? new Date(r.created_at).toLocaleDateString() : "--"}
                   </span>
-                  <span><StatusPill atsScore={r.ats_score} /></span>
+                  <span data-label="Status">
+                    <StatusPill atsScore={r.ats_score} />
+                  </span>
                 </Link>
               );
             })
@@ -87,11 +165,10 @@ export default function Dashboard() {
 }
 
 const s = {
-  kpiRow: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: 16,
-    marginBottom: 28,
+  page: {
+    maxWidth: 960,
+    margin: "0 auto",
+    padding: "clamp(16px, 3vw, 32px)",
   },
   kpiCard: {
     background: "var(--bg-card)",
@@ -129,34 +206,6 @@ const s = {
     padding: "18px 20px",
     borderBottom: "1px solid var(--border)",
   },
-  table: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  tableHead: {
-    display: "flex",
-    padding: "12px 20px",
-    fontSize: 11,
-    fontWeight: 600,
-    color: "var(--text-muted)",
-    textTransform: "uppercase",
-    letterSpacing: "0.06em",
-    borderBottom: "1px solid var(--border)",
-    background: "rgba(148,163,184,0.03)",
-  },
-  th: { flex: 1, textAlign: "left" },
-  row: {
-    display: "flex",
-    alignItems: "center",
-    padding: "14px 20px",
-    textDecoration: "none",
-    color: "inherit",
-    borderBottom: "1px solid var(--border)",
-    transition: "background 0.12s",
-  },
-  filename: { flex: 1, fontWeight: 500, fontSize: 14, color: "var(--text)" },
-  score: { flex: 1, fontWeight: 700, fontSize: 14 },
-  date: { flex: 1, fontSize: 13, color: "var(--text-muted)" },
 
   pillSuccess: {
     display: "inline-flex",

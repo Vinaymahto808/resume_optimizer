@@ -9,39 +9,52 @@ export default function AuthShell({
   note = "A calmer workspace for serious applications.",
   children,
 }) {
+  const showAside = !!(eyebrow || title);
+
   return (
     <div style={styles.page}>
-      <div className="auth-shell-grid" style={styles.wrap}>
-        <aside className="ui-card auth-shell-aside" style={styles.aside}>
-          <div style={styles.asideWash} />
-          <div style={styles.eyebrow}>{eyebrow}</div>
-          <h1 style={styles.title}>{title}</h1>
-          <p style={styles.subtitle}>{subtitle}</p>
+      <div
+        className="auth-shell-grid"
+        style={{
+          ...styles.wrap,
+          gridTemplateColumns: showAside
+            ? "minmax(0, 1.05fr) minmax(340px, 0.95fr)"
+            : "1fr",
+          justifyContent: "center",
+        }}
+      >
+        {showAside && (
+          <aside className="ui-card auth-shell-aside" style={styles.aside}>
+            <div style={styles.asideWash} />
+            <div style={styles.eyebrow}>{eyebrow}</div>
+            <h1 style={styles.title}>{title}</h1>
+            <p style={styles.subtitle}>{subtitle}</p>
 
-          {metrics.length > 0 && (
-            <div style={styles.metrics}>
-              {metrics.map((metric) => (
-                <div key={metric.label} style={styles.metricCard}>
-                  <div style={styles.metricValue}>{metric.value}</div>
-                  <div style={styles.metricLabel}>{metric.label}</div>
-                </div>
-              ))}
-            </div>
-          )}
+            {metrics.length > 0 && (
+              <div style={styles.metrics}>
+                {metrics.map((metric) => (
+                  <div key={metric.label} style={styles.metricCard}>
+                    <div style={styles.metricValue}>{metric.value}</div>
+                    <div style={styles.metricLabel}>{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
 
-          {bullets.length > 0 && (
-            <div style={styles.bulletList}>
-              {bullets.map((bullet) => (
-                <div key={bullet} style={styles.bulletRow}>
-                  <span style={styles.bulletDot} />
-                  <span style={styles.bulletText}>{bullet}</span>
-                </div>
-              ))}
-            </div>
-          )}
+            {bullets.length > 0 && (
+              <div style={styles.bulletList}>
+                {bullets.map((bullet) => (
+                  <div key={bullet} style={styles.bulletRow}>
+                    <span style={styles.bulletDot} />
+                    <span style={styles.bulletText}>{bullet}</span>
+                  </div>
+                ))}
+              </div>
+            )}
 
-          <div style={styles.note}>{note}</div>
-        </aside>
+            <div style={styles.note}>{note}</div>
+          </aside>
+        )}
 
         <div style={styles.panel}>{children}</div>
       </div>
