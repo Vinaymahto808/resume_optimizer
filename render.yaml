@@ -15,11 +15,11 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: https://ats-resume-checker.onrender.com,https://www.ats-resume-checker.onrender.com
+        value: http://localhost:5173,http://localhost:8000,https://www.profileotimizer.online,https://profileotimizer.online
       - key: RUN_ENV
         value: production
       - key: FRONTEND_URL
-        value: https://ats-resume-checker.onrender.com
+        value: https://www.profileotimizer.online
       - key: RESEND_API_KEY
         sync: false
       - key: GROQ_API_KEY
@@ -51,7 +51,7 @@ services:
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://ats-resume-checker-api.onrender.com
+        value: https://api.profileotimizer.online
     headers:
       - path: /*
         name: X-Frame-Options
