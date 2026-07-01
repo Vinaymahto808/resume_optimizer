@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: ats-resume-checker-api
+    name: resume-optimizer
     env: python
     region: oregon
     plan: free
-    buildCommand: cd backend && pip install -r requirements.txt
+    buildCommand: cd frontend && npm ci && npm run build && cd ../backend && pip install -r requirements.txt
     startCommand: cd backend && gunicorn main:app --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     healthCheckPath: /api/health
     envVars:
@@ -15,7 +15,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: http://localhost:5173,http://localhost:8000,https://resume-optimizer-frontend.onrender.com,https://api.profileotimizer.online,https://www.profileotimizer.online,https://profileotimizer.online
+        value: http://localhost:5173,http://localhost:8000,https://resume-optimizer-frontend.onrender.com,https://api.profileotimizer.online,https://www.profileotimizer.online,https://profileotimizer.online,https://resume-optimizer.onrender.com
       - key: RUN_ENV
         value: production
       - key: FRONTEND_URL
@@ -42,32 +42,6 @@ services:
         sync: false
       - key: SMTP_FROM_NAME
         value: ProfileOptimizer
-
-  - type: web
-    name: ats-resume-checker-frontend
-    env: static
-    region: oregon
-    buildCommand: cd frontend && npm ci && npm run build
-    staticPublishPath: frontend/dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://resume-optimizer-cr4v.onrender.com
-      - key: VITE_GTM_ID
-        value: GTM-PHXK9HX
-    headers:
-      - path: /*
-        name: X-Frame-Options
-        value: DENY
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff
-      - path: /*
-        name: Referrer-Policy
-        value: strict-origin-when-cross-origin
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
 
 databases:
   - name: ats-resume-db

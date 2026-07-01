@@ -1,7 +1,9 @@
 import os
+from pathlib import Path
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.config import settings
 from app.database import engine, Base
 
@@ -137,3 +139,8 @@ app.include_router(latex_router)
 app.include_router(latex_engine_router)
 app.include_router(analytics_router)
 app.include_router(template_gallery_router)
+
+frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if frontend_dist.exists():
+    logger.info("Serving frontend from %s", frontend_dist)
+    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
