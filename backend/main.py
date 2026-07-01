@@ -140,7 +140,7 @@ app.include_router(latex_engine_router)
 app.include_router(analytics_router)
 app.include_router(template_gallery_router)
 
-frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+frontend_dist = Path(__file__).resolve().parent / "frontend" / "dist"
 if frontend_dist.exists():
     logger.info("Serving frontend from %s", frontend_dist)
     app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
