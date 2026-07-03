@@ -102,29 +102,29 @@ function FlyoutDropdown({ item, activeDropdown, onEnter, onLeave, onClose }) {
         "absolute left-1/2 -translate-x-1/2 top-full pt-3 transition-all duration-200 ease-out",
         isOpen ? "visible opacity-100 translate-y-0" : "invisible opacity-0 -translate-y-2 pointer-events-none",
       )}>
-        <div className="relative rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5 overflow-hidden">
+        <div className="relative rounded-2xl border border-slate-200/70 bg-white/95 shadow-lg shadow-slate-900/10 overflow-hidden">
           <div className="absolute -top-1 left-1/2 -translate-x-1/2 h-2 w-2 rotate-45 border-l border-t border-slate-200 bg-white" />
           <div className="flex gap-0">
             {resolveChildren(item).map((col, ci) => (
-              <div key={ci} className={cn("p-2", ci > 0 && "border-l border-slate-100")}>
+              <div key={ci} className={cn("p-1.5", ci > 0 && "border-l border-slate-100")}>
                 <div className="space-y-0.5 min-w-[220px]">
                   {col.map((child) => {
                     const Icon = resolveIcon(child);
                     return (
                       <Link key={child.label} to={child.to} onClick={() => onClose(null)}
-                        className="group/child flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 hover:bg-teal-50"
+                        className="group/child flex items-start gap-2.5 rounded-2xl border border-slate-200 bg-white p-3.5 text-left transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/70 hover:shadow-sm"
                       >
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 transition-all duration-150 group-hover/child:bg-teal-100 group-hover/child:text-teal-600">
+                        <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-600 transition-all duration-200 group-hover/child:bg-teal-100 group-hover/child:text-teal-600">
                           <Icon size={16} />
                         </span>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-slate-700 group-hover/child:text-teal-700 transition-colors duration-150">{child.label}</span>
-                            {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-teal-600 to-teal-500 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-semibold text-slate-900 transition-colors duration-150 group-hover/child:text-teal-700">{child.label}</span>
+                            {child.badge && <span className="rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-2 py-0.5 text-[10px] font-semibold text-white">{child.badge}</span>}
                           </div>
-                          <span className="block text-xs text-slate-400 group-hover/child:text-teal-500 transition-colors duration-150">{child.desc}</span>
+                          <p className="mt-1 text-xs leading-5 text-slate-500 transition-colors duration-150 group-hover/child:text-teal-600">{child.desc}</p>
                         </div>
-                        <ChevronRight size={14} className="shrink-0 text-slate-300 transition-all duration-150 group-hover/child:translate-x-1 group-hover/child:text-teal-400" />
+                        <ChevronRight size={16} className="mt-1 shrink-0 text-slate-300 transition-transform duration-200 group-hover/child:translate-x-1 group-hover/child:text-teal-500" />
                       </Link>
                     );
                   })}
@@ -145,32 +145,32 @@ function MobileAccordion({ item, expanded, onToggle, onClose }) {
     <div>
       <button onClick={() => onToggle(item.label)}
         className={cn(
-          "flex w-full items-center justify-between px-5 py-3.5 text-sm font-semibold transition-all duration-200 border-b border-slate-100",
+          "flex w-full items-center justify-between px-5 py-3 text-sm font-semibold transition-all duration-200 border-b border-slate-100",
           isExpanded ? "text-teal-700 bg-teal-50" : "text-slate-700 hover:text-teal-600 hover:bg-slate-50",
         )}
       >
         <span>{item.label}</span>
         <ChevronDown size={14} className={cn("transition-all duration-250 ease-out", isExpanded ? "rotate-180 text-teal-500" : "text-slate-400")} />
       </button>
-      <div className="overflow-hidden transition-[max-height] duration-300 ease-in-out" style={{ maxHeight: isExpanded ? 800 : 0 }}>
-        <div className="py-1 px-5 space-y-0.5">
+      <div className="overflow-hidden transition-[max-height] duration-300 ease-in-out" style={{ maxHeight: isExpanded ? 900 : 0 }}>
+                <div className="space-y-2.5 py-3 px-3.5">
           {resolveChildren(item).flat().map((child) => {
             const Icon = resolveIcon(child);
             return (
               <Link key={child.label} to={child.to} onClick={onClose}
-                className="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition-all duration-150 hover:bg-teal-50 hover:text-teal-700"
+                className="group flex items-start gap-2.5 rounded-2xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-700 transition-all duration-200 hover:border-teal-200 hover:bg-teal-50/80 hover:shadow-sm"
               >
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-400 group-hover:bg-teal-100 group-hover:text-teal-600">
-                  <Icon size={13} />
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 transition-all duration-200 group-hover:bg-teal-100 group-hover:text-teal-600">
+                  <Icon size={14} />
                 </span>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold">{child.label}</span>
-                    {child.badge && <span className="text-[9px] font-semibold text-white bg-gradient-to-r from-teal-600 to-teal-500 px-1.5 py-0.5 rounded-full">{child.badge}</span>}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-semibold text-slate-900">{child.label}</span>
+                    {child.badge && <span className="rounded-full bg-gradient-to-r from-teal-600 to-teal-500 px-2 py-0.5 text-[10px] font-semibold text-white">{child.badge}</span>}
                   </div>
-                  <span className="block text-[11px] text-slate-400 truncate">{child.desc}</span>
+                  <p className="mt-1 text-xs leading-5 text-slate-500">{child.desc}</p>
                 </div>
-                <ChevronRight size={12} className="shrink-0 text-slate-300" />
+                <ChevronRight size={12} className="mt-1 shrink-0 text-slate-300 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             );
           })}
@@ -230,10 +230,10 @@ export default function Navbar() {
     <header ref={navRef} className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
       scrolled
-        ? "bg-white/70 backdrop-blur-2xl border-b border-slate-200/60 shadow-sm shadow-slate-900/5"
-        : "bg-transparent",
+        ? "bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm shadow-slate-900/10"
+        : "bg-white/10 backdrop-blur-xl",
     )}>
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 lg:px-8">
         {/* Logo */}
         <Link to="/" className="group flex items-center gap-2.5 shrink-0" aria-label="Home">
           <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-sm transition-all duration-200 group-hover:shadow-md group-hover:shadow-slate-900/20 group-hover:scale-105">
@@ -268,17 +268,18 @@ export default function Navbar() {
         {/* Desktop Right */}
         <div className="hidden lg:flex items-center gap-4 shrink-0">
           <Link to="/login"
-            className="text-sm font-semibold text-slate-500 transition-all duration-200 hover:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 rounded-lg px-3 py-2"
+            className="text-sm font-semibold text-slate-500 transition-all duration-200 hover:text-teal-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 rounded-full px-3 py-2"
           >
             Log In
           </Link>
           <Link to="/scan"
-            className="relative inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25 hover:scale-[1.03] active:scale-[0.98] overflow-hidden group"
+            className="relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-teal-600 via-emerald-500 to-cyan-500 px-5 py-2.5 text-sm font-semibold text-white shadow-xl shadow-teal-500/15 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-teal-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60"
           >
-            <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-200" />
-            <Scan size={15} />
-            <span>Get Your Free ATS Report</span>
-            <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-0.5" />
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white">
+              <Scan size={15} />
+            </span>
+            <span>Start Free Scan</span>
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 
@@ -295,14 +296,14 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={cn("lg:hidden fixed inset-0 z-40 transition-all duration-300", menuOpen ? "pointer-events-auto" : "pointer-events-none")} style={{ top: 0 }}>
         <button type="button"
-          className={cn("absolute inset-0 bg-slate-900/20 backdrop-blur-sm cursor-pointer transition-opacity duration-300", menuOpen ? "opacity-100" : "opacity-0")}
+          className={cn("absolute inset-0 bg-slate-900/15 backdrop-blur-sm cursor-pointer transition-opacity duration-300", menuOpen ? "opacity-100" : "opacity-0")}
           onClick={() => setMenuOpen(false)} aria-label="Close menu"
         />
         <div className={cn(
-          "absolute top-0 right-0 h-full w-full max-w-sm max-md:max-w-[85vw] bg-white border-l border-slate-200 shadow-xl flex flex-col transition-transform duration-300 ease-out",
+          "absolute top-0 right-0 h-full w-full max-w-sm max-md:max-w-[85vw] bg-white/95 border-l border-slate-200/70 shadow-xl flex flex-col transition-transform duration-300 ease-out",
           menuOpen ? "translate-x-0" : "translate-x-full",
         )} role="dialog" aria-modal="true" aria-label="Mobile navigation">
-          <div className="flex items-center justify-between h-16 px-5 border-b border-slate-100 shrink-0">
+          <div className="flex items-center justify-between h-14 px-5 border-b border-slate-100/80 shrink-0">
             <Link to="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-slate-900 to-slate-800 text-white">
                 <Target size={13} />
@@ -333,12 +334,12 @@ export default function Navbar() {
           </div>
           <div className="shrink-0 px-5 py-4 border-t border-slate-100 space-y-3 bg-white">
             <Link to="/scan" onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-teal-500 px-4 py-3 text-sm font-bold text-white transition-all duration-200 hover:shadow-lg hover:shadow-teal-500/25 active:scale-[0.97]"
+              className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-teal-600 via-emerald-500 to-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-xl shadow-teal-500/15 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-teal-500/20 active:scale-[0.98]"
             >
-              <Scan size={15} /> Get Your Free ATS Report <ArrowRight size={14} />
+              <Scan size={15} /> Start Free Scan <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link to="/login" onClick={() => setMenuOpen(false)}
-              className="flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold text-slate-500 hover:text-teal-600 hover:bg-teal-50 transition-all duration-200"
+              className="flex items-center justify-center px-4 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-teal-600 hover:bg-teal-50 transition-all duration-200"
             >
               Log In
             </Link>
