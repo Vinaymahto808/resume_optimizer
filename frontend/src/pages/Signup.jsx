@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import AuthShell from "../components/AuthShell";
+import SEO from "../components/SEO";
 
 const MIN = 12;
 
@@ -49,6 +50,11 @@ export default function Signup() {
 
   return (
     <AuthShell>
+      <SEO
+        title="Create a Free Account"
+        description="Sign up for free to scan your resume, get AI-powered suggestions, and unlock career opportunities."
+        canonical="https://profileoptimizer.com/signup"
+      />
       <div className="auth-card">
         <Link to="/" className="auth-brand" style={{ textDecoration: "none" }}>
           <div className="auth-brand-dot">P</div>

@@ -1,6 +1,13 @@
+import SEO from "../components/SEO";
+
 export default function TermsOfService() {
   return (
     <div className="landing" style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <SEO
+        title="Terms of Service"
+        description="ProfileOptimizer terms of service. Read the rules and guidelines for using our platform."
+        canonical="https://profileoptimizer.com/terms"
+      />
       <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>

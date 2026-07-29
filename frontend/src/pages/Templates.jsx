@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { latex } from "../api";
+import SEO from "../components/SEO";
 
 const STYLES = ["single-column", "modern", "minimal", "sidebar", "two-column", "infographic"];
 const STYLE_LABELS = { "single-column": "Classic", "modern": "Modern", "minimal": "Minimal", "sidebar": "Sidebar", "two-column": "Two-Column", "infographic": "Infographic" };
@@ -329,6 +330,11 @@ export default function Templates() {
 
   return (
     <div>
+      <SEO
+        title="ATS-Friendly Resume Templates"
+        description="Browse 100+ ATS-optimized resume templates. Built for modern job seekers who want to pass applicant tracking systems."
+        canonical="https://profileoptimizer.com/templates"
+      />
       <div className="templates-hero">
         <div className="templates-hero-bg" />
         <div className="templates-hero-inner">

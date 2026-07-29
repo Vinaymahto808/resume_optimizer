@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Eye, Shield, Zap, Clock } from "lucide-react";
+import SEO from "../components/SEO";
 
 const stats = [
   { value: "50K+", label: "Resumes scanned" },
@@ -34,6 +35,11 @@ const values = [
 export default function About() {
   return (
     <div className="landing">
+      <SEO
+        title="About Us"
+        description="ProfileOptimizer helps job seekers optimize their resumes for ATS. 50K+ resumes scanned, 19 checkpoints, 9 job portals."
+        canonical="https://profileoptimizer.com/about"
+      />
       <section className="about-hero">
         <div className="about-hero-inner">
           <div className="about-eyebrow">Our Story</div>

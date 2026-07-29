@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import AuthShell from "../components/AuthShell";
+import SEO from "../components/SEO";
 
 export default function Login() {
   const { user, login } = useAuth();
@@ -30,6 +31,11 @@ export default function Login() {
 
   return (
     <AuthShell>
+      <SEO
+        title="Log In"
+        description="Sign in to your ProfileOptimizer account to access your resume scans, AI analysis, and career tools."
+        canonical="https://profileoptimizer.com/login"
+      />
       <div className="auth-card">
         <Link to="/" className="auth-brand" style={{ textDecoration: "none" }}>
           <div className="auth-brand-dot">P</div>

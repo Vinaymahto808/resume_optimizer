@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PlanProvider } from "./contexts/PlanContext";
 import { ResumeProvider } from "./contexts/ResumeContext";
@@ -28,6 +29,8 @@ import Account from "./pages/Account";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import AutoApply from "./pages/AutoApply";
+import AutomationHub from "./pages/AutomationHub";
 
 function PublicLayout() {
   return (
@@ -45,6 +48,7 @@ function AuthPage({ children }) {
 
 export default function App() {
   return (
+    <HelmetProvider>
     <BrowserRouter>
       <AuthProvider>
         <PlanProvider>
@@ -77,11 +81,14 @@ export default function App() {
             <Route path="/student-resume" element={<AuthPage><StudentResume /></AuthPage>} />
             <Route path="/account" element={<AuthPage><Account /></AuthPage>} />
             <Route path="/latex-builder/:id" element={<AuthPage><LatexBuilder /></AuthPage>} />
+            <Route path="/auto-apply" element={<AuthPage><AutoApply /></AuthPage>} />
+            <Route path="/automation" element={<AuthPage><AutomationHub /></AuthPage>} />
           </Routes>
         </ResumeProvider>
         </GTMProvider>
         </PlanProvider>
       </AuthProvider>
     </BrowserRouter>
+    </HelmetProvider>
   );
 }

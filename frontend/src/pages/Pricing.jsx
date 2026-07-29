@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { payments } from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import SEO from "../components/SEO";
 
 const FALLBACK_PLANS = [
   {
@@ -88,6 +89,11 @@ export default function Pricing() {
 
   return (
     <div className="pricing-page">
+      <SEO
+        title="Pricing Plans"
+        description="Choose the perfect plan for your job search. Free, Pro, and Enterprise plans with unlimited scans, AI analysis, and more."
+        canonical="https://profileoptimizer.com/pricing"
+      />
       <div className="pricing-header">
         <div className="pricing-eyebrow">Simple Pricing</div>
         <h1 className="pricing-title">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useRef, useEffect, useCallback } from "react";
+import SEO from "../components/SEO";
 
 const checklistItems = [
   { cat: "Content", label: "ATS parse rate" },
@@ -533,6 +534,13 @@ export default function Home() {
 
   return (
     <div className="landing">
+      <SEO
+        title="ATS Resume Checker — Free Resume Score & Analysis"
+        description="Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems."
+        canonical="https://profileoptimizer.com/"
+        ogTitle="ATS Resume Checker — Free Resume Score & Analysis"
+        ogDescription="Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems."
+      />
 
       {/* ─── SECTION 1: HERO ─── */}
       <section ref={addSectionRef} className="scroll-fade hero-refined" style={{ position: "relative" }}>
@@ -1420,7 +1428,81 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 9: FAQ ─── */}
+      {/* ─── SECTION 9: AUTOMATION / AUTO-APPLY ─── */}
+      <section ref={addSectionRef} className="scroll-fade automation-section" style={{ position: "relative", background: "var(--bg-card)" }}>
+        <div className="section-bg-svg" aria-hidden="true">
+          <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-auto-l" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#10B981" strokeWidth="0.5" /></pattern></defs>
+            <rect width="300" height="300" fill="url(#g-auto-l)" />
+          </svg>
+          <svg className="section-bg-svg__grid section-bg-svg__grid--r" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="g-auto-r" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M 22 0 L 0 0 0 22" fill="none" stroke="#4F46E5" strokeWidth="0.5" /></pattern></defs>
+            <rect width="250" height="250" fill="url(#g-auto-r)" />
+          </svg>
+        </div>
+        <svg style={{ position: "absolute", right: "4%", top: "8%", pointerEvents: "none", opacity: 0.04 }} width="120" height="200" viewBox="0 0 120 200" fill="none" aria-hidden="true">
+          <circle cx="60" cy="60" r="45" fill="#10B981"><animate attributeName="r" values="45;50;45" dur="4s" repeatCount="indefinite" /></circle>
+          <circle cx="30" cy="160" r="18" fill="#4F46E5"><animate attributeName="r" values="18;22;18" dur="3.5s" repeatCount="indefinite" /></circle>
+          <circle cx="100" cy="140" r="12" fill="#F59E0B"><animate attributeName="r" values="12;15;12" dur="5s" repeatCount="indefinite" /></circle>
+        </svg>
+
+        <div className="section-header">
+          <div className="section-eyebrow" style={{ justifyContent: "center", color: "#10B981" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" style={{ marginRight: 4 }}>
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            Auto-Apply Engine
+          </div>
+          <h2 className="section-title-refined">
+            Apply to jobs <span className="section-title-gradient">on autopilot.</span>
+          </h2>
+          <p className="section-sub-refined">
+            Our AI browser agent, job queue, and LLM-powered cover letter engine handle the tedious parts of applying so you can focus on interview prep.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20, maxWidth: 960, margin: "0 auto", padding: "0 24px" }}>
+          {[
+            { title: "Browser Automation", desc: "Playwright-powered agent navigates job portals, fills forms, and submits applications with human-like interaction.", color: "#10B981", icon: <><rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8 M12 17v4" /></> },
+            { title: "LLM Cover Letter Engine", desc: "Groq, OpenAI, or Anthropic generate tailored cover letters and bullet rewrites in seconds.", color: "#4F46E5", icon: <><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z" /></> },
+            { title: "Smart Job Queue", desc: "Priority-based queue with rate limiting, automatic retry, and real-time status tracking.", color: "#F59E0B", icon: <><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></> },
+            { title: "Credential Vault", desc: "Fernet-encrypted storage for portal logins — passwords never leave your server.", color: "#10B981", icon: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></> },
+            { title: "Application State Machine", desc: "11-state lifecycle tracks every application from discovery to interview with full audit trail.", color: "#4F46E5", icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></> },
+            { title: "Multi-Portal Search", desc: "LinkedIn, Indeed, Naukri, Glassdoor and more — unified search across 25+ job boards.", color: "#F59E0B", icon: <><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></> },
+          ].map((feat, i) => (
+            <div key={i} style={{
+              background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "28px 24px",
+              position: "relative", overflow: "hidden", transition: "all 0.25s ease",
+            }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${feat.color}40`; e.currentTarget.style.boxShadow = `0 8px 24px ${feat.color}10`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }}
+            >
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: feat.color, opacity: 0.7 }} />
+              <div style={{
+                width: 40, height: 40, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
+                background: `${feat.color}10`, color: feat.color, marginBottom: 16,
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  {feat.icon}
+                </svg>
+              </div>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>{feat.title}</h3>
+              <p style={{ fontSize: 13, lineHeight: 1.7, color: "var(--text-secondary)", margin: 0 }}>{feat.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ textAlign: "center", marginTop: 36 }}>
+          <Link to="/automation" className="btn-primary" style={{ fontSize: 15, padding: "13px 32px", borderRadius: 10, display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            Open Automation Hub →
+          </Link>
+        </div>
+      </section>
+
+      {/* ─── SECTION 10: FAQ ─── */}
       <section ref={addSectionRef} className="scroll-fade faq-section" style={{ position: "relative" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1451,7 +1533,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 10: FINAL CTA ─── */}
+      {/* ─── SECTION 11: FINAL CTA ─── */}
       <section ref={addSectionRef} className="scroll-fade cta-section-refined" style={{ position: "relative" }}>
         <div className="section-bg-svg" aria-hidden="true">
           <svg className="section-bg-svg__grid section-bg-svg__grid--l" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">

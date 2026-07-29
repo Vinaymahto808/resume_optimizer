@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../api";
 import AuthShell from "../components/AuthShell";
+import SEO from "../components/SEO";
 
 function getError(err) {
   if (err?.response?.data?.detail) return err.response.data.detail;
@@ -114,7 +115,11 @@ export default function ForgotPassword() {
   }
 
   return (
-    <AuthShell
+    <><SEO
+        title="Reset Password"
+        description="Reset your ProfileOptimizer account password."
+        canonical="https://profileoptimizer.com/forgot-password"
+      /><AuthShell
       eyebrow="Account recovery"
       title="Reset your password."
       subtitle="Enter the email tied to your account and we’ll send a secure reset link."
@@ -152,7 +157,7 @@ export default function ForgotPassword() {
         </button>
         <Link to="/login" style={styles.footerLink}>Back to login</Link>
       </form>
-    </AuthShell>
+    </AuthShell></>
   );
 }
 

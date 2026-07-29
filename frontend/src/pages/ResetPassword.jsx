@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { auth } from "../api";
 import AuthShell from "../components/AuthShell";
+import SEO from "../components/SEO";
 
 function validatePassword(pw) {
   const checks = [];
@@ -91,7 +92,11 @@ export default function ResetPassword() {
   }
 
   return (
-    <AuthShell
+    <><SEO
+        title="Set New Password"
+        description="Set a new password for your ProfileOptimizer account."
+        canonical="https://profileoptimizer.com/reset-password"
+      /><AuthShell
       eyebrow="Choose a new password"
       title="Set a fresh password."
       subtitle="Use a strong password you’ll remember, then return to your resume workspace."
@@ -125,7 +130,7 @@ export default function ResetPassword() {
           Reset Password
         </button>
       </form>
-    </AuthShell>
+    </AuthShell></>
   );
 }
 
