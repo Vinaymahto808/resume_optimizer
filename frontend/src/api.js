@@ -230,3 +230,103 @@ export const templateGallery = {
   get: (slug) => API.get(`/api/v1/templates/${slug}`).then((r) => r.data),
   categories: () => API.get("/api/v1/templates/meta/categories").then((r) => r.data),
 };
+
+export const autoApply = {
+  tailor: (data) =>
+    API.post("/api/auto-apply/tailor", data).then((r) => r.data),
+  apply: (data) =>
+    API.post("/api/auto-apply/apply", data).then((r) => r.data),
+  extractKeywords: (jobDescription) =>
+    API.post("/api/auto-apply/extract-keywords", { job_description: jobDescription }).then((r) => r.data),
+  generateCoverLetter: (data) =>
+    API.post("/api/auto-apply/cover-letter", data).then((r) => r.data),
+  listApplications: () =>
+    API.get("/api/auto-apply/applications").then((r) => r.data),
+  getApplication: (id) =>
+    API.get(`/api/auto-apply/applications/${id}`).then((r) => r.data),
+  pipeline: (data) =>
+    API.post("/api/auto-apply/pipeline", data).then((r) => r.data),
+  pipelineUpload: (formData) =>
+    API.post("/api/auto-apply/pipeline/upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }).then((r) => r.data),
+};
+
+// === Automation Layer (LLM, State Machine, Vault, Queue, Browser, Jobs, Analytics) ===
+export const automation = {
+  // LLM Executor
+  llmCall: (data) =>
+    API.post("/api/automation/llm/call", data).then((r) => r.data),
+  llmUsage: () =>
+    API.get("/api/automation/llm/usage").then((r) => r.data),
+
+  // Prompt Registry
+  listPrompts: () =>
+    API.get("/api/automation/prompts").then((r) => r.data),
+  renderPrompt: (data) =>
+    API.post("/api/automation/prompts/render", data).then((r) => r.data),
+
+  // Application State Machine
+  createApplication: (data) =>
+    API.post("/api/automation/applications", data).then((r) => r.data),
+  listApplications: (params = {}) =>
+    API.get("/api/automation/applications", { params }).then((r) => r.data),
+  getApplication: (id) =>
+    API.get(`/api/automation/applications/${id}`).then((r) => r.data),
+  transitionApplication: (id, data) =>
+    API.post(`/api/automation/applications/${id}/transition`, data).then((r) => r.data),
+  applicationStats: () =>
+    API.get("/api/automation/applications/stats").then((r) => r.data),
+
+  // Credential Vault
+  storeCredential: (data) =>
+    API.post("/api/automation/credentials", data).then((r) => r.data),
+  listCredentials: () =>
+    API.get("/api/automation/credentials").then((r) => r.data),
+  getCredential: (id) =>
+    API.get(`/api/automation/credentials/${id}`).then((r) => r.data),
+  deleteCredential: (id) =>
+    API.delete(`/api/automation/credentials/${id}`).then((r) => r.data),
+
+  // Job Queue
+  enqueueJob: (data) =>
+    API.post("/api/automation/queue/enqueue", data).then((r) => r.data),
+  listQueueJobs: (params = {}) =>
+    API.get("/api/automation/queue/jobs", { params }).then((r) => r.data),
+  queueStats: () =>
+    API.get("/api/automation/queue/stats").then((r) => r.data),
+
+  // Job Board Search
+  searchJobs: (data) =>
+    API.post("/api/automation/jobs/search", data).then((r) => r.data),
+  portalStatus: () =>
+    API.get("/api/automation/jobs/portal-status").then((r) => r.data),
+
+  // Browser Automation
+  startBrowser: (data) =>
+    API.post("/api/automation/browser/start", data).then((r) => r.data),
+  browserNavigate: (sid, data) =>
+    API.post(`/api/automation/browser/${sid}/navigate`, data).then((r) => r.data),
+  browserFillForm: (sid, data) =>
+    API.post(`/api/automation/browser/${sid}/fill-form`, data).then((r) => r.data),
+  browserDetectCaptcha: (sid) =>
+    API.post(`/api/automation/browser/${sid}/detect-captcha`).then((r) => r.data),
+  browserScreenshot: (sid) =>
+    API.post(`/api/automation/browser/${sid}/screenshot`).then((r) => r.data),
+  browserSubmit: (sid) =>
+    API.post(`/api/automation/browser/${sid}/submit`).then((r) => r.data),
+  stopBrowser: (sid) =>
+    API.delete(`/api/automation/browser/${sid}`).then((r) => r.data),
+
+  // Notifications
+  sendNotification: (data) =>
+    API.post("/api/automation/notifications/send", data).then((r) => r.data),
+
+  // Analytics
+  getMetrics: () =>
+    API.get("/api/automation/analytics/metrics").then((r) => r.data),
+  getEvents: (params = {}) =>
+    API.get("/api/automation/analytics/events", { params }).then((r) => r.data),
+  flushAnalytics: () =>
+    API.post("/api/automation/analytics/flush").then((r) => r.data),
+};

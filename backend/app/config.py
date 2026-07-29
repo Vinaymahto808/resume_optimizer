@@ -6,11 +6,33 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def _resolve_secret_key() -> str:
+    key = os.getenv("SECRET_KEY", "")
+    if key:
+        return key
+    env_path = Path(".env")
+    env_lines = env_path.read_text().splitlines() if env_path.exists() else []
+    for line in env_lines:
+        if line.startswith("SECRET_KEY=") and len(line.split("=", 1)[1]) > 10:
+            return line.split("=", 1)[1]
+    import secrets as _secrets
+    generated = _secrets.token_urlsafe(48)
+    if env_path.exists():
+        content = env_path.read_text()
+        if "SECRET_KEY=" not in content:
+            env_path.write_text(content.rstrip() + f"\nSECRET_KEY={generated}\n")
+    else:
+        env_path.write_text(f"SECRET_KEY={generated}\n")
+    load_dotenv(override=True)
+    os.environ["SECRET_KEY"] = generated
+    print(f"[config] Auto-generated SECRET_KEY and saved to .env")
+    return generated
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./ats_resume.db")
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "")
+    SECRET_KEY: str = _resolve_secret_key()
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7

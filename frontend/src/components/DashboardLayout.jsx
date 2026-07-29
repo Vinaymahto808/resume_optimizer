@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { icon: "◎", label: "Profile", path: "/profile-analyzer" },
   { icon: "↗", label: "Career Map", path: "/career-roadmap" },
   { icon: "◇", label: "Analytics", path: "/dashboard-analytics" },
+  { icon: "⚙", label: "Automation", path: "/automation" },
 ];
 
 const BREADCRUMB_MAP = {
@@ -23,6 +24,7 @@ const BREADCRUMB_MAP = {
   "/profile-analyzer": ["Dashboard", "Profile Analyzer"],
   "/career-roadmap": ["Dashboard", "Career Roadmap"],
   "/dashboard-analytics": ["Dashboard", "Analytics"],
+  "/automation": ["Dashboard", "Automation Hub"],
   "/portfolio-generator": ["Dashboard", "Portfolio Generator"],
   "/student-resume": ["Dashboard", "Student Resume"],
   "/account": ["Dashboard", "Account Settings"],

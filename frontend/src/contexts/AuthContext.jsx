@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const data = await auth.login({ username: email, password });
+    const data = await auth.login({ username: email.trim().toLowerCase(), password });
     localStorage.setItem("token", data.access_token);
     saveUser(data.user);
     pushGTMEvent("login", { method: "email" });
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (email, password, full_name) => {
-    const data = await auth.register({ email, password, full_name });
+    const data = await auth.register({ email: email.trim().toLowerCase(), password, full_name });
     localStorage.setItem("token", data.access_token);
     saveUser(data.user);
     pushGTMEvent("signup", { method: "email" });

@@ -21,6 +21,8 @@ from app.latex_engine.routes import router as latex_engine_router
 from app.analytics_routes import router as analytics_router
 from app.template_gallery_routes import router as template_gallery_router
 from app.routes.auth_routes import router as auth_router
+from app.auto_apply_routes import router as auto_apply_router
+from app.automation_routes import router as automation_router
 
 from app.middleware.request_id import RequestIDMiddleware
 from app.middleware.timing import RequestTimingMiddleware
@@ -32,6 +34,11 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+from app.models_extended import (
+    JobApplication, ApplicationEvent, UserCredential,
+    LLMUsageLog, BrowserSession,
+)
 
 try:
     Base.metadata.create_all(bind=engine)
@@ -103,7 +110,7 @@ def get_nav_links():
     return NAV_LINKS
 
 NAV_LINKS = [
-    {"label": "Platform", "icon": "Grid3X3", "children": [
+    {"label": "Tools", "icon": "Grid3X3", "children": [
         [
             {"label": "ATS Resume Scanner", "to": "/scan", "icon": "Scan", "desc": "Score your resume in seconds", "badge": "Popular"},
             {"label": "AI Resume Builder", "to": "/templates", "icon": "FileText", "desc": "Build an ATS-friendly resume"},
@@ -114,6 +121,9 @@ NAV_LINKS = [
             {"label": "Job Application Tracker", "to": "/dashboard", "icon": "BarChart3", "desc": "Track applications & interviews"},
             {"label": "AI Deep Analysis", "to": "/ai-analysis", "icon": "Brain", "desc": "Advanced AI-powered insights"},
         ],
+        [
+            {"label": "Auto-Apply Hub", "to": "/automation", "icon": "Zap", "desc": "Browser automation, job queue & LLM engine", "badge": "New"},
+        ],
     ]},
     {"label": "Solutions", "icon": "Briefcase", "children": [
         [
@@ -122,7 +132,7 @@ NAV_LINKS = [
             {"label": "For Enterprise Teams", "to": "/pricing", "icon": "Building", "desc": "Enterprise-grade ATS optimization"},
         ],
     ]},
-    {"label": "Learning Hub", "icon": "BookOpen", "children": [
+    {"label": "Templates", "icon": "BookOpen", "children": [
         [
             {"label": "Career Blog", "to": "/about", "icon": "BookOpen", "desc": "Advice & guides for job seekers"},
             {"label": "Resume Templates", "to": "/templates", "icon": "Layout", "desc": "Free ATS-friendly templates"},
@@ -148,6 +158,8 @@ app.include_router(latex_router)
 app.include_router(latex_engine_router)
 app.include_router(analytics_router)
 app.include_router(template_gallery_router)
+app.include_router(auto_apply_router)
+app.include_router(automation_router)
 
 if FRONTEND_DIST:
     app.mount("/assets", StaticFiles(directory=str(FRONTEND_DIST / "assets")), name="assets")
@@ -161,3 +173,8 @@ if FRONTEND_DIST:
         if full_path.startswith(("api/", "docs", "openapi", "uploads", "assets/")):
             raise HTTPException(status_code=404)
         return FileResponse(str(FRONTEND_DIST / "index.html"), media_type="text/html")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

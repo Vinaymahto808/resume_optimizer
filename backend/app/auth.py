@@ -46,6 +46,23 @@ def hash_password(password: str) -> str:
 def verify_password(plain: str, hashed: str) -> bool:
     return pwd_context.verify(plain, hashed)
 
+def validate_password_strength(pw: str) -> None:
+    issues = []
+    if len(pw) < 12:
+        issues.append("at least 12 characters")
+    if not re.search(r"[A-Z]", pw):
+        issues.append("an uppercase letter")
+    if not re.search(r"[a-z]", pw):
+        issues.append("a lowercase letter")
+    if not re.search(r"[0-9]", pw):
+        issues.append("a number")
+    if not re.search(r"[^A-Za-z0-9]", pw):
+        issues.append("a special character")
+    if re.search(r"\s", pw):
+        issues.append("no spaces")
+    if issues:
+        raise HTTPException(status_code=400, detail="Password must include " + ", ".join(issues) + ".")
+
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -66,27 +83,13 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 def register_user(data: UserCreate, db: Session) -> User:
-    pw = data.password
-    issues = []
-    if len(pw) < 12:
-        issues.append("at least 12 characters")
-    if not re.search(r"[A-Z]", pw):
-        issues.append("an uppercase letter")
-    if not re.search(r"[a-z]", pw):
-        issues.append("a lowercase letter")
-    if not re.search(r"[0-9]", pw):
-        issues.append("a number")
-    if not re.search(r"[^A-Za-z0-9]", pw):
-        issues.append("a special character")
-    if re.search(r"\s", pw):
-        issues.append("no spaces")
-    if issues:
-        raise HTTPException(status_code=400, detail="Password must include " + ", ".join(issues) + ".")
-    existing = db.query(User).filter(User.email == data.email).first()
+    email = data.email.strip().lower()
+    validate_password_strength(data.password)
+    existing = db.query(User).filter(User.email == email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
     user = User(
-        email=data.email,
+        email=email,
         hashed_password=hash_password(data.password),
         full_name=data.full_name or "",
     )
@@ -96,6 +99,7 @@ def register_user(data: UserCreate, db: Session) -> User:
     return user
 
 def authenticate_user(email: str, password: str, db: Session) -> User:
+    email = email.strip().lower()
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
@@ -121,11 +125,6 @@ def create_password_reset_token(user: User, db: Session) -> str:
     return token
 
 def send_reset_email(to_email: str, token: str) -> bool:
-    api_key = settings.RESEND_API_KEY or settings.POSTMARK_API_TOKEN or settings.SMTP_PASSWORD
-    if not api_key:
-        logger.warning("Resend not configured — cannot send reset email")
-        return False
-
     reset_link = f"{settings.FRONTEND_URL}/reset-password?token={token}"
 
     html = f"""\
@@ -168,40 +167,80 @@ Button not working? Paste this in your browser:<br>
 </body>
 </html>"""
 
-    try:
-        import resend
-        resend.api_key = api_key
-        r = resend.Emails.send({
-            "from": settings.SMTP_FROM_EMAIL,
-            "to": [to_email],
-            "subject": "Reset your ProfileOptimizer password",
-            "html": html,
-            "text": f"Reset your password\n\nClick: {reset_link}",
-        })
-        logger.info("Reset email sent to %s — id=%s", to_email, r.get("id", "unknown"))
-        return True
-    except Exception:
-        logger.exception("Resend exception for %s", to_email)
-        return False
+    subject = "Reset your ProfileOptimizer password"
+    text_body = f"Reset your password\n\nClick: {reset_link}"
+
+    # Try Resend first
+    if settings.RESEND_API_KEY:
+        try:
+            import resend
+            resend.api_key = settings.RESEND_API_KEY
+            r = resend.Emails.send({
+                "from": settings.SMTP_FROM_EMAIL,
+                "to": [to_email],
+                "subject": subject,
+                "html": html,
+                "text": text_body,
+            })
+            logger.info("Reset email sent via Resend to %s — id=%s", to_email, r.get("id", "unknown"))
+            return True
+        except Exception:
+            logger.warning("Resend failed for %s, trying next provider", to_email)
+
+    # Try Postmark next
+    if settings.POSTMARK_API_TOKEN:
+        try:
+            resp = httpx.post(
+                "https://api.postmarkapp.com/email",
+                headers={
+                    "X-Postmark-Server-Token": settings.POSTMARK_API_TOKEN,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                json={
+                    "From": settings.SMTP_FROM_EMAIL,
+                    "To": to_email,
+                    "Subject": subject,
+                    "HtmlBody": html,
+                    "TextBody": text_body,
+                    "MessageStream": "outbound",
+                },
+                timeout=15,
+            )
+            if resp.is_success:
+                logger.info("Reset email sent via Postmark to %s", to_email)
+                return True
+            logger.warning("Postmark error for %s: %s %s", to_email, resp.status_code, resp.text)
+        except Exception:
+            logger.warning("Postmark failed for %s, trying next provider", to_email)
+
+    # Try SMTP last
+    if settings.SMTP_HOST and settings.SMTP_USER and settings.SMTP_PASSWORD:
+        try:
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = subject
+            msg["From"] = f"{settings.SMTP_FROM_NAME} <{settings.SMTP_FROM_EMAIL}>"
+            msg["To"] = to_email
+            msg.attach(MIMEText(text_body, "plain"))
+            msg.attach(MIMEText(html, "html"))
+            with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
+                server.starttls()
+                server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+                server.sendmail(settings.SMTP_FROM_EMAIL, to_email, msg.as_string())
+            logger.info("Reset email sent via SMTP to %s", to_email)
+            return True
+        except Exception:
+            logger.exception("SMTP failed for %s", to_email)
+
+    logger.warning("No email provider configured — cannot send reset email to %s", to_email)
+    return False
 
 
 def reset_password(token: str, new_password: str, db: Session) -> User:
-    pw = new_password
-    issues = []
-    if len(pw) < 12:
-        issues.append("at least 12 characters")
-    if not re.search(r"[A-Z]", pw):
-        issues.append("an uppercase letter")
-    if not re.search(r"[a-z]", pw):
-        issues.append("a lowercase letter")
-    if not re.search(r"[0-9]", pw):
-        issues.append("a number")
-    if not re.search(r"[^A-Za-z0-9]", pw):
-        issues.append("a special character")
-    if re.search(r"\s", pw):
-        issues.append("no spaces")
-    if issues:
-        raise HTTPException(status_code=400, detail="Password must include " + ", ".join(issues) + ".")
+    validate_password_strength(new_password)
     reset = db.query(PasswordResetToken).filter(
         PasswordResetToken.token == token,
         PasswordResetToken.used == False,

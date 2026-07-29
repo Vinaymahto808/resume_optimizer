@@ -5,7 +5,7 @@ import {
   Compass, Palette, BarChart3, Layout, CreditCard, Home, Info,
   Shield, FileText, Sparkles, ArrowRight, X, Grid3X3, LineChart,
   BookOpen, MessageSquare, ChevronRight, Building2, Building,
-  Database, Target,
+  Database, Target, Zap,
 } from "lucide-react";
 import { portals } from "../api";
 
@@ -20,6 +20,9 @@ const FALLBACK_NAV_ITEMS = [
       { label: "LinkedIn Profile Audit", to: "/profile-analyzer", icon: "UserCheck", desc: "Get noticed by recruiters" },
       { label: "Job Application Tracker", to: "/dashboard", icon: "BarChart3", desc: "Track applications & interviews" },
       { label: "AI Deep Analysis", to: "/ai-analysis", icon: "Brain", desc: "Advanced AI-powered insights" },
+    ],
+    [
+      { label: "Auto-Apply Hub", to: "/automation", icon: "Zap", desc: "Browser automation, job queue & LLM engine", badge: "New" },
     ],
   ]},
   { label: "Solutions", icon: "Briefcase", children: [
@@ -48,7 +51,7 @@ const ICON_MAP = {
   Home, Scan, UserCheck, Briefcase, Brain, GraduationCap,
   Compass, Palette, BarChart3, Layout, CreditCard, Info,
   Shield, FileText, Sparkles, ArrowRight, Grid3X3, LineChart,
-  BookOpen, MessageSquare, Building2, Building, Database, Target,
+  BookOpen, MessageSquare, Building2, Building, Database, Target, Zap,
 };
 
 function resolveIcon(item) {
