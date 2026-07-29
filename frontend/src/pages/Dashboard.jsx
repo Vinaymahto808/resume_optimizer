@@ -36,7 +36,7 @@ export default function Dashboard() {
       <SEO
         title="Dashboard"
         description="View your scanned resumes, ATS scores, and subscription details on your ProfileOptimizer dashboard."
-        canonical="https://profileoptimizer.com/dashboard"
+        canonical="https://www.profileotimizer.online/dashboard"
       />
       <style>{`
         .dash-kpi {

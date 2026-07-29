@@ -6,7 +6,7 @@ export default function TermsOfService() {
       <SEO
         title="Terms of Service"
         description="ProfileOptimizer terms of service. Read the rules and guidelines for using our platform."
-        canonical="https://profileoptimizer.com/terms"
+        canonical="https://www.profileotimizer.online/terms"
       />
       <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>

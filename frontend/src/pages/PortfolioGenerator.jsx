@@ -168,7 +168,7 @@ export default function PortfolioGenerator() {
       <SEO
         title="Portfolio Website Generator"
         description="Generate a complete, ready-to-use portfolio HTML page with Tailwind CSS from your resume content."
-        canonical="https://profileoptimizer.com/portfolio-generator"
+        canonical="https://www.profileotimizer.online/portfolio-generator"
       />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Portfolio Website Generator</h2>

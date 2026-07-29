@@ -38,7 +38,7 @@ export default function About() {
       <SEO
         title="About Us"
         description="ProfileOptimizer helps job seekers optimize their resumes for ATS. 50K+ resumes scanned, 19 checkpoints, 9 job portals."
-        canonical="https://profileoptimizer.com/about"
+        canonical="https://www.profileotimizer.online/about"
       />
       <section className="about-hero">
         <div className="about-hero-inner">

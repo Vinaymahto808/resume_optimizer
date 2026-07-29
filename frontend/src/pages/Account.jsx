@@ -55,7 +55,7 @@ export default function Account() {
       <SEO
         title="Account Settings"
         description="Manage your ProfileOptimizer account profile, security, and account preferences."
-        canonical="https://profileoptimizer.com/account"
+        canonical="https://www.profileotimizer.online/account"
       />
       <h1 style={s.heading}>Account Settings</h1>
       <p style={s.sub}>Manage your profile, security, and account preferences.</p>

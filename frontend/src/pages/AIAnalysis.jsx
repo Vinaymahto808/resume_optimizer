@@ -48,7 +48,7 @@ export default function AIAnalysis() {
       <SEO
         title="AI Deep Analysis"
         description="Get an expert-level AI critique of your resume or LinkedIn profile using Google Gemini."
-        canonical="https://profileoptimizer.com/ai-analysis"
+        canonical="https://www.profileotimizer.online/ai-analysis"
       />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>AI Deep Analysis</h2>

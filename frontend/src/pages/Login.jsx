@@ -34,7 +34,7 @@ export default function Login() {
       <SEO
         title="Log In"
         description="Sign in to your ProfileOptimizer account to access your resume scans, AI analysis, and career tools."
-        canonical="https://profileoptimizer.com/login"
+        canonical="https://www.profileotimizer.online/login"
       />
       <div className="auth-card">
         <Link to="/" className="auth-brand" style={{ textDecoration: "none" }}>

@@ -118,7 +118,7 @@ export default function ForgotPassword() {
     <><SEO
         title="Reset Password"
         description="Reset your ProfileOptimizer account password."
-        canonical="https://profileoptimizer.com/forgot-password"
+        canonical="https://www.profileotimizer.online/forgot-password"
       /><AuthShell
       eyebrow="Account recovery"
       title="Reset your password."

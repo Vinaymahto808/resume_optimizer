@@ -152,7 +152,7 @@ export default function AutoApply() {
       <SEO
         title="Auto Apply"
         description="Automate your job applications with AI-powered resume tailoring and one-click applications."
-        canonical="https://profileoptimizer.com/auto-apply"
+        canonical="https://www.profileotimizer.online/auto-apply"
       />
       <style>{`
         .auto-apply-page {

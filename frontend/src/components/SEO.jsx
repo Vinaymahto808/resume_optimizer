@@ -13,7 +13,7 @@ export default function SEO({
 }) {
   const fullTitle = title ? `${title} — ${SITE_NAME}` : SITE_NAME;
   const metaDescription = description || "Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems.";
-  const canonicalUrl = canonical || "https://profileoptimizer.com/";
+  const canonicalUrl = canonical || "https://www.profileotimizer.online/";
   const ogImg = ogImage || DEFAULT_OG_IMAGE;
   const ogT = ogTitle || fullTitle;
   const ogD = ogDescription || metaDescription;

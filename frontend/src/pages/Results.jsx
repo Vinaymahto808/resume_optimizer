@@ -222,7 +222,7 @@ export default function Results() {
       <SEO
         title="Resume Analysis Results"
         description="View your ATS resume score, keyword analysis, skill breakdown, and actionable suggestions to improve your resume."
-        canonical="https://profileoptimizer.com/results"
+        canonical="https://www.profileotimizer.online/results"
       />
       <div className="results-inner">
         <div className="results-header">

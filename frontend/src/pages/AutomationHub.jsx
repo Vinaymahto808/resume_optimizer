@@ -41,7 +41,7 @@ export default function AutomationHub() {
       <SEO
         title="Automation Hub"
         description="Manage LLM, job applications, browser automation, credentials, and analytics in one place."
-        canonical="https://profileoptimizer.com/automation"
+        canonical="https://www.profileotimizer.online/automation"
       />
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 24, fontWeight: 800, color: "var(--text)", margin: 0 }}>

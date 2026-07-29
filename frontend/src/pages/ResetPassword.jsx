@@ -95,7 +95,7 @@ export default function ResetPassword() {
     <><SEO
         title="Set New Password"
         description="Set a new password for your ProfileOptimizer account."
-        canonical="https://profileoptimizer.com/reset-password"
+        canonical="https://www.profileotimizer.online/reset-password"
       /><AuthShell
       eyebrow="Choose a new password"
       title="Set a fresh password."

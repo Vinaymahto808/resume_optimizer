@@ -333,7 +333,7 @@ export default function Templates() {
       <SEO
         title="ATS-Friendly Resume Templates"
         description="Browse 100+ ATS-optimized resume templates. Built for modern job seekers who want to pass applicant tracking systems."
-        canonical="https://profileoptimizer.com/templates"
+        canonical="https://www.profileotimizer.online/templates"
       />
       <div className="templates-hero">
         <div className="templates-hero-bg" />

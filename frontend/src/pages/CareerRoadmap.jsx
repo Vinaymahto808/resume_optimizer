@@ -29,7 +29,7 @@ export default function CareerRoadmap() {
       <SEO
         title="Career Roadmap Generator"
         description="Get a personalized career roadmap with skills, projects, certifications, and interview prep tailored to your target role."
-        canonical="https://profileoptimizer.com/career-roadmap"
+        canonical="https://www.profileotimizer.online/career-roadmap"
       />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Career Roadmap Generator</h2>

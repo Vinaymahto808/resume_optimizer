@@ -53,7 +53,7 @@ export default function Signup() {
       <SEO
         title="Create a Free Account"
         description="Sign up for free to scan your resume, get AI-powered suggestions, and unlock career opportunities."
-        canonical="https://profileoptimizer.com/signup"
+        canonical="https://www.profileotimizer.online/signup"
       />
       <div className="auth-card">
         <Link to="/" className="auth-brand" style={{ textDecoration: "none" }}>

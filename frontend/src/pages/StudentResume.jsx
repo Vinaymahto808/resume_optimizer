@@ -236,7 +236,7 @@ export default function StudentResume() {
       <SEO
         title="Student Resume Builder"
         description="Create ATS-optimized resumes for college admissions, internships, scholarships, and first jobs."
-        canonical="https://profileoptimizer.com/student-resume"
+        canonical="https://www.profileotimizer.online/student-resume"
       />
       <style>{`
         .student-resume-page { max-width: 1200px; margin: 0 auto; padding: 24px; }

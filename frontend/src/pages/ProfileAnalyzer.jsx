@@ -32,7 +32,7 @@ export default function ProfileAnalyzer() {
       <SEO
         title="LinkedIn Profile Analyzer"
         description="Paste your LinkedIn profile or resume text to get actionable suggestions, keyword analysis, and optimized content."
-        canonical="https://profileoptimizer.com/profile-analyzer"
+        canonical="https://www.profileotimizer.online/profile-analyzer"
       />
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 24px" }}>
         <div style={{ marginBottom: 40 }}>

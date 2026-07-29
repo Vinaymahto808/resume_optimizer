@@ -15,7 +15,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: http://localhost:5173,http://localhost:8000,https://resume-optimizer-frontend.onrender.com,https://api.profileotimizer.online,https://www.profileotimizer.online,https://profileotimizer.online,https://resume-optimizer.onrender.com
+        value: http://localhost:5173,http://localhost:8000,https://api.profileotimizer.online,https://www.profileotimizer.online,https://profileotimizer.online,https://resume-optimizer-cr4v.onrender.com
       - key: RUN_ENV
         value: production
       - key: FRONTEND_URL

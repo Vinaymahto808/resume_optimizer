@@ -99,7 +99,7 @@ export default function DashboardAnalytics() {
       <SEO
         title="Profile Analytics Dashboard"
         description="Analyze your profile strength, prioritize improvements, and benchmark against industry standards."
-        canonical="https://profileoptimizer.com/dashboard-analytics"
+        canonical="https://www.profileotimizer.online/dashboard-analytics"
       />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Profile Analytics Dashboard</h2>

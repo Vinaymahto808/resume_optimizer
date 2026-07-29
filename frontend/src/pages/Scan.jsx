@@ -105,7 +105,7 @@ export default function Scan() {
       <SEO
         title="Resume Scanner"
         description="Upload your resume to get an ATS compatibility score, detailed breakdown, and browse ATS-optimized templates."
-        canonical="https://profileoptimizer.com/scan"
+        canonical="https://www.profileotimizer.online/scan"
       />
       <div style={styles.inner}>
           <section className="scan-hero scan-hero-grid" style={styles.hero}>

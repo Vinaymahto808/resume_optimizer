@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
       <SEO
         title="Privacy Policy"
         description="ProfileOptimizer privacy policy. Learn how we collect, use, and protect your personal data."
-        canonical="https://profileoptimizer.com/privacy"
+        canonical="https://www.profileotimizer.online/privacy"
       />
       <section style={{ padding: "80px 24px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>

@@ -537,7 +537,7 @@ export default function Home() {
       <SEO
         title="ATS Resume Checker — Free Resume Score & Analysis"
         description="Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems."
-        canonical="https://profileoptimizer.com/"
+        canonical="https://www.profileotimizer.online/"
         ogTitle="ATS Resume Checker — Free Resume Score & Analysis"
         ogDescription="Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems."
       />

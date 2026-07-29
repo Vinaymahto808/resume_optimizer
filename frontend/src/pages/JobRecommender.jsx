@@ -186,7 +186,7 @@ export default function JobRecommender() {
       <SEO
         title="Job Recommendations"
         description="Find your next role with AI-powered job matching. Paste your resume to see matched roles from 25+ job portals."
-        canonical="https://profileoptimizer.com/job-recommender"
+        canonical="https://www.profileotimizer.online/job-recommender"
       />
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 24px" }}>
         <div style={{ marginBottom: 32 }}>

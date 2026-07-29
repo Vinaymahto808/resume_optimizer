@@ -92,7 +92,7 @@ export default function Pricing() {
       <SEO
         title="Pricing Plans"
         description="Choose the perfect plan for your job search. Free, Pro, and Enterprise plans with unlimited scans, AI analysis, and more."
-        canonical="https://profileoptimizer.com/pricing"
+        canonical="https://www.profileotimizer.online/pricing"
       />
       <div className="pricing-header">
         <div className="pricing-eyebrow">Simple Pricing</div>

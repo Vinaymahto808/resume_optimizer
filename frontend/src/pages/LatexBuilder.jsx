@@ -161,7 +161,7 @@ export default function LatexBuilder() {
       <SEO
         title="LaTeX Resume Builder"
         description="Build and customize ATS-optimized LaTeX resumes with real-time preview and multiple templates."
-        canonical="https://profileoptimizer.com/latex-builder"
+        canonical="https://www.profileotimizer.online/latex-builder"
       />
       {/* Toast */}
       {toast && (
