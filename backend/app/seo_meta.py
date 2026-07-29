@@ -1,5 +1,6 @@
+CANONICAL_DOMAIN = "https://www.profileotimizer.online"
 SITE_NAME = "ProfileOptimizer"
-DEFAULT_OG_IMAGE = "/og-image.png"
+DEFAULT_OG_IMAGE = f"{CANONICAL_DOMAIN}/og-image.png"
 DEFAULT_DESCRIPTION = "Scan your resume against 27 ATS checkpoints. Get a detailed score, keyword analysis, and actionable suggestions to beat applicant tracking systems."
 
 PAGE_META = {

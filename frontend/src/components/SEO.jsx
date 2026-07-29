@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "ProfileOptimizer";
-const DEFAULT_OG_IMAGE = "/og-image.png";
+const DEFAULT_OG_IMAGE = "https://www.profileotimizer.online/og-image.png";
 
 export default function SEO({
   title,

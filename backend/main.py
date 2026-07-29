@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi import HTTPException
 from app.config import settings
 from app.database import engine, Base
-from app.seo_meta import get_meta_for_path
+from app.seo_meta import get_meta_for_path, CANONICAL_DOMAIN
 
 from app.job_recommender import get_all_job_portals, get_internship_portals
 from app.paypal_integration import router as payments_router
@@ -80,12 +80,9 @@ def _inject_meta(html: str, meta: dict) -> str:
     title = meta["title"]
     description = meta["description"]
     canonical = meta["canonical"]
+    og_image = f"{CANONICAL_DOMAIN}/og-image.png"
 
-    html = re.sub(
-        r'<title>[^<]*</title>',
-        f'<title>{title}</title>',
-        html,
-    )
+    html = re.sub(r'<title>[^<]*</title>', f'<title>{title}</title>', html)
     html = re.sub(
         r'<meta name="description" content="[^"]*"',
         f'<meta name="description" content="{description}"',
@@ -107,6 +104,11 @@ def _inject_meta(html: str, meta: dict) -> str:
         html,
     )
     html = re.sub(
+        r'<meta property="og:image" content="[^"]*"',
+        f'<meta property="og:image" content="{og_image}"',
+        html,
+    )
+    html = re.sub(
         r'<meta name="twitter:title" content="[^"]*"',
         f'<meta name="twitter:title" content="{title}"',
         html,
@@ -114,6 +116,11 @@ def _inject_meta(html: str, meta: dict) -> str:
     html = re.sub(
         r'<meta name="twitter:description" content="[^"]*"',
         f'<meta name="twitter:description" content="{description}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta name="twitter:image" content="[^"]*"',
+        f'<meta name="twitter:image" content="{og_image}"',
         html,
     )
     html = re.sub(
