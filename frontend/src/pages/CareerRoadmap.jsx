@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ai } from "../api";
+import SEO from "../components/SEO";
 
 export default function CareerRoadmap() {
   const [role, setRole] = useState("");
@@ -25,6 +26,11 @@ export default function CareerRoadmap() {
 
   return (
     <div style={styles.wrapper}>
+      <SEO
+        title="Career Roadmap Generator"
+        description="Get a personalized career roadmap with skills, projects, certifications, and interview prep tailored to your target role."
+        canonical="https://profileoptimizer.com/career-roadmap"
+      />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Career Roadmap Generator</h2>
       <p style={styles.subtitle}>

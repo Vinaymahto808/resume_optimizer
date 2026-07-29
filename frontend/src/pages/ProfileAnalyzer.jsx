@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { v1 } from "../api";
+import SEO from "../components/SEO";
 
 export default function ProfileAnalyzer() {
   const [text, setText] = useState("");
@@ -28,6 +29,11 @@ export default function ProfileAnalyzer() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-card)" }}>
+      <SEO
+        title="LinkedIn Profile Analyzer"
+        description="Paste your LinkedIn profile or resume text to get actionable suggestions, keyword analysis, and optimized content."
+        canonical="https://profileoptimizer.com/profile-analyzer"
+      />
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 24px" }}>
         <div style={{ marginBottom: 40 }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "var(--accent)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>

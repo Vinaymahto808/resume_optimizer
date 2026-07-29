@@ -4,6 +4,7 @@ import { resumes, v1 } from "../api";
 import { useResume } from "../contexts/ResumeContext";
 import { usePlan } from "../contexts/PlanContext";
 import { AdHorizontal, AdSidebar, UpgradePrompt } from "../components/AdBanner";
+import SEO from "../components/SEO";
 
 const categoryIcons = {
   Content: "📄", Format: "📐", Skills: "💼", Sections: "📋", Style: "🎨",
@@ -218,6 +219,11 @@ export default function Results() {
 
   return (
     <div className="results-page">
+      <SEO
+        title="Resume Analysis Results"
+        description="View your ATS resume score, keyword analysis, skill breakdown, and actionable suggestions to improve your resume."
+        canonical="https://profileoptimizer.com/results"
+      />
       <div className="results-inner">
         <div className="results-header">
           <div className="results-title-section">

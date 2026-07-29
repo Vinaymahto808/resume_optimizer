@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { automation, autoApply } from "../api";
+import SEO from "../components/SEO";
 
 const TABS = [
   { id: "overview", label: "Overview", icon: "⊞" },
@@ -37,6 +38,11 @@ export default function AutomationHub() {
 
   return (
     <div style={{ minHeight: "100%" }}>
+      <SEO
+        title="Automation Hub"
+        description="Manage LLM, job applications, browser automation, credentials, and analytics in one place."
+        canonical="https://profileoptimizer.com/automation"
+      />
       <div style={{ marginBottom: 24 }}>
         <h1 style={{ fontSize: 24, fontWeight: 800, color: "var(--text)", margin: 0 }}>
           Automation Hub

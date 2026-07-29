@@ -4,6 +4,7 @@ import { v1 } from "../api";
 import ProgressStepper from "../components/ProgressStepper";
 import { usePlan } from "../contexts/PlanContext";
 import { AdHorizontal, UpgradePrompt } from "../components/AdBanner";
+import SEO from "../components/SEO";
 
 const templateCards = [
   {
@@ -101,6 +102,11 @@ export default function Scan() {
 
   return (
     <div style={styles.page}>
+      <SEO
+        title="Resume Scanner"
+        description="Upload your resume to get an ATS compatibility score, detailed breakdown, and browse ATS-optimized templates."
+        canonical="https://profileoptimizer.com/scan"
+      />
       <div style={styles.inner}>
           <section className="scan-hero scan-hero-grid" style={styles.hero}>
           <div style={styles.heroCopy}>

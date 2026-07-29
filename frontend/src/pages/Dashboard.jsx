@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { resumes, payments } from "../api";
 import { usePlan } from "../contexts/PlanContext";
 import { AdHorizontal, UpgradePrompt } from "../components/AdBanner";
+import SEO from "../components/SEO";
 
 function StatusPill({ atsScore }) {
   if (atsScore === null || atsScore === undefined) {
@@ -32,6 +33,11 @@ export default function Dashboard() {
 
   return (
     <div style={s.page}>
+      <SEO
+        title="Dashboard"
+        description="View your scanned resumes, ATS scores, and subscription details on your ProfileOptimizer dashboard."
+        canonical="https://profileoptimizer.com/dashboard"
+      />
       <style>{`
         .dash-kpi {
           display: grid;

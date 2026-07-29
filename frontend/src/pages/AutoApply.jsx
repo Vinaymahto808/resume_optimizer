@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { autoApply, resumes } from "../api";
+import SEO from "../components/SEO";
 
 export default function AutoApply() {
   const { user } = useAuth();
@@ -148,6 +149,11 @@ export default function AutoApply() {
 
   return (
     <div className="auto-apply-page">
+      <SEO
+        title="Auto Apply"
+        description="Automate your job applications with AI-powered resume tailoring and one-click applications."
+        canonical="https://profileoptimizer.com/auto-apply"
+      />
       <style>{`
         .auto-apply-page {
           max-width: 1200px;

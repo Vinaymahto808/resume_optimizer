@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ai } from "../api";
 import ProgressStepper from "../components/ProgressStepper";
 import { useResume } from "../contexts/ResumeContext";
+import SEO from "../components/SEO";
 
 const PLACEHOLDER_LINES = [
   '<!DOCTYPE html>',
@@ -164,6 +165,11 @@ export default function PortfolioGenerator() {
 
   return (
     <div style={styles.wrapper}>
+      <SEO
+        title="Portfolio Website Generator"
+        description="Generate a complete, ready-to-use portfolio HTML page with Tailwind CSS from your resume content."
+        canonical="https://profileoptimizer.com/portfolio-generator"
+      />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Portfolio Website Generator</h2>
       <p style={styles.subtitle}>

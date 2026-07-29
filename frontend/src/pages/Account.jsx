@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { auth } from "../api";
+import SEO from "../components/SEO";
 
 export default function Account() {
   const { user, logout } = useAuth();
@@ -51,6 +52,11 @@ export default function Account() {
 
   return (
     <div style={s.wrap}>
+      <SEO
+        title="Account Settings"
+        description="Manage your ProfileOptimizer account profile, security, and account preferences."
+        canonical="https://profileoptimizer.com/account"
+      />
       <h1 style={s.heading}>Account Settings</h1>
       <p style={s.sub}>Manage your profile, security, and account preferences.</p>
 

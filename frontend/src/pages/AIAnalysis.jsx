@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ai, profile } from "../api";
 import { useResume } from "../contexts/ResumeContext";
+import SEO from "../components/SEO";
 
 export default function AIAnalysis() {
   const { latestText } = useResume();
@@ -44,6 +45,11 @@ export default function AIAnalysis() {
 
   return (
     <div style={styles.wrapper}>
+      <SEO
+        title="AI Deep Analysis"
+        description="Get an expert-level AI critique of your resume or LinkedIn profile using Google Gemini."
+        canonical="https://profileoptimizer.com/ai-analysis"
+      />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>AI Deep Analysis</h2>
       <p style={styles.subtitle}>

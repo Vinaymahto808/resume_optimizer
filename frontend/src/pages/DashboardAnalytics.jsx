@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ai } from "../api";
 import SkeletonCard, { SkeletonCircle, SkeletonBar } from "../components/SkeletonLoader";
 import { useResume } from "../contexts/ResumeContext";
+import SEO from "../components/SEO";
 
 function CircularMeter({ score, size = 140, strokeWidth = 10 }) {
   const r = (size - strokeWidth) / 2;
@@ -95,6 +96,11 @@ export default function DashboardAnalytics() {
 
   return (
     <div style={styles.wrapper}>
+      <SEO
+        title="Profile Analytics Dashboard"
+        description="Analyze your profile strength, prioritize improvements, and benchmark against industry standards."
+        canonical="https://profileoptimizer.com/dashboard-analytics"
+      />
       <div style={styles.bgGlow} />
       <h2 style={styles.title}>Profile Analytics Dashboard</h2>
       <p style={styles.subtitle}>

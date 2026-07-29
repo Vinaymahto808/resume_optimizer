@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { latex } from "../api";
+import SEO from "../components/SEO";
 
 const FONTS = ["modern", "sans", "serif", "elegant"];
 const SPACING_OPTS = ["compact", "normal", "spacious"];
@@ -157,6 +158,11 @@ export default function LatexBuilder() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 0, margin: -28, height: "calc(100vh - 60px)" }}>
+      <SEO
+        title="LaTeX Resume Builder"
+        description="Build and customize ATS-optimized LaTeX resumes with real-time preview and multiple templates."
+        canonical="https://profileoptimizer.com/latex-builder"
+      />
       {/* Toast */}
       {toast && (
         <div style={{

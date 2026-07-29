@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { templates } from "../api";
+import SEO from "../components/SEO";
 
 const GOALS = [
   { id: "college", label: "College Admissions", icon: "🎓", desc: "Showcase academics, test scores & activities" },
@@ -232,6 +233,11 @@ export default function StudentResume() {
 
   return (
     <div className="student-resume-page">
+      <SEO
+        title="Student Resume Builder"
+        description="Create ATS-optimized resumes for college admissions, internships, scholarships, and first jobs."
+        canonical="https://profileoptimizer.com/student-resume"
+      />
       <style>{`
         .student-resume-page { max-width: 1200px; margin: 0 auto; padding: 24px; }
         .sr-header { text-align: center; margin-bottom: 32px; }

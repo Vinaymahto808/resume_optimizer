@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { v1, portals } from "../api";
 import { useResume } from "../contexts/ResumeContext";
+import SEO from "../components/SEO";
 
 const ALL_PORTALS = [
   { name: "LinkedIn", color: "#0A66C2" },
@@ -182,6 +183,11 @@ export default function JobRecommender() {
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg-card)" }}>
+      <SEO
+        title="Job Recommendations"
+        description="Find your next role with AI-powered job matching. Paste your resume to see matched roles from 25+ job portals."
+        canonical="https://profileoptimizer.com/job-recommender"
+      />
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 24px" }}>
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "var(--accent)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
