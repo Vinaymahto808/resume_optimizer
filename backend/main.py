@@ -1,13 +1,15 @@
 import os
+import re
 from pathlib import Path
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi import HTTPException
 from app.config import settings
 from app.database import engine, Base
+from app.seo_meta import get_meta_for_path
 
 from app.job_recommender import get_all_job_portals, get_internship_portals
 from app.paypal_integration import router as payments_router
@@ -66,10 +68,69 @@ FRONTEND_DIST = frontend_dist_path if (frontend_dist_path / "index.html").exists
 if FRONTEND_DIST:
     logger.info("Frontend dist found at %s", FRONTEND_DIST)
 
+_INDEX_HTML_TEMPLATE: str | None = None
+
+def _get_index_html():
+    global _INDEX_HTML_TEMPLATE
+    if _INDEX_HTML_TEMPLATE is None and FRONTEND_DIST:
+        _INDEX_HTML_TEMPLATE = (FRONTEND_DIST / "index.html").read_text(encoding="utf-8")
+    return _INDEX_HTML_TEMPLATE
+
+def _inject_meta(html: str, meta: dict) -> str:
+    title = meta["title"]
+    description = meta["description"]
+    canonical = meta["canonical"]
+
+    html = re.sub(
+        r'<title>[^<]*</title>',
+        f'<title>{title}</title>',
+        html,
+    )
+    html = re.sub(
+        r'<meta name="description" content="[^"]*"',
+        f'<meta name="description" content="{description}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta property="og:title" content="[^"]*"',
+        f'<meta property="og:title" content="{title}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta property="og:description" content="[^"]*"',
+        f'<meta property="og:description" content="{description}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta property="og:url" content="[^"]*"',
+        f'<meta property="og:url" content="{canonical}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta name="twitter:title" content="[^"]*"',
+        f'<meta name="twitter:title" content="{title}"',
+        html,
+    )
+    html = re.sub(
+        r'<meta name="twitter:description" content="[^"]*"',
+        f'<meta name="twitter:description" content="{description}"',
+        html,
+    )
+    html = re.sub(
+        r'<link rel="canonical" href="[^"]*"',
+        f'<link rel="canonical" href="{canonical}"',
+        html,
+    )
+    return html
+
 
 @app.get("/")
-def root():
+def root(request: Request):
     if FRONTEND_DIST:
+        html = _get_index_html()
+        if html:
+            meta = get_meta_for_path(str(request.url.path))
+            return HTMLResponse(_inject_meta(html, meta))
         return FileResponse(str(FRONTEND_DIST / "index.html"), media_type="text/html")
     return {
         "app": "ProfileOptimizer API",
@@ -169,9 +230,13 @@ if FRONTEND_DIST:
         return FileResponse(str(FRONTEND_DIST / "favicon.svg"))
 
     @app.get("/{full_path:path}", include_in_schema=False)
-    async def serve_spa(full_path: str):
+    async def serve_spa(full_path: str, request: Request):
         if full_path.startswith(("api/", "docs", "openapi", "uploads", "assets/")):
             raise HTTPException(status_code=404)
+        html = _get_index_html()
+        if html:
+            meta = get_meta_for_path(str(request.url.path))
+            return HTMLResponse(_inject_meta(html, meta))
         return FileResponse(str(FRONTEND_DIST / "index.html"), media_type="text/html")
 
 
