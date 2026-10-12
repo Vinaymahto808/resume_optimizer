@@ -185,10 +185,10 @@ def test_pricing_periods_and_expiry(client):
     from datetime import datetime
     data = client.get("/api/career/plans").json()
     turbo = next(p for p in data["plans"] if p["id"] == "turbo")
-    assert turbo["price_usd"] == 39.99
+    assert turbo["price_usd"] == 2.99
     periods = {p["id"]: p for p in data["billing_periods"]}
     assert set(periods) == {"monthly", "quarterly", "annual"}
-    assert periods["annual"]["per_month_usd"] < periods["quarterly"]["per_month_usd"] < 39.99
+    assert periods["annual"]["per_month_usd"] < periods["quarterly"]["per_month_usd"] < 2.99
     assert periods["annual"]["savings_pct"] > 0
     assert client.post("/api/career/plan/upgrade", headers=H, json={"period": "weekly"}).status_code == 422
     status = client.post("/api/career/plan/upgrade", headers=H, json={"period": "annual"}).json()
@@ -208,11 +208,11 @@ def test_paypal_capture_validation():
         return {"status": status, "purchase_units": [{"custom_id": custom,
                 "payments": {"captures": [{"amount": {"currency_code": "USD", "value": value}}]}}]}
 
-    assert plans.period_from_capture(cap(f"career|{cid}|annual", "359.99"), cid) == "annual"
-    assert plans.period_from_capture(cap(f"career|{cid}", "39.99"), cid) == "monthly"       # legacy order
-    assert plans.period_from_capture(cap(f"career|{cid}|annual", "39.99"), cid) is None     # underpaid
-    assert plans.period_from_capture(cap(f"career|other|annual", "359.99"), cid) is None    # wrong owner
-    assert plans.period_from_capture(cap(f"career|{cid}|annual", "359.99", "PENDING"), cid) is None
+    assert plans.period_from_capture(cap(f"career|{cid}|annual", "19.99"), cid) == "annual"
+    assert plans.period_from_capture(cap(f"career|{cid}", "2.99"), cid) == "monthly"       # legacy order
+    assert plans.period_from_capture(cap(f"career|{cid}|annual", "2.99"), cid) is None     # underpaid
+    assert plans.period_from_capture(cap(f"career|other|annual", "19.99"), cid) is None    # wrong owner
+    assert plans.period_from_capture(cap(f"career|{cid}|annual", "19.99", "PENDING"), cid) is None
     assert plans.period_from_capture({}, cid) is None
 
 
@@ -305,19 +305,19 @@ def _submit(client, utr="123456789012", period="monthly", headers=H, image=PNG, 
 def test_upi_mode_details_and_create_request(upi, tmp_path):
     plans_data = upi.get("/api/career/plans").json()
     assert plans_data["billing_mode"] == "upi_manual"
-    assert {p["id"]: p["price_inr"] for p in plans_data["billing_periods"]} ==         {"monthly": 499, "quarterly": 1299, "annual": 3999}
+    assert {p["id"]: p["price_inr"] for p in plans_data["billing_periods"]} ==         {"monthly": 199, "quarterly": 499, "annual": 1599}
     # Instant upgrade is closed in this mode: access only comes from an admin approval.
     assert upi.post("/api/career/plan/upgrade", headers=H, json={}).status_code == 409
 
     info = upi.get("/api/career/payments/upi?period=quarterly", headers=H).json()
-    assert info["amount_inr"] == 1299 and info["reference_code"].startswith("PO-")
-    assert "pa=profileoptimizer@ybl" in info["upi_link"] and "am=1299.00" in info["upi_link"]
+    assert info["amount_inr"] == 499 and info["reference_code"].startswith("PO-")
+    assert "pa=profileoptimizer@ybl" in info["upi_link"] and "am=499.00" in info["upi_link"]
     assert info["qr_data_uri"].startswith("data:image/svg+xml") and info["qr_image_url"] is None
 
     r = _submit(upi, period="quarterly")
     assert r.status_code == 200, r.text
     req = r.json()["request"]
-    assert req["status"] == "pending" and req["amount_inr"] == 1299
+    assert req["status"] == "pending" and req["amount_inr"] == 499
     assert req["reference_code"] == info["reference_code"]
     assert len(list((tmp_path / "payments").iterdir())) == 1
     assert upi.sent == [("admin@example.com", upi.sent[0][1])]

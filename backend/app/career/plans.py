@@ -27,14 +27,14 @@ def _price_inr(env: str, default: int) -> int:
 # `days` is how long one payment extends the plan.
 BILLING_PERIODS = {
     "monthly": {"id": "monthly", "label": "Monthly", "months": 1, "days": 30,
-                "price_usd": _price("TURBO_PRICE_MONTHLY", 39.99),
-                "price_inr": _price_inr("TURBO_PRICE_INR_MONTHLY", 499)},
+                "price_usd": _price("TURBO_PRICE_MONTHLY", 2.99),
+                "price_inr": _price_inr("TURBO_PRICE_INR_MONTHLY", 199)},
     "quarterly": {"id": "quarterly", "label": "Quarterly", "months": 3, "days": 90,
-                  "price_usd": _price("TURBO_PRICE_QUARTERLY", 99.99),
-                  "price_inr": _price_inr("TURBO_PRICE_INR_QUARTERLY", 1299)},
+                  "price_usd": _price("TURBO_PRICE_QUARTERLY", 6.99),
+                  "price_inr": _price_inr("TURBO_PRICE_INR_QUARTERLY", 499)},
     "annual": {"id": "annual", "label": "Annual", "months": 12, "days": 365,
-               "price_usd": _price("TURBO_PRICE_ANNUAL", 359.99),
-               "price_inr": _price_inr("TURBO_PRICE_INR_ANNUAL", 3999)},
+               "price_usd": _price("TURBO_PRICE_ANNUAL", 19.99),
+               "price_inr": _price_inr("TURBO_PRICE_INR_ANNUAL", 1599)},
 }
 DEFAULT_PERIOD = "monthly"
 
