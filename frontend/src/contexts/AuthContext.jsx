@@ -9,7 +9,8 @@ export function AuthProvider({ children }) {
     const saved = localStorage.getItem("user");
     return saved ? JSON.parse(saved) : null;
   });
-  const [loading, setLoading] = useState(true);
+  // Only wait on /me when there is a token to check.
+  const [loading, setLoading] = useState(() => !!localStorage.getItem("token"));
 
   const saveUser = (u) => {
     setUser(u);
@@ -32,8 +33,6 @@ export function AuthProvider({ children }) {
           setUser(null);
         })
         .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
     }
   }, []);
 
@@ -68,4 +67,5 @@ export function AuthProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

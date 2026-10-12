@@ -67,9 +67,9 @@ def analyze_ats(resume_text: str) -> dict:
 
     suggestions = []
     if word_count < 200:
-        suggestions.append("Your resume is too short ({word_count} words). Aim for 300-600 words with detailed experience.")
+        suggestions.append(f"Your resume is too short ({word_count} words). Aim for 300-600 words with detailed experience.")
     elif word_count > 800:
-        suggestions.append("Your resume is long ({word_count} words). Consider trimming to 600 words for better ATS scoring.")
+        suggestions.append(f"Your resume is long ({word_count} words). Consider trimming to 600 words for better ATS scoring.")
 
     if not any(r["passed"] for r in results if r["id"] == "job_keywords"):
         suggestions.append("Add more data science keywords (Python, ML, NLP, SQL, etc.) to pass ATS keyword filters.")

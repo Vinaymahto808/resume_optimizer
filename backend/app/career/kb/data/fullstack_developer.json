@@ -1,0 +1,407 @@
+{
+  "id": "fullstack_developer",
+  "name": "Full-Stack Developer",
+  "summary": "Full-stack developers build and ship complete web products, from the browser UI and accessible components to the APIs, databases, authentication and deployment pipeline behind them. They are hired by startups, product companies, agencies and enterprise teams that want engineers who can own a feature end to end. Typical stacks are TypeScript with React or Next.js on the front end and Node.js with a SQL or NoSQL database on the back end.",
+  "titles": [
+    "full stack developer",
+    "full-stack engineer",
+    "full stack software engineer",
+    "web developer",
+    "react developer",
+    "node.js developer",
+    "software engineer",
+    "javascript developer",
+    "mern stack developer",
+    "typescript developer"
+  ],
+  "skills": {
+    "core": [
+      "html",
+      "css",
+      "javascript",
+      "typescript",
+      "react",
+      "next.js",
+      "node.js",
+      "express",
+      "rest api",
+      "graphql",
+      "sql",
+      "postgresql",
+      "mongodb",
+      "git",
+      "jwt",
+      "oauth2",
+      "jest",
+      "tailwind css",
+      "redux",
+      "json"
+    ],
+    "advanced": [
+      "nestjs",
+      "vue.js",
+      "angular",
+      "react server components",
+      "server-side rendering",
+      "static site generation",
+      "incremental static regeneration",
+      "core web vitals",
+      "oidc",
+      "redis",
+      "websockets",
+      "microservices",
+      "ci/cd",
+      "owasp",
+      "wcag"
+    ],
+    "tools": [
+      "docker",
+      "vercel",
+      "aws",
+      "github actions",
+      "vite",
+      "webpack",
+      "npm",
+      "postman",
+      "prisma",
+      "eslint",
+      "playwright",
+      "cypress",
+      "storybook"
+    ]
+  },
+  "ats_keywords": [
+    "full stack developer",
+    "full-stack development",
+    "web development",
+    "single page application",
+    "restful apis",
+    "react.js",
+    "responsive web design",
+    "unit testing",
+    "integration testing",
+    "end-to-end testing",
+    "agile",
+    "scrum",
+    "code review",
+    "microservices architecture",
+    "web accessibility",
+    "cross-browser compatibility",
+    "state management",
+    "database design",
+    "api development",
+    "cloud deployment",
+    "ci/cd pipelines",
+    "test-driven development",
+    "version control",
+    "object-oriented programming",
+    "performance optimization",
+    "authentication and authorization",
+    "mobile-first design",
+    "nosql",
+    "orm",
+    "server-side rendering"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Developer - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "Validates practical knowledge of deploying and debugging applications on AWS (Lambda, API Gateway, DynamoDB, IAM), which is useful for roles on AWS-based teams, though a deployed project of your own still carries more weight with most hiring managers."
+    },
+    {
+      "name": "Meta Front-End Developer Professional Certificate",
+      "provider": "Meta (via Coursera)",
+      "level": "entry",
+      "why": "A structured path through HTML, CSS, JavaScript and React that helps career changers fill gaps, but employers care far more about the projects you build than the certificate itself."
+    },
+    {
+      "name": "MongoDB Associate Developer",
+      "provider": "MongoDB",
+      "level": "associate",
+      "why": "Shows working knowledge of MongoDB data modeling, queries and indexing for teams on the MEAN or MERN stack; treat it as a small supporting signal next to a portfolio app that actually uses the database."
+    },
+    {
+      "name": "freeCodeCamp Full Stack Developer Curriculum",
+      "provider": "freeCodeCamp",
+      "level": "entry",
+      "why": "A free, project-based curriculum that gives beginners verifiable practice and public projects; it is a learning path rather than a credential, so the shipped projects matter more than the badge."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Web fundamentals",
+      "duration_weeks": 8,
+      "goals": [
+        "Write semantic, accessible HTML and responsive CSS with flexbox and grid",
+        "Understand core JavaScript: scope, closures, promises, async/await and the event loop",
+        "Manipulate the DOM and call APIs with fetch",
+        "Use Git and GitHub for daily version control"
+      ],
+      "skills": ["html", "css", "javascript", "git", "json", "http"],
+      "project": "Build a responsive, accessible weather or recipe finder that consumes a public REST API, handles loading and error states, and is deployed on GitHub Pages or Vercel."
+    },
+    {
+      "stage": "Front-end frameworks and TypeScript",
+      "duration_weeks": 10,
+      "goals": [
+        "Build component-driven UIs in React using hooks and composition",
+        "Add TypeScript types to props, state and API responses",
+        "Manage client and server state with context, Redux or TanStack Query",
+        "Write component tests with Jest and Testing Library"
+      ],
+      "skills": ["react", "typescript", "redux", "tailwind css", "jest", "vite", "next.js"],
+      "project": "Create a kanban task board in React and TypeScript with drag and drop, optimistic updates, form validation and a tested reducer, deployed to Vercel."
+    },
+    {
+      "stage": "Back end, databases and auth",
+      "duration_weeks": 10,
+      "goals": [
+        "Design REST APIs in Node.js with Express or NestJS, including validation and error handling",
+        "Model relational data in PostgreSQL and use an ORM such as Prisma",
+        "Implement authentication with sessions or JWT and an OAuth2 social login",
+        "Learn the OWASP Top 10 and apply input validation, CORS and rate limiting"
+      ],
+      "skills": ["node.js", "express", "nestjs", "postgresql", "prisma", "jwt", "oauth2", "rest api"],
+      "project": "Build a multi-user expense tracker API with PostgreSQL, role-based access, OpenAPI docs, integration tests and a React front end."
+    },
+    {
+      "stage": "Production, performance and deployment",
+      "duration_weeks": 8,
+      "goals": [
+        "Containerize apps with Docker and automate tests and deploys with GitHub Actions",
+        "Use SSR, SSG and ISR in Next.js and improve Core Web Vitals",
+        "Write end-to-end tests with Playwright",
+        "Deploy to AWS or Vercel with environment configuration, logging and monitoring"
+      ],
+      "skills": ["docker", "github actions", "playwright", "next.js", "core web vitals", "aws", "ci/cd", "redis"],
+      "project": "Ship a full-stack SaaS-style app in Next.js with auth, a Postgres database, Redis caching, Playwright tests and a CI pipeline that deploys on every merge."
+    }
+  ],
+  "resume_bullets": [
+    "Built a customer dashboard in React and TypeScript with 40+ reusable components, cutting new-screen delivery time by roughly 35% across a team of six engineers.",
+    "Designed and shipped a Node.js and Express REST API backed by PostgreSQL serving 120k requests per day, with indexed queries that lowered p95 latency from 480 ms to 140 ms.",
+    "Migrated a client-rendered React app to Next.js with SSR and ISR, improving Largest Contentful Paint from 4.1 s to 1.9 s and lifting organic traffic by an illustrative 22%.",
+    "Implemented OAuth2/OIDC single sign-on with short-lived JWT access tokens and refresh rotation, reducing password-reset support tickets by 30%.",
+    "Established a CI/CD pipeline with GitHub Actions, Docker and automated Jest and Playwright suites, raising test coverage from 35% to 82% and shortening release cycles from weekly to daily.",
+    "Replaced three redundant REST endpoints with a GraphQL gateway using DataLoader batching, eliminating N+1 queries and reducing mobile payload size by 45%.",
+    "Remediated findings from a security review by adding CSRF protection, parameterized queries, strict CORS and a Content Security Policy, closing 14 OWASP Top 10 issues before launch.",
+    "Improved accessibility to WCAG 2.1 AA by fixing keyboard navigation, focus management and ARIA labels, raising the Lighthouse accessibility score from 71 to 97."
+  ],
+  "interview": [
+    {
+      "topic": "JavaScript event loop",
+      "level": "junior",
+      "question": "Explain how the JavaScript event loop works and why a Promise callback runs before a setTimeout callback with 0 delay.",
+      "answer": "JavaScript runs on a single thread with a call stack. Asynchronous work such as timers, network calls and I/O is handed to the host environment (browser APIs or libuv in Node). When it finishes, its callback is queued. The event loop takes the next task from the macrotask queue only when the call stack is empty. After each macrotask, the engine drains the entire microtask queue, which holds promise reactions and queueMicrotask callbacks. That is why a resolved promise's then callback runs before a setTimeout 0 callback: the timer callback is a macrotask, which must wait until the current script and all queued microtasks have finished. A long synchronous task blocks both, so heavy work should be chunked or moved to a Worker.",
+      "follow_ups": [
+        "Where do process.nextTick and setImmediate fit in Node?",
+        "How can an endless microtask loop starve rendering?"
+      ]
+    },
+    {
+      "topic": "JavaScript closures",
+      "level": "junior",
+      "question": "What is a closure, and where would you use one in real code?",
+      "answer": "A closure is a function bundled with references to the variables of the lexical scope where it was created, so it can still read and update those variables after the outer function has returned. Practical uses include private state (a counter factory that exposes only increment), partial application and configuration (createLogger(prefix) returning a logging function), memoization caches, and debounce or throttle helpers that keep a timer id between calls. In React, event handlers and effects close over props and state from a specific render, which explains stale closure bugs when a dependency is missing from a useEffect array. The trade-off is that closures keep captured variables alive, so holding large objects in long-lived callbacks can cause memory leaks.",
+      "follow_ups": [
+        "What does a for loop with var and setTimeout print, and how does let change it?",
+        "How does a stale closure appear in a React effect?"
+      ]
+    },
+    {
+      "topic": "React reconciliation",
+      "level": "mid",
+      "question": "How does React decide what to update in the DOM, and why do keys matter in lists?",
+      "answer": "On a state change React re-runs the component to produce a new element tree and compares it with the previous one, a process called reconciliation. It uses heuristics rather than a full tree diff: elements of different types are torn down and rebuilt, while same-type elements are updated in place, and the comparison recurses through children. For lists, keys tell React which item is which across renders. Stable, unique keys such as database ids let React move and preserve existing component instances and their state. Using array indexes as keys breaks when items are reordered, inserted or removed, causing wrong state to stick to the wrong row, extra re-mounts and subtle input bugs. Only the minimal set of real DOM mutations is then committed.",
+      "follow_ups": [
+        "What happens to local state when a component's type changes at the same position?",
+        "When is a random key like Math.random() harmful?"
+      ]
+    },
+    {
+      "topic": "React hooks",
+      "level": "mid",
+      "question": "When would you use useMemo, useCallback and useRef, and what are the pitfalls of useEffect?",
+      "answer": "useMemo caches an expensive computed value and useCallback caches a function identity; both only help when the result is passed to memoized children or used as a dependency, and they should be added after profiling, not by default. useRef holds a mutable value that persists across renders without triggering one, which suits DOM nodes, timers and previous values. useEffect is for synchronizing with external systems such as subscriptions or network calls, not for deriving state. Common pitfalls are missing or unstable dependencies causing stale closures or infinite loops, forgetting cleanup functions, fetching without handling race conditions or aborts, and putting computations in effects that could be done during render. Prefer data libraries or server components for fetching.",
+      "follow_ups": [
+        "How would you avoid a race condition in a data-fetching effect?",
+        "Why does React run effects twice in development Strict Mode?"
+      ]
+    },
+    {
+      "topic": "Rendering strategies",
+      "level": "mid",
+      "question": "Compare CSR, SSR, SSG and ISR and say when you would pick each in Next.js.",
+      "answer": "CSR ships a small HTML shell and builds the page in the browser, which is simple and good for authenticated dashboards but slow to first content and weaker for SEO. SSR renders HTML on the server for each request, giving fast first paint and fresh data at the cost of server load and higher time to first byte. SSG renders pages at build time and serves them from a CDN, which is fastest and cheapest for content that rarely changes. ISR regenerates static pages in the background after a revalidation interval or on demand, so large catalogs stay fast and reasonably fresh without rebuilding everything. I choose SSG or ISR for marketing, blog and product pages, SSR for personalized or frequently changing public pages, and CSR for private app screens, often mixing them per route.",
+      "follow_ups": [
+        "What is hydration and what causes hydration mismatches?",
+        "How does streaming with Suspense improve perceived performance?"
+      ]
+    },
+    {
+      "topic": "REST API design",
+      "level": "mid",
+      "question": "What makes a REST API well designed? Cover resources, status codes, idempotency, pagination and versioning.",
+      "answer": "Model nouns as resources (/orders/42) and use HTTP methods for actions: GET reads, POST creates, PUT replaces, PATCH partially updates and DELETE removes. GET, PUT and DELETE should be idempotent, so retries are safe; for POST, accept an Idempotency-Key header on payments. Return accurate status codes: 201 with a Location header on creation, 400 for validation errors, 401 versus 403 for unauthenticated versus unauthorized, 404, 409 for conflicts and 429 for rate limits, with a consistent JSON error body. Paginate collections, preferring cursor-based pagination for large or changing data over offset. Version through the path or headers, and keep changes additive to avoid breaking clients. Document with OpenAPI and validate input at the boundary.",
+      "follow_ups": [
+        "PUT versus PATCH: when is each appropriate?",
+        "How would you design rate limiting for a public API?"
+      ]
+    },
+    {
+      "topic": "Authentication",
+      "level": "mid",
+      "question": "How would you implement authentication for a web app? Compare JWTs with server-side sessions.",
+      "answer": "Server-side sessions store state on the server (database or Redis) and send the browser an opaque session id in an HttpOnly, Secure, SameSite cookie. They are easy to revoke and keep secrets off the client, but need shared storage when you scale horizontally. JWTs are signed tokens containing claims that any service can verify without a lookup, which suits distributed APIs and mobile clients, but they are hard to revoke before expiry, so use short-lived access tokens plus rotating refresh tokens. Never store tokens in localStorage if XSS is a concern; an HttpOnly cookie is safer. For a typical first-party web app I default to sessions. For third-party login or single sign-on, use OAuth2 with OIDC through a vetted provider or library and never roll your own crypto.",
+      "follow_ups": [
+        "How would you revoke a JWT before it expires?",
+        "What does the authorization code flow with PKCE protect against?"
+      ]
+    },
+    {
+      "topic": "Databases",
+      "level": "mid",
+      "question": "How do you choose between SQL and NoSQL, and how do indexes and the N+1 problem affect performance?",
+      "answer": "I start with a relational database such as PostgreSQL when data has clear relationships and needs transactions, constraints and flexible queries. A document store like MongoDB fits nested, read-heavy documents with evolving shape, and key-value stores like Redis suit caching, sessions and rate limiting. Indexes, usually B-trees, make lookups and sorts fast by avoiding full scans, but they slow writes and use memory, so I index columns used in WHERE, JOIN and ORDER BY clauses and check plans with EXPLAIN. Composite index column order matters. The N+1 problem occurs when code runs one query for a list and then one per row, often hidden by an ORM. Fix it with joins, eager loading, batching with DataLoader, or a single IN query.",
+      "follow_ups": [
+        "What does ACID guarantee, and what isolation level problems exist?",
+        "When would you denormalize data?"
+      ]
+    },
+    {
+      "topic": "Web security",
+      "level": "mid",
+      "question": "Explain XSS, CSRF and CORS and how you defend against each.",
+      "answer": "XSS is injecting script into a page that runs in a victim's browser. Defend by escaping output (frameworks like React escape by default), avoiding dangerouslySetInnerHTML or sanitizing with a library such as DOMPurify, setting a strict Content Security Policy and using HttpOnly cookies. CSRF tricks a logged-in browser into sending an unwanted request because cookies are attached automatically; defend with SameSite cookies, anti-CSRF tokens on state-changing requests and checking the Origin header. CORS is not a defense but a browser relaxation of the same-origin policy: the server lists allowed origins through response headers, and preflight requests handle non-simple calls. Avoid wildcard origins with credentials. Also use parameterized queries to prevent SQL injection, validate input and keep dependencies patched.",
+      "follow_ups": [
+        "Why does CORS not protect your API from curl or a malicious server?",
+        "What does SameSite=Lax change for cross-site POST requests?"
+      ]
+    },
+    {
+      "topic": "Node.js concurrency",
+      "level": "senior",
+      "question": "Node.js is single threaded. How does it handle many concurrent requests, and what do you do about CPU-heavy work?",
+      "answer": "Node runs JavaScript on one thread but delegates I/O to the OS and libuv's thread pool, so thousands of connections can wait on databases and networks without blocking the loop. Throughput is great for I/O-bound workloads, but a CPU-heavy synchronous task such as large JSON parsing, image processing or a bad regex blocks every other request. Options are worker_threads for compute offloading, a job queue (BullMQ or SQS) with separate worker processes, or a dedicated service in another language. To use multiple cores, run several processes with the cluster module, PM2 or container replicas behind a load balancer. Monitor event loop lag, use streaming for large payloads, set timeouts, and apply backpressure so a slow downstream does not exhaust memory.",
+      "follow_ups": [
+        "How would you detect that the event loop is blocked in production?",
+        "What is backpressure in streams?"
+      ]
+    },
+    {
+      "topic": "GraphQL versus REST",
+      "level": "senior",
+      "question": "When would you choose GraphQL over REST, and what problems does it introduce?",
+      "answer": "GraphQL lets clients request exactly the fields they need in one round trip against a typed schema, which helps when many different clients, such as web and mobile, need varied shapes of related data or when you aggregate several backend services behind one gateway. It reduces over-fetching and under-fetching and gives a self-documenting contract. The costs are real: HTTP caching is harder because requests are usually POSTs to a single endpoint, so you need persisted queries or client caches; naive resolvers cause N+1 queries unless you batch with DataLoader; and unbounded queries can overload the server, so you need depth and complexity limits, timeouts and authorization at the field level. For simple CRUD with a single client, REST is simpler to build, cache and monitor.",
+      "follow_ups": [
+        "How do you protect a GraphQL endpoint from expensive queries?",
+        "How do subscriptions differ from queries and mutations?"
+      ]
+    },
+    {
+      "topic": "Web performance",
+      "level": "senior",
+      "question": "A Next.js page has a poor Largest Contentful Paint and layout shifts. How do you diagnose and fix it?",
+      "answer": "I first measure with Lighthouse and the Performance panel in the lab, then confirm with field data from real users, such as CrUX or a RUM tool, because lab and field often differ. For LCP I identify the LCP element, which is often a hero image, and fix its delivery: use next/image with correct sizing, modern formats and priority, preload critical resources, reduce render-blocking CSS and JavaScript, and cut server response time with caching, a CDN, static generation or streaming. For layout shifts (CLS) I reserve space with width and height or aspect-ratio, avoid inserting content above existing content, and load fonts with font-display and size adjustments. For INP, I break up long tasks, defer third-party scripts and reduce hydration cost with server components and code splitting.",
+      "follow_ups": [
+        "What replaced First Input Delay as a Core Web Vital, and why?",
+        "How do you stop third-party scripts from hurting responsiveness?"
+      ]
+    },
+    {
+      "topic": "State management",
+      "level": "mid",
+      "question": "How do you decide where state should live in a React application, and when is Redux worth it?",
+      "answer": "I keep state as local and as close to where it is used as possible, lifting it up only when siblings need it. I separate kinds of state: server state (fetched data) belongs in a cache library like TanStack Query or SWR, which handles loading, caching, deduplication and revalidation; URL state such as filters and pagination belongs in the route; form state in a form library; and only genuinely shared client state, such as a theme or a multi-step wizard, goes in context or a store like Redux Toolkit or Zustand. Context re-renders all consumers on change, so it suits low-frequency values. Redux is worth it when many distant components share complex state with predictable transitions, need middleware, or benefit from time-travel debugging and a strict audit trail.",
+      "follow_ups": [
+        "Why can a single large context cause performance problems?",
+        "What problem does Redux Toolkit's createSlice solve?"
+      ]
+    },
+    {
+      "topic": "System design",
+      "level": "senior",
+      "question": "Design a URL shortener. Cover the API, storage, ID generation, scaling and caching.",
+      "answer": "The API has POST /links with a long URL (optional custom alias, expiry) returning a short code, and GET /:code that responds with a 301 or 302 redirect. Reads vastly outnumber writes, so optimize for redirects. For codes, use a base62 encoding of an auto-increment or distributed ID (such as a snowflake-style generator), or random 7-character codes with a uniqueness check; avoid guessable sequences if links are private. Store code, target URL, owner and timestamps in PostgreSQL or a key-value store, with a unique index on the code. Put Redis in front for hot codes and a CDN for edge caching, using 302 if you need to count clicks or allow edits. Record clicks asynchronously through a queue to avoid slowing redirects. Add rate limiting, URL validation and malware checks, and scale with read replicas and sharding by code.",
+      "follow_ups": [
+        "301 versus 302: what are the trade-offs for analytics and SEO?",
+        "How would you prevent two servers from generating the same code?"
+      ]
+    },
+    {
+      "topic": "Testing and CI/CD",
+      "level": "mid",
+      "question": "What does your testing strategy look like for a full-stack app, and how does it fit into CI/CD?",
+      "answer": "I follow a testing pyramid. Many fast unit tests with Jest or Vitest cover pure logic, hooks and reducers. Component and integration tests with Testing Library check behavior the way users experience it, not implementation details, and API tests run against a real test database, ideally in Docker, using supertest. A small number of end-to-end tests with Playwright cover critical flows such as sign-up, checkout and permissions, run against a preview deployment. I mock only external boundaries, and avoid flaky tests by using auto-waiting and deterministic data. In CI, such as GitHub Actions, each pull request runs lint, type check, tests and a build in parallel, with caching for dependencies; merges to main deploy automatically, with preview environments, database migrations run safely and a quick rollback path.",
+      "follow_ups": [
+        "How do you keep end-to-end tests from becoming flaky?",
+        "How do you run database migrations safely during a deploy?"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "SSR vs CSR vs SSG vs ISR",
+      "body": "These are strategies for where and when HTML is produced. Client-side rendering (CSR) sends a near-empty HTML document and a JavaScript bundle; the browser fetches data and builds the UI. It makes highly interactive, authenticated apps simple, but the first meaningful paint is slower and crawlers see less content. Server-side rendering (SSR) generates HTML on the server per request, so users see content quickly and the data is always fresh, but every request costs server compute and time to first byte depends on data fetching. Static site generation (SSG) renders pages once at build time and serves them from a CDN, which is the fastest and cheapest option for content that changes rarely. Incremental static regeneration (ISR) extends SSG by regenerating individual pages in the background after a time window or an on-demand trigger, so big sites avoid full rebuilds. After HTML arrives, the browser hydrates it, attaching event handlers to make it interactive. Modern frameworks such as Next.js let you choose per route and combine them with streaming and React Server Components to send HTML progressively and ship less JavaScript."
+    },
+    {
+      "title": "REST vs GraphQL",
+      "body": "REST models an API as resources addressed by URLs and manipulated with standard HTTP methods. It benefits from HTTP caching, simple tooling, clear status codes and easy monitoring, but clients can suffer from over-fetching (more data than needed) or under-fetching (multiple requests to assemble a screen). GraphQL exposes a single endpoint and a strongly typed schema; clients send a query describing exactly the fields they want, including nested relations, and receive that shape in one response. This is valuable for diverse clients, rapidly changing UIs and gateways over multiple services. Its trade-offs include more complex caching, since requests are typically POSTs, risk of expensive or deeply nested queries that require depth limits and cost analysis, N+1 resolver problems solved with batching tools such as DataLoader, and a steeper learning curve for file uploads and error handling. REST fits simple resource-oriented services and public APIs; GraphQL fits product teams iterating on data-rich front ends. Many companies use both, and tRPC is an alternative for TypeScript monorepos where client and server share types directly."
+    },
+    {
+      "title": "JWT vs server-side sessions",
+      "body": "A server-side session stores user state on the server, keyed by a random session id sent in a cookie. The server can revoke or modify a session instantly, and the cookie contains no user data. The cost is a lookup per request and shared storage such as Redis when you run multiple instances. A JSON Web Token is a signed, self-contained token carrying claims like the user id, roles and expiry. Any service with the key can verify it without a database call, which is attractive for microservices, mobile apps and third-party APIs. The weakness is revocation: a leaked token is valid until it expires, so you use short-lived access tokens, rotate refresh tokens and sometimes keep a denylist, which reintroduces state. JWTs are signed, not encrypted, so never put secrets in the payload, and always validate the algorithm, issuer, audience and expiry. Where the token lives matters: HttpOnly, Secure, SameSite cookies resist XSS theft, while localStorage does not. For a classic first-party web app, sessions are usually simpler and safer."
+    },
+    {
+      "title": "OAuth2 and OpenID Connect",
+      "body": "OAuth2 is an authorization framework that lets an application obtain limited access to a resource on a user's behalf without seeing their password. The common browser flow is the authorization code flow with PKCE: the app redirects the user to the identity provider, the user authenticates and consents, the provider redirects back with a one-time code, and the app exchanges the code, together with a PKCE code verifier, for an access token and optionally a refresh token. PKCE prevents an attacker who intercepts the code from redeeming it. OAuth2 alone says what an app may access, not who the user is. OpenID Connect (OIDC) adds an identity layer on top, returning an ID token, a JWT with claims such as subject, email and issuer, plus a userinfo endpoint and standard scopes like openid and profile. Practical advice: use a maintained library or a provider such as Auth0, Cognito, Clerk or Keycloak, validate state and nonce values, check the ID token signature, audience and expiry, keep scopes minimal, store secrets only on the server, and avoid the deprecated implicit flow."
+    },
+    {
+      "title": "The browser event loop and async JavaScript",
+      "body": "JavaScript executes on a single thread, with one call stack. Asynchrony comes from the environment around the engine: timers, network requests, DOM events and file I/O are handled outside the stack, and when they complete, callbacks are placed in queues. The event loop repeatedly checks whether the call stack is empty and then runs the next queued task. There are two key queues: the macrotask queue (timers, I/O, UI events) and the microtask queue (promise callbacks, queueMicrotask, MutationObserver). After every macrotask, all microtasks run before the next macrotask or a render, so promise chains run ahead of setTimeout callbacks. Async/await is syntax over promises: an await pauses the function and resumes it as a microtask when the promise settles, without blocking the thread. Long synchronous work freezes the page and delays input handling, which hurts Interaction to Next Paint, so split work into chunks, use requestIdleCallback or scheduler APIs, or move computation into a Web Worker. In Node.js the same idea applies, with libuv phases and process.nextTick running before promise microtasks."
+    },
+    {
+      "title": "React rendering, hooks and Server Components",
+      "body": "A React component is a function from props and state to a description of UI. When state changes, React re-renders the component and its children, compares the new element tree with the previous one (reconciliation), and applies only the necessary DOM changes. Rendering must be pure; side effects belong in event handlers or useEffect. Hooks let function components hold state (useState, useReducer), subscribe to external systems (useEffect), keep mutable references (useRef), and memoize values or functions (useMemo, useCallback). The Rules of Hooks require calling them unconditionally at the top level so React can associate them with the component by call order. Performance tools such as React.memo, splitting components, virtualizing long lists and lazy loading help when profiling shows a real problem. React Server Components run only on the server, can read databases directly, and send no component JavaScript to the browser, reducing bundle size. Client Components, marked with use client, handle interactivity and state. In Next.js App Router, you compose both, keeping data fetching on the server and interactive leaves on the client."
+    },
+    {
+      "title": "Relational and NoSQL databases",
+      "body": "Relational databases such as PostgreSQL and MySQL store data in tables with defined schemas, enforce relationships through foreign keys and constraints, and support powerful joins and ACID transactions, which guarantee atomic, consistent, isolated and durable updates. They are the default choice for business data like users, orders and payments. NoSQL covers several models: document stores like MongoDB hold JSON-like documents that map naturally to application objects and scale horizontally; key-value stores like Redis give very fast access for caching, sessions and rate limits; wide-column and graph databases serve specialized workloads. NoSQL systems often trade strict joins and cross-document transactions for flexibility and scale, although modern MongoDB and PostgreSQL both blur the line, with PostgreSQL offering JSONB columns. Good performance depends on schema design and indexing: add indexes for frequent filters and sorts, inspect query plans, avoid N+1 queries, paginate, and consider read replicas and caching before sharding. Use migrations to evolve schemas safely, and choose based on access patterns and consistency needs rather than fashion."
+    },
+    {
+      "title": "Core Web Vitals and front-end performance",
+      "body": "Core Web Vitals are Google's field metrics for user experience. Largest Contentful Paint (LCP) measures how quickly the main content renders, with a good target of 2.5 seconds or less. Interaction to Next Paint (INP), which replaced First Input Delay, measures responsiveness across all interactions, with 200 milliseconds or less considered good. Cumulative Layout Shift (CLS) measures visual stability, with 0.1 or less considered good. To improve LCP, serve fast HTML through a CDN or static generation, optimize and properly size images, preload the hero resource, and remove render-blocking assets. To improve INP, shorten main-thread tasks by code splitting, deferring third-party scripts, avoiding heavy re-renders and moving computation to workers. To improve CLS, set explicit dimensions for images, embeds and ads, and handle web fonts carefully. Measure with Lighthouse and DevTools in the lab, but rely on real-user data from the Chrome UX Report or your own monitoring, because devices and networks vary. Set performance budgets in CI so regressions are caught early."
+    },
+    {
+      "title": "Web security essentials: XSS, CSRF, CORS and injection",
+      "body": "The OWASP Top 10 lists the most critical web risks, including broken access control, cryptographic failures, injection and security misconfiguration. Cross-site scripting (XSS) happens when untrusted input is rendered as executable script; prevent it with output encoding, framework auto-escaping, sanitizing any HTML you must render, and a Content Security Policy. Cross-site request forgery (CSRF) abuses automatically attached cookies to make authenticated requests from another site; prevent it with SameSite cookies, CSRF tokens and Origin checks. CORS is a browser mechanism that relaxes the same-origin policy for approved origins through headers like Access-Control-Allow-Origin; it protects users' browsers, not your server, so you still need authentication and authorization on every endpoint. Never combine wildcard origins with credentials. SQL injection is prevented by parameterized queries or an ORM, never by string concatenation. Broken access control is the most common failure: always check object-level permissions on the server rather than trusting IDs from the client. Also hash passwords with bcrypt or Argon2, enforce HTTPS and HSTS, rate limit sensitive routes, keep secrets out of source control and update dependencies."
+    },
+    {
+      "title": "Docker, CI/CD and deployment",
+      "body": "Docker packages an application and its dependencies into an image that runs the same way on a laptop, in CI and in production. A good Dockerfile uses a small base image, multi-stage builds to keep build tools out of the final image, a non-root user, layer ordering that caches dependency installs, and a dockerignore file. Docker Compose helps run the app with a database and cache locally. Continuous integration runs on every pull request: install, lint, type check, unit and integration tests, build, and sometimes end-to-end tests. Continuous delivery or deployment then promotes passing builds automatically. Tools like GitHub Actions define these pipelines as code. For deployment, platforms such as Vercel suit Next.js with preview deployments per pull request and edge caching, while AWS offers more control through services like ECS or Lambda, S3 with CloudFront, and RDS. Good practice includes environment-specific configuration through environment variables or a secrets manager, safe database migrations, health checks, structured logging, monitoring with alerts, and a fast rollback strategy such as redeploying the previous image."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Full-stack SaaS starter with authentication and billing",
+      "description": "Build a multi-tenant subscription app in Next.js and TypeScript with email and OAuth login, role-based access, a PostgreSQL database through Prisma, Stripe test-mode checkout with webhooks, and a Playwright-tested sign-up flow, deployed through a GitHub Actions pipeline.",
+      "skills": ["next.js", "typescript", "postgresql", "prisma", "oauth2", "playwright", "github actions"]
+    },
+    {
+      "name": "Real-time collaborative task board",
+      "description": "Create a kanban app with a React front end and a Node.js backend that uses WebSockets to sync card moves between users, optimistic UI updates, Redis for presence and caching, and Jest and Testing Library coverage for the core logic.",
+      "skills": ["react", "node.js", "websockets", "redis", "typescript", "jest", "mongodb"]
+    },
+    {
+      "name": "E-commerce storefront with SSR and ISR",
+      "description": "Develop a product catalog and cart with server-rendered and incrementally regenerated pages, a REST or GraphQL API, search with filters and pagination, image optimization, and documented Lighthouse and Core Web Vitals improvements before and after tuning.",
+      "skills": ["next.js", "graphql", "postgresql", "incremental static regeneration", "core web vitals", "tailwind css"]
+    },
+    {
+      "name": "Secure REST API with documentation and CI",
+      "description": "Design a NestJS or Express API for a notes or expense service with JWT access and refresh tokens, input validation, rate limiting, strict CORS, OpenAPI docs, integration tests against a Dockerized database and an automated container build.",
+      "skills": ["nestjs", "rest api", "jwt", "docker", "postgresql", "owasp", "ci/cd"]
+    }
+  ]
+}

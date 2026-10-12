@@ -68,15 +68,6 @@ export default function DashboardAnalytics() {
   const [error, setError] = useState("");
   const [autoFired, setAutoFired] = useState(false);
 
-  useEffect(() => {
-    if (latestText && !autoFired && !loading && !result) {
-      setText(latestText);
-      setAutoFired(true);
-      const timer = setTimeout(() => handleAnalyze(latestText), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [latestText]);
-
   const handleAnalyze = async (overrideText) => {
     const t = overrideText ?? text;
     if (!t.trim()) return;
@@ -93,6 +84,18 @@ export default function DashboardAnalytics() {
     }
     setLoading(false);
   };
+
+  // Auto-run analytics once when resume text arrives from context.
+  useEffect(() => {
+    if (latestText && !autoFired && !loading && !result) {
+      Promise.resolve().then(() => {
+        setText(latestText);
+        setAutoFired(true);
+      });
+      const timer = setTimeout(() => handleAnalyze(latestText), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [latestText]); // eslint-disable-line react-hooks/exhaustive-deps -- intentionally fires only when latestText changes
 
   return (
     <div style={styles.wrapper}>

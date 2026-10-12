@@ -1,29 +1,17 @@
 import { useState, useEffect } from "react";
-import { ai, profile } from "../api";
+import { ai } from "../api";
 import { useResume } from "../contexts/ResumeContext";
 import SEO from "../components/SEO";
 
 export default function AIAnalysis() {
   const { latestText } = useResume();
-  const [text, setText] = useState(latestText || "");
+  const [text, setText] = useState(
+    () => latestText || sessionStorage.getItem("profileText") || ""
+  );
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [autoFired, setAutoFired] = useState(false);
-
-  useEffect(() => {
-    const saved = sessionStorage.getItem("profileText");
-    if (saved && !latestText) setText(saved);
-  }, []);
-
-  useEffect(() => {
-    if (latestText && !autoFired && !loading && !result) {
-      setText(latestText);
-      setAutoFired(true);
-      const timer = setTimeout(() => handleAnalyze(latestText), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [latestText]);
 
   const handleAnalyze = async (overrideText) => {
     const t = overrideText ?? text;
@@ -42,6 +30,18 @@ export default function AIAnalysis() {
     }
     setLoading(false);
   };
+
+  // Auto-run the analysis once when resume text arrives from context.
+  useEffect(() => {
+    if (latestText && !autoFired && !loading && !result) {
+      Promise.resolve().then(() => {
+        setText(latestText);
+        setAutoFired(true);
+      });
+      const timer = setTimeout(() => handleAnalyze(latestText), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [latestText]); // eslint-disable-line react-hooks/exhaustive-deps -- intentionally fires only when latestText changes
 
   return (
     <div style={styles.wrapper}>

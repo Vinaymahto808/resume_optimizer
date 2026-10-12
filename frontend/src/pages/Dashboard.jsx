@@ -17,7 +17,7 @@ function StatusPill({ atsScore }) {
 export default function Dashboard() {
   const { isPaid, planLoading } = usePlan();
   const [list, setList] = useState([]);
-  const [sub, setSub] = useState(null);
+  const [, setSub] = useState(null); // subscription value currently not rendered
 
   useEffect(() => {
     resumes.list().then(setList).catch(() => {});
@@ -76,10 +76,11 @@ export default function Dashboard() {
 
         @media (max-width: 768px) {
           .dash-kpi {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 20px;
           }
+          .dash-kpi > :last-child { grid-column: 1 / -1; }
 
           .dash-table-head { display: none; }
 

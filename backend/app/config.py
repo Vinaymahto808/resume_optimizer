@@ -6,10 +6,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Vercel Functions: only /tmp is writable, and it is per instance and temporary.
+ON_VERCEL = bool(os.getenv("VERCEL"))
+if ON_VERCEL and not os.getenv("DATABASE_URL"):
+    sys.exit("FATAL: set DATABASE_URL to a Postgres database; SQLite can't persist on Vercel")
+
 def _resolve_secret_key() -> str:
     key = os.getenv("SECRET_KEY", "")
     if key:
         return key
+    if ON_VERCEL:
+        # The deployed bundle is read-only, and a per-instance random key would break every session.
+        sys.exit("FATAL: set SECRET_KEY in the Vercel project's environment variables")
     env_path = Path(".env")
     env_lines = env_path.read_text().splitlines() if env_path.exists() else []
     for line in env_lines:
@@ -29,15 +37,19 @@ def _resolve_secret_key() -> str:
     return generated
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./ats_resume.db")
+    # SQLAlchemy 2 only accepts the "postgresql://" scheme; some hosts hand out "postgres://".
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./ats_resume.db").replace("postgres://", "postgresql://", 1)
     SECRET_KEY: str = _resolve_secret_key()
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
-    UPLOAD_DIR: str = "uploads"
-    CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "http://localhost:5173")
+    UPLOAD_DIR: str = "/tmp/uploads" if ON_VERCEL else "uploads"
+    CORS_ORIGINS: str = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173",
+    )
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:5173")
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")

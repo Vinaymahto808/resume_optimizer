@@ -16,7 +16,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     if settings.DATABASE_URL.startswith("sqlite"):
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA journal_mode=WAL")
-        cursor.execute("PRAGMA busy_timeout=5000")
+        cursor.execute("PRAGMA busy_timeout=15000")  # match the 15 s connect timeout above
         cursor.execute("PRAGMA synchronous=NORMAL")
         cursor.close()
 

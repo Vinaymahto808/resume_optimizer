@@ -1,0 +1,484 @@
+{
+  "id": "crm_developer",
+  "name": "CRM Developer / Consultant",
+  "summary": "CRM developers and consultants configure, extend and integrate customer relationship management platforms, most often Salesforce, Microsoft Dynamics 365 and Power Platform, and HubSpot or Zoho CRM. They translate sales, service and marketing processes into objects, automation, code and integrations, and run implementations from requirements through data migration, deployment and adoption. They are hired by consultancies and implementation partners, in-house IT and RevOps teams, and software vendors that run on a CRM.",
+  "titles": [
+    "salesforce developer",
+    "salesforce administrator",
+    "salesforce consultant",
+    "crm consultant",
+    "crm developer",
+    "dynamics 365 developer",
+    "power platform developer",
+    "salesforce business analyst",
+    "salesforce architect",
+    "hubspot developer"
+  ],
+  "skills": {
+    "core": [
+      "salesforce",
+      "apex",
+      "soql",
+      "sosl",
+      "apex triggers",
+      "salesforce flow",
+      "validation rules",
+      "custom objects",
+      "lookup and master-detail relationships",
+      "profiles and permission sets",
+      "sharing rules",
+      "record types",
+      "page layouts",
+      "lightning web components",
+      "lwc",
+      "sales cloud",
+      "service cloud",
+      "reports and dashboards",
+      "data loader"
+    ],
+    "advanced": [
+      "governor limits",
+      "bulkification",
+      "trigger framework",
+      "batch apex",
+      "queueable apex",
+      "scheduled apex",
+      "platform events",
+      "rest api",
+      "soap api",
+      "named credentials",
+      "apex test classes",
+      "salesforce dx",
+      "data migration",
+      "integration patterns",
+      "sharing model"
+    ],
+    "tools": [
+      "visual studio code",
+      "salesforce cli",
+      "sfdx",
+      "change sets",
+      "developer console",
+      "workbench",
+      "postman",
+      "git",
+      "ci/cd",
+      "dataloader.io",
+      "dynamics 365",
+      "power automate",
+      "dataverse",
+      "hubspot",
+      "zoho crm"
+    ]
+  },
+  "ats_keywords": [
+    "salesforce developer",
+    "salesforce administrator",
+    "salesforce certified",
+    "apex",
+    "soql",
+    "lightning web components",
+    "lwc",
+    "salesforce flow",
+    "apex triggers",
+    "governor limits",
+    "sales cloud",
+    "service cloud",
+    "salesforce dx",
+    "change sets",
+    "rest api",
+    "soap api",
+    "platform events",
+    "data migration",
+    "requirements gathering",
+    "stakeholder management",
+    "user acceptance testing",
+    "crm implementation",
+    "dynamics 365",
+    "power automate",
+    "dataverse",
+    "hubspot",
+    "zoho crm",
+    "permission sets",
+    "validation rules",
+    "ci/cd"
+  ],
+  "certifications": [
+    {
+      "name": "Salesforce Certified Platform Administrator",
+      "provider": "Salesforce",
+      "level": "entry",
+      "why": "The standard entry credential for configuring objects, security, Flow and reports, and the base most other Salesforce certifications build on."
+    },
+    {
+      "name": "Salesforce Certified Platform App Builder",
+      "provider": "Salesforce",
+      "level": "associate",
+      "why": "Validates declarative application design: data modeling, business logic with Flow and validation rules, and UI configuration without code."
+    },
+    {
+      "name": "Salesforce Certified Platform Developer I",
+      "provider": "Salesforce",
+      "level": "associate",
+      "why": "Proves core Apex, SOQL, triggers, testing and Lightning Web Components skills, and is the most commonly requested developer credential in postings."
+    },
+    {
+      "name": "Salesforce Certified Platform Developer II",
+      "provider": "Salesforce",
+      "level": "professional",
+      "why": "Covers advanced Apex, asynchronous processing, integration and performance patterns expected of senior developers."
+    },
+    {
+      "name": "Microsoft Certified: Dynamics 365 Fundamentals (CRM)",
+      "provider": "Microsoft",
+      "level": "entry",
+      "why": "Introduces Dynamics 365 sales, customer service and marketing apps and is a sensible first step for Microsoft-ecosystem CRM roles."
+    },
+    {
+      "name": "Microsoft Certified: Power Platform Developer Associate",
+      "provider": "Microsoft",
+      "level": "associate",
+      "why": "Validates Dataverse modeling, plug-ins, Power Apps components, Power Automate and extending the platform through code and APIs."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Salesforce admin foundations",
+      "duration_weeks": 6,
+      "goals": [
+        "Understand the Salesforce data model: standard and custom objects, fields, relationships",
+        "Configure security with profiles, permission sets, roles and sharing rules",
+        "Build automation with record-triggered Flow and validation rules",
+        "Create reports and dashboards for a sales or service team"
+      ],
+      "skills": [
+        "salesforce",
+        "custom objects",
+        "salesforce flow",
+        "validation rules",
+        "permission sets",
+        "record types",
+        "reports and dashboards"
+      ],
+      "project": "In a free Developer Edition or Trailhead playground org, model a recruitment tracker (candidates, jobs, applications) with a master-detail relationship, record types, a Flow that advances application stages, validation rules, and a manager dashboard."
+    },
+    {
+      "stage": "Apex and SOQL development",
+      "duration_weeks": 8,
+      "goals": [
+        "Write bulk-safe Apex triggers using a handler pattern",
+        "Query and modify data with SOQL and DML within governor limits",
+        "Write Apex test classes with meaningful assertions and at least 75 percent coverage",
+        "Use Batch, Queueable and Scheduled Apex for asynchronous work"
+      ],
+      "skills": [
+        "apex",
+        "soql",
+        "apex triggers",
+        "governor limits",
+        "bulkification",
+        "apex test classes",
+        "batch apex",
+        "queueable apex"
+      ],
+      "project": "Extend the playground org with a trigger framework that rolls up application counts onto jobs, plus a nightly Scheduled and Batch Apex job that closes stale applications, all covered by test classes."
+    },
+    {
+      "stage": "Lightning Web Components and integrations",
+      "duration_weeks": 8,
+      "goals": [
+        "Build LWCs with wire adapters, imperative Apex and event communication",
+        "Call external REST APIs using named credentials and expose Apex REST endpoints",
+        "Publish and subscribe to platform events for decoupled integration",
+        "Use Salesforce DX, Git and scratch orgs for source-driven development"
+      ],
+      "skills": [
+        "lightning web components",
+        "lwc",
+        "rest api",
+        "named credentials",
+        "platform events",
+        "salesforce dx",
+        "salesforce cli",
+        "git"
+      ],
+      "project": "Build an LWC application board that shows candidates by stage with drag-style updates, and integrate with a public REST API to enrich company data via a named credential and a queueable callout."
+    },
+    {
+      "stage": "Delivery, migration and the wider CRM landscape",
+      "duration_weeks": 8,
+      "goals": [
+        "Run a requirements workshop and write user stories with acceptance criteria",
+        "Plan and execute a data migration with external IDs, validation and rollback",
+        "Set up a CI/CD pipeline that deploys and runs tests on every pull request",
+        "Build a small Dynamics 365 or Power Platform solution and a HubSpot or Zoho CRM workflow to compare platforms"
+      ],
+      "skills": [
+        "requirements gathering",
+        "data migration",
+        "data loader",
+        "ci/cd",
+        "dynamics 365",
+        "dataverse",
+        "power automate",
+        "hubspot"
+      ],
+      "project": "Migrate a messy CSV of 5,000 contacts and accounts into your org using external IDs and a staging object, document the mapping, and ship the whole project through a GitHub Actions pipeline using the Salesforce CLI."
+    }
+  ],
+  "resume_bullets": [
+    "Designed and built 12 record-triggered Flows and 8 Apex trigger handlers on Sales Cloud, cutting manual lead-routing effort by 70 percent and reducing time-to-first-contact from 6 hours to 45 minutes.",
+    "Refactored legacy Apex triggers into a single-trigger-per-object framework with bulk-safe handlers, eliminating recurring Too many SOQL queries errors and raising test coverage from 68 to 91 percent.",
+    "Developed 6 Lightning Web Components for Service Cloud agent workspaces using wire adapters and Apex, reducing average case handling time by 18 percent across 120 support agents.",
+    "Integrated Salesforce with an ERP via REST APIs, named credentials and platform events, syncing 40,000 order records daily with automated retry and error logging and zero data loss over 6 months.",
+    "Led migration of 1.2 million account, contact and opportunity records from a legacy CRM into Salesforce using Data Loader and external IDs, achieving 99.8 percent record-level reconciliation with a rehearsed rollback plan.",
+    "Introduced Salesforce DX, Git branching and a GitHub Actions CI/CD pipeline replacing change-set deployments, cutting release time from 4 hours to 30 minutes and halving post-release defects.",
+    "Facilitated requirements workshops with sales, finance and support stakeholders, translating 45 requirements into prioritized user stories and delivering a Service Cloud rollout to 300 users on schedule.",
+    "Built a Dynamics 365 and Power Automate approval solution on Dataverse with a custom C# plug-in, automating discount approvals and saving roughly 25 staff hours per week."
+  ],
+  "interview": [
+    {
+      "topic": "Governor limits and bulkification",
+      "level": "junior",
+      "question": "What are Salesforce governor limits and how do you write bulk-safe Apex?",
+      "answer": "Salesforce is multitenant, so the runtime enforces per-transaction limits to stop one org from monopolizing shared resources. Key synchronous limits are 100 SOQL queries, 150 DML statements, 50,000 rows retrieved by SOQL, 10,000 rows processed by DML, 10 seconds of CPU time and 6 MB heap. Bulk-safe code assumes a trigger may receive up to 200 records at once. Never put SOQL or DML inside a for loop. Instead collect IDs into a Set, query once into a Map keyed by Id, loop over the records using that map, gather changes into a List, and perform one DML at the end. Also avoid hard-coded IDs and test with 200-record batches.",
+      "follow_ups": [
+        "How do limits differ in asynchronous Apex?",
+        "How can you check consumption at runtime with the Limits class?"
+      ]
+    },
+    {
+      "topic": "Trigger best practices",
+      "level": "mid",
+      "question": "What are best practices for writing Apex triggers, and why use a trigger framework?",
+      "answer": "Use one trigger per object so execution order is predictable, and keep the trigger body thin: it only dispatches to a handler class by context (before insert, after update and so on). Put logic in the handler or service classes so it is testable and reusable. Write for bulk, using Trigger.new and Trigger.oldMap with collections. Use before triggers to change fields on the same record because no extra DML is needed, and after triggers when you need the record Id or must touch related records. Guard against recursion with static state or by comparing old and new values. A framework standardizes this, adds bypass switches for data loads, and makes order of execution easier to reason about. The trade-off is added abstraction, so keep it lightweight.",
+      "follow_ups": [
+        "How do you prevent a trigger from running twice in one transaction?",
+        "How would you disable triggers during a data migration?"
+      ]
+    },
+    {
+      "topic": "Flow vs Apex",
+      "level": "mid",
+      "question": "How do you decide between Flow and Apex for a piece of automation?",
+      "answer": "Start with declarative: Salesforce recommends Flow as the primary automation tool, and Process Builder and Workflow Rules are retired for new development in favor of it. Flow is faster to build, readable by admins, and fine for field updates, record creation, approvals-style steps and simple screens. Choose Apex when logic needs complex data structures or algorithms, very large data volumes, precise transaction control, callouts needing custom handling, or when Flow hits limits or becomes unmaintainable spaghetti. Flows are also subject to governor limits, so loops with Get or Update elements inside are just as dangerous as in code. A common hybrid is a Flow that calls an invocable Apex action. Weigh who will maintain it, testability, performance and deployment, and avoid mixing both on the same object and event without a clear order.",
+      "follow_ups": [
+        "How do you test and debug a record-triggered Flow?",
+        "What is the order of execution when a Flow and a trigger both fire on the same save?"
+      ]
+    },
+    {
+      "topic": "Sharing model",
+      "level": "mid",
+      "question": "Explain how record access works in Salesforce: OWD, role hierarchy, sharing rules and permission sets.",
+      "answer": "Object-level access comes from profiles and permission sets (CRUD) and field-level security. Record-level access is layered on top. Organization-wide defaults set the baseline for each object: Private, Public Read Only, Public Read/Write, or Controlled by Parent. You can only open access up from the baseline, never restrict below it. The role hierarchy then lets managers see records owned by subordinates if Grant Access Using Hierarchies is enabled. Sharing rules, owner-based or criteria-based, extend access to groups, roles or queues. Manual sharing and Apex managed sharing handle exceptions, and teams or territories add more. Permissions like View All and Modify All bypass sharing. Best practice is a minimal profile plus permission sets and permission set groups for additive access, keeping OWD as restrictive as the business allows.",
+      "follow_ups": [
+        "Which objects ignore the role hierarchy?",
+        "What is the difference between with sharing and without sharing in Apex?"
+      ]
+    },
+    {
+      "topic": "Lightning Web Components lifecycle",
+      "level": "mid",
+      "question": "Describe the lifecycle of a Lightning Web Component and how it gets data.",
+      "answer": "The constructor runs first, with no access to the component's DOM or public properties. connectedCallback fires when the component is inserted into the DOM, suitable for initialization and subscribing to events. render determines the template, then renderedCallback runs after every render, so guard any DOM work to avoid loops. disconnectedCallback runs on removal for cleanup, and errorCallback catches errors from child components. For data, use wire adapters such as getRecord or a wired Apex method annotated with cacheable=true for reactive, cached reads, or call Apex imperatively for DML and non-cacheable work. Parents pass data through @api properties, children send CustomEvents upward, and unrelated components can use Lightning Message Service. Use refreshApex or notifyRecordUpdateAvailable to refresh cached data after changes.",
+      "follow_ups": [
+        "Why must a method be cacheable to be wired?",
+        "When would you use imperative Apex instead of wire?"
+      ]
+    },
+    {
+      "topic": "Integration patterns",
+      "level": "senior",
+      "question": "How would you integrate Salesforce with an external system, and which pattern would you pick?",
+      "answer": "Choose by direction, timing and volume. For real-time request and reply from Salesforce, make a REST or SOAP callout, with the endpoint and credentials stored in a named credential. For inbound calls, expose Apex REST or use the standard REST, Bulk or Composite APIs with an OAuth-connected app. For fire-and-forget or decoupled flows, publish platform events or use Change Data Capture and let subscribers such as middleware consume them. For large volumes, use the Bulk API or batch jobs. Callouts cannot happen after uncommitted DML in the same transaction and are capped at 100 per transaction with a timeout, so do them in queueable or future context where needed. Add idempotency through external IDs, retries with backoff, error logging, and consider middleware like MuleSoft when many systems are involved.",
+      "follow_ups": [
+        "How do you make an inbound integration idempotent?",
+        "What is the difference between platform events and Change Data Capture?"
+      ]
+    },
+    {
+      "topic": "Asynchronous Apex",
+      "level": "mid",
+      "question": "When would you use Batch Apex, Queueable Apex and Scheduled Apex?",
+      "answer": "Batch Apex processes large data sets, up to tens of millions of records, in chunks. A QueryLocator in start, a scope of records per execute call with fresh governor limits each time, and a finish method for follow-up. The default scope is 200, and you can tune it down for callouts or heavy logic. Queueable Apex is for single asynchronous jobs that need complex types as parameters, can chain to another job, and can be monitored by job Id; it is the modern replacement for most future methods. Scheduled Apex runs a Schedulable class on a cron expression, and often just kicks off a batch. Watch limits such as 100 batch jobs in the flex queue, 5 running at once, and one chained job per queueable execution. Use Database.Stateful only when you truly need state across batches.",
+      "follow_ups": [
+        "How do you handle partial failures inside a batch?",
+        "Can you call a batch job from a trigger, and what is the risk?"
+      ]
+    },
+    {
+      "topic": "Testing",
+      "level": "junior",
+      "question": "What do you need to know about Apex testing and deployment requirements?",
+      "answer": "Apex must have at least 75 percent overall code coverage to deploy to production, and every trigger needs some coverage, though coverage is a minimum and not the goal. Good tests create their own data (preferably via a test data factory), because tests do not see org data by default unless SeeAllData is set, which should be avoided. They exercise positive, negative and bulk cases of 200 records, use System.runAs to verify sharing and permissions, and assert real outcomes with System.Assert methods. Use Test.startTest and Test.stopTest to reset limits and force asynchronous code to run, and implement HttpCalloutMock or StubProvider to mock callouts since real callouts are not allowed in tests. Production deployments run local tests, so slow or order-dependent tests slow every release.",
+      "follow_ups": [
+        "How do you test a Queueable that makes a callout?",
+        "What is a test data factory and why use one?"
+      ]
+    },
+    {
+      "topic": "SOQL and SOSL",
+      "level": "junior",
+      "question": "What is the difference between SOQL and SOSL, and how do you write efficient queries?",
+      "answer": "SOQL queries one object, plus related objects through relationship queries, and returns records matching field filters. It is right when you know which object holds the data. SOSL performs a text search across multiple objects and fields at once and returns lists of lists, suited to global search. Efficient SOQL filters on indexed fields such as Id, Name, lookup and master-detail fields, external IDs and unique fields, and avoids leading wildcards and negative operators like != or NOT IN, which hurt selectivity. Select only needed fields, add LIMIT, use bind variables, and use relationship subqueries to avoid queries in loops. Use a for loop over the query result to handle large result sets in chunks of 200. For very large tables, ask about custom indexes and skinny tables and check the query plan tool in the Developer Console.",
+      "follow_ups": [
+        "What makes a query selective?",
+        "How do you prevent SOQL injection in dynamic queries?"
+      ]
+    },
+    {
+      "topic": "Data migration",
+      "level": "senior",
+      "question": "How would you plan and execute a data migration into Salesforce?",
+      "answer": "Start with scope and profiling: inventory source objects, volumes, quality and what the business actually needs, and agree what history to archive rather than migrate. Build a field mapping document, including picklist value translation and owner mapping to users. Create external ID fields on target objects so loads are upsertable and parent-child relationships can be resolved without fetching Salesforce IDs. Load in dependency order: users, accounts, contacts, opportunities, then child records. Before loading, temporarily bypass triggers, flows and validation rules through a custom permission or setting, and disable email notifications. Use Data Loader or Bulk API for volume. Rehearse in a full sandbox, reconcile counts and sample records against source, keep error files, and plan cutover and rollback. Remember storage limits and record ownership skew.",
+      "follow_ups": [
+        "What is data skew and how does it affect loads?",
+        "How do you preserve original created dates during migration?"
+      ]
+    },
+    {
+      "topic": "Deployment",
+      "level": "mid",
+      "question": "Compare change sets with Salesforce DX source-driven development.",
+      "answer": "Change sets are a point-and-click way to move metadata between connected orgs, such as sandbox to production. They are easy for admins but manual: you pick components by hand, they cannot be versioned or reviewed, dependencies are missed easily, and they can't delete components or be automated. Salesforce DX treats the Git repository as the source of truth. Metadata is stored in source format, developers work in scratch orgs or sandboxes with the Salesforce CLI and VS Code, and changes flow through pull requests. A CI/CD pipeline then validates and deploys with sf project deploy commands, runs Apex tests, and promotes between environments. This gives history, code review, repeatable releases, and rollback by redeploying a prior commit. The trade-off is a learning curve and more tooling, which is worth it for any team larger than one or two people.",
+      "follow_ups": [
+        "What is a scratch org and when is it not suitable?",
+        "How do you handle destructive changes in a deployment?"
+      ]
+    },
+    {
+      "topic": "Security in Apex",
+      "level": "senior",
+      "question": "How do you enforce object, field and record security in Apex?",
+      "answer": "Apex runs in system mode by default, ignoring the user's object and field permissions, so developers must enforce security deliberately. Sharing is controlled by the class keyword: with sharing respects record access, without sharing ignores it, and inherited sharing takes the caller's context. For CRUD and field-level security, use WITH USER_MODE in SOQL and DML (Database.insert with AccessLevel.USER_MODE), or WITH SECURITY_ENFORCED, or strip inaccessible fields with Security.stripInaccessible. Use bind variables or String.escapeSingleQuotes to prevent SOQL injection, and avoid exposing sensitive data from @AuraEnabled methods. In LWC, remember that UI-layer hiding is not security. Default to with sharing, justify every without sharing class in a comment, and test with System.runAs using users who hold minimal permission sets.",
+      "follow_ups": [
+        "What does inherited sharing do?",
+        "How would you test that a user without field access cannot read a field?"
+      ]
+    },
+    {
+      "topic": "Dynamics 365 and Power Platform",
+      "level": "mid",
+      "question": "How do Dataverse plug-ins differ from Power Automate flows, and when do you use each?",
+      "answer": "Dataverse is the data layer behind Dynamics 365 and Power Apps, with tables, columns, relationships and role-based security. Plug-ins are custom .NET (C#) classes registered on messages such as Create or Update of a table, running in the Dataverse event pipeline at pre-validation, pre-operation or post-operation stages, and either synchronously inside the transaction or asynchronously. Use them for transactional logic that must run in the same database transaction, cancel an operation by throwing an exception, or need high performance. Power Automate cloud flows are low-code, connector-based, and run outside the transaction, suited to approvals, notifications and integrations with other services; they are easier for makers but subject to throttling and run in separate context. Pick plug-ins for strict consistency, flows for flexible orchestration.",
+      "follow_ups": [
+        "What is the difference between pre-operation and post-operation stages?",
+        "How are solutions used to move customizations between environments?"
+      ]
+    },
+    {
+      "topic": "Stakeholder scenario",
+      "level": "senior",
+      "question": "A sales director asks for a custom object and heavy code to track something, but you suspect a standard feature would do. How do you handle it?",
+      "answer": "I would start with the problem rather than the solution: ask what decision or process the data supports, who uses it, and how success will be measured. Then I would map the need against standard capability, such as an existing object with record types, a custom field, a report type, or a Flow, and show a quick prototype in a sandbox so the director can react to something real. I would lay out trade-offs in plain terms: standard features cost less to build, upgrade safely and are maintainable by admins, whereas custom code adds technical debt and testing overhead. If a gap remains, I document the requirement, estimate effort, and let the business prioritize it with clear acceptance criteria. If they still choose custom, I record the decision and build it cleanly.",
+      "follow_ups": [
+        "How do you push back when a stakeholder insists on a risky design?",
+        "How do you document and prioritize competing requests from different departments?"
+      ]
+    },
+    {
+      "topic": "Order of execution",
+      "level": "senior",
+      "question": "Walk through the Salesforce order of execution when a record is saved, and why it matters.",
+      "answer": "At a high level: the system loads the record and runs system validation, then before-save record-triggered flows run, followed by before triggers. Custom validation rules and duplicate rules run next, then the record is saved to the database but not committed. After triggers run, then assignment, auto-response and escalation rules, then after-save record-triggered flows. If a flow or trigger updates the record again, the update cycle can re-fire triggers, though before-save flows and workflow field updates have specific re-run behavior. Roll-up summary calculations, criteria-based sharing evaluation and post-commit logic such as email and asynchronous jobs come last. It matters because a field set in a before trigger is visible to validation rules, validations can be bypassed by logic in earlier steps, and unexpected recursion or limit usage arises when many automations stack on one object.",
+      "follow_ups": [
+        "Which runs first, a before-save flow or a before trigger?",
+        "How would you debug an unexpected field value after save?"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "The Salesforce data model and relationships",
+      "body": "Salesforce stores data in objects, which behave like database tables, made up of fields and records. Standard objects such as Account, Contact, Lead, Opportunity, Case and Campaign cover common CRM processes, and custom objects (suffixed __c) model anything else. Relationships link them. A lookup relationship is a loose link where the child can exist without a parent and ownership and sharing are independent. A master-detail relationship is tight: the child inherits sharing and ownership from the master, is deleted with it, and enables roll-up summary fields on the master. Many-to-many relationships are built with a junction object holding two master-detail fields. Hierarchical relationships exist on User, and external lookups reference data in external objects. Record types and page layouts tailor picklist values and screens for different business processes on the same object. Good data modeling decides sharing, reporting and automation options later, so choose master-detail only when the lifecycle really is shared, and avoid creating objects when a field or record type on a standard object is enough."
+    },
+    {
+      "title": "Governor limits and why they exist",
+      "body": "Salesforce runs many customers on shared infrastructure, so the Apex runtime enforces governor limits per transaction to guarantee fair use. A transaction is one execution context, such as a trigger save or a web request. Typical synchronous limits include 100 SOQL queries, 150 DML statements, 50,000 query rows, 10,000 DML rows, 10 seconds of CPU, 6 MB heap and 100 callouts. Asynchronous contexts get higher limits, for example 200 SOQL queries, 60 seconds of CPU and 12 MB heap. Limits are not per trigger but cumulative for everything in the transaction, including flows, triggers, and managed packages other than those with their own namespace allowance. The practical lessons are always to bulkify, query and update outside loops, query only what is needed, and move heavy work into Batch or Queueable Apex. The Limits class lets code inspect consumption, and debug logs show cumulative usage. Exceeding a limit throws an uncatchable LimitException and rolls back the whole transaction, so limits must be designed for rather than handled."
+    },
+    {
+      "title": "Apex triggers and trigger frameworks",
+      "body": "An Apex trigger runs custom logic before or after DML events such as insert, update, delete and undelete on an object. Before triggers are used to validate or modify values on the records being saved without extra DML. After triggers have the record Id and are used to create or update related records. Triggers always receive a list of records, up to 200 per chunk, via Trigger.new, Trigger.old and the maps Trigger.newMap and Trigger.oldMap. Without discipline, multiple triggers on one object run in an undefined order and logic gets tangled. The accepted pattern is one trigger per object that delegates to a handler class, which has methods per context and calls service classes for business rules. A framework formalizes this with a base handler, recursion control, and bypass flags for data migrations, and sometimes metadata-driven enable switches. Keep trigger logic idempotent, avoid hard-coded IDs, never mix SOQL or DML in loops, and cover handlers with bulk tests. Prefer Flow for simple field updates and reserve triggers for complex or high-volume logic."
+    },
+    {
+      "title": "Security and sharing model layers",
+      "body": "Salesforce security is layered, from broad to specific. Authentication and session settings, IP and login restrictions, and MFA protect access to the org. Object permissions (create, read, edit, delete) and field-level security are granted by profiles and, increasingly, by permission sets and permission set groups, which are additive and are the recommended way to assign access. Record-level access starts with organization-wide defaults, the most restrictive baseline for each object. The role hierarchy, sharing rules, teams, territories, manual shares and Apex managed sharing open access up from that baseline. Because sharing can only grant, never remove, access, the design pattern is to set OWD as restrictive as the business allows and then open up selectively. Permissions such as View All Data and Modify All Data override sharing and should be rare. Apex adds its own concerns: classes declared with sharing enforce record access, while system mode ignores object and field permissions unless user mode is used. A consultant should be able to explain why a given user can or cannot see a record by tracing each layer."
+    },
+    {
+      "title": "Flow and declarative automation",
+      "body": "Salesforce Flow is the platform's main declarative automation tool, replacing Workflow Rules and Process Builder. Flow types include record-triggered flows, screen flows for guided user interfaces, schedule-triggered flows, autolaunched flows invoked from other automation, and platform-event-triggered flows. Record-triggered flows run either before save, which is fast and ideal for updating fields on the triggering record, or after save, which can create or update other records and call actions. A flow is built from elements such as Get Records, Decision, Assignment, Loop, Create, Update and Action, and can call Apex through invocable methods or subflows for reuse. Flows count toward the same governor limits as code, so avoid Get, Create or Update elements inside loops and prefer collecting records and acting once. Good practice includes meaningful naming, one record-triggered flow per object and trigger context where practical, entry conditions that limit executions, fault paths, and debugging with the Flow debugger. Document intent so future admins understand it."
+    },
+    {
+      "title": "Lightning Web Components",
+      "body": "Lightning Web Components, or LWC, is Salesforce's UI framework built on standard web components: HTML templates, modern JavaScript classes and CSS, with a thin layer of platform services. A component bundle contains an HTML file, a JavaScript controller, a CSS file and a metadata XML file declaring where it can be used, such as record pages, app pages, Experience Cloud or quick actions. Properties are reactive, and fields decorated with @api are public for parent components to set. Data access is through the Lightning Data Service wire adapters, which respect security and cache results, or through Apex methods marked cacheable or called imperatively. Components communicate through events: child to parent with CustomEvent, and across the page with Lightning Message Service. Jest enables unit tests, and base components from lightning-* provide consistent styling and accessibility. LWC replaces Aura for new development, though they can coexist. Keep components small and single-purpose, handle errors visibly, and avoid querying in render cycles."
+    },
+    {
+      "title": "Integration patterns and APIs",
+      "body": "Salesforce exposes and consumes data through several mechanisms. Inbound, the REST API suits most modern clients, the SOAP API serves legacy enterprise tooling, the Bulk API handles large asynchronous loads, and the Composite API batches several requests. Custom Apex REST classes can expose bespoke endpoints. Outbound, Apex makes HTTP callouts, with named credentials holding the endpoint and authentication so secrets stay out of code, and external services can generate invocable actions from an OpenAPI specification. Event-driven integration uses platform events, which are custom messages published and subscribed to inside and outside Salesforce, and Change Data Capture, which streams changes to records. Common patterns include request and reply, fire and forget, batch synchronization, remote call-in and data virtualization through Salesforce Connect. Selection depends on volume, latency, who owns the source of truth and error handling needs. Whatever the choice, design for idempotency with external IDs, retry with backoff, monitoring and alerting, and respect API request limits, which are allocated per org per day."
+    },
+    {
+      "title": "CRM implementation lifecycle and requirements gathering",
+      "body": "A CRM implementation typically moves through discovery, design, build, test, deploy and adopt phases. Discovery uncovers current processes, pain points, reporting needs, users, and integrations through stakeholder interviews and workshops. A good consultant asks about the business outcome rather than the feature, separates must-haves from nice-to-haves, and captures requirements as user stories with acceptance criteria, then prioritizes them with the sponsor, often using MoSCoW. Design translates requirements into a data model, security model, process maps, and an integration and migration plan, reviewed with stakeholders before build. Build happens iteratively in sandboxes, with regular demos so users shape the result early. Testing combines unit tests, system integration tests, and user acceptance testing against the agreed criteria. Deployment includes cutover planning, data migration, training and a go-live support period. Adoption is where many projects fail, so plan change management, champions, documentation, dashboards that managers actually use, and a governance process for post-launch enhancements. Track risks and scope changes openly throughout."
+    },
+    {
+      "title": "Microsoft Dynamics 365, Dataverse and Power Platform",
+      "body": "Dynamics 365 is Microsoft's suite of business applications, including Sales, Customer Service, Field Service and Customer Insights, built on Microsoft Dataverse, a managed data platform that stores data in tables with columns, relationships, business rules and role-based security. The Power Platform sits on top: Power Apps for model-driven and canvas applications, Power Automate for cloud and desktop flow automation with hundreds of connectors, Power BI for analytics, and Copilot Studio for conversational agents. Customization is packaged in solutions, which are the unit of transport between development, test and production environments, and can be managed or unmanaged. Developers extend the platform with C# plug-ins registered on the event pipeline, custom APIs, web resources, Power Apps component framework controls, and the Dataverse Web API. Compared with Salesforce, concepts map roughly as tables to objects, security roles to profiles and permission sets, and cloud flows to Flow. Knowing both ecosystems helps when clients run mixed estates, but keep the mapping loose because behaviors differ."
+    },
+    {
+      "title": "HubSpot and Zoho CRM basics",
+      "body": "HubSpot and Zoho CRM are common in small and mid-sized businesses and are often configured rather than coded. HubSpot organizes data around objects such as contacts, companies, deals, tickets and custom objects, linked by associations, with properties instead of fields. Deals move through pipelines and stages, and automation is built with workflows that trigger on property changes, form submissions or schedules. HubSpot has a public REST API, webhooks, private apps for authentication, and custom code actions in workflows. Zoho CRM uses modules such as Leads, Contacts, Accounts and Deals, with custom modules, blueprints for enforcing process stages, workflow rules, and Deluge, its scripting language, for custom functions and integrations. Both support lead scoring, reports and dashboards, and marketplaces of integrations. The skills transfer from Salesforce: data modeling, lifecycle stage definitions, lead routing, deduplication, migration through CSV imports or APIs, and stakeholder alignment between sales and marketing on what counts as a qualified lead. Learn each tool's limits on API calls and automation before promising designs."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Recruitment tracker on Salesforce",
+      "description": "Build a full Salesforce app in a Developer Edition org with custom objects for jobs, candidates and applications, record types, a master-detail relationship, validation rules, record-triggered Flows, permission sets for recruiters and managers, and a dashboard of pipeline by stage. Document the data model and security design in a short README.",
+      "skills": [
+        "salesforce",
+        "custom objects",
+        "salesforce flow",
+        "validation rules",
+        "permission sets",
+        "reports and dashboards"
+      ]
+    },
+    {
+      "name": "Apex trigger framework with async processing",
+      "description": "Implement a reusable single-trigger-per-object handler framework with bypass controls and recursion guards, a bulk-safe roll-up of child counts, and Batch plus Scheduled Apex to clean stale records. Include test classes covering 200-record bulk cases, callout mocks and permission checks, and publish the code in a Git repository with a Salesforce DX project structure.",
+      "skills": [
+        "apex",
+        "apex triggers",
+        "trigger framework",
+        "batch apex",
+        "scheduled apex",
+        "apex test classes",
+        "salesforce dx"
+      ]
+    },
+    {
+      "name": "LWC dashboard with external API integration",
+      "description": "Create a Lightning Web Component for record pages that shows account health, pulling enrichment data from a public REST API through a named credential and a queueable callout, and publishing a platform event when risk changes. Add Jest tests for the component and a GitHub Actions pipeline that validates and deploys to a scratch org.",
+      "skills": [
+        "lightning web components",
+        "lwc",
+        "rest api",
+        "named credentials",
+        "platform events",
+        "ci/cd"
+      ]
+    },
+    {
+      "name": "Legacy CRM data migration and Power Platform approval app",
+      "description": "Take a messy CSV export of contacts and accounts, profile and clean it, load it into Salesforce with external IDs and a documented mapping, and reconcile counts. Then rebuild a small discount-approval process on Dataverse with Power Automate to compare the two platforms and write up the trade-offs.",
+      "skills": [
+        "data migration",
+        "data loader",
+        "dataverse",
+        "power automate",
+        "dynamics 365",
+        "requirements gathering"
+      ]
+    }
+  ]
+}

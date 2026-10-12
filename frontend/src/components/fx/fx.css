@@ -1,0 +1,81 @@
+/* ── Motion primitives ── */
+
+.fx-tilt {
+  --rx: 0deg; --ry: 0deg; --ts: 1; --gx: 50%; --gy: 50%; --go: 0;
+  perspective: 1100px;
+}
+.fx-tilt-inner {
+  position: relative;
+  height: 100%;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--ts));
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+  will-change: transform;
+}
+.fx-tilt:hover .fx-tilt-inner { transition-duration: 0.12s; }
+.fx-tilt-glare {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.55), transparent 55%);
+  opacity: calc(var(--go) * 0.6);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s ease;
+}
+
+.fx-count { font-variant-numeric: tabular-nums; }
+
+.fx-glow {
+  position: relative; padding: 1px; overflow: hidden; isolation: isolate;
+  background: var(--border);
+}
+.fx-glow::before {
+  content: ""; position: absolute; inset: -60%; z-index: -1;
+  background: conic-gradient(from 0deg, transparent 0 60%, #38BDF8 70%, #A855F7 80%, #10B981 90%, transparent 100%);
+  animation: fxSpin 6s linear infinite;
+}
+.fx-glow-inner { background: var(--bg-card); height: 100%; }
+
+@keyframes fxSpin { to { transform: rotate(1turn); } }
+@keyframes fxFloat {
+  0%, 100% { transform: translate3d(0, 0, var(--z, 0)) rotateX(var(--frx, 0deg)) rotateY(var(--fry, 0deg)); }
+  50% { transform: translate3d(0, -14px, var(--z, 0)) rotateX(var(--frx, 0deg)) rotateY(var(--fry, 0deg)); }
+}
+@keyframes fxOrbit { to { transform: rotate(1turn); } }
+@keyframes fxPulseRing {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes fxTyping {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes fxBlink { 50% { opacity: 0; } }
+@keyframes fxShine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fxPageIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.995); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+/* Page entrance used by the app shell */
+.fx-page { animation: fxPageIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Shimmering gradient text */
+.fx-shine-text {
+  background: linear-gradient(90deg, #0EA5E9, #6366F1, #A855F7, #10B981, #0EA5E9);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: fxShine 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-tilt-inner, .fx-glow::before, .fx-page, .fx-shine-text { animation: none !important; transition: none !important; }
+}
+
+/* Briefly highlight the section a #hash link jumped to */
+.fx-target-flash { animation: fxFlash 1.6s ease; }
+@keyframes fxFlash {
+  0%, 60% { box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.55), 0 20px 50px -20px rgba(14, 165, 233, 0.6); }
+  100% { box-shadow: none; }
+}

@@ -25,6 +25,14 @@ from app.template_gallery_routes import router as template_gallery_router
 from app.routes.auth_routes import router as auth_router
 from app.auto_apply_routes import router as auto_apply_router
 from app.automation_routes import router as automation_router
+from app.career.routes import router as career_router
+from app.career.payments import router as career_payments_router
+from app.career.admin import router as career_admin_router
+from app.career.boards import router as career_boards_router
+from app.career.kb.routes import router as career_kb_router
+from app.career.migrations import ensure_columns
+from app.career import models as career_models  # noqa: F401  (registers tables)
+from app.career import scheduler as career_scheduler
 
 from app.middleware.request_id import RequestIDMiddleware
 from app.middleware.timing import RequestTimingMiddleware
@@ -46,6 +54,11 @@ try:
     Base.metadata.create_all(bind=engine)
 except Exception:
     logger.warning("Table/type creation skipped (may already exist on PostgreSQL)")
+
+try:
+    ensure_columns(engine)
+except Exception:
+    logger.exception("Column migration failed")
 
 app = FastAPI(title="ProfileOptimizer", version="1.0.0")
 
@@ -228,6 +241,21 @@ app.include_router(analytics_router)
 app.include_router(template_gallery_router)
 app.include_router(auto_apply_router)
 app.include_router(automation_router)
+app.include_router(career_router)
+app.include_router(career_payments_router)
+app.include_router(career_admin_router)
+app.include_router(career_boards_router)
+app.include_router(career_kb_router)
+
+
+@app.on_event("startup")
+def _start_career_scheduler():
+    career_scheduler.start()
+
+
+@app.on_event("shutdown")
+def _stop_career_scheduler():
+    career_scheduler.stop()
 
 if FRONTEND_DIST:
     app.mount("/assets", StaticFiles(directory=str(FRONTEND_DIST / "assets")), name="assets")
@@ -240,6 +268,11 @@ if FRONTEND_DIST:
     async def serve_spa(full_path: str, request: Request):
         if full_path.startswith(("api/", "docs", "openapi", "uploads", "assets/")):
             raise HTTPException(status_code=404)
+        # Real files at the dist root (ads.txt, og-image.png, icons.svg) are served as themselves.
+        if full_path and "/" not in full_path:
+            candidate = (FRONTEND_DIST / full_path).resolve()
+            if candidate.parent == FRONTEND_DIST.resolve() and candidate.is_file() and candidate.name != "index.html":
+                return FileResponse(str(candidate))
         html = _get_index_html()
         if html:
             meta = get_meta_for_path(str(request.url.path))

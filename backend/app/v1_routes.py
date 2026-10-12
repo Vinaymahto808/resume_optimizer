@@ -91,6 +91,13 @@ def get_user_plan(user: User, db: Session) -> PlanTier:
 def check_scan_limit(user: User, db: Session) -> bool:
     plan = get_user_plan(user, db)
     if plan == PlanTier.FREE:
+        # Turbo (the career copilot plan sold on /pricing) also unlocks unlimited scans.
+        from app.career import plans as career_plans
+        from app.career.identity import user_client_id
+        from app.career.models import SeekerProfile
+        profile = db.get(SeekerProfile, user_client_id(user))
+        if profile is not None and career_plans.effective_plan(profile) == "turbo":
+            return True
         count = db.query(Resume).filter(Resume.user_id == user.id).count()
         return count < 1
     return True
@@ -111,16 +118,13 @@ async def upload_resume(
             raise HTTPException(status_code=400, detail="File too large (max 10MB)")
 
         if not check_scan_limit(user, db):
-            raise HTTPException(status_code=403, detail="Free tier: 1 scan only. Upgrade to Pro.")
+            raise HTTPException(status_code=403, detail="The Free plan includes 1 resume scan. Upgrade to Turbo for unlimited scans, or edit your scanned resume and re-check it for free.")
 
         os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
         file_id = str(uuid.uuid4())
         file_path = os.path.join(settings.UPLOAD_DIR, f"{file_id}{ext}")
         with open(file_path, "wb") as f:
             f.write(content)
-
-        task = task_manager.create_task("ats_scan", {"file_path": file_path})
-        task_manager.start_processing(task.task_id, run_ats_scan_task)
 
         resume = Resume(
             user_id=user.id,
@@ -136,7 +140,10 @@ async def upload_resume(
         db.commit()
         db.refresh(resume)
 
-        task.params["resume_id"] = resume.id
+        # Create the resume row before starting the scan: a fast scan used to finish before resume_id was
+        # attached, leaving the result without an id (the Scan page then never opened Results).
+        task = task_manager.create_task("ats_scan", {"file_path": file_path, "resume_id": resume.id})
+        task_manager.start_processing(task.task_id, run_ats_scan_task)
 
         return UnifiedScanResponse(
             task_id=task.task_id,

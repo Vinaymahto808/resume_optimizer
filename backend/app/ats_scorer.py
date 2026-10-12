@@ -687,7 +687,11 @@ def score_human_quality(text: str) -> Tuple[float, List[Dict[str, Any]]]:
 
 
 def generate_dual_score_report(file_path: str) -> dict:
-    raw_text = parse_resume(file_path)
+    return score_text(parse_resume(file_path))
+
+
+def score_text(raw_text: str) -> dict:
+    """Dual ATS/human-quality report for resume text (the scorer behind uploaded scans)."""
     word_count = len(raw_text.split())
 
     tier1_score, tier1_checks = score_ats_parse_rate(raw_text)

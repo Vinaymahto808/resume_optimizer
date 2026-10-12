@@ -370,6 +370,30 @@ class TestProfileRoutes:
         data = response.json()
         assert data["success"] is True
 
+    def test_ats_analyze_returns_review_stages(self, client):
+        resume = ("Jane Doe\njane@example.com | +1 415 555 0182\nProfessional Summary\nData engineer.\n"
+                  "Experience\nData Engineer - Acme (2020 - Present)\n• Built Python and SQL pipelines for 2M users\n"
+                  "• Cut costs by 30% with Airflow\nSkills\nPython, SQL, Airflow\nEducation\nBS CS 2019\n")
+        data = client.post("/api/ats-analyze", json={"resume_text": resume}).json()["data"]
+        assert [s["id"] for s in data["stages"]] == ["structure", "keywords", "experience", "readability"]
+        assert all(0 <= s["score"] <= 100 and s["total"] >= 1 for s in data["stages"])
+        assert data["job_match"] is None
+        assert sum(s["total"] for s in data["stages"]) == len(data["checks"])
+
+    def test_ats_analyze_scores_against_job_description(self, client):
+        resume = "Jane Doe\njane@example.com\nSkills\nPython, SQL, Airflow\nExperience\n• Built Python pipelines\n"
+        jd = "We need a data engineer with Python, SQL, Spark, Kafka and Airflow experience to build streaming pipelines."
+        data = client.post("/api/ats-analyze", json={"resume_text": resume, "job_description": jd,
+                                                     "job_title": "Data Engineer"}).json()["data"]
+        m = data["job_match"]
+        assert {"python", "sql", "airflow"} <= set(m["matched"]) and {"spark", "kafka"} <= set(m["missing"])
+        assert m["score"] == round(100 * len(m["matched"]) / m["keywords_found"])
+        kw = next(c for c in data["checks"] if c["id"] == "job_keywords")
+        assert kw["label"] == "Job description keywords"
+        assert next(s for s in data["stages"] if s["id"] == "keywords")["passed"] == int(kw["passed"])
+        too_long = client.post("/api/ats-analyze", json={"resume_text": resume, "job_description": "x" * 60000})
+        assert too_long.status_code == 422
+
     def test_upload_resume_legacy_no_file(self, client):
         response = client.post("/api/upload-resume")
         assert response.status_code == 422
@@ -377,9 +401,19 @@ class TestProfileRoutes:
     def test_upload_resume_legacy_invalid_ext(self, client):
         response = client.post(
             "/api/upload-resume",
-            files={"file": ("test.txt", b"some text", "text/plain")},
+            files={"file": ("test.exe", b"MZ binary", "application/octet-stream")},
         )
         assert response.status_code == 400
+
+    def test_upload_resume_legacy_text_file(self, client):
+        response = client.post(
+            "/api/upload-resume",
+            files={"file": ("resume.txt", b"Sample resume text", "text/plain")},
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["success"] is True
+        assert data["text"] == "Sample resume text"
 
     @patch("app.profile_routes.extract_text_from_resume")
     def test_upload_resume_legacy_success(self, mock_extract, client):

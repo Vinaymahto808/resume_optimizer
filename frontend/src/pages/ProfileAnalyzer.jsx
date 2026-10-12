@@ -47,7 +47,7 @@ export default function ProfileAnalyzer() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: result ? "1fr 1fr" : "1fr 500px", gap: 24, alignItems: "start" }}>
+        <div className="pa-grid" style={{ display: "grid", gridTemplateColumns: result ? "1fr 1fr" : "1fr 500px", gap: 24, alignItems: "start" }}>
           {/* Left: Input */}
           <div>
             <div className="ui-card" style={{ padding: 24 }}>

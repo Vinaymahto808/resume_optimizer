@@ -48,8 +48,8 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 def validate_password_strength(pw: str) -> None:
     issues = []
-    if len(pw) < 12:
-        issues.append("at least 12 characters")
+    if len(pw) < 8:
+        issues.append("at least 8 characters")
     if not re.search(r"[A-Z]", pw):
         issues.append("an uppercase letter")
     if not re.search(r"[a-z]", pw):

@@ -1,161 +1,95 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
-import { auth } from "../api";
+import { auth, authError } from "../api";
 import AuthShell from "../components/AuthShell";
+import { AuthCard, AuthNote, PasswordField, PasswordRules } from "../components/auth/AuthParts";
+import { passwordProblems } from "../lib/passwordRules";
 import SEO from "../components/SEO";
 
-function validatePassword(pw) {
-  const checks = [];
-  if (pw.length < 12) checks.push("at least 12 characters");
-  if (!/[A-Z]/.test(pw)) checks.push("an uppercase letter");
-  if (!/[a-z]/.test(pw)) checks.push("a lowercase letter");
-  if (!/[0-9]/.test(pw)) checks.push("a number");
-  if (!/[^A-Za-z0-9]/.test(pw)) checks.push("a special character");
-  if (/\s/.test(pw)) checks.push("no spaces");
-  return checks;
-}
+const REDIRECT_SECONDS = 3;
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const token = searchParams.get("token");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!success) return undefined;
+    const t = setTimeout(() => navigate("/login"), REDIRECT_SECONDS * 1000);
+    return () => clearTimeout(t);
+  }, [success, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const issues = validatePassword(password);
+    const issues = passwordProblems(password);
     if (issues.length) {
-      setError("Password must include " + issues.join(", ") + ".");
+      setError("Password needs: " + issues.join(", ") + ".");
       return;
     }
+    if (password !== confirm) {
+      setError("The two passwords don't match.");
+      return;
+    }
+    setLoading(true);
     try {
       await auth.resetPassword(token, password);
       setSuccess(true);
-      setTimeout(() => navigate("/login"), 3000);
     } catch (err) {
-      setError(err.response?.data?.detail || "Invalid or expired reset link");
+      setError(authError(err, "This reset link is invalid or has expired. Request a new one."));
+    } finally {
+      setLoading(false);
     }
   };
 
+  let card;
   if (!token) {
-    return (
-      <AuthShell
-        eyebrow="Reset link"
-        title="This link looks invalid."
-        subtitle="The reset token is missing or expired. Request a fresh link and try again."
-        metrics={[
-          { value: "Expired", label: "link" },
-          { value: "New", label: "request" },
-          { value: "Secure", label: "flow" },
-        ]}
-        bullets={[
-          "Reset links expire for safety, so requesting a new one is the fastest fix.",
-          "You can keep using the same account email when you ask again.",
-          "Once the link lands, you’ll be able to set a new password right away.",
-        ]}
-      >
-        <div className="ui-card" style={styles.card}>
-          <h2 style={styles.title}>Invalid link</h2>
-          <p style={styles.subtitle}>This reset link is missing or invalid.</p>
-          <Link to="/forgot-password" style={styles.link}>Request a new one</Link>
-        </div>
-      </AuthShell>
+    card = (
+      <AuthCard title="Reset link not valid" subtitle="This link is missing its reset code. Links can also expire, so request a fresh one."
+        footer={<Link to="/login">Back to sign in</Link>}>
+        <Link to="/forgot-password" className="auth-btn auth-btn--link">Request a new link</Link>
+      </AuthCard>
     );
-  }
-
-  if (success) {
-    return (
-      <AuthShell
-        eyebrow="Password updated"
-        title="All set."
-        subtitle="Your password has been changed. We’re taking you back to sign in now."
-        metrics={[
-          { value: "Done", label: "update" },
-          { value: "Next", label: "login" },
-          { value: "Safe", label: "account" },
-        ]}
-        bullets={[
-          "You can sign in again using the new password you just created.",
-          "If you get locked out later, the recovery flow is still available.",
-          "Your scan history and saved work stay tied to the same account.",
-        ]}
-      >
-        <div className="ui-card" style={styles.card}>
-          <h2 style={styles.title}>Password reset!</h2>
-          <p style={styles.subtitle}>Redirecting you to login...</p>
-        </div>
-      </AuthShell>
+  } else if (success) {
+    card = (
+      <AuthCard title="Password updated" subtitle="You can now sign in with your new password.">
+        <AuthNote tone="success">Taking you to sign in in {REDIRECT_SECONDS} seconds…</AuthNote>
+        <Link to="/login" className="auth-btn auth-btn--link">Sign in now</Link>
+      </AuthCard>
+    );
+  } else {
+    const mismatch = confirm.length > 0 && confirm !== password;
+    card = (
+      <AuthCard title="Set a new password" subtitle="Choose a password you haven't used on other sites."
+        footer={<Link to="/login">Back to sign in</Link>}>
+        <AuthNote>{error}</AuthNote>
+        {error && /expired|invalid/i.test(error) && (
+          <p className="auth-inline-help"><Link to="/forgot-password">Request a new reset link</Link></p>
+        )}
+        <form onSubmit={handleSubmit}>
+          <PasswordField id="new-password" label="New password" value={password} onChange={setPassword}
+            autoComplete="new-password" placeholder="Create a password" />
+          <PasswordRules password={password} />
+          <PasswordField id="confirm-password" label="Confirm new password" value={confirm} onChange={setConfirm}
+            autoComplete="new-password" placeholder="Type it again" invalid={mismatch} />
+          {mismatch && <p className="auth-field-error">Passwords don't match yet.</p>}
+          <button className="auth-btn" type="submit" disabled={loading}>
+            {loading ? "Saving…" : "Save new password"}
+          </button>
+        </form>
+      </AuthCard>
     );
   }
 
   return (
-    <><SEO
-        title="Set New Password"
-        description="Set a new password for your ProfileOptimizer account."
-        canonical="https://www.profileotimizer.online/reset-password"
-      /><AuthShell
-      eyebrow="Choose a new password"
-      title="Set a fresh password."
-      subtitle="Use a strong password you’ll remember, then return to your resume workspace."
-      metrics={[
-        { value: "12+", label: "chars" },
-        { value: "One", label: "reset" },
-        { value: "Secure", label: "flow" },
-      ]}
-      bullets={[
-        "Pick something unique that you haven’t reused on other sites.",
-        "Once you save it, you’ll be sent back to sign in.",
-        "Your account data remains untouched during the reset.",
-      ]}
-    >
-      <form onSubmit={handleSubmit} className="ui-card" style={styles.card}>
-        <h2 style={styles.title}>Set new password</h2>
-        <p style={styles.subtitle}>Enter your new password below</p>
-
-        {error && <p style={styles.error}>{error}</p>}
-
-        <input
-          style={styles.input}
-          type="password"
-          placeholder="New password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={12}
-        />
-        <button className="btn-primary" style={styles.btn} type="submit">
-          Reset Password
-        </button>
-      </form>
-    </AuthShell></>
+    <AuthShell>
+      <SEO title="Set New Password" description="Choose a new password for your ProfileOptimizer account." canonical="https://www.profileotimizer.online/reset-password" />
+      {card}
+    </AuthShell>
   );
 }
-
-const styles = {
-  card: {
-    position: "relative",
-    width: "100%",
-    maxWidth: 460,
-    background: "var(--bg-card)",
-    border: "1px solid var(--border)",
-    borderRadius: 22,
-    padding: "36px 34px",
-    textAlign: "left",
-  },
-  title: { fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, marginBottom: 6, lineHeight: 1.05 },
-  subtitle: { fontSize: 14, color: "var(--text-secondary)", marginBottom: 24, lineHeight: 1.7 },
-  error: {
-    color: "var(--danger)",
-    fontSize: 13,
-    marginBottom: 16,
-    padding: "8px 12px",
-    background: "rgba(248,113,113,0.1)",
-    borderRadius: "var(--radius-sm)",
-  },
-  input: { marginBottom: 14 },
-  btn: { width: "100%", marginTop: 6 },
-  link: { color: "var(--accent)", fontWeight: 500 },
-};

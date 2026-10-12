@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ChevronDown, Upload, Lock, FileText, CheckCircle, AlertCircle, BarChart3, Menu, X, File, Sparkles, ArrowUpRight } from "lucide-react";
+import { ChevronDown, Upload, FileText, CheckCircle, AlertCircle, BarChart3, Menu, X, Sparkles, ArrowUpRight } from "lucide-react";
 
 const NAV_LINKS = [
   {
@@ -65,7 +65,6 @@ export default function HeroSection({ onUpload }) {
 
   useEffect(() => {
     if (uploadedFile) {
-      setDropAnim(true);
       const t = setTimeout(() => setDropAnim(false), 600);
       return () => clearTimeout(t);
     }
@@ -105,11 +104,11 @@ export default function HeroSection({ onUpload }) {
     e.preventDefault();
     setDragOver(false);
     const file = e.dataTransfer.files?.[0];
-    if (file) { setUploadedFile(file); onUpload?.(file); }
+    if (file) { setUploadedFile(file); setDropAnim(true); onUpload?.(file); }
   };
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
-    if (file) { setUploadedFile(file); onUpload?.(file); }
+    if (file) { setUploadedFile(file); setDropAnim(true); onUpload?.(file); }
   };
 
   const NavLink = ({ link }) => (

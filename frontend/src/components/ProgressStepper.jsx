@@ -27,10 +27,26 @@ export default function ProgressStepper({
     });
   }, [steps.length]);
 
+  // Reset when (re)activated or when timing inputs change while active.
+  // Derived during render instead of calling setState inside an effect.
+  const resetKey = active ? `${estimatedSeconds}|${steps.length}` : null;
+  const [prevResetKey, setPrevResetKey] = useState(null);
+  if (prevResetKey !== resetKey) {
+    setPrevResetKey(resetKey);
+    if (active) {
+      setStep(0);
+      setProgress(0);
+    }
+  }
+
+  // Keep the internal step pinned to an externally-controlled currentStep.
+  const pinnedStep = Math.min(currentStep, steps.length - 1);
+  if (prevResetKey === resetKey && currentStep > 0 && pinnedStep !== step) {
+    setStep(pinnedStep);
+  }
+
   useEffect(() => {
     if (!active) return;
-    setStep(0);
-    setProgress(0);
     const interval = (estimatedSeconds * 1000) / steps.length / 10;
     const timer = setInterval(() => {
       setProgress((p) => {
@@ -56,12 +72,6 @@ export default function ProgressStepper({
     const advanceTimer = setTimeout(advance, estimatedSeconds * 1000 / steps.length);
     return () => clearTimeout(advanceTimer);
   }, [active, step, steps.length, estimatedSeconds, advance, onComplete]);
-
-  useEffect(() => {
-    if (currentStep > 0 && currentStep !== step) {
-      setStep(Math.min(currentStep, steps.length - 1));
-    }
-  }, [currentStep, step, steps.length]);
 
   if (!active) return null;
 

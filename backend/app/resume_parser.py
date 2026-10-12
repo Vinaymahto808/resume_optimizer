@@ -167,8 +167,17 @@ def extract_text_from_resume(filename: str, file_bytes: bytes, ext: str = "", gr
             return {"success": False, "error": "Could not extract text from image. Please upload a clear scan."}
         return {"success": True, "text": text, "char_count": len(text), "word_count": len(text.split()), "ocr": True}
 
+    if ext == "txt":
+        try:
+            text = file_bytes.decode("utf-8-sig").strip()
+        except UnicodeDecodeError:
+            return {"success": False, "error": "Could not read the text file. Save it as UTF-8 and try again."}
+        if not text:
+            return {"success": False, "error": "The text file is empty."}
+        return {"success": True, "text": text, "char_count": len(text), "word_count": len(text.split())}
+
     if ext not in ("pdf", "doc", "docx"):
-        return {"success": False, "error": f"Unsupported format: .{ext}. Please upload a PDF, DOC/DOCX, or image file."}
+        return {"success": False, "error": f"Unsupported format: .{ext}. Please upload a PDF, DOC/DOCX, TXT, or image file."}
 
     valid, resolved = _validate_magic(file_bytes, ext)
     if not valid:

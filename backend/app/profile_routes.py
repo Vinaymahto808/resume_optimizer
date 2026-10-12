@@ -15,7 +15,7 @@ MAX_TEXT_LENGTH = 50_000
 MAX_URL_LENGTH = 2000
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
-ALLOWED_DOC_EXTS = {"pdf", "doc", "docx"}
+ALLOWED_DOC_EXTS = {"pdf", "doc", "docx", "txt"}
 ALLOWED_IMAGE_EXTS = {"png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff", "tif"}
 
 def _get_groq_key() -> str:
@@ -29,6 +29,9 @@ class FetchRequest(BaseModel):
 
 class ATSRequest(BaseModel):
     resume_text: str = Field(min_length=10, max_length=MAX_TEXT_LENGTH)
+    # Optional target job: keywords are then checked against this job and a job match is returned.
+    job_description: str = Field(default="", max_length=MAX_TEXT_LENGTH)
+    job_title: str = Field(default="", max_length=300)
 
 @router.post("/analyze")
 def profile_analyze(req: AnalyzeRequest):
@@ -60,7 +63,8 @@ def job_recommend(req: AnalyzeRequest):
 @router.post("/ats-analyze")
 def ats_analyze_resume(req: ATSRequest):
     try:
-        result = analyze_ats(req.resume_text)
+        from app.ats_stages import review
+        result = review(analyze_ats(req.resume_text), req.resume_text, req.job_description, req.job_title)
         return {"success": True, "data": result}
     except Exception as e:
         logger.error(f"ATS error: {e}")
@@ -75,7 +79,7 @@ async def legacy_upload_resume(file: UploadFile = File(...)):
     if ext not in allowed:
         raise HTTPException(
             status_code=400,
-            detail=f"Unsupported format .{ext}. Please upload PDF, DOC/DOCX, or image (PNG, JPG)."
+            detail=f"Unsupported format .{ext}. Please upload a PDF, DOC/DOCX, TXT, or image (PNG, JPG)."
         )
     try:
         contents = await file.read()

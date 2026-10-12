@@ -22,7 +22,6 @@ const SKILL_PRESETS = {
 
 const STEPS = ["Goal", "Education", "Experience", "Skills", "Preview"];
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export default function StudentResume() {
   const [step, setStep] = useState(0);
@@ -359,6 +358,13 @@ export default function StudentResume() {
 
         .preview-right { position: sticky; top: 24px; }
         .preview-right .preview-card { max-height: 90vh; overflow-y: auto; }
+
+        @media (max-width: 560px) {
+          .student-resume-page { padding: 4px 0 24px; }
+          .form-row { grid-template-columns: 1fr !important; gap: 0; }
+          .sr-input, .sr-textarea, .sr-select { font-size: 16px; }
+          .nav-btns > button { flex: 1; }
+        }
       `}</style>
 
       <div className="sr-header">

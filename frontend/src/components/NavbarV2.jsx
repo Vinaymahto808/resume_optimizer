@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Menu, X, ChevronDown, ChevronRight, FileText, Wand2, Search, Shuffle, BookOpen, Grid, Pen, File, Layout, Mail, HelpCircle, Building2, DollarSign } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, FileText, Wand2, Search, Shuffle, BookOpen, Grid, Pen, File, Layout, Building2, DollarSign } from "lucide-react";
 
 const NAV_ITEMS = [
   {

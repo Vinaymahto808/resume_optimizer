@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { v1 } from "../api";
+import { v1, career } from "../api";
 import ProgressStepper from "../components/ProgressStepper";
 import { usePlan } from "../contexts/PlanContext";
 import { AdHorizontal, UpgradePrompt } from "../components/AdBanner";
@@ -39,7 +39,7 @@ const templateCards = [
 
 export default function Scan() {
   const navigate = useNavigate();
-  const { isPaid, planLoading } = usePlan();
+  const { isPaid, planLoading, refreshCareer } = usePlan();
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -78,7 +78,7 @@ export default function Scan() {
         setScanStep((s) => Math.min(s + 1, 2));
         setTimeout(() => { if (mountedRef.current) pollStatus(taskId); }, 1500);
       }
-    } catch (err) {
+    } catch {
       setUploading(false);
       setError("Failed to check scan status");
     }
@@ -92,6 +92,8 @@ export default function Scan() {
     try {
       setTimeout(() => setScanStep(1), 800);
       const result = await v1.uploadResume(file);
+      // Accepted: the scanned resume also becomes the structured resume used for job matching (Resume editor).
+      career.parseResume({ file }, true).then(() => refreshCareer()).catch(() => {});
       setScanStep(2);
       pollStatus(result.task_id);
     } catch (err) {
@@ -325,9 +327,9 @@ const styles = {
   sectionCta: {
     whiteSpace: "nowrap",
   },
+  // Columns come from .scan-template-grid in index.css so they can collapse on small screens.
   templateGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
     gap: 16,
   },
   templateCard: {

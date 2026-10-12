@@ -1,0 +1,417 @@
+{
+  "id": "ai_engineer",
+  "name": "AI Engineer (LLM / GenAI)",
+  "summary": "AI engineers build applications on top of large language models: retrieval-augmented generation (RAG) systems, agents that call tools, structured extraction pipelines and chat assistants. The work is mostly software engineering plus evaluation: wiring models, vector databases and APIs together, then measuring quality, cost and latency so the system is reliable in production. They are hired at product companies, SaaS vendors, consultancies, fintech, healthcare and any enterprise adding LLM features to internal or customer-facing workflows.",
+  "titles": [
+    "ai engineer",
+    "genai engineer",
+    "generative ai engineer",
+    "llm engineer",
+    "applied ai engineer",
+    "ai application engineer",
+    "machine learning engineer",
+    "nlp engineer",
+    "ai software engineer"
+  ],
+  "skills": {
+    "core": [
+      "python",
+      "llm",
+      "prompt engineering",
+      "rag",
+      "embeddings",
+      "vector database",
+      "openai api",
+      "langchain",
+      "structured outputs",
+      "function calling",
+      "ai agents",
+      "fastapi",
+      "rest api",
+      "docker",
+      "git",
+      "sql"
+    ],
+    "advanced": [
+      "langgraph",
+      "hybrid search",
+      "reranking",
+      "query rewriting",
+      "fine-tuning",
+      "lora",
+      "qlora",
+      "llm evaluation",
+      "llm-as-judge",
+      "guardrails",
+      "prompt injection",
+      "semantic caching",
+      "model context protocol",
+      "multi-agent systems"
+    ],
+    "tools": [
+      "pinecone",
+      "pgvector",
+      "qdrant",
+      "weaviate",
+      "chroma",
+      "llamaindex",
+      "hugging face",
+      "vllm",
+      "ollama",
+      "langsmith",
+      "ragas",
+      "anthropic api",
+      "gemini api",
+      "kubernetes"
+    ]
+  },
+  "ats_keywords": [
+    "generative ai",
+    "large language models",
+    "llm",
+    "retrieval-augmented generation",
+    "rag pipeline",
+    "prompt engineering",
+    "vector database",
+    "vector search",
+    "semantic search",
+    "embeddings",
+    "langchain",
+    "langgraph",
+    "llamaindex",
+    "ai agents",
+    "agentic workflows",
+    "tool calling",
+    "function calling",
+    "fine-tuning",
+    "llm evaluation",
+    "hallucination",
+    "guardrails",
+    "model context protocol",
+    "mcp",
+    "openai api",
+    "hugging face",
+    "transformers",
+    "fastapi",
+    "llmops",
+    "mlops",
+    "chatbot"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified AI Practitioner",
+      "provider": "Amazon Web Services",
+      "level": "entry",
+      "why": "A foundational credential covering generative AI concepts and AWS services such as Bedrock; useful for cloud-centric employers but it does not prove you can build."
+    },
+    {
+      "name": "AWS Certified Machine Learning Engineer - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "Validates deploying and operating ML workloads on AWS, which helps for MLOps-leaning AI engineer roles at AWS shops."
+    },
+    {
+      "name": "Microsoft Certified: Azure AI Engineer Associate",
+      "provider": "Microsoft",
+      "level": "associate",
+      "why": "Relevant for enterprises standardized on Azure OpenAI and Azure AI Search, where it signals familiarity with the platform."
+    },
+    {
+      "name": "Google Cloud Professional Machine Learning Engineer",
+      "provider": "Google Cloud",
+      "level": "professional",
+      "why": "A broad professional-level credential for designing and productionizing ML systems on Google Cloud, including Vertex AI."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "LLM API fundamentals",
+      "duration_weeks": 4,
+      "goals": [
+        "Call chat completion APIs from OpenAI, Anthropic and Gemini with streaming and retries",
+        "Write prompts with clear roles, examples and output constraints",
+        "Get reliable JSON using structured outputs and Pydantic validation",
+        "Understand tokens, context windows, temperature and cost per request"
+      ],
+      "skills": ["python", "openai api", "anthropic api", "prompt engineering", "structured outputs", "pydantic", "fastapi"],
+      "project": "A document extraction API: upload an invoice or resume, return validated JSON via structured outputs, with retries, token-usage logging and a FastAPI endpoint."
+    },
+    {
+      "stage": "Retrieval and RAG",
+      "duration_weeks": 6,
+      "goals": [
+        "Chunk documents and generate embeddings, then store them in a vector database",
+        "Implement metadata filtering and hybrid search with BM25 plus vectors",
+        "Add reranking and query rewriting to improve recall and precision",
+        "Return answers with citations and refuse when context is insufficient"
+      ],
+      "skills": ["rag", "embeddings", "vector database", "pgvector", "pinecone", "hybrid search", "reranking", "llamaindex"],
+      "project": "A question-answering assistant over a public documentation set or your own PDFs, using pgvector or Pinecone, hybrid retrieval, a reranker and clickable source citations."
+    },
+    {
+      "stage": "Agents and orchestration",
+      "duration_weeks": 5,
+      "goals": [
+        "Implement tool calling with validated arguments and error handling",
+        "Model a workflow as a LangGraph state graph with conditional edges",
+        "Add checkpointers for memory and human-in-the-loop approval steps",
+        "Expose tools and data through an MCP server"
+      ],
+      "skills": ["langgraph", "langchain", "ai agents", "tool calling", "model context protocol", "human-in-the-loop", "postgresql"],
+      "project": "A research or support agent built in LangGraph that plans, calls search and database tools, pauses for human approval before write actions, and persists state with a Postgres checkpointer."
+    },
+    {
+      "stage": "Evaluation and production",
+      "duration_weeks": 5,
+      "goals": [
+        "Build a golden dataset and automated regression evals for retrieval and generation",
+        "Add tracing, cost and latency dashboards with LangSmith or similar",
+        "Apply guardrails, prompt injection defenses and output validation",
+        "Containerize with Docker and deploy a streaming FastAPI service with caching"
+      ],
+      "skills": ["ragas", "llm evaluation", "langsmith", "guardrails", "semantic caching", "docker", "fastapi", "ci/cd"],
+      "project": "Take your RAG assistant to production: add a 100-question golden set, RAGAS plus LLM-as-judge evals in CI, tracing, a semantic cache, input and output guardrails, and a Docker deployment."
+    }
+  ],
+  "resume_bullets": [
+    "Built a RAG assistant over 40k internal documents using pgvector, hybrid BM25 plus vector retrieval and a cross-encoder reranker, raising answer correctness on a 150-question golden set from 61% to 84%.",
+    "Designed a LangGraph support agent with conditional routing, tool calling and a Postgres checkpointer, with human approval before refunds, automating about 35% of tier-1 tickets.",
+    "Reduced LLM spend by 48% by routing simple queries to a smaller model, adding prompt caching and a semantic cache, with no drop in eval scores.",
+    "Implemented an automated evaluation pipeline with RAGAS and LLM-as-judge in CI, catching retrieval regressions before release and cutting hallucinated answers by 40%.",
+    "Shipped a streaming FastAPI service in Docker serving LLM responses with p95 time-to-first-token under 900 ms, instrumented with LangSmith tracing.",
+    "Hardened a customer-facing chatbot against prompt injection using input classification, least-privilege tool scopes and output validation, passing an internal red-team suite of 200 attacks.",
+    "Fine-tuned an open model with QLoRA on 8k labeled examples for ticket classification, matching a larger hosted model's accuracy at roughly one-fifth the inference cost.",
+    "Built an MCP server exposing CRM and ticketing tools to internal assistants, replacing five bespoke integrations and cutting new-tool onboarding time from days to hours."
+  ],
+  "interview": [
+    {
+      "topic": "RAG system design",
+      "level": "senior",
+      "question": "Design a RAG system that answers questions over a company's internal documents.",
+      "answer": "Start with ingestion: parse documents (PDF, wiki, tickets), clean them, chunk by structure (headings, sections) with some overlap, attach metadata such as source, team, date and access permissions, embed, and upsert into a vector store. At query time: rewrite the query if needed, run hybrid retrieval (BM25 plus vectors) with metadata filters enforcing access control, rerank the top 20-50 to the best 5-8, and prompt the model to answer only from context with citations and an explicit 'I don't know' path. Add evals on a golden set (retrieval recall, faithfulness, answer correctness), tracing, caching, and an incremental re-indexing pipeline so content stays fresh. Trade-offs: chunk size, reranker latency, and index freshness versus cost.",
+      "follow_ups": [
+        "How do you enforce per-user document permissions?",
+        "How would you handle tables and scanned PDFs?",
+        "How do you keep the index fresh when documents change?"
+      ]
+    },
+    {
+      "topic": "Chunking",
+      "level": "mid",
+      "question": "What are the trade-offs in choosing chunk size and overlap?",
+      "answer": "Small chunks (100-300 tokens) give precise embeddings and cheap context, but they can lose surrounding meaning and split answers across chunks. Large chunks (800-1500 tokens) keep context but dilute the embedding, retrieve irrelevant text and cost more tokens per query. Overlap reduces boundary losses but increases index size and duplicates. In practice, chunk along document structure (headings, paragraphs, code blocks) rather than fixed characters, and tune size empirically against retrieval recall on a golden set. Patterns that help: parent-document retrieval (search small chunks, return the larger parent), adding titles or summaries to each chunk, and contextual chunk headers. There is no universal best size; it depends on document type and question style.",
+      "follow_ups": [
+        "What is parent-document retrieval?",
+        "How would you chunk code or tables?",
+        "How do you measure whether chunking changes helped?"
+      ]
+    },
+    {
+      "topic": "RAG evaluation",
+      "level": "mid",
+      "question": "How do you evaluate a RAG system?",
+      "answer": "Evaluate retrieval and generation separately, then end to end. Build a golden set of real questions with reference answers and, ideally, the supporting passages. For retrieval, measure recall@k, precision and MRR against labeled relevant chunks. For generation, measure faithfulness (is every claim supported by retrieved context), answer relevance and correctness; tools like RAGAS provide these metrics, often using an LLM as judge. Calibrate any LLM judge against human labels, since judges have biases such as favoring longer answers. Run evals in CI so prompt, chunking or model changes are regression-tested, and complement with production signals: user feedback, thumbs-down review, and sampled trace review. Keep the golden set growing from real failures.",
+      "follow_ups": [
+        "What are the limits of LLM-as-judge?",
+        "How do you build a golden set without much labeled data?",
+        "How do you detect retrieval failure versus generation failure?"
+      ]
+    },
+    {
+      "topic": "Hallucination mitigation",
+      "level": "mid",
+      "question": "How do you reduce hallucinations in an LLM application?",
+      "answer": "Layer several defenses. Ground the model with retrieval and instruct it to answer only from supplied context, citing sources, and to say it does not know otherwise. Improve retrieval quality first, since poor context is the main driver in RAG. Constrain output with structured schemas and validate against them. Use lower temperature for factual tasks, and verification steps such as a second pass that checks claims against sources or a faithfulness judge. Add tool use for facts the model should not recall, such as calculations or database lookups. Measure with faithfulness evals and monitor in production. You cannot eliminate hallucinations, so design UX for it: show citations, confidence cues and human review for high-stakes actions.",
+      "follow_ups": [
+        "How do citations help and where do they fail?",
+        "Would you use a smaller or larger model to reduce hallucinations?",
+        "How do you test for hallucination before release?"
+      ]
+    },
+    {
+      "topic": "LangGraph vs chain",
+      "level": "mid",
+      "question": "When would you use LangGraph instead of a simple chain?",
+      "answer": "A simple chain or a single function is right when the flow is linear and fixed: retrieve, prompt, parse. LangGraph earns its complexity when you need loops, branching, shared state or durability: an agent that decides between tools and retries, conditional edges that route by classification, parallel branches, human-in-the-loop approval, long-running workflows that must resume, or multi-agent handoffs. You define a typed state, nodes that update it, and edges (including conditional ones) between nodes; a checkpointer persists state per thread so you can resume, time-travel and inspect. The cost is more concepts and debugging surface. My rule: start with plain code, and move to a graph when control flow becomes dynamic or needs persistence and interrupts.",
+      "follow_ups": [
+        "What is a checkpointer and why use one?",
+        "How do you implement human approval in LangGraph?",
+        "How do you prevent infinite loops in an agent graph?"
+      ]
+    },
+    {
+      "topic": "Fine-tuning vs RAG",
+      "level": "senior",
+      "question": "When should you fine-tune a model instead of using RAG or prompting?",
+      "answer": "Try prompting first, then RAG, and fine-tune only with a measured reason. RAG is for injecting knowledge that is private, large or changing; it is updatable and attributable. Fine-tuning changes behavior: a consistent style or format, domain-specific classification or extraction, tool-use patterns, or distilling a large model's behavior into a smaller, cheaper, lower-latency one. It is poor for adding fresh facts, and can be expensive to maintain. Parameter-efficient methods like LoRA and QLoRA make it affordable on open models by training small adapter matrices, with QLoRA quantizing the base model to save memory. You need quality labeled data and an eval set to prove gains. Often the best system combines fine-tuning for behavior with RAG for knowledge.",
+      "follow_ups": [
+        "How much data do you need for a LoRA fine-tune?",
+        "What is catastrophic forgetting?",
+        "How do you decide between fine-tuning and a bigger prompt with examples?"
+      ]
+    },
+    {
+      "topic": "Prompt injection",
+      "level": "senior",
+      "question": "How do you defend an LLM application against prompt injection?",
+      "answer": "Assume it cannot be fully prevented and limit the blast radius. Treat all retrieved documents, web pages, emails and tool outputs as untrusted data, not instructions. Apply least privilege: give agents only the tools and scopes they need, require human approval for sensitive or irreversible actions, and never let the model hold secrets. Separate system instructions from user and retrieved content, use delimiters, and validate outputs against schemas and allowlists. Add input and output classifiers or guardrail layers to detect injection attempts and data exfiltration, such as markdown image links leaking data. Block risky combinations: private data access plus untrusted content plus an outbound channel. Red-team continuously with an attack test suite and log tool calls for audit.",
+      "follow_ups": [
+        "What is indirect prompt injection?",
+        "Why are delimiters not sufficient?",
+        "How would you secure an agent with email and database access?"
+      ]
+    },
+    {
+      "topic": "Cost and latency",
+      "level": "senior",
+      "question": "Your LLM feature is too slow and expensive. What do you do?",
+      "answer": "Measure first with tracing: tokens in and out, latency per step, and cache hit rates. Then reduce work. Route easy requests to smaller, cheaper models and reserve large models for hard ones. Shorten prompts, retrieve fewer but better chunks, and use provider prompt caching for long stable prefixes. Add exact and semantic caching for repeated queries. Stream responses so perceived latency drops to time-to-first-token. Parallelize independent calls, avoid unnecessary agent loops, and cap output length. Batch offline workloads with batch APIs for lower cost. For self-hosted models, use vLLM with continuous batching and quantization. Verify each change against your eval set so quality does not silently regress.",
+      "follow_ups": [
+        "What are the risks of semantic caching?",
+        "How does streaming change the UX and architecture?",
+        "When is self-hosting cheaper than an API?"
+      ]
+    },
+    {
+      "topic": "Vector index and metadata filtering",
+      "level": "mid",
+      "question": "How do you choose a vector index and use metadata filtering in Pinecone?",
+      "answer": "Most vector databases use approximate nearest neighbor indexes, commonly HNSW, trading a little recall for large speed gains; exact search is fine for small collections. Choose the distance metric to match your embedding model (cosine is typical, dot product for normalized vectors), and set dimension to the model's output size. In Pinecone you upsert vectors with a metadata object (for example tenant, doc_type, date, access level) and query with a filter such as equality or range conditions, so filtering happens during search rather than after. Use namespaces to isolate tenants or environments. Keep metadata small and indexed fields intentional, since overly selective filters can hurt recall or latency. If you already run Postgres, pgvector is simpler to operate at moderate scale.",
+      "follow_ups": [
+        "What is the difference between pre-filtering and post-filtering?",
+        "When would you choose pgvector over Pinecone?",
+        "How do HNSW parameters affect recall and latency?"
+      ]
+    },
+    {
+      "topic": "Hybrid search and reranking",
+      "level": "mid",
+      "question": "Why combine BM25 with vector search, and what does reranking add?",
+      "answer": "Vector search captures semantic similarity but can miss exact terms such as product codes, error IDs, names and rare jargon. BM25 is lexical and strong on exact matches but misses paraphrases. Running both and fusing the results, often with reciprocal rank fusion, improves recall across query types. Reranking then takes the top 20-100 candidates and rescores each query-document pair with a cross-encoder or hosted rerank model, which reads both together and is much more precise than comparing independent embeddings, but slower, so it is applied only to a shortlist. The usual pipeline is wide retrieval for recall, rerank for precision, and a small final context for the LLM. Measure the gain with recall@k and answer quality, and watch added latency.",
+      "follow_ups": [
+        "What is reciprocal rank fusion?",
+        "Bi-encoder versus cross-encoder: what is the difference?",
+        "How many candidates should you rerank?"
+      ]
+    },
+    {
+      "topic": "Embeddings",
+      "level": "junior",
+      "question": "What are embeddings and why is cosine similarity used?",
+      "answer": "An embedding is a dense vector, typically hundreds to a few thousand dimensions, produced by a model so that texts with similar meaning land close together in vector space. To search, you embed the query with the same model and find nearest document vectors. Cosine similarity measures the angle between vectors, ignoring magnitude, so it captures directional similarity regardless of text length; for normalized vectors it equals the dot product. Key practices: use the same embedding model for indexing and querying, re-embed everything if you change models, and pick a model that fits your language and domain. Embeddings are good at semantic matching but not exact keywords, which is why hybrid search exists.",
+      "follow_ups": [
+        "What happens if you switch embedding models?",
+        "What is the effect of embedding dimension on cost?",
+        "How would you evaluate embedding models for your data?"
+      ]
+    },
+    {
+      "topic": "Structured outputs",
+      "level": "junior",
+      "question": "How do you get reliable structured data out of an LLM?",
+      "answer": "Prefer native structured output features, where you pass a JSON schema and the provider constrains decoding to match it, over asking politely for JSON. Define the schema with Pydantic, validate the response, and handle failures with a bounded retry that feeds the validation error back to the model. Keep schemas simple and field descriptions clear, use enums for closed sets, and make optional fields nullable rather than inventing values. Alternatively use tool or function calling with a schema as the output channel. Even valid JSON can be semantically wrong, so add business-rule checks and evals. Constrained decoding guarantees format, not correctness of the content.",
+      "follow_ups": [
+        "What if the model returns valid JSON but wrong values?",
+        "Tool calling versus JSON mode: what is the difference?",
+        "How do you handle very long extraction outputs?"
+      ]
+    },
+    {
+      "topic": "Agents and tool calling",
+      "level": "mid",
+      "question": "How does tool calling work, and how do you make agents reliable?",
+      "answer": "You describe tools with names, descriptions and JSON-schema parameters. The model returns a structured request to call a tool; your code validates the arguments, executes the tool, and sends the result back as a message; the loop continues until the model answers. Reliability comes from engineering: write precise tool descriptions, keep the tool set small, validate and sanitize arguments, return clear error messages the model can recover from, set step and token budgets, and make side-effecting tools idempotent with confirmation for risky actions. Prefer deterministic workflows where possible and use agents only for genuinely open-ended steps. Trace every step and evaluate trajectories, not just final answers.",
+      "follow_ups": [
+        "How do you stop an agent from looping forever?",
+        "When is a workflow better than an agent?",
+        "How do you evaluate agent trajectories?"
+      ]
+    },
+    {
+      "topic": "MCP",
+      "level": "mid",
+      "question": "What is the Model Context Protocol and why use it?",
+      "answer": "MCP is an open protocol that standardizes how LLM applications connect to external tools, data sources and prompts. An MCP server exposes capabilities (tools, resources, prompts) and an MCP client inside a host application, such as an assistant or IDE, discovers and calls them over a transport like stdio or streamable HTTP. The benefit is write once, use anywhere: instead of custom integrations per application and per model vendor, one server works with any compatible client. Trade-offs: you must treat servers as a security boundary, since tool descriptions and outputs can carry injected instructions; apply authentication, least-privilege scopes, and user approval for sensitive actions. It standardizes plumbing but does not replace good tool design.",
+      "follow_ups": [
+        "What are the security risks of connecting third-party MCP servers?",
+        "Tools versus resources in MCP?",
+        "How would you expose an internal API through MCP?"
+      ]
+    },
+    {
+      "topic": "LangGraph persistence",
+      "level": "senior",
+      "question": "How do checkpointers and human-in-the-loop work in LangGraph?",
+      "answer": "A checkpointer saves the graph state after each step, keyed by a thread ID, to a backend such as in-memory for dev or Postgres or SQLite for production. This gives conversation memory across turns, fault tolerance (resume after a crash), and the ability to inspect or replay earlier states. Human-in-the-loop uses interrupts: the graph pauses at a node, for example before executing a refund tool, surfaces the pending action to a person, and resumes with their approval, edit or rejection, because state is persisted while it waits. This is what makes long-running, approval-gated workflows practical. Design state to be serializable and compact, and make nodes safe to re-run after a resume.",
+      "follow_ups": [
+        "Short-term versus long-term memory in agents?",
+        "How do you make nodes idempotent?",
+        "How would you test a graph with interrupts?"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "The RAG pipeline end to end",
+      "body": "Retrieval-augmented generation gives a model access to knowledge it was not trained on by fetching relevant text at query time and placing it in the prompt. The pipeline has two phases. Offline ingestion: load documents, parse and clean them, split them into chunks, compute an embedding for each chunk, and store vectors plus metadata in a vector database. Online query: optionally rewrite or expand the user question, embed it, retrieve candidate chunks (often with hybrid search and metadata filters), rerank them, assemble a prompt with the best chunks and instructions to answer only from context with citations, then generate. Each stage is a place to lose quality: bad parsing, poor chunk boundaries, weak embeddings, missed retrieval, noisy context or a model that ignores instructions. That is why RAG systems are debugged by inspecting retrieved chunks first. Add evaluation, tracing, access control and re-indexing to make it production-ready."
+    },
+    {
+      "title": "Embeddings and cosine similarity",
+      "body": "An embedding model maps text to a dense vector so that semantically similar passages are near each other. Retrieval embeds the query with the same model and finds the closest stored vectors using a similarity measure. Cosine similarity compares the angle between two vectors and ignores their length; when vectors are normalized to unit length, cosine similarity equals the dot product, which is why many systems normalize and use dot product for speed. Euclidean distance is another option but behaves similarly on normalized vectors. Practical points: query and documents must use the same model; changing models means re-embedding the whole corpus; higher dimensions can improve nuance but increase storage and latency, and some models support truncating dimensions; embeddings are weak on exact identifiers and numbers, so combine them with keyword search. Choose a model by testing on your own queries, not just public leaderboards."
+    },
+    {
+      "title": "Chunking strategies",
+      "body": "Chunking decides what unit of text a retriever can return, and it strongly affects answer quality. Fixed-size splitting by tokens is simple but cuts through sentences and sections. Recursive splitting tries paragraph, then sentence, then word boundaries. Structure-aware splitting follows headings, Markdown, HTML or code syntax so each chunk is a coherent unit. Semantic chunking splits where embedding similarity between sentences drops. Overlap preserves context across boundaries at the cost of duplication. Useful enhancements include prepending the document title and section path to each chunk, parent-document retrieval where small chunks are searched but a larger parent is returned, and sentence-window retrieval. Tables, code and scanned documents often need special parsing before chunking. Because the right strategy depends on content and question style, treat chunk size and overlap as hyperparameters and tune them against a retrieval benchmark rather than copying defaults."
+    },
+    {
+      "title": "Hybrid search and reranking",
+      "body": "Dense vector search matches meaning but can miss exact tokens such as SKUs, acronyms, error codes and proper names. Sparse lexical search such as BM25 does the opposite. Hybrid search runs both and merges results, either with weighted score fusion or with reciprocal rank fusion, which combines rankings without needing comparable scores. Many vector databases, including Weaviate, Qdrant and Pinecone, support hybrid queries directly. A second stage, reranking, rescoring the top candidates with a cross-encoder or hosted reranker that reads the query and passage together, gives much better precision than bi-encoder similarity but costs more per document, so it is applied to a shortlist of tens of candidates. A typical design retrieves 30-100 candidates for recall, reranks, and sends only the top handful to the LLM, reducing noise and token cost. Tune the candidate count against latency and measure with recall@k and final answer quality."
+    },
+    {
+      "title": "Vector databases and indexes",
+      "body": "A vector database stores embeddings with metadata and answers nearest-neighbor queries quickly. Exact search compares the query with every vector, which is accurate but slow at scale, so most systems use approximate nearest neighbor indexes. HNSW builds a layered graph that is searched greedily, giving high recall and low latency with higher memory use; IVF-style indexes cluster vectors and search only nearby clusters; quantization compresses vectors to save memory at some accuracy cost. Key tuning knobs are graph connectivity and search breadth, which trade recall against speed. Metadata filtering lets you restrict results by tenant, date, type or permission, and namespaces or collections isolate datasets. Options differ in operations: Pinecone is fully managed, Qdrant and Weaviate can be self-hosted or managed, Chroma is lightweight for prototyping, and pgvector adds vector search to PostgreSQL, which is attractive when you want relational data and vectors together."
+    },
+    {
+      "title": "LangGraph state graphs",
+      "body": "LangGraph models an LLM workflow as a graph. You define a typed state, for example messages plus working fields. Nodes are functions that read the state and return updates; edges define what runs next. Conditional edges call a routing function that inspects state and picks the next node, which is how you implement decisions such as 'call a tool or finish' or 'retry retrieval with a rewritten query'. Reducers specify how updates merge, such as appending to a message list. Graphs can contain cycles, enabling agent loops, and can run branches in parallel. A checkpointer persists state per thread, giving memory, resumability and time-travel debugging, and interrupts pause execution for human approval. Subgraphs let you compose multi-agent systems. Compared with a linear chain, a graph makes control flow explicit and testable, at the price of more structure, so use it when the workflow is genuinely dynamic or long-running."
+    },
+    {
+      "title": "Agents and tool calling",
+      "body": "An agent is an LLM in a loop that can decide to use tools. With tool calling, you supply function definitions as JSON schemas; the model responds with a tool name and arguments instead of text; your application validates and runs the function and returns the result; the model continues until it produces a final answer. Patterns include ReAct-style reasoning with actions, plan-and-execute, routing to specialist sub-agents, and orchestrator-worker designs. Failure modes are common: wrong tool choice, malformed arguments, infinite loops, runaway cost, and prompt injection through tool outputs. Mitigate with a small well-described tool set, strict validation, step and budget limits, idempotent tools, approval gates for side effects, and tracing of every step. Prefer deterministic workflows when the steps are known, and reserve autonomy for open-ended tasks. MCP standardizes how tools are exposed so the same server can serve different clients."
+    },
+    {
+      "title": "Evaluating RAG and LLM apps",
+      "body": "LLM outputs are open-ended, so evaluation needs a deliberate method. Start with a golden set of representative questions, reference answers and, for RAG, the supporting passages. Evaluate retrieval with recall@k, precision and MRR, and generation with faithfulness (claims supported by context), answer relevance and correctness. Frameworks like RAGAS implement these using an LLM as judge. LLM-as-judge scales well but must be calibrated against human labels, checked for position and verbosity bias, and ideally use a clear rubric and a different model family than the one being judged. Run evals automatically in CI to catch regressions from prompt, model or chunking changes, and add online monitoring: traces in LangSmith or similar, user feedback, and review of low-scoring samples. Convert production failures into new test cases so the benchmark improves over time. Evaluate agents on trajectories and tool use, not only final answers."
+    },
+    {
+      "title": "Prompting vs RAG vs fine-tuning",
+      "body": "These are different levers. Prompt engineering is the cheapest and fastest: clear instructions, examples, output formats and reasoning guidance. RAG adds external knowledge at inference time, which suits private, large or frequently changing information and supports citations and access control. Fine-tuning changes the model's weights to alter behavior: style, format adherence, domain-specific classification, tool-use patterns, or distilling a big model into a smaller cheaper one. It is a poor way to store facts that change. LoRA freezes the base model and trains small low-rank adapter matrices, and QLoRA does this on a quantized base model so fine-tuning fits on modest GPUs. The sensible order is to prompt first, add retrieval for knowledge gaps, and fine-tune only when evals show a behavior gap that prompting cannot close or when cost and latency demand a smaller model. Combinations are common, such as a fine-tuned small model plus RAG."
+    },
+    {
+      "title": "Guardrails, prompt injection and safety",
+      "body": "Guardrails are controls around the model that keep behavior safe and predictable. Input guardrails screen for prompt injection, personal data and off-topic requests; output guardrails validate schemas, check for policy violations, redact sensitive data and test claims against sources. Prompt injection is the central threat: instructions hidden in user input or in retrieved documents, web pages, emails or tool results can hijack the model. Direct injection comes from the user; indirect injection arrives through content the application fetches. Defenses are architectural rather than purely textual: treat external content as untrusted data, apply least-privilege tools, require human approval for sensitive actions, avoid giving a single agent private data, untrusted input and an exfiltration channel together, validate outputs, and log tool calls. Add red-team test suites to CI and monitor in production. Libraries and hosted moderation endpoints help, but no filter is complete, so design for containment."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Company docs RAG assistant",
+      "description": "Ingest PDFs and wiki pages, chunk by structure, embed into pgvector or Pinecone, and answer questions with hybrid retrieval, reranking and source citations. Add a golden set with RAGAS metrics and a dashboard of retrieval recall and faithfulness.",
+      "skills": ["rag", "embeddings", "pgvector", "hybrid search", "reranking", "ragas", "fastapi"]
+    },
+    {
+      "name": "LangGraph support agent with approvals",
+      "description": "Build a customer-support agent as a state graph that classifies intent, searches a knowledge base, calls order and refund tools, and pauses for human approval on write actions. Persist conversations with a Postgres checkpointer and trace runs in LangSmith.",
+      "skills": ["langgraph", "ai agents", "tool calling", "langsmith", "human-in-the-loop", "postgresql"]
+    },
+    {
+      "name": "MCP server for internal tools",
+      "description": "Expose a ticketing or CRM API as an MCP server with typed tools, authentication and read-only versus write scopes, then connect it to an assistant client. Add logging and tests for malicious tool inputs.",
+      "skills": ["model context protocol", "python", "rest api", "prompt injection", "guardrails"]
+    },
+    {
+      "name": "Fine-tuned small model with cost comparison",
+      "description": "Fine-tune an open model with QLoRA on a classification or extraction task, serve it with vLLM, and compare accuracy, latency and cost against a hosted API on a held-out eval set.",
+      "skills": ["qlora", "fine-tuning", "hugging face", "vllm", "llm evaluation", "docker"]
+    }
+  ]
+}

@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { latex } from "../api";
 import SEO from "../components/SEO";
 
 const STYLES = ["single-column", "modern", "minimal", "sidebar", "two-column", "infographic"];
 const STYLE_LABELS = { "single-column": "Classic", "modern": "Modern", "minimal": "Minimal", "sidebar": "Sidebar", "two-column": "Two-Column", "infographic": "Infographic" };
-const SORT_OPTIONS = ["popular", "ats_score", "newest", "name"];
 const EXPERIENCE_LEVELS = ["entry", "mid", "senior", "executive"];
 
 const COLORS_ARRAY = ["navy","emerald","crimson","slate","purple","teal","amber","rose","indigo","zinc"];
@@ -130,7 +129,6 @@ function QuickViewModal({ template, onClose }) {
 export default function Templates() {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQ, setSearchQ] = useState("");
   const [filterIndustry, setFilterIndustry] = useState("");
@@ -143,8 +141,6 @@ export default function Templates() {
   const [industries, setIndustries] = useState([]);
   const [roles, setRoles] = useState([]);
   const [quickView, setQuickView] = useState(null);
-  const [compilingId, setCompilingId] = useState(null);
-  const [showFilters, setShowFilters] = useState(false);
 
   const [activeTab, setActiveTab] = useState("browse");
 
@@ -186,7 +182,6 @@ export default function Templates() {
       latex.roles().then(r => r.data || []).catch(() => []),
     ]).then(([tmpl, inds, rls]) => {
       setTemplates(tmpl);
-      setFiltered(tmpl);
       setIndustries(inds);
       setRoles(rls);
       if (tmpl.length > 0) {
@@ -196,7 +191,7 @@ export default function Templates() {
     }).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
+  const filtered = useMemo(() => {
     let result = [...templates];
     if (searchQ) {
       const q = searchQ.toLowerCase();
@@ -211,7 +206,7 @@ export default function Templates() {
     if (sortBy === "ats_score") result.sort((a, b) => (b.ats_score || 0) - (a.ats_score || 0));
     else if (sortBy === "name") result.sort((a, b) => a.name.localeCompare(b.name));
     else result.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
-    setFiltered(result);
+    return result;
   }, [templates, searchQ, filterIndustry, filterRole, filterStyle, filterExp, filterColor, minATS, sortBy]);
 
   const addSkill = () => {
@@ -258,7 +253,7 @@ export default function Templates() {
       a.href = url;
       a.download = `${customTemplateId}-resume.pdf`;
       a.click();
-    } catch (e) {
+    } catch {
       setCustomError("Compilation failed. Check server logs or ensure pdflatex is installed.");
     } finally {
       setCustomLoading(false);
@@ -273,7 +268,7 @@ export default function Templates() {
     try {
       const res = await latex.analyzeJD({ job_description: jdText, company_name: jdCompany, job_title: jdTitle });
       setJdAnalysis(res.data);
-    } catch (e) {
+    } catch {
       setJdError("Analysis failed. Check API key or try again.");
     } finally {
       setJdLoading(false);
@@ -300,7 +295,7 @@ export default function Templates() {
       a.href = url;
       a.download = `${jdTemplateId}-tailored-resume.pdf`;
       a.click();
-    } catch (e) {
+    } catch {
       setJdError("Generation failed. Check server logs.");
     } finally {
       setJdResultLoading(false);
@@ -319,7 +314,7 @@ export default function Templates() {
       });
       setAiResult(res.data?.optimized_resume || null);
       setAiSuggestions(res.data?.suggestions || []);
-    } catch (e) {
+    } catch {
       setAiError("AI optimization failed. Check GROQ_API_KEY in .env.");
     } finally {
       setAiLoading(false);
@@ -329,7 +324,7 @@ export default function Templates() {
   const activeFiltersCount = [searchQ, filterIndustry, filterRole, filterStyle, filterExp, filterColor, minATS > 0].filter(Boolean).length;
 
   return (
-    <div>
+    <div className="templates-page">
       <SEO
         title="ATS-Friendly Resume Templates"
         description="Browse 100+ ATS-optimized resume templates. Built for modern job seekers who want to pass applicant tracking systems."
@@ -542,7 +537,7 @@ export default function Templates() {
 
           {/* Template Grid */}
           {loading ? (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: 16 }}>
               {[1,2,3,4,5,6].map(n => (
                 <div key={n} className="ui-card" style={{ padding: 0, overflow: "hidden", animation: "pulse 2s infinite" }}>
                   <div style={{ aspectRatio: "1/1.414", background: "rgba(148,163,184,0.05)" }} />
@@ -562,7 +557,7 @@ export default function Templates() {
               <button className="btn-secondary" style={{ fontSize: 12 }} onClick={() => { setSearchQ(""); setFilterIndustry(""); setFilterRole(""); setFilterStyle(""); setFilterExp(""); setFilterColor(""); setMinATS(0); }}>Clear All Filters</button>
             </div>
           ) : (
-            <div className="tmpl-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+            <div className="tmpl-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: 16 }}>
               {filtered.map((t) => {
                 const color = t.config?.color || "navy";
                 return (
@@ -984,7 +979,7 @@ export default function Templates() {
               <label style={{ fontSize: 11, fontWeight: 600, color: "var(--text-muted)", display: "block", marginBottom: 4 }}>Resume Data (JSON)</label>
               <textarea
                 value={aiData ? JSON.stringify(aiData, null, 2) : JSON.stringify(resumeData, null, 2)}
-                onChange={(e) => { try { setAiData(JSON.parse(e.target.value)); } catch {} }}
+                onChange={(e) => { try { setAiData(JSON.parse(e.target.value)); } catch { /* ignore: keep last valid JSON while user is typing */ } }}
                 rows={12}
                 style={{ width: "100%", fontSize: 11, padding: "8px 10px", borderRadius: 6, background: "rgba(15,23,42,0.72)", border: "1px solid var(--border)", color: "var(--text)", outline: "none", resize: "vertical", fontFamily: "monospace" }}
               />

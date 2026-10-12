@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { auth } from "../api";
 import SEO from "../components/SEO";
+import AccountCareer from "../components/career/AccountCareer";
 
 export default function Account() {
   const { user, logout } = useAuth();
@@ -34,8 +35,8 @@ export default function Account() {
       setPwMsg({ type: "error", text: "Passwords do not match" });
       return;
     }
-    if (pwForm.newPw.length < 12) {
-      setPwMsg({ type: "error", text: "Password must be at least 12 characters" });
+    if (pwForm.newPw.length < 8) {
+      setPwMsg({ type: "error", text: "Password must be at least 8 characters" });
       return;
     }
     setSaving(true);
@@ -58,7 +59,7 @@ export default function Account() {
         canonical="https://www.profileotimizer.online/account"
       />
       <h1 style={s.heading}>Account Settings</h1>
-      <p style={s.sub}>Manage your profile, security, and account preferences.</p>
+      <p style={s.sub}>Manage your profile, job preferences, plan, and security.</p>
 
       <div style={s.grid}>
         {/* Profile info */}
@@ -107,7 +108,7 @@ export default function Account() {
               value={pwForm.newPw}
               onChange={(e) => setPwForm({ ...pwForm, newPw: e.target.value })}
               required
-              minLength={12}
+              minLength={8}
             />
           </div>
           <div style={s.field}>
@@ -129,6 +130,9 @@ export default function Account() {
             {saving ? "Saving…" : "Change Password"}
           </button>
         </form>
+
+        {/* Job search: plan, job profile, alerts, connections, extension */}
+        <AccountCareer />
 
         {/* Danger zone */}
         <div style={s.cardDanger}>

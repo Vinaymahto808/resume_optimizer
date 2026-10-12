@@ -263,6 +263,25 @@ class TestExtractTextFromResume:
         assert result["success"] is False
         assert "Unsupported" in result["error"]
 
+    def test_text_file_success(self):
+        result = extract_text_from_resume("file.txt", b"\xef\xbb\xbfResume text", "txt")
+        assert result == {
+            "success": True,
+            "text": "Resume text",
+            "char_count": 11,
+            "word_count": 2,
+        }
+
+    def test_text_file_invalid_encoding(self):
+        result = extract_text_from_resume("file.txt", b"\xff\xfe", "txt")
+        assert result["success"] is False
+        assert "UTF-8" in result["error"]
+
+    def test_text_file_empty(self):
+        result = extract_text_from_resume("file.txt", b" \n ", "txt")
+        assert result["success"] is False
+        assert "empty" in result["error"]
+
     @patch("app.resume_parser.extract_text_from_image")
     def test_image_file_success(self, mock_extract):
         mock_extract.return_value = "Image text"

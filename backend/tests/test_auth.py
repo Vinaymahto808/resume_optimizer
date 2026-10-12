@@ -91,7 +91,7 @@ class TestRegisterUser:
         with pytest.raises(HTTPException) as exc:
             register_user(data, mock_db)
         assert exc.value.status_code == 400
-        assert "at least 12 characters" in exc.value.detail
+        assert "at least 8 characters" in exc.value.detail
 
     def test_rejects_password_without_uppercase(self, mock_db):
         data = UserCreate(email="test@test.com", password="lowercaseonly1!")

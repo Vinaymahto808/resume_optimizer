@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { templates } from "../api";
 
 const TEMPLATE_LAYOUT = {
   "simple-clean": "simple", "simple-minimal": "simple", "simple-basic": "simple", "simple-light": "simple",
@@ -21,7 +20,6 @@ export default function ResumeBuilder({ templateId, onBack }) {
     summary: "",
     skills: "",
   });
-  const [generating, setGenerating] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
   const handleChange = (e) =>

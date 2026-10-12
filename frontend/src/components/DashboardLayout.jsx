@@ -1,19 +1,26 @@
 import { useState, useRef, useEffect } from "react";
-import { Navigate, Link, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { usePlan } from "../contexts/PlanContext";
+import { career } from "../api";
+import "./fx/fx.css";
 
 const NAV_ITEMS = [
   { icon: "⊞", label: "Dashboard", path: "/dashboard" },
   { icon: "⬆", label: "Scan Resume", path: "/scan" },
-  { icon: "✦", label: "AI Analysis", path: "/ai-analysis" },
+  { icon: "✎", label: "Resume Editor", path: "/resume-editor" },
+  { icon: "◉", label: "Job Match", path: "/jobs" },
+  { icon: "☰", label: "Tracker", path: "/tracker" },
+  { icon: "⚡", label: "Agent", path: "/agent" },
+  { icon: "✦", label: "Sage Coach", path: "/coach" },
   { icon: "◈", label: "Templates", path: "/templates" },
-  { icon: "◉", label: "Job Match", path: "/job-recommender" },
   { icon: "◎", label: "Profile", path: "/profile-analyzer" },
+  { icon: "▲", label: "AI Analysis", path: "/ai-analysis" },
   { icon: "↗", label: "Career Map", path: "/career-roadmap" },
   { icon: "◇", label: "Analytics", path: "/dashboard-analytics" },
-  { icon: "⚙", label: "Automation", path: "/automation" },
 ];
+const EMPLOYER_ITEMS = [{ icon: "⌂", label: "For Employers", path: "/recruiter" }];
+const ADMIN_ITEMS = [{ icon: "⚙", label: "Admin", path: "/admin" }];
 
 const BREADCRUMB_MAP = {
   "/dashboard": ["Dashboard"],
@@ -24,7 +31,13 @@ const BREADCRUMB_MAP = {
   "/profile-analyzer": ["Dashboard", "Profile Analyzer"],
   "/career-roadmap": ["Dashboard", "Career Roadmap"],
   "/dashboard-analytics": ["Dashboard", "Analytics"],
-  "/automation": ["Dashboard", "Automation Hub"],
+  "/resume-editor": ["Dashboard", "Resume Editor"],
+  "/jobs": ["Dashboard", "AI Job Match"],
+  "/tracker": ["Dashboard", "Application Tracker"],
+  "/agent": ["Dashboard", "Background Agent"],
+  "/coach": ["Dashboard", "Sage AI Coach"],
+  "/recruiter": ["Dashboard", "For Employers"],
+  "/admin": ["Dashboard", "Admin"],
   "/portfolio-generator": ["Dashboard", "Portfolio Generator"],
   "/student-resume": ["Dashboard", "Student Resume"],
   "/account": ["Dashboard", "Account Settings"],
@@ -32,7 +45,8 @@ const BREADCRUMB_MAP = {
 
 export default function DashboardLayout({ children }) {
   const { user, loading, logout } = useAuth();
-  const { plan, isPaid } = usePlan();
+  const { plan, isPaid, isTurbo, careerPlan, openPaywall } = usePlan();
+  const [notifs, setNotifs] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -51,9 +65,27 @@ export default function DashboardLayout({ children }) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  useEffect(() => {
+  // Close the mobile sidebar on navigation (adjust state during render instead of in an effect).
+  const [lastPath, setLastPath] = useState(location.pathname);
+  if (lastPath !== location.pathname) {
+    setLastPath(location.pathname);
     setMobileSidebarOpen(false);
-  }, [location.pathname]);
+  }
+
+  const loadNotifications = () => {
+    Promise.allSettled([career.alertHits(), career.agentTasks("today")]).then(([hits, tasks]) => {
+      const items = [];
+      (hits.value?.hits || []).filter((h) => !h.seen).slice(0, 5).forEach((h) => items.push({
+        icon: "◉", accent: "#0EA5E9", path: "/jobs",
+        text: `New match: ${h.job.title} at ${h.job.company} (${h.match_score}%)`, time: h.created_at,
+      }));
+      (tasks.value?.tasks || []).filter((t) => t.status === "needs_review").slice(0, 5).forEach((t) => items.push({
+        icon: "⚡", accent: "#f59e0b", path: "/agent",
+        text: `Ready for review: ${t.job?.title || "application"} at ${t.job?.company || ""}`, time: t.updated_at,
+      }));
+      setNotifs(items);
+    });
+  };
 
   const showToast = (msg, type = "success") => {
     setToast({ msg, type });
@@ -97,7 +129,7 @@ export default function DashboardLayout({ children }) {
         </div>
 
         {/* Collapse toggle */}
-        <button style={s.collapseBtn} onClick={() => setCollapsed(!collapsed)} title="Toggle sidebar">
+        <button className="dash-collapse-btn" style={s.collapseBtn} onClick={() => setCollapsed(!collapsed)} title="Toggle sidebar">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d={collapsed ? "M6 3l5 5-5 5" : "M10 3L5 8l5 5"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -106,7 +138,7 @@ export default function DashboardLayout({ children }) {
         {/* Nav */}
         <nav style={s.nav}>
           {!collapsed && <div style={s.navSection}>MAIN MENU</div>}
-          {NAV_ITEMS.map((item) => {
+          {[...NAV_ITEMS, ...EMPLOYER_ITEMS, ...(user.is_admin ? ADMIN_ITEMS : [])].map((item) => {
             const active = location.pathname === item.path;
             return (
               <Link
@@ -135,16 +167,19 @@ export default function DashboardLayout({ children }) {
                 ...s.planBadge,
                 background: isPaid ? "rgba(13,148,136,0.12)" : "var(--border)",
                 color: isPaid ? "var(--accent)" : "var(--text-muted)",
-              }}>{plan.toUpperCase()}</span>
-              <span style={s.planText}>{isPaid ? "Active" : "Upgrade to Pro"}</span>
+              }}>{isTurbo ? "TURBO" : plan.toUpperCase()}</span>
+              <span style={s.planText}>
+                {isTurbo ? "Unlimited AI" : careerPlan?.credits_limit != null
+                  ? `${careerPlan.credits_remaining}/${careerPlan.credits_limit} AI credits today` : isPaid ? "Active" : "Upgrade to Turbo"}
+              </span>
             </div>
-            {!isPaid && <Link to="/pricing" style={s.upgradeBtn}>Upgrade &rarr;</Link>}
+            {!isPaid && <button type="button" onClick={() => openPaywall(null)} style={{ ...s.upgradeBtn, border: 0, cursor: "pointer", width: "100%" }}>Upgrade &rarr;</button>}
           </div>
         )}
       </aside>
 
       {/* ── Main ── */}
-      <div style={{ ...s.main, marginLeft: collapsed ? 64 : 220 }}>
+      <div className="dash-main" style={{ ...s.main, marginLeft: collapsed ? 64 : 220 }}>
         {/* Top bar */}
         <header className="dash-topbar" style={s.topbar}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -161,10 +196,10 @@ export default function DashboardLayout({ children }) {
                 <line x1="4" y1="18" x2="20" y2="18" />
               </svg>
             </button>
-            <nav style={s.breadcrumbs} aria-label="breadcrumb">
+            <nav className="dash-breadcrumbs" style={s.breadcrumbs} aria-label="breadcrumb">
             {crumbs.map((crumb, i) => (
-              <span key={i} style={s.breadcrumbWrap}>
-                {i > 0 && <span style={s.breadcrumbSep}>/</span>}
+              <span key={i} className="dash-crumb" style={s.breadcrumbWrap}>
+                {i > 0 && <span className="dash-crumb-sep" style={s.breadcrumbSep}>/</span>}
                 <span style={{ ...s.breadcrumb, ...(i === crumbs.length - 1 ? s.breadcrumbActive : {}) }}>
                   {crumb}
                 </span>
@@ -186,30 +221,28 @@ export default function DashboardLayout({ children }) {
 
             {/* Notifications */}
             <div style={s.iconBtnWrap} ref={notifRef}>
-              <button style={s.iconBtn} onClick={() => setNotifOpen(!notifOpen)}>
+              <button style={s.iconBtn} aria-label="Notifications" onClick={() => { if (!notifOpen) loadNotifications(); setNotifOpen(!notifOpen); }}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M8 1a5 5 0 00-5 5v2l-1.5 2.5h13L13 8V6a5 5 0 00-5-5z" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M6.5 13.5a1.5 1.5 0 003 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                <span style={s.notifDot} />
+                {notifs?.length > 0 && <span style={s.notifDot} />}
               </button>
               {notifOpen && (
-                <div style={s.dropdown}>
+                <div className="dash-dropdown" style={s.dropdown}>
                   <div style={s.dropdownHeader}>Notifications</div>
-                  {[
-                    { icon: "✦", text: "AI analysis complete on SWE_Resume.pdf", time: "2m ago", accent: "#4f46e5" },
-                    { icon: "⬆", text: "Resume scored 87/100 &mdash; great work!", time: "1h ago", accent: "#10b981" },
-                    { icon: "◉", text: "3 new job matches found for your profile", time: "3h ago", accent: "#f59e0b" },
-                  ].map((n, i) => (
-                    <div key={i} style={s.notifItem}>
+                  {notifs === null && <div style={s.notifItem}><div style={s.notifItemText}>Loading…</div></div>}
+                  {notifs?.length === 0 && <div style={s.notifItem}><div style={s.notifItemText}>You're all caught up.</div></div>}
+                  {(notifs || []).map((n, i) => (
+                    <Link key={i} to={n.path} style={{ ...s.notifItem, textDecoration: "none" }} onClick={() => setNotifOpen(false)}>
                       <span style={{ ...s.notifItemIcon, background: n.accent + "16", color: n.accent }}>{n.icon}</span>
                       <div style={s.notifItemBody}>
                         <div style={s.notifItemText}>{n.text}</div>
-                        <div style={s.notifItemTime}>{n.time}</div>
+                        <div style={s.notifItemTime}>{n.time ? new Date(n.time.endsWith("Z") ? n.time : `${n.time}Z`).toLocaleString() : ""}</div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
-                  <div style={s.dropdownFooter}>View all notifications</div>
+                  <Link to="/agent" style={{ ...s.dropdownFooter, display: "block", textDecoration: "none" }} onClick={() => setNotifOpen(false)}>Open agent queue</Link>
                 </div>
               )}
             </div>
@@ -223,7 +256,7 @@ export default function DashboardLayout({ children }) {
                 </svg>
               </button>
               {profileOpen && (
-                <div style={{ ...s.dropdown, right: 0, minWidth: 200 }}>
+                <div className="dash-dropdown" style={{ ...s.dropdown, right: 0, minWidth: 200 }}>
                   <div style={s.profileInfo}>
                     <div style={s.profileAvatar}>{initials}</div>
                     <div>
@@ -234,7 +267,8 @@ export default function DashboardLayout({ children }) {
                   <div style={s.dropdownDivider} />
                   {[
                     { icon: "◎", label: "My Account", path: "/account" },
-                    { icon: "◇", label: "Billing", path: "/pricing" },
+                    { icon: "◇", label: "Plan & billing", path: "/pricing" },
+                    ...(user.is_admin ? [{ icon: "⚙", label: "Admin", path: "/admin" }] : []),
                   ].map((item) => (
                     <Link key={item.label} to={item.path} style={s.dropdownItem}>
                       <span style={s.dropdownItemIcon}>{item.icon}</span>
@@ -256,8 +290,9 @@ export default function DashboardLayout({ children }) {
         </header>
 
         {/* Page content */}
-        <main style={s.content}>
-          {children}
+        <main className="dash-content" style={s.content}>
+          {/* Keyed on the path so every page plays the entrance animation */}
+          <div key={location.pathname} className="fx-page">{children}</div>
         </main>
       </div>
 

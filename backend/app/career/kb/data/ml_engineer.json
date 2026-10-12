@@ -1,0 +1,362 @@
+{
+  "id": "ml_engineer",
+  "name": "Machine Learning Engineer",
+  "summary": "Machine learning engineers build, train, evaluate and operate predictive models, bridging data science experiments and reliable production systems. They work on feature pipelines, model training at scale, serving infrastructure and monitoring. They are hired at product companies, fintech, e-commerce, healthcare, ad-tech, and cloud and AI platform vendors.",
+  "titles": [
+    "machine learning engineer",
+    "ml engineer",
+    "mlops engineer",
+    "senior machine learning engineer",
+    "applied scientist",
+    "applied machine learning engineer",
+    "deep learning engineer",
+    "ai engineer",
+    "data scientist",
+    "ml platform engineer"
+  ],
+  "skills": {
+    "core": [
+      "machine learning",
+      "python",
+      "scikit-learn",
+      "supervised learning",
+      "unsupervised learning",
+      "feature engineering",
+      "model evaluation",
+      "cross-validation",
+      "regularization",
+      "bias-variance",
+      "hyperparameter tuning",
+      "classification",
+      "regression",
+      "sql",
+      "pandas",
+      "numpy",
+      "deep learning",
+      "statistics"
+    ],
+    "advanced": [
+      "gradient boosting",
+      "neural networks",
+      "convolutional neural networks",
+      "transformers",
+      "recommendation systems",
+      "time series forecasting",
+      "class imbalance",
+      "model calibration",
+      "distributed training",
+      "model deployment",
+      "model monitoring",
+      "drift detection",
+      "a/b testing",
+      "model optimization",
+      "embeddings"
+    ],
+    "tools": [
+      "pytorch",
+      "tensorflow",
+      "xgboost",
+      "lightgbm",
+      "mlflow",
+      "spark",
+      "airflow",
+      "docker",
+      "kubernetes",
+      "fastapi",
+      "sagemaker",
+      "vertex ai",
+      "feast",
+      "triton",
+      "onnx"
+    ]
+  },
+  "ats_keywords": [
+    "machine learning",
+    "deep learning",
+    "mlops",
+    "model deployment",
+    "model training",
+    "feature engineering",
+    "feature store",
+    "model serving",
+    "model monitoring",
+    "experiment tracking",
+    "ci/cd",
+    "data pipelines",
+    "pytorch",
+    "tensorflow",
+    "scikit-learn",
+    "xgboost",
+    "mlflow",
+    "sagemaker",
+    "vertex ai",
+    "apache spark",
+    "real-time inference",
+    "batch inference",
+    "recommendation systems",
+    "natural language processing",
+    "computer vision",
+    "a/b testing",
+    "production ml",
+    "model registry",
+    "data drift",
+    "hyperparameter tuning"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Machine Learning Engineer - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "Validates hands-on ability to build, deploy, orchestrate and monitor ML workflows on AWS, including SageMaker pipelines and CI/CD for ML."
+    },
+    {
+      "name": "Professional Machine Learning Engineer",
+      "provider": "Google Cloud",
+      "level": "professional",
+      "why": "Covers designing, productionizing and monitoring ML systems on Vertex AI and related Google Cloud services, matching real MLOps job scope."
+    },
+    {
+      "name": "Azure Data Scientist Associate (DP-100)",
+      "provider": "Microsoft",
+      "level": "associate",
+      "why": "Demonstrates training, tracking and deploying models with Azure Machine Learning, useful for enterprises standardized on Microsoft cloud."
+    },
+    {
+      "name": "Databricks Certified Machine Learning Professional",
+      "provider": "Databricks",
+      "level": "professional",
+      "why": "Shows competence with MLflow, model registry, scalable training and deployment on the Databricks lakehouse platform."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Foundations: Python, math and classical ML",
+      "duration_weeks": 10,
+      "goals": [
+        "Write clean Python with numpy and pandas and query data with SQL joins and window functions",
+        "Understand linear and logistic regression, trees, k-means and PCA, including the math behind them",
+        "Apply train/validation/test splits, cross-validation and common metrics correctly",
+        "Reason about bias-variance, overfitting and regularization on real datasets"
+      ],
+      "skills": ["python", "numpy", "pandas", "sql", "scikit-learn", "cross-validation", "regularization", "statistics"],
+      "project": "Build a customer churn predictor on a public telecom dataset with a leakage-safe scikit-learn Pipeline, compare logistic regression and random forest, and report precision-recall and calibration."
+    },
+    {
+      "stage": "Applied ML: boosting, deep learning and evaluation depth",
+      "duration_weeks": 12,
+      "goals": [
+        "Train and tune gradient boosting models with XGBoost or LightGBM and explain feature importance",
+        "Implement neural networks in PyTorch including training loops, optimizers and learning-rate schedules",
+        "Handle class imbalance, missing values and categorical features with sound feature engineering",
+        "Build one vision or text model using transfer learning from a pretrained network"
+      ],
+      "skills": ["xgboost", "lightgbm", "pytorch", "feature engineering", "class imbalance", "hyperparameter tuning", "transformers", "convolutional neural networks"],
+      "project": "Create a fraud detection model on the heavily imbalanced credit card fraud dataset, comparing LightGBM with a small PyTorch network using PR-AUC and cost-based threshold selection."
+    },
+    {
+      "stage": "MLOps: tracking, pipelines and serving",
+      "duration_weeks": 10,
+      "goals": [
+        "Track experiments, artifacts and models with MLflow and promote models through a registry",
+        "Containerize a model and serve it with FastAPI, with request validation and latency tests",
+        "Orchestrate training and batch scoring with Airflow and automate tests in a CI/CD pipeline",
+        "Add monitoring for data drift, prediction distributions and service health"
+      ],
+      "skills": ["mlflow", "docker", "fastapi", "airflow", "ci/cd", "model registry", "model monitoring", "feature store"],
+      "project": "Deploy a model as a Dockerized FastAPI service with MLflow tracking and registry, a GitHub Actions pipeline, and an Evidently drift report scheduled daily."
+    },
+    {
+      "stage": "Scale and specialization: cloud, distributed and system design",
+      "duration_weeks": 12,
+      "goals": [
+        "Run training and endpoints on a managed platform such as SageMaker or Vertex AI",
+        "Process large datasets with Spark and train with data-parallel distributed training",
+        "Design end-to-end ML systems such as recommendation or fraud detection with offline and online components",
+        "Optimize inference with quantization, ONNX export or Triton dynamic batching"
+      ],
+      "skills": ["sagemaker", "vertex ai", "spark", "distributed training", "kubernetes", "triton", "onnx", "recommendation systems"],
+      "project": "Build a two-stage recommender (candidate retrieval plus ranking) with batch feature computation in Spark, served behind a low-latency endpoint, and evaluate offline with recall at k and NDCG."
+    }
+  ],
+  "resume_bullets": [
+    "Built a LightGBM churn model on 4M customer records with leakage-safe feature pipelines and time-based validation, lifting recall at fixed precision by 18% and enabling a retention campaign that cut churn by 2.3 points.",
+    "Designed and deployed a real-time fraud scoring service using XGBoost behind FastAPI on Kubernetes, serving p99 latency under 40 ms at 1,500 requests per second and reducing fraud losses by 22%.",
+    "Implemented an MLflow-based experiment tracking and model registry workflow with CI/CD gates, cutting model release time from two weeks to two days and making every production model reproducible.",
+    "Trained a PyTorch two-tower recommendation model on 120M interaction events using distributed data-parallel training on 8 GPUs, improving click-through rate by 7% in an online A/B test.",
+    "Created a drift-monitoring system with population stability index and feature-level alerts on Airflow and Grafana, detecting data pipeline regressions within one hour and avoiding repeated silent accuracy degradation.",
+    "Migrated batch scoring from pandas scripts to PySpark on Databricks, processing 300M rows nightly in 25 minutes instead of 6 hours and reducing compute spend by 35%.",
+    "Optimized a computer vision classifier with ONNX export, INT8 quantization and Triton dynamic batching, reducing inference cost per thousand requests by 60% with less than 0.5 point accuracy loss.",
+    "Built a Feast feature store with point-in-time correct joins to eliminate training-serving skew across 5 models, shortening new feature onboarding from weeks to days."
+  ],
+  "interview": [
+    {
+      "topic": "bias-variance",
+      "level": "junior",
+      "question": "Explain the bias-variance tradeoff and how you diagnose which one is hurting your model.",
+      "answer": "Bias is error from overly simple assumptions, so the model underfits and performs poorly on both training and validation data. Variance is error from sensitivity to the specific training sample, so the model overfits: low training error but much higher validation error. Total expected error is bias squared plus variance plus irreducible noise. To diagnose, plot learning curves. If training and validation errors are both high and close, you have high bias: add features, use a more expressive model, reduce regularization. If there is a large gap, you have high variance: get more data, regularize, simplify the model, use dropout, early stopping or bagging. Modern overparameterized networks can generalize despite interpolating the training data, so treat the tradeoff as a practical diagnostic rather than a strict law.",
+      "follow_ups": ["How does ensembling change bias and variance?", "What do learning curves look like when you simply need more data?"]
+    },
+    {
+      "topic": "overfitting",
+      "level": "junior",
+      "question": "Your model has 99% training accuracy but 80% validation accuracy. What do you do?",
+      "answer": "That gap signals overfitting, but first I verify the evaluation itself: confirm the split is correct and there is no leakage inflating one side, and that validation data matches the production distribution. Then I attack variance. Options include gathering more data or augmenting it, simplifying the model (shallower trees, fewer parameters), adding L1 or L2 regularization, dropout, or weight decay, using early stopping on a validation metric, reducing noisy features through selection, and using ensembling such as bagging. For trees and boosting, tune depth, minimum samples per leaf, learning rate and number of estimators. I would then compare with cross-validation to confirm the improvement is real and not noise from a single split. I change one thing at a time and track experiments so results are reproducible.",
+      "follow_ups": ["How does early stopping act as regularization?", "When would L1 be preferred over L2?"]
+    },
+    {
+      "topic": "evaluation metrics",
+      "level": "mid",
+      "question": "How do you choose evaluation metrics for a problem with 0.5% positive class, such as fraud?",
+      "answer": "Accuracy is useless there because predicting all negatives gives 99.5%. I start from business cost: what a false negative and a false positive cost, and what review capacity exists. Precision-recall is more informative than ROC-AUC under heavy imbalance, because ROC-AUC can look strong when the many true negatives dominate the false positive rate. I report PR-AUC (average precision), precision and recall at an operating threshold, and recall at a fixed precision or alert budget. Threshold selection is a separate step, ideally driven by expected cost on a validation set. If scores are used as probabilities, I check calibration with reliability curves and Brier score, and fix it with Platt scaling or isotonic regression. For training, I consider class weights, focal loss or resampling, evaluating always on the untouched, naturally distributed test set.",
+      "follow_ups": ["Why can SMOTE be risky, and where must it be applied in cross-validation?", "What is calibration and why does it matter for decisions?"]
+    },
+    {
+      "topic": "data leakage",
+      "level": "mid",
+      "question": "What is data leakage and how do you prevent it? Give concrete examples.",
+      "answer": "Leakage is when information unavailable at prediction time influences training or evaluation, giving optimistic metrics that collapse in production. Examples: fitting a scaler, imputer or target encoder on the full dataset before splitting; random splitting of time-ordered data so the future informs the past; duplicate or near-duplicate rows or the same user in both train and test; features derived from the label, such as a 'refund issued' flag when predicting fraud; and tuning hyperparameters repeatedly on the test set. Prevention: split first, then fit all preprocessing inside a scikit-learn Pipeline so it is refit per cross-validation fold; use time-based or group-based splits (GroupKFold) when appropriate; use point-in-time correct joins in feature stores; review features with domain experts for availability at inference; and treat suspiciously high scores or a feature with dominant importance as a red flag.",
+      "follow_ups": ["How would you validate a time-series or user-level model?", "How can target encoding leak, and how do you do it safely?"]
+    },
+    {
+      "topic": "gradient boosting",
+      "level": "mid",
+      "question": "Compare gradient boosting with random forests. When would you choose each?",
+      "answer": "Random forests train many deep, decorrelated trees in parallel on bootstrap samples and average them, which mainly reduces variance. They are robust, need little tuning, and rarely overfit badly. Gradient boosting builds shallow trees sequentially, each fitting the gradient of the loss with respect to the current ensemble's predictions, reducing bias step by step. It usually achieves higher accuracy on tabular data but is more sensitive to learning rate, number of trees, depth and regularization, and can overfit noisy labels without early stopping. XGBoost, LightGBM and CatBoost add regularized objectives, histogram-based splits, and native handling of missing values and categories. I start with a random forest as a quick baseline, and choose tuned boosting when accuracy matters and I can afford tuning, early stopping and monitoring.",
+      "follow_ups": ["What are the key hyperparameters in LightGBM and how do they interact?", "How does LightGBM differ from XGBoost in tree growth?"]
+    },
+    {
+      "topic": "deep learning",
+      "level": "mid",
+      "question": "What are vanishing gradients and how do you mitigate them?",
+      "answer": "Backpropagation multiplies local derivatives layer by layer via the chain rule. If those factors are consistently below one, as with sigmoid or tanh activations in saturation, the gradient shrinks exponentially with depth, so early layers learn extremely slowly. Exploding gradients are the opposite, common in recurrent networks. Mitigations: use ReLU-family or GELU activations; initialize weights appropriately (He for ReLU, Xavier for tanh) so activation variance is preserved; add normalization such as batch norm or layer norm; use residual connections so gradients flow through identity paths; use gated architectures such as LSTM and GRU for sequences; apply gradient clipping for explosion; and choose adaptive optimizers with sensible learning-rate warmup and schedules. Monitoring per-layer gradient norms during training helps catch the problem early.",
+      "follow_ups": ["Why do residual connections help?", "Why is layer norm preferred over batch norm in transformers?"]
+    },
+    {
+      "topic": "model deployment",
+      "level": "mid",
+      "question": "How would you choose between batch and online inference, and how do you deploy a model for each?",
+      "answer": "The choice depends on latency requirements, input freshness, and cost. Batch inference scores large datasets on a schedule (for example nightly recommendations or risk scores) and writes results to a table or key-value store. It is cheaper, simpler to test, and allows heavy models, but predictions can be stale and cannot react to new context. Online inference serves a request synchronously with strict latency (tens of milliseconds), needs autoscaling, feature retrieval from a low-latency store, and strong observability. A hybrid is common: precompute expensive embeddings in batch, then rank online. For online serving I package the model in a container behind FastAPI, BentoML, TorchServe or Triton, use dynamic batching on GPUs, and ship with canary or shadow deployments, versioned models from a registry, and automated rollback. Both need input validation and logging for monitoring.",
+      "follow_ups": ["What is shadow deployment and why use it?", "How do you avoid training-serving skew?"]
+    },
+    {
+      "topic": "monitoring and drift",
+      "level": "senior",
+      "question": "How do you monitor a production model, and what is the difference between data drift and concept drift?",
+      "answer": "Data (covariate) drift means the input distribution P(X) changes; concept drift means the relationship P(y|X) changes, so a fixed model becomes wrong even if inputs look similar. Label drift or prior shift is a change in P(y). I monitor at several layers: service metrics (latency, errors, throughput), data quality (nulls, schema, ranges), input and prediction distribution drift using PSI, KS tests or Jensen-Shannon distance per feature, and, when labels arrive, actual performance metrics sliced by segment. Because labels are often delayed, drift in predictions and features serves as an early proxy, but drift alone does not prove degradation. Alerts need thresholds tuned to avoid fatigue. Responses include retraining on a schedule or trigger, rolling back, fixing upstream pipelines, or redesigning features. I also keep a reference window and log inputs and predictions for debugging and retraining.",
+      "follow_ups": ["How would you detect concept drift when labels arrive a month late?", "How do you decide between scheduled and triggered retraining?"]
+    },
+    {
+      "topic": "ML system design",
+      "level": "senior",
+      "question": "Design a real-time fraud detection system for card payments.",
+      "answer": "Start with requirements: decision within roughly 100 ms, extreme class imbalance, costly false positives (declined good customers), delayed and noisy labels from chargebacks. Architecture: a streaming layer (Kafka) feeds a feature pipeline computing real-time aggregates (transactions per card in the last 10 minutes, merchant risk, device and geo velocity) into an online feature store (Redis or similar), while the same definitions are computed in batch for training to avoid skew. The scoring service combines rules for hard constraints with a gradient boosting model, optionally plus a graph or sequence model, returning a score and reason codes. Thresholds map to approve, step-up authentication or decline based on cost. Training uses time-based splits, handles imbalance and label delay, and evaluates PR-AUC and recall at fixed false-positive rate. Add shadow mode, canary rollout, drift and feedback-loop monitoring, human review queues, and fallback to rules if the model is unavailable.",
+      "follow_ups": ["How do you handle labels that arrive weeks later?", "How do you avoid feedback loops when declined transactions never get labels?"]
+    },
+    {
+      "topic": "recommendation systems",
+      "level": "senior",
+      "question": "How would you design a recommendation system for an e-commerce homepage?",
+      "answer": "Use a multi-stage funnel. Candidate generation narrows millions of items to a few hundred using approximate nearest-neighbor search over embeddings from a two-tower model, plus collaborative filtering, popularity and recent-behavior sources. A ranking model, often gradient boosting or a deep model with user, item, context and cross features, scores candidates for click or purchase probability, possibly multi-objective. A re-ranking stage applies business rules, diversity, freshness and inventory constraints. Handle cold start with content features and exploration (bandits). Offline evaluation uses recall at k, NDCG and MAP with time-based splits, but the decisive evidence is online A/B testing on conversion and long-term metrics. Features come from a feature store with consistent offline and online definitions. Monitor for popularity bias, feedback loops, latency, and metric guardrails, and refresh embeddings on a regular cadence.",
+      "follow_ups": ["How do you evaluate offline when logged data is biased by the previous recommender?", "How would you handle new users and new items?"]
+    },
+    {
+      "topic": "cross-validation",
+      "level": "junior",
+      "question": "When is standard k-fold cross-validation inappropriate, and what would you use instead?",
+      "answer": "K-fold assumes rows are independent and identically distributed. It breaks for time series, where shuffling lets future data inform the past; use forward-chaining splits such as TimeSeriesSplit, with a gap if features use lagged windows. It breaks when rows are grouped, for example multiple records per patient or user, because the same entity in train and validation inflates scores; use GroupKFold. For imbalanced classes use StratifiedKFold so each fold keeps the class ratio. For hyperparameter tuning plus an unbiased estimate, use nested cross-validation or a held-out final test set that is touched only once. All preprocessing, resampling and feature selection must happen inside each fold, typically via a Pipeline, otherwise information leaks. Finally, report the mean and spread across folds, not just a single number.",
+      "follow_ups": ["What is nested cross-validation and why use it?", "How large should the gap be in time series splits?"]
+    },
+    {
+      "topic": "regularization",
+      "level": "junior",
+      "question": "Explain L1 versus L2 regularization and when you would use each.",
+      "answer": "Both add a penalty on weight magnitude to the loss to limit model complexity. L2 (ridge, weight decay) penalizes the sum of squared weights, shrinking all coefficients smoothly toward zero and handling correlated features gracefully; it rarely produces exact zeros. L1 (lasso) penalizes absolute values, which creates sparse solutions that zero out features, giving built-in feature selection and interpretability, but it can be unstable among correlated features, where it picks one arbitrarily. Elastic net combines both. Features should be standardized first because penalties are scale-sensitive. Regularization strength is a hyperparameter tuned by cross-validation. Probabilistically, L2 corresponds to a Gaussian prior and L1 to a Laplace prior on weights. In neural networks, related tools include dropout, early stopping and data augmentation.",
+      "follow_ups": ["Why must features be standardized before regularizing?", "How does weight decay differ from L2 in Adam?"]
+    },
+    {
+      "topic": "transformers",
+      "level": "mid",
+      "question": "How does self-attention work in a transformer, and why did it replace RNNs for many tasks?",
+      "answer": "Each token embedding is projected into a query, key and value vector. Attention scores are dot products of queries with keys, scaled by the square root of key dimension, passed through softmax, then used to take a weighted sum of values. Every token can therefore directly attend to every other token, capturing long-range dependencies in a single layer. Multi-head attention runs several such projections in parallel to learn different relationships. Because attention has no inherent order, positional encodings are added. Compared with RNNs, transformers process all positions in parallel, which makes training far faster on GPUs, and avoid long gradient paths through time. The trade-off is quadratic memory and compute in sequence length, addressed with techniques such as FlashAttention, sparse or linear attention, and KV caching during generation.",
+      "follow_ups": ["What is the difference between encoder-only, decoder-only and encoder-decoder models?", "What does causal masking do?"]
+    },
+    {
+      "topic": "MLOps",
+      "level": "mid",
+      "question": "What does a mature CI/CD pipeline for machine learning include, and how does it differ from software CI/CD?",
+      "answer": "ML pipelines version three things, not one: code, data and models. Continuous integration runs unit tests on feature code, data validation (schema, ranges, null rates), and training smoke tests on a small sample. Continuous training retrains on schedule or trigger, logging parameters, metrics and artifacts to a tracker such as MLflow, and registers candidate models. Quality gates then compare the candidate against the current production model on held-out and slice-based metrics, plus fairness, latency and size checks. Continuous delivery packages the model in a container, deploys to staging, runs integration tests, then uses canary or shadow release with automated rollback. After release, monitoring feeds back into retraining. The key difference from software is that behavior depends on data, so tests must cover data and statistical performance, and reproducibility requires pinning data snapshots, code and environment.",
+      "follow_ups": ["How do you make training reproducible?", "What quality gates would block a model from promotion?"]
+    },
+    {
+      "topic": "distributed training",
+      "level": "senior",
+      "question": "When and how would you scale model training across multiple GPUs or machines?",
+      "answer": "First confirm the bottleneck: data loading, a single-GPU memory limit, or training time. Optimize cheaply first with mixed precision, efficient dataloaders, larger batch size, gradient accumulation and profiling. If the model fits on one GPU but training is slow, use data parallelism (PyTorch DistributedDataParallel), where each worker holds a model replica, processes a data shard, and gradients are all-reduced. Scale the learning rate and use warmup when increasing global batch size. If the model does not fit in memory, use sharding such as FSDP or DeepSpeed ZeRO, which partitions parameters, gradients and optimizer states, and for very large models add tensor or pipeline parallelism. Trade-offs include communication overhead, interconnect bandwidth, fault tolerance and checkpointing, and reproducibility. For classical ML on big tables, use Spark or Dask, or XGBoost distributed training, rather than deep learning tooling.",
+      "follow_ups": ["What is the difference between DDP and FSDP?", "How does large batch training affect generalization?"]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "Bias-variance tradeoff and regularization",
+      "body": "The expected squared prediction error of a model decomposes into bias squared, variance, and irreducible noise. Bias measures how far the average model, over many training sets, is from the truth; it is high when the hypothesis class is too restrictive. Variance measures how much predictions change across training sets; it is high for flexible models trained on little data. Underfitting shows up as high error on both training and validation sets, while overfitting shows a large gap between them. Regularization deliberately adds a bit of bias to reduce variance: L2 penalties shrink weights, L1 penalties zero them out, dropout randomly removes units, early stopping halts training before memorization, and data augmentation expands the effective dataset. Ensembling also helps: bagging lowers variance by averaging, boosting lowers bias by sequentially correcting errors. Practical diagnosis uses learning curves and validation curves over hyperparameters such as tree depth or regularization strength. Note that very large neural networks can exhibit double descent, where test error falls again past the interpolation threshold, so the classical U-shaped picture is a guide rather than a rule."
+    },
+    {
+      "title": "Evaluation metrics for classification",
+      "body": "Accuracy is the fraction of correct predictions and misleads on imbalanced data. Precision is the fraction of predicted positives that are truly positive; recall (sensitivity) is the fraction of actual positives found. F1 is their harmonic mean, and F-beta weights recall more or less. ROC-AUC measures the probability that a random positive is ranked above a random negative and is threshold-independent, but it can look optimistic when negatives vastly outnumber positives; PR-AUC (average precision) focuses on the positive class and is usually more informative in that regime. Log loss and the Brier score evaluate probability quality, and calibration curves show whether a predicted 0.8 really means 80% positives. Calibration can be repaired with Platt scaling or isotonic regression on held-out data. For multiclass problems, choose macro averaging to treat classes equally or micro averaging to weight by frequency. In practice, pick the metric from business costs, choose the decision threshold separately from model training, and examine metrics per segment to catch hidden failures."
+    },
+    {
+      "title": "Class imbalance strategies",
+      "body": "When one class is rare, models optimized for overall loss can ignore it. Strategies fall into data, algorithm and decision levels. At the data level, undersample the majority class, oversample the minority class, or synthesize examples with SMOTE; any resampling must be applied only to the training portion of each cross-validation fold, never before splitting, and the test set must keep the natural distribution. At the algorithm level, use class weights or cost-sensitive losses, focal loss for deep networks, or boosting parameters such as scale_pos_weight in XGBoost. Anomaly detection methods can suit extremely rare events with few labels. At the decision level, train for good ranking, then choose the threshold that minimizes expected business cost or hits a target precision or recall. Resampling and class weights distort predicted probabilities, so recalibrate if you need real probabilities. Evaluate with PR-AUC, recall at fixed precision, and confusion matrices rather than accuracy, and be careful comparing metrics across datasets with different base rates."
+    },
+    {
+      "title": "Cross-validation and data leakage",
+      "body": "Cross-validation estimates generalization by repeatedly training on part of the data and validating on the rest. K-fold is the default, stratified k-fold preserves class ratios, GroupKFold keeps all rows of an entity together, and time-series splits respect chronology. The estimate is only trustworthy if every data-dependent step is fitted inside the training fold: scalers, imputers, encoders, feature selection, resampling and even text vectorizers. Wrapping those steps and the estimator in a scikit-learn Pipeline enforces this. Leakage takes many forms: target leakage from features that encode the label or are created after the outcome, train-test contamination through duplicates, temporal leakage from random splits on time-ordered data, and tuning leakage when the test set guides decisions. Symptoms include near-perfect scores, a single dominant feature, and a large drop in production. Mitigate by clarifying the prediction moment, documenting when each feature becomes available, using point-in-time joins, reserving a final untouched test set, and using nested cross-validation when both tuning and estimating performance."
+    },
+    {
+      "title": "Gradient boosting internals",
+      "body": "Gradient boosting builds an additive model stage by stage. At each iteration, it computes the negative gradient of the loss with respect to the current predictions (the pseudo-residuals), fits a small decision tree to them, and adds that tree scaled by a learning rate. XGBoost extends this with a second-order Taylor approximation of the loss, explicit L1 and L2 penalties on leaf weights, and a split gain that includes complexity costs. LightGBM speeds training with histogram-based binning, leaf-wise tree growth, gradient-based one-side sampling and exclusive feature bundling. CatBoost uses ordered boosting and target statistics to handle categorical features without leakage. Key hyperparameters are learning rate and number of trees (a trade-off, so use early stopping), max depth or number of leaves, minimum child weight or samples, subsampling of rows and columns, and regularization terms. Boosting generally wins on tabular data but needs careful validation, and its feature importance should be examined with permutation importance or SHAP values since split-based importance is biased toward high-cardinality features."
+    },
+    {
+      "title": "Neural network training and backpropagation",
+      "body": "A neural network is a composition of differentiable layers. Training minimizes a loss by gradient descent: the forward pass computes predictions, then backpropagation applies the chain rule to compute the gradient of the loss with respect to each parameter, reusing intermediate activations. Optimizers such as SGD with momentum and Adam or AdamW use these gradients, with learning-rate schedules like cosine decay and warmup. Practical issues include vanishing and exploding gradients, addressed by ReLU or GELU activations, careful initialization, normalization layers, residual connections, and gradient clipping. Overfitting is controlled with weight decay, dropout, data augmentation and early stopping. Batch size affects noise, throughput and generalization. In PyTorch, the training loop explicitly calls zero_grad, backward and optimizer step, and you switch between train and eval modes so dropout and batch norm behave correctly. Mixed precision reduces memory and increases speed. Always establish a simple baseline, overfit a tiny batch as a sanity check, and track training and validation curves to debug."
+    },
+    {
+      "title": "CNNs and transformers in brief",
+      "body": "Convolutional neural networks exploit spatial structure. A convolution slides small learned filters across an image, sharing weights, which gives translation equivariance and far fewer parameters than fully connected layers. Stacked convolutions and pooling build hierarchical features, from edges to textures to objects; architectures such as ResNet add skip connections to enable depth. In practice, most vision work starts from transfer learning: take a pretrained backbone, replace the head, and fine-tune with augmentation. Transformers replace recurrence and convolution with self-attention, letting each token weigh every other token. They use positional encodings, multi-head attention, feed-forward blocks, residual connections and layer normalization. Encoder-only models like BERT suit classification and retrieval embeddings, decoder-only models suit generation, and encoder-decoder models suit translation and summarization. Vision transformers apply the same idea to image patches. The main costs are quadratic attention complexity and data hunger, so pretrained checkpoints, parameter-efficient fine-tuning such as LoRA, and quantization are standard for real projects."
+    },
+    {
+      "title": "Recommendation systems",
+      "body": "Recommenders predict which items a user will value. Collaborative filtering learns from interaction patterns, using matrix factorization or neural embeddings; content-based methods use item and user attributes; hybrids combine both and handle cold start better. Production systems use a funnel: candidate generation (approximate nearest-neighbor search over embeddings, often from a two-tower model), ranking (a model such as gradient boosting or a deep network using rich features and cross terms), and re-ranking for diversity, freshness and business rules. Implicit feedback like clicks is biased by what was previously shown, so exposure bias and position bias must be considered, for example with randomized exploration or inverse propensity weighting. Offline metrics include recall at k, precision at k, MAP and NDCG, evaluated with time-based splits to avoid leakage. Offline gains do not always translate online, so A/B tests on conversion and retention are decisive. Operational concerns include feature freshness, latency budgets, embedding refresh, popularity bias, and feedback loops."
+    },
+    {
+      "title": "Time series forecasting",
+      "body": "Time series data has temporal order, so the main rules are: never shuffle, never use future information, and validate by walking forward in time. Start with baselines such as the last value, seasonal naive and moving averages, because they are surprisingly hard to beat. Classical models include ARIMA, exponential smoothing and Prophet-style decomposition into trend, seasonality and holidays. Machine learning approaches frame forecasting as supervised learning with lag features, rolling statistics, calendar features and known future covariates, trained with LightGBM or XGBoost; deep models such as LSTMs, temporal convolutional networks and transformers help with many related series. Handle stationarity through differencing or transformations when the model needs it. Choose the horizon explicitly and decide between direct (one model per horizon) and recursive strategies. Evaluate with MAE, RMSE, MAPE or sMAPE, and for scale-free comparison use MASE; consider prediction intervals or quantile loss when uncertainty matters. Watch for regime changes, outliers and missing timestamps, and monitor for drift after deployment."
+    },
+    {
+      "title": "MLOps lifecycle: tracking, registry, serving and monitoring",
+      "body": "MLOps applies engineering discipline to the machine learning lifecycle. Experiment tracking tools such as MLflow record parameters, metrics, code versions, datasets and artifacts so any result can be reproduced. A model registry stores versioned models with stages or aliases and metadata, enabling approval workflows and rollback. Feature stores such as Feast provide consistent feature definitions for offline training and online serving, with point-in-time correct joins to prevent training-serving skew. Pipelines orchestrated with Airflow, Kubeflow or managed services automate data validation, training, evaluation and registration, while CI/CD tests code, data and model quality before release. Serving options include FastAPI or BentoML for custom services, TorchServe and Triton for optimized deep learning inference with dynamic batching, and managed endpoints on SageMaker or Vertex AI. Batch inference suits scheduled scoring; online inference suits low-latency decisions. After release, monitoring tracks service health, data quality, drift in features and predictions, and delayed ground-truth performance, feeding alerts and retraining. Governance adds lineage, access control and documentation."
+    }
+  ],
+  "projects": [
+    {
+      "name": "End-to-end churn prediction with MLOps",
+      "description": "Train a gradient boosting churn model with a leakage-safe pipeline and time-based validation, track runs and register models in MLflow, serve through a Dockerized FastAPI endpoint, and automate tests and deployment with GitHub Actions.",
+      "skills": ["xgboost", "mlflow", "fastapi", "docker", "ci/cd", "scikit-learn", "model deployment"]
+    },
+    {
+      "name": "Real-time fraud detection service",
+      "description": "Build a fraud scoring system on an imbalanced transaction dataset with streaming-style aggregate features, LightGBM, cost-based threshold selection and calibration, plus a drift monitoring dashboard and canary rollout simulation.",
+      "skills": ["lightgbm", "class imbalance", "feature engineering", "model monitoring", "drift detection", "model calibration", "kubernetes"]
+    },
+    {
+      "name": "Two-stage recommender system",
+      "description": "Implement candidate retrieval with a two-tower PyTorch model and approximate nearest-neighbor search, add a gradient boosting ranker, evaluate offline with recall at k and NDCG using time-based splits, and expose results via a low-latency API.",
+      "skills": ["recommendation systems", "pytorch", "embeddings", "spark", "fastapi", "model evaluation"]
+    },
+    {
+      "name": "Demand forecasting pipeline on the cloud",
+      "description": "Create a time series forecasting pipeline with lag and calendar features, walk-forward validation and LightGBM, orchestrated with Airflow, trained and deployed on SageMaker or Vertex AI with scheduled batch inference and error monitoring.",
+      "skills": ["time series forecasting", "lightgbm", "airflow", "sagemaker", "vertex ai", "batch inference", "feature engineering"]
+    }
+  ]
+}

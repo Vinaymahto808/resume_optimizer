@@ -1,0 +1,352 @@
+{
+  "id": "system_design",
+  "name": "System Design",
+  "summary": "System design rounds are given to mid, senior and staff software engineers, architects and tech leads, and often decide the level of the offer. Interviewers assess whether you can clarify ambiguous requirements, estimate load, choose components and data models, find bottlenecks, and defend trade-offs among consistency, availability, latency, cost and operational complexity.",
+  "titles": [
+    "senior software engineer",
+    "staff software engineer",
+    "principal engineer",
+    "software architect",
+    "solutions architect",
+    "distributed systems engineer",
+    "backend engineer",
+    "engineering manager",
+    "tech lead",
+    "site reliability engineer"
+  ],
+  "skills": {
+    "core": [
+      "distributed systems",
+      "scalability",
+      "load balancing",
+      "caching",
+      "cdn",
+      "sql",
+      "nosql",
+      "replication",
+      "sharding",
+      "partitioning",
+      "indexing",
+      "message queues",
+      "rest api",
+      "microservices",
+      "rate limiting",
+      "back-of-the-envelope estimation",
+      "high availability",
+      "latency"
+    ],
+    "advanced": [
+      "consistent hashing",
+      "cap theorem",
+      "pacelc",
+      "eventual consistency",
+      "idempotency",
+      "saga pattern",
+      "two-phase commit",
+      "transactional outbox",
+      "raft",
+      "event sourcing",
+      "cqrs",
+      "circuit breaker",
+      "exponential backoff",
+      "backpressure",
+      "slo"
+    ],
+    "tools": [
+      "kafka",
+      "redis",
+      "nginx",
+      "cassandra",
+      "dynamodb",
+      "postgresql",
+      "elasticsearch",
+      "rabbitmq",
+      "memcached",
+      "kubernetes",
+      "prometheus",
+      "grpc",
+      "zookeeper"
+    ]
+  },
+  "ats_keywords": [
+    "distributed systems",
+    "scalability",
+    "high availability",
+    "low latency",
+    "fault tolerance",
+    "system architecture",
+    "microservices",
+    "event-driven architecture",
+    "load balancing",
+    "caching",
+    "sharding",
+    "replication",
+    "data modeling",
+    "api design",
+    "message queues",
+    "streaming",
+    "observability",
+    "reliability",
+    "performance optimization",
+    "capacity planning",
+    "service-oriented architecture",
+    "technical design",
+    "cloud architecture",
+    "high throughput",
+    "disaster recovery",
+    "sla",
+    "monitoring",
+    "scalable systems"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect - Professional",
+      "provider": "Amazon Web Services",
+      "level": "professional",
+      "why": "Validates multi-service architecture, resilience and cost trade-offs on AWS, though interviews reward whiteboard design practice more than the certificate."
+    },
+    {
+      "name": "Google Cloud Professional Cloud Architect",
+      "provider": "Google Cloud",
+      "level": "professional",
+      "why": "Covers designing reliable, secure and scalable solutions on Google Cloud and is useful for solutions architect roles."
+    },
+    {
+      "name": "Microsoft Certified: Azure Solutions Architect Expert",
+      "provider": "Microsoft",
+      "level": "expert",
+      "why": "Demonstrates architecture across identity, data, networking and infrastructure on Azure for enterprise-facing roles."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Foundations and estimation",
+      "duration_weeks": 3,
+      "goals": [
+        "Learn latency numbers, throughput units and how to estimate QPS, storage and bandwidth",
+        "Understand client-server flow, DNS, HTTP, TCP and TLS at a working level",
+        "Compare SQL and NoSQL stores and know when each fits",
+        "Practice the requirements, estimate, API, data model, high-level design flow"
+      ],
+      "skills": ["back-of-the-envelope estimation", "load balancing", "sql", "nosql", "rest api", "latency"],
+      "project": "Design and write up a URL shortener end to end, including a capacity estimate, schema, key generation strategy and a small working prototype."
+    },
+    {
+      "stage": "Scaling building blocks",
+      "duration_weeks": 4,
+      "goals": [
+        "Master caching layers, eviction policies and invalidation patterns",
+        "Understand replication, sharding, partitioning and consistent hashing",
+        "Learn message queues versus log-based streaming and delivery guarantees",
+        "Implement rate limiting algorithms"
+      ],
+      "skills": ["caching", "replication", "sharding", "consistent hashing", "message queues", "kafka", "redis", "rate limiting"],
+      "project": "Build a distributed rate limiter service backed by Redis supporting token bucket and sliding window, with a load test showing behavior under burst traffic."
+    },
+    {
+      "stage": "Consistency and reliability",
+      "duration_weeks": 4,
+      "goals": [
+        "Reason about CAP and PACELC, consistency models and quorum reads and writes",
+        "Design idempotent APIs and use saga and outbox patterns for cross-service workflows",
+        "Add retries with backoff, circuit breakers and timeouts, and define SLIs and SLOs",
+        "Understand Raft leader election and log replication at a conceptual level"
+      ],
+      "skills": ["cap theorem", "pacelc", "idempotency", "saga pattern", "transactional outbox", "raft", "circuit breaker", "slo"],
+      "project": "Build an order-processing workflow across three services using the outbox pattern and Kafka, with idempotent consumers and fault injection tests."
+    },
+    {
+      "stage": "Classic problems and mock interviews",
+      "duration_weeks": 5,
+      "goals": [
+        "Work through news feed, chat, notifications, autocomplete, video streaming, ride sharing and distributed cache designs",
+        "Design an LLM-backed or RAG system including retrieval, caching and cost control",
+        "Run timed 45-minute mock interviews and get feedback on structure and trade-off articulation",
+        "Prepare two real production stories to anchor deep dives"
+      ],
+      "skills": ["distributed systems", "scalability", "high availability", "observability", "elasticsearch", "cassandra", "microservices", "event-driven architecture"],
+      "project": "Produce a written design document with diagrams for a chat system or news feed, then defend it in a recorded mock interview with a peer."
+    }
+  ],
+  "resume_bullets": [
+    "Redesigned a monolithic checkout flow into event-driven microservices with a transactional outbox and Kafka, cutting p99 latency from 1.8s to 420ms while sustaining 12x peak traffic.",
+    "Introduced a read-through Redis cache with request coalescing and TTL jitter, lifting cache hit rate to 94% and reducing primary database load by roughly 70%.",
+    "Sharded a 4 TB PostgreSQL workload by tenant ID with consistent hashing and online resharding, removing the single-writer bottleneck and enabling 5x write growth with no downtime.",
+    "Defined SLIs and SLOs, added circuit breakers and exponential backoff with jitter, and improved availability from 99.5% to 99.95% over two quarters.",
+    "Built a distributed rate limiter using token bucket on Redis serving 50k requests per second, blocking abusive traffic while keeping added latency under 2ms.",
+    "Led the architecture of a multi-region notification platform handling 30M messages per day with idempotent delivery, retries and per-channel priority queues.",
+    "Reduced infrastructure cost by 35% through capacity planning, autoscaling policies and moving cold data to tiered storage while maintaining latency targets.",
+    "Authored design documents and ran architecture reviews for five teams, establishing API, data-ownership and failure-handling standards adopted across 20+ services."
+  ],
+  "interview": [
+    {
+      "topic": "Interview framework",
+      "level": "mid",
+      "question": "How do you approach an open-ended system design question in 45 minutes?",
+      "answer": "Start with requirements: clarify functional scope, users, and non-functional goals such as latency, availability, consistency and scale; state what is out of scope. Next, estimate load: daily active users, read/write ratio, QPS, peak factor, storage and bandwidth. Then sketch the API and core entities, followed by the data model and storage choice. Draw a high-level diagram: clients, load balancer, stateless services, cache, database, queue, CDN. Pick one or two areas for deep dives, usually the bottleneck or hardest requirement, such as hot keys, fan-out or ordering. Finish with failure modes, monitoring, and a summary of trade-offs and what you would change at 10x scale. Throughout, think aloud, check in with the interviewer, and justify each choice by a requirement rather than by habit.",
+      "follow_ups": ["What would you do if the interviewer changes the scale by 100x midway?", "How do you decide which component to deep dive?"]
+    },
+    {
+      "topic": "URL shortener",
+      "level": "junior",
+      "question": "Design a URL shortener like bit.ly.",
+      "answer": "Requirements: create short links, redirect with low latency, optional expiry and custom aliases; availability matters more than strict consistency. Estimate: 100M new URLs per month is about 40 writes/s; with a 100:1 read ratio, about 4k redirects/s, peaks several times higher; 500 bytes per record gives roughly 60 GB per year. API: POST /urls returns a short code, GET /{code} returns a 301 or 302 redirect. Key generation: base62 of a unique ID from a distributed ID generator or pre-allocated ranges handed to each app server, which avoids collisions without coordination; hashing plus collision checks is the alternative. Data: key-value store keyed by code (DynamoDB, Cassandra, or sharded SQL). Read path: CDN or Redis cache in front, since reads are hot and skewed. Trade-offs: 301 is cacheable but hides click analytics, 302 keeps analytics; counters are written asynchronously via a queue. Add rate limiting and abuse checks.",
+      "follow_ups": ["How do you avoid predictable codes?", "How would you handle a link that suddenly goes viral?"]
+    },
+    {
+      "topic": "Rate limiter",
+      "level": "mid",
+      "question": "Design a distributed rate limiter for an API gateway.",
+      "answer": "Requirements: limit per user, API key or IP, low added latency, tolerate gateway scale-out, return 429 with Retry-After. Algorithms: token bucket allows bursts with a steady refill rate and needs two values per key; sliding window counter approximates a rolling window cheaply; fixed window is simplest but allows a 2x burst at boundaries. Storage: Redis holding counters per key with TTL; make check-and-update atomic with a Lua script or INCR plus EXPIRE to avoid races. Placement: in the gateway or sidecar, with rules loaded from a config service. Scaling: shard Redis by key via consistent hashing; to cut latency, allow small local token batches that sync periodically, accepting slight over-admission. Failure: decide fail-open versus fail-closed per route; fail-open is common for non-critical limits. Observability: metrics on rejected rate per rule. Trade-offs: accuracy versus latency and memory; global limits across regions need eventual aggregation.",
+      "follow_ups": ["How do you handle clock skew between servers?", "How would you do per-tier limits for paid customers?"]
+    },
+    {
+      "topic": "News feed",
+      "level": "senior",
+      "question": "Design a news feed for a social network.",
+      "answer": "Requirements: post, follow, read a ranked feed with low latency; eventual consistency is acceptable. Estimate: say 300M DAU, feed read dominates writes by 100x or more. Core choice is fan-out. Fan-out on write precomputes each follower's feed in a cache (a Redis list of post IDs) when someone posts, giving fast reads but expensive writes for celebrities. Fan-out on read assembles at request time, cheap writes but slow reads. A hybrid pushes for normal users and pulls celebrity posts at read time, merging results. Components: post service, social graph store, fan-out workers consuming from Kafka, feed cache, post store with media in object storage behind a CDN, and a ranking service that scores candidates. Pagination uses cursors, not offsets. Bottlenecks: hot celebrity keys, cache memory for inactive users (only materialize feeds for active users), and ranking latency. Trade-offs: freshness versus cost, and chronological versus ranked.",
+      "follow_ups": ["How do you handle deleted posts already in follower feeds?", "How would you rebuild a lost feed cache?"]
+    },
+    {
+      "topic": "Chat system",
+      "level": "senior",
+      "question": "Design a chat system supporting one-to-one and group messaging.",
+      "answer": "Requirements: real-time delivery, message history, delivery and read receipts, presence, group chats up to some thousands, multi-device sync. Connection layer: persistent WebSocket connections to stateless-ish chat servers; a session registry (Redis) maps user to connection server. Send path: client sends message with a client-generated ID for idempotency; the server persists it, assigns a per-conversation sequence number for ordering, then routes to recipients' servers, or to a push notification service if offline. Storage: wide-column store such as Cassandra partitioned by conversation ID and clustered by sequence for efficient history scans; recent messages cached. Groups: fan-out through a queue per conversation shard; large groups use pull for catch-up. Sync: devices request messages after their last seen sequence. Bottlenecks: connection count per server, hot large groups, presence churn (use coarse heartbeats and lazy updates). Trade-offs: ordering per conversation rather than global, at-least-once delivery with client dedup instead of exactly-once.",
+      "follow_ups": ["How do you guarantee ordering in a group chat?", "What happens when a chat server crashes?"]
+    },
+    {
+      "topic": "Notification system",
+      "level": "mid",
+      "question": "Design a notification system that sends push, email and SMS at scale.",
+      "answer": "Requirements: multi-channel delivery, user preferences, templating, scheduling, high throughput, no duplicates, respect for provider limits. Flow: producers call a notification API or publish events; a service validates, checks user preferences and quiet hours, renders templates, and enqueues to per-channel topics (Kafka or SQS) with priority tiers so transactional messages are not stuck behind marketing bursts. Channel workers call providers (APNs, FCM, email and SMS vendors), with rate limiting per provider and retries using exponential backoff and jitter; permanently failing messages go to a dead-letter queue. Idempotency: each notification has a unique ID stored with status so redelivered queue messages do not send twice; delivery is at-least-once with dedup. Data: preferences and device tokens in a database, delivery log in a scalable store for status and analytics. Bottlenecks: provider throttling, bursty campaigns, token cleanup. Trade-offs: strict dedup costs lookups; accept rare duplicates for low-value messages. Add observability on delivery rate and latency per channel.",
+      "follow_ups": ["How do you throttle a campaign sent to 50M users?", "How do you handle provider outages?"]
+    },
+    {
+      "topic": "Distributed cache",
+      "level": "senior",
+      "question": "Design a distributed cache like Redis or Memcached.",
+      "answer": "Requirements: low-latency get/put, horizontal scale, high availability, configurable eviction and TTL. Partitioning: consistent hashing with virtual nodes distributes keys and limits movement when nodes join or leave; clients or a proxy route requests using a cluster map. Replication: each shard has a primary and replicas; asynchronous replication gives speed but risks losing recent writes on failover; a coordinator or consensus service handles failure detection and promotion. Single-node design: hash table plus doubly linked list for LRU, or approximate LRU/LFU sampling; memory managed with slab allocation to limit fragmentation. Eviction: LRU, LFU or TTL based. Persistence is optional: snapshots and append-only log. Hot keys: replicate hot entries, add a local near-cache, or split a key into suffixed copies. Cache stampede: request coalescing and TTL jitter. Trade-offs: availability versus consistency under partition, memory cost, and cold-start behavior after restart. Observe hit rate, evictions, and tail latency.",
+      "follow_ups": ["What happens to the cache when you add a node?", "How would you keep cache and database consistent?"]
+    },
+    {
+      "topic": "Search autocomplete",
+      "level": "mid",
+      "question": "Design search autocomplete (typeahead) suggestions.",
+      "answer": "Requirements: suggestions within roughly 100ms as the user types, ranked by popularity and relevance, fresh enough for trends. Estimate: every keystroke can issue a request, so traffic is high but responses are tiny and highly cacheable. Data structure: a trie where each node stores top-k completions precomputed, so lookup is O(prefix length); alternatively a prefix-keyed key-value store mapping prefix to top suggestions. Pipeline: log queries into Kafka, aggregate counts in batch or windowed streams, rebuild or incrementally update the trie periodically, and publish snapshots to serving nodes. Serving: sharded by prefix range, replicated, with results cached in CDN and browser; clients debounce input and cancel stale requests. Personalization and trending can be blended in a second layer. Bottlenecks: skewed short prefixes (cache them aggressively), update freshness, and filtering offensive or illegal terms. Trade-offs: freshness versus compute cost, and exact ranking versus approximate counts using sketches.",
+      "follow_ups": ["How do you incorporate trending queries within minutes?", "How would you support typos?"]
+    },
+    {
+      "topic": "Video streaming",
+      "level": "senior",
+      "question": "Design a video streaming service like YouTube or Netflix.",
+      "answer": "Requirements: upload, transcode, adaptive playback worldwide, minimal buffering, metadata and search. Upload path: client uploads in chunks to object storage; a message triggers a transcoding pipeline that splits video into segments, encodes multiple bitrates and codecs in parallel workers, and generates thumbnails and manifests. Playback: adaptive bitrate protocols (HLS or DASH) let the player switch quality by bandwidth; segments are served from a CDN, with popular content pushed to edge caches and the long tail pulled from origin. Metadata (titles, users, counts) lives in a database with caching and a search index; view counts are aggregated asynchronously. Estimate storage as duration times sum of bitrates times replicas, and egress bandwidth as the dominant cost. Bottlenecks: transcoding queue backlog (autoscale workers), origin load on cold content (origin shield), hot new releases (pre-warm edges). Trade-offs: storage cost versus number of renditions, startup latency versus quality, and cache hit rate versus freshness. Add DRM and monitoring of rebuffering ratio.",
+      "follow_ups": ["How would you reduce transcoding cost?", "How do you handle a live stream differently?"]
+    },
+    {
+      "topic": "Ride sharing",
+      "level": "senior",
+      "question": "Design a ride-sharing service: match riders to nearby drivers.",
+      "answer": "Requirements: track driver locations, match rider requests to nearby available drivers quickly, show live trip updates, compute price and ETA. Location ingestion: drivers send GPS updates every few seconds; a write-heavy stream goes through a gateway into a geospatial index kept in memory (geohash, S2 or H3 cells) partitioned by region, with persistence only of sampled history. Matching: on request, query adjacent cells for available drivers, rank by ETA from a routing service and other signals, then offer to a driver with a timeout and fall back to the next candidate; use a per-driver lock or state machine so a driver is not double-assigned. Trip state: strongly consistent store for trips and payments, event stream for downstream consumers. Updates to riders flow through WebSockets or push. Bottlenecks: hot dense areas (split cells dynamically), update volume (batch and drop stale), and surge pricing computation per cell. Trade-offs: matching optimality versus latency, and consistency for assignment versus availability for location reads.",
+      "follow_ups": ["How do you prevent two riders getting the same driver?", "How would you shard the geospatial index?"]
+    },
+    {
+      "topic": "RAG and LLM systems",
+      "level": "senior",
+      "question": "Design a retrieval-augmented generation (RAG) assistant over a company's documents.",
+      "answer": "Requirements: answer questions grounded in private documents with citations, enforce per-user access, acceptable latency and cost, measurable quality. Ingestion: connectors pull documents, parse and clean, chunk by structure with overlap, embed, and store vectors plus metadata (source, ACL, version) in a vector index alongside a keyword index. Query path: authenticate, rewrite the query if needed, run hybrid retrieval (vector plus keyword), filter by the user's permissions at retrieval time, rerank with a cross-encoder, assemble a prompt within the context budget, call the LLM, and return the answer with citations. Reliability and cost: cache embeddings and frequent answers, stream tokens, set timeouts and fallbacks across model providers, rate limit per tenant, and track token spend. Quality: evaluation sets for retrieval recall and answer faithfulness, feedback capture, and monitoring for drift as documents change. Safety: guard against prompt injection from retrieved content and avoid leaking restricted data. Trade-offs: chunk size versus precision, reranking latency versus relevance, freshness versus reindex cost.",
+      "follow_ups": ["How do you evaluate answer quality?", "How would you keep the index fresh when documents change?"]
+    },
+    {
+      "topic": "Cache invalidation",
+      "level": "mid",
+      "question": "How do you keep a cache consistent with the database, and what goes wrong?",
+      "answer": "Start from the requirement: how stale can data be? Common patterns: cache-aside (read from cache, on miss load from the database and populate; on write update the database then delete the cache key), read-through, write-through (write cache and database together), write-behind (buffer writes, risk of loss). Prefer deleting over updating the cached value on writes, since concurrent updates can leave stale data. Race: a slow reader can repopulate an old value after a delete; mitigate with short TTLs, versioned values, or leases. TTLs bound staleness for any bug. For stronger freshness, publish invalidation events from the database change log (CDC) to evict keys, which also handles writes from many services. Problems to name: stampede when a hot key expires (use coalescing, jitter, stale-while-revalidate), penetration from missing keys (cache negative results or use bloom filters), and cross-region lag. Trade-offs: freshness versus load and complexity; many systems accept TTL-bounded eventual consistency.",
+      "follow_ups": ["How do you prevent a cache stampede?", "Why delete the key instead of updating it?"]
+    },
+    {
+      "topic": "Sharding",
+      "level": "senior",
+      "question": "How do you choose a shard key, and what problems can sharding cause?",
+      "answer": "A good shard key has high cardinality, spreads load evenly, and matches the dominant access pattern so most queries hit one shard. Start by listing queries: for a multi-tenant app, tenant ID keeps a tenant's data together; for user data, user ID. Strategies: hash sharding spreads evenly but makes range scans expensive; range sharding supports scans but risks hot ranges, such as monotonically increasing timestamps all writing to the newest shard; directory-based sharding gives flexibility at the cost of a lookup service. Use consistent hashing or many logical shards mapped to fewer physical nodes so rebalancing moves small pieces. Problems: hot keys and celebrity tenants, cross-shard joins and transactions (denormalize, use sagas, or avoid), global secondary indexes (scatter-gather or separate index), resharding complexity (dual writes, backfills, online migration), and uneven growth. Trade-offs: simplicity of one database versus scale; delay sharding until vertical scaling, read replicas and caching are exhausted, since the operational cost is significant.",
+      "follow_ups": ["How would you reshard without downtime?", "How do you handle a hot tenant?"]
+    },
+    {
+      "topic": "Exactly-once delivery",
+      "level": "senior",
+      "question": "Can a distributed system guarantee exactly-once processing? How do you get close?",
+      "answer": "Across an unreliable network, exactly-once delivery is not achievable in general, because a sender cannot distinguish a lost message from a lost acknowledgment. The practical goal is exactly-once effects: at-least-once delivery combined with idempotent processing. Techniques: producers attach a unique idempotency key or sequence number; consumers record processed IDs in the same transaction as their state change, or use natural idempotence such as upserts and set operations. For databases plus messaging, use the transactional outbox so a state change and its event commit atomically, and a relay publishes to the broker; consumers dedupe. Kafka offers idempotent producers and transactions that give exactly-once semantics within Kafka read-process-write pipelines, but side effects on external systems still need idempotency keys, as with payment APIs. Trade-offs: dedup stores cost memory and require expiry windows; at-most-once loses data; at-least-once without idempotency causes duplicates. State the guarantee you need per operation, not globally.",
+      "follow_ups": ["How long should idempotency keys be retained?", "What is the difference between at-least-once and at-most-once?"]
+    },
+    {
+      "topic": "Consistency and CAP",
+      "level": "mid",
+      "question": "Explain CAP and PACELC and how they influence database choice for a shopping cart versus a bank ledger.",
+      "answer": "CAP says that during a network partition a distributed store must choose between consistency (every read sees the latest write) and availability (every non-failing node answers). Partitions are unavoidable, so the real choice is CP or AP behavior when they occur. PACELC adds that even without a partition (Else), you trade latency against consistency, since waiting for replicas to agree costs round trips. Shopping cart: temporary divergence is tolerable and downtime loses sales, so an AP, eventually consistent design (Dynamo-style with merge on conflict, or CRDT-like sets) is reasonable. Bank ledger: double spending is unacceptable, so choose strong consistency with synchronous replication or consensus (Raft or Paxos based stores, single-leader SQL with sync replicas), accepting reduced availability and higher latency. Mention tunable consistency: quorum reads and writes with R + W > N. Also note consistency is a spectrum: linearizable, sequential, causal, read-your-writes, eventual. Choose per feature, and be explicit about which anomalies users can see.",
+      "follow_ups": ["What does R + W > N guarantee, and what does it not?", "When is read-your-writes enough?"]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "CAP theorem and PACELC",
+      "body": "The CAP theorem states that when a network partition occurs, a distributed data store cannot provide both consistency, meaning linearizable reads that see the latest write, and availability, meaning every request to a non-failed node gets a non-error response. Because partitions cannot be ruled out, practical systems choose between CP behavior, which rejects or delays requests on the minority side, and AP behavior, which keeps serving possibly stale data and reconciles later. CAP is often misused as a three-way pick; it only describes behavior during a partition. PACELC extends it: if there is a Partition, choose Availability or Consistency; Else, when running normally, choose Latency or Consistency. This captures the everyday cost of replication, because synchronous replication across regions raises write latency, while asynchronous replication lowers latency but allows stale reads and data loss on failover. For example, a Dynamo-style store is PA/EL, while a consensus-backed store is typically PC/EC. In interviews, tie the choice to the requirement: money movement needs consistency, social counters and carts can tolerate eventual consistency. Mention quorums, read-your-writes and conflict resolution such as last-write-wins or merging."
+    },
+    {
+      "title": "Consistent hashing",
+      "body": "Consistent hashing distributes keys across nodes so that adding or removing a node moves only a small fraction of keys. With naive modulo hashing (hash(key) mod N), changing N remaps almost every key, which would invalidate nearly an entire cache or force massive data migration. In consistent hashing, both nodes and keys are hashed onto a ring; a key belongs to the first node clockwise from its position. When a node joins, it takes over only the range between itself and its predecessor, roughly 1/N of the keys; when it leaves, its range passes to its successor. Plain rings can be unbalanced, so each physical node is assigned many virtual nodes at different ring positions, which smooths load and lets stronger machines take more virtual nodes. Replication is typically done by also storing a key on the next few distinct nodes on the ring. It is used in distributed caches, Dynamo-style databases such as Cassandra and DynamoDB, and load balancing. Limitations include hot keys, which hashing does not fix, and the need for a membership view, usually spread by gossip or a coordination service. Variants like rendezvous hashing and jump hash achieve similar goals."
+    },
+    {
+      "title": "Caching strategies",
+      "body": "Caching trades memory and some staleness for lower latency and reduced backend load. Layers include the browser, a CDN at the edge for static and cacheable responses, an application or distributed cache such as Redis or Memcached, and database buffer caches. Write patterns: cache-aside loads on a miss and is the most common; read-through hides loading behind the cache; write-through updates cache and store together for consistency at the cost of write latency; write-behind buffers writes for speed but risks data loss. Eviction policies decide what to drop when memory is full: LRU removes the least recently used, LFU the least frequently used, and TTLs expire entries by time. Invalidation is the hard part: delete keys on write, rely on TTLs to bound staleness, or consume change events from the database. Known failure modes are stampedes when a hot key expires (mitigate with request coalescing, jittered TTLs, or serving stale while revalidating), cache penetration from nonexistent keys (cache negative results, bloom filter), and hot keys overloading a single shard. Always measure hit rate, evictions and latency, and decide acceptable staleness per data type."
+    },
+    {
+      "title": "Replication and sharding",
+      "body": "Replication copies the same data to multiple nodes for availability and read scale; sharding (partitioning) splits different data across nodes for write and storage scale. They are usually combined: each shard is replicated. Replication models: single-leader sends writes to one primary and streams them to followers, simple and consistent but with replica lag and failover risk; multi-leader allows writes in several regions but needs conflict resolution; leaderless systems use quorums, where R + W > N makes reads overlap with the latest successful write. Synchronous replication prevents data loss but adds latency and reduces availability; asynchronous does the opposite. Sharding approaches are hash, range and directory based. Hashing balances load but hurts range queries; ranges support scans but can create hotspots; directories add flexibility with an extra lookup. The shard key must match access patterns, otherwise queries fan out to every shard. Costs include cross-shard joins and transactions, rebalancing, and global indexes. Practical advice: exhaust indexing, caching, read replicas and vertical scaling first, and choose logical shards that can be remapped to physical machines without rehashing everything."
+    },
+    {
+      "title": "Message queues versus event streams",
+      "body": "A message queue, such as RabbitMQ or SQS, delivers each message to one consumer in a competing-consumers group, and the broker typically deletes the message after acknowledgment. It suits task distribution, work smoothing and decoupling, with features like per-message acknowledgments, visibility timeouts, retries and dead-letter queues. Ordering is limited or per queue. An event stream or log, such as Kafka, appends records to partitioned, durable, ordered logs. Consumers track their own offsets, many independent consumer groups can read the same data, and records stay for a retention period, so consumers can replay history. Ordering is guaranteed only within a partition, so choose the partition key (for example user ID) to keep related events in order; parallelism is capped by partition count. Delivery is generally at-least-once, so consumers must be idempotent; Kafka transactions can provide exactly-once inside Kafka pipelines. Choose queues for job processing with simple semantics, and streams for event sourcing, analytics pipelines, change data capture and fan-out to many consumers. Watch for consumer lag, poison messages, rebalancing pauses and backpressure when consumers are slower than producers."
+    },
+    {
+      "title": "Rate limiting algorithms",
+      "body": "Rate limiting protects services from abuse and overload by capping requests per identity over time. Fixed window counters count requests in each time bucket; they are simple but permit up to double the limit around a window boundary. Sliding window log stores timestamps for exact accounting, which is accurate but memory heavy. Sliding window counter blends the current and previous window counts weighted by overlap, giving a good approximation with two counters. Token bucket adds tokens at a fixed rate up to a capacity and spends one per request, allowing bursts up to the bucket size while enforcing the average rate; it is widely used because it is cheap and intuitive. Leaky bucket processes requests at a constant outflow rate through a queue, smoothing traffic at the cost of added delay. In a distributed deployment, keep counters in Redis and make read-modify-write atomic with Lua scripts; reduce latency by batching tokens locally and syncing, accepting slight inaccuracy. Return HTTP 429 with a Retry-After header, define limits per user, key, IP and endpoint, and decide whether to fail open or closed if the limiter store is down. Combine with load shedding and quotas."
+    },
+    {
+      "title": "Saga and transactional outbox",
+      "body": "In a microservices architecture each service owns its data, so a business operation spanning services cannot use a single ACID transaction. Two-phase commit offers atomicity across resources but blocks on coordinator failure, holds locks, and is rarely used across independent services. A saga instead breaks the operation into a sequence of local transactions, each followed by an event or command; if a step fails, previously completed steps are undone by compensating transactions, such as refunding a payment or releasing inventory. Sagas can be choreographed, where services react to each other's events, or orchestrated, where a coordinator drives the steps and is easier to reason about and monitor. Sagas provide eventual consistency, not isolation, so design for intermediate states and make every step and compensation idempotent. The dual-write problem arises when a service updates its database and then publishes an event; a crash between the two loses the event. The transactional outbox solves it by writing the event to an outbox table in the same local transaction as the state change; a relay process or change data capture then publishes it to the broker, with at-least-once delivery and consumer-side deduplication."
+    },
+    {
+      "title": "Load balancing: L4 versus L7",
+      "body": "A load balancer spreads traffic across healthy backends to improve capacity, availability and deployment flexibility. A layer 4 balancer works at the transport level, using IP addresses and ports; it forwards TCP or UDP connections without inspecting content, so it is very fast, handles any protocol, and adds little latency. A layer 7 balancer understands HTTP or gRPC, so it can route by path, host or header, terminate TLS, retry, rewrite requests, cache, apply authentication or rate limits, and do canary routing, at higher CPU cost. Common algorithms are round robin, weighted round robin, least connections, least response time, and hashing on client IP or a key for stickiness. Health checks remove failed nodes; connection draining lets in-flight requests finish during deploys. Sticky sessions are best avoided in favor of stateless services with shared session storage. For global scale, DNS or anycast steers users to the nearest region, with regional load balancers beneath. The load balancer itself must not be a single point of failure, so deploy pairs or managed multi-zone services. Mention client-side load balancing in service meshes as an alternative."
+    },
+    {
+      "title": "Back-of-the-envelope estimation",
+      "body": "Estimation shows you can size a system and spot which resource dominates, without false precision. Memorize round numbers: a day has about 86,400 seconds (call it 100k), so 1M requests per day is roughly 12 per second; 1 KB, 1 MB, 1 GB powers of ten work fine. Typical latencies: memory reference in nanoseconds, SSD read about 100 microseconds, same-datacenter round trip about 0.5 ms, cross-continent round trip about 100 to 150 ms. Method: start with users and daily active users, multiply by actions per user to get daily requests, divide by 100k for average QPS, then apply a peak factor of 2 to 5. Multiply new records per day by record size and retention for storage, then add replication factor. Bandwidth is QPS times payload size. Memory for a cache can be sized by the hot fraction, for example 20 percent of daily data. State assumptions out loud, round aggressively, and sanity check the result against a single machine's capacity, for instance a few thousand to tens of thousands of simple requests per second per server. Use the numbers to justify decisions such as sharding, caching, or a CDN."
+    },
+    {
+      "title": "The 45-minute interview framework",
+      "body": "A repeatable structure keeps you from rambling and shows seniority. Spend about 5 minutes on requirements: ask about users, core features, scale, read/write ratio, latency and availability targets, consistency needs, and what is out of scope; write them down. Spend about 5 minutes on estimates: QPS, storage, bandwidth, and which numbers will drive design. Spend about 5 minutes on the API and data model: main endpoints, entities, relationships, access patterns, and the storage type that fits. Spend about 10 minutes on a high-level design: clients, DNS and CDN, load balancer, stateless services, cache, database, queues, and the data flow for the main use cases. Spend about 15 minutes on deep dives into the hardest parts, such as fan-out, hot keys, ordering, sharding, consistency or failure handling, guided by the interviewer's interest. Reserve the last 5 minutes for bottlenecks, failure scenarios, monitoring, security and future scaling. Throughout, narrate your reasoning, name alternatives with explicit trade-offs, begin simple and evolve to scale, and invite feedback. Seniority shows in the clarity of trade-offs and operational thinking, not in the number of boxes drawn."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Distributed rate limiter service",
+      "description": "Build an HTTP middleware and standalone service enforcing token bucket and sliding window limits per API key using Redis with atomic Lua scripts. Include configurable rules, 429 responses with Retry-After, fail-open behavior, metrics, and a load test comparing algorithms under bursts.",
+      "skills": ["rate limiting", "redis", "caching", "load balancing", "observability"]
+    },
+    {
+      "name": "URL shortener with analytics",
+      "description": "Implement a shortener with a distributed ID generator, base62 codes, a Redis read cache, a sharded store, and asynchronous click analytics through Kafka. Add a capacity estimate document and a load test showing cache hit rate and p99 latency.",
+      "skills": ["kafka", "redis", "sharding", "back-of-the-envelope estimation", "rest api"]
+    },
+    {
+      "name": "Event-driven order workflow with outbox",
+      "description": "Create order, payment and inventory services that coordinate through a saga, using a transactional outbox and Kafka. Make consumers idempotent, add retries with backoff, a dead-letter topic and a circuit breaker, then run fault injection tests that kill services mid-flow.",
+      "skills": ["saga pattern", "transactional outbox", "idempotency", "kafka", "microservices", "circuit breaker"]
+    },
+    {
+      "name": "Mini chat system with presence",
+      "description": "Build a WebSocket chat service with per-conversation ordering, offline delivery through a queue, message history in a partitioned store, and a lightweight presence service. Document scaling limits and how to shard connections across servers.",
+      "skills": ["websockets", "message queues", "cassandra", "scalability", "high availability"]
+    }
+  ]
+}

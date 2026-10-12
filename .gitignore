@@ -1,6 +1,11 @@
-# Environment
+# Environment and secrets
 .env
 **/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+.vercel
 
 # Python
 __pycache__/
@@ -10,10 +15,15 @@ dist/
 *.egg
 .venv/
 venv/
+.pytest_cache/
+.coverage
 
-# Uploads
+# Local data and uploads
 backend/uploads/
+backend/output/
 *.db
+*.db-shm
+*.db-wal
 
 # IDE
 .idea/
@@ -28,3 +38,6 @@ Thumbs.db
 
 # Node
 node_modules/
+
+# Local Python pin (dev uses 3.10; Vercel builds with its default 3.12)
+backend/.python-version

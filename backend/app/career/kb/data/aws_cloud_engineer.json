@@ -1,0 +1,374 @@
+{
+  "id": "aws_cloud_engineer",
+  "name": "AWS Cloud Engineer",
+  "summary": "AWS Cloud Engineers design, build, secure and operate infrastructure and platforms on Amazon Web Services, usually through infrastructure as code and automated delivery pipelines. They are hired by SaaS companies, startups, banks, healthcare and retail firms, consultancies and managed service providers that run production workloads on AWS. The role overlaps with DevOps, SRE and solutions architecture, with a focus on reliability, security and cost.",
+  "titles": [
+    "aws cloud engineer",
+    "cloud engineer",
+    "aws devops engineer",
+    "devops engineer",
+    "cloud infrastructure engineer",
+    "site reliability engineer",
+    "platform engineer",
+    "cloud solutions architect",
+    "aws solutions architect",
+    "cloud operations engineer"
+  ],
+  "skills": {
+    "core": [
+      "aws",
+      "ec2",
+      "s3",
+      "iam",
+      "vpc",
+      "rds",
+      "cloudwatch",
+      "route 53",
+      "elb",
+      "auto scaling",
+      "lambda",
+      "cloudformation",
+      "linux",
+      "networking fundamentals",
+      "security groups",
+      "high availability",
+      "python",
+      "bash"
+    ],
+    "advanced": [
+      "eks",
+      "ecs",
+      "fargate",
+      "transit gateway",
+      "aws organizations",
+      "service control policies",
+      "aurora",
+      "dynamodb",
+      "kms",
+      "aws cdk",
+      "disaster recovery",
+      "multi-region",
+      "well-architected framework",
+      "cost optimization",
+      "infrastructure as code"
+    ],
+    "tools": [
+      "terraform",
+      "aws cli",
+      "github actions",
+      "codepipeline",
+      "codebuild",
+      "docker",
+      "kubernetes",
+      "helm",
+      "ansible",
+      "jenkins",
+      "git",
+      "x-ray",
+      "secrets manager",
+      "guardduty",
+      "cloudtrail"
+    ]
+  },
+  "ats_keywords": [
+    "aws",
+    "amazon web services",
+    "aws certified",
+    "infrastructure as code",
+    "iac",
+    "terraform",
+    "cloudformation",
+    "aws cdk",
+    "ci/cd",
+    "devops",
+    "ec2",
+    "s3",
+    "iam",
+    "vpc",
+    "lambda",
+    "serverless",
+    "eks",
+    "ecs",
+    "kubernetes",
+    "docker",
+    "cloudwatch",
+    "high availability",
+    "disaster recovery",
+    "cost optimization",
+    "least privilege",
+    "well-architected",
+    "multi-az",
+    "auto scaling",
+    "monitoring and alerting",
+    "cloud migration"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "provider": "Amazon Web Services",
+      "level": "entry",
+      "why": "A foundational credential covering core services, the shared responsibility model and billing, useful for career switchers and non-engineering cloud roles."
+    },
+    {
+      "name": "AWS Certified Solutions Architect - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "The most widely requested AWS certification, validating design of resilient, secure and cost-aware architectures across core services."
+    },
+    {
+      "name": "AWS Certified SysOps Administrator - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "Focuses on deployment, monitoring, troubleshooting and operations, which matches day-to-day cloud engineering work."
+    },
+    {
+      "name": "AWS Certified DevOps Engineer - Professional",
+      "provider": "Amazon Web Services",
+      "level": "professional",
+      "why": "Validates CI/CD, infrastructure as code, monitoring and automated governance at scale, and is a strong signal for senior DevOps roles."
+    },
+    {
+      "name": "AWS Certified Security - Specialty",
+      "provider": "Amazon Web Services",
+      "level": "specialty",
+      "why": "Demonstrates depth in IAM, KMS, logging, detection and incident response, valued in regulated industries."
+    },
+    {
+      "name": "HashiCorp Certified: Terraform Associate",
+      "provider": "HashiCorp",
+      "level": "associate",
+      "why": "Proves practical knowledge of Terraform workflow, state and modules, which is the dominant infrastructure as code tool in multi-cloud and AWS job postings."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Foundations: Linux, networking and core AWS",
+      "duration_weeks": 6,
+      "goals": [
+        "Learn Linux administration, SSH, permissions and shell scripting",
+        "Understand IP addressing, CIDR, DNS, HTTP and TLS",
+        "Use the console and AWS CLI to launch EC2, S3 buckets and IAM users safely",
+        "Set billing alarms and learn the shared responsibility model"
+      ],
+      "skills": ["linux", "bash", "aws", "ec2", "s3", "iam", "aws cli", "networking fundamentals"],
+      "project": "Host a static website on S3 with CloudFront and Route 53 using a custom domain, HTTPS via ACM, and a least-privilege IAM user for deployment."
+    },
+    {
+      "stage": "Networking, compute and data services",
+      "duration_weeks": 8,
+      "goals": [
+        "Design a multi-tier VPC with public and private subnets, NAT and security groups",
+        "Run web apps behind an ALB with Auto Scaling across two Availability Zones",
+        "Operate RDS with Multi-AZ and read replicas, and compare it with DynamoDB",
+        "Collect metrics, logs and alarms with CloudWatch"
+      ],
+      "skills": ["vpc", "security groups", "elb", "auto scaling", "rds", "dynamodb", "cloudwatch", "route 53"],
+      "project": "Deploy a three-tier web application (ALB, EC2 Auto Scaling group, RDS Multi-AZ) in a custom VPC with CloudWatch dashboards and alarms."
+    },
+    {
+      "stage": "Infrastructure as code, containers and CI/CD",
+      "duration_weeks": 10,
+      "goals": [
+        "Codify infrastructure with Terraform and CloudFormation, with remote state and modules",
+        "Containerize apps with Docker and run them on ECS Fargate or EKS",
+        "Build pipelines with GitHub Actions using OIDC federation instead of long-lived keys",
+        "Build serverless APIs with Lambda, API Gateway and DynamoDB"
+      ],
+      "skills": ["terraform", "cloudformation", "docker", "ecs", "fargate", "eks", "github actions", "aws lambda"],
+      "project": "Create a Terraform-managed ECS Fargate service with a GitHub Actions pipeline that builds an image, pushes to ECR and performs a rolling deployment on every merge."
+    },
+    {
+      "stage": "Security, resilience, cost and certification",
+      "duration_weeks": 8,
+      "goals": [
+        "Apply least privilege, SCPs, KMS encryption, Secrets Manager and GuardDuty",
+        "Define RTO and RPO targets and implement a multi-region disaster recovery pattern",
+        "Run a Well-Architected review and reduce cost with rightsizing, Savings Plans and lifecycle rules",
+        "Prepare for the Solutions Architect Associate or DevOps Professional exam"
+      ],
+      "skills": ["kms", "secrets manager", "guardduty", "service control policies", "disaster recovery", "multi-region", "well-architected framework", "cost optimization"],
+      "project": "Build a multi-account landing zone with AWS Organizations, SCP guardrails, centralized CloudTrail, and a pilot-light disaster recovery environment in a second region."
+    }
+  ],
+  "resume_bullets": [
+    "Migrated 40+ on-premises services to AWS using EC2, RDS and Application Load Balancers across three Availability Zones, achieving 99.95% availability and cutting provisioning time from weeks to under 2 hours.",
+    "Codified 120+ resources in Terraform modules with S3 and DynamoDB remote state and policy checks in GitHub Actions, eliminating configuration drift and reducing environment build time by 80%.",
+    "Reduced monthly AWS spend by 32% through EC2 rightsizing, Compute Savings Plans, S3 lifecycle policies and scheduled shutdown of non-production environments, validated with Cost Explorer and budgets.",
+    "Designed a hub-and-spoke network with Transit Gateway, VPC endpoints and centralized egress for 12 accounts, removing public exposure of internal services and cutting NAT data charges by 25%.",
+    "Implemented CI/CD with GitHub Actions and OIDC role assumption to deploy containers to ECS Fargate with blue/green releases, reducing deployment failures by 60% and shortening lead time to 15 minutes.",
+    "Hardened IAM by replacing long-lived access keys with roles, enforcing SCPs and permission boundaries, and enabling GuardDuty and CloudTrail across all accounts, closing 45 audit findings.",
+    "Built a cross-region disaster recovery runbook with Aurora Global Database and Route 53 failover, meeting an RTO of 30 minutes and RPO under 1 minute in quarterly game-day tests.",
+    "Created CloudWatch dashboards, composite alarms and X-Ray tracing for 25 microservices, reducing mean time to detect incidents from 20 minutes to 4 minutes."
+  ],
+  "interview": [
+    {
+      "topic": "IAM",
+      "level": "junior",
+      "question": "What is the difference between an IAM user, group, role and policy?",
+      "answer": "A user is a long-term identity for a person or application, with credentials. A group is a collection of users that you attach policies to for easier management. A role is an identity with no permanent credentials that anyone or anything trusted can assume to get temporary credentials through STS; it is used by EC2 instances, Lambda functions, cross-account access and federated users. A policy is a JSON document that defines allowed or denied actions on resources, and it is attached to users, groups or roles (identity-based) or to resources such as S3 buckets (resource-based). Best practice is to prefer roles and federation over IAM users with access keys, and to grant only the permissions needed.",
+      "follow_ups": ["How does a role's trust policy differ from its permissions policy?", "When would you use a resource-based policy instead?"]
+    },
+    {
+      "topic": "VPC",
+      "level": "junior",
+      "question": "Explain security groups versus network ACLs.",
+      "answer": "Security groups are stateful firewalls attached to elastic network interfaces. They only contain allow rules, and return traffic is automatically permitted. They can reference other security groups, which makes tier-to-tier rules clean. Network ACLs are stateless filters at the subnet boundary with numbered allow and deny rules evaluated in order, so you must explicitly allow return traffic on ephemeral ports. Security groups are the primary control for most workloads. NACLs are a coarse, additional layer, useful for explicitly blocking an IP range, which security groups cannot do because they have no deny rules. Each subnet has exactly one NACL, while an instance can have several security groups.",
+      "follow_ups": ["Why do NACLs need ephemeral port rules?", "How does security group referencing work across tiers?"]
+    },
+    {
+      "topic": "S3",
+      "level": "junior",
+      "question": "How would you control S3 costs for data with changing access patterns?",
+      "answer": "Choose storage classes by access pattern and use lifecycle rules to transition automatically. Standard suits frequently accessed data, Standard-IA and One Zone-IA suit infrequent access with retrieval fees and a minimum storage duration, and the Glacier classes suit archives with retrieval delays. If patterns are unknown or unpredictable, S3 Intelligent-Tiering moves objects between tiers for a small monitoring fee per object, which is not worthwhile for many tiny objects. Add lifecycle expiration for temporary data, abort incomplete multipart uploads, expire noncurrent versions on versioned buckets, and use S3 Storage Lens to find waste. Always consider minimum duration and per-object retrieval charges before moving data to colder classes.",
+      "follow_ups": ["What are the minimum storage duration charges?", "How would you handle versioned buckets that keep growing?"]
+    },
+    {
+      "topic": "Troubleshooting",
+      "level": "mid",
+      "question": "An EC2 instance in a private subnet cannot reach the internet. How do you debug it?",
+      "answer": "Work from the instance outward. First check the subnet route table has a default route (0.0.0.0/0) to a NAT gateway, not an internet gateway. Verify the NAT gateway is in a public subnet, is in the available state, and has an Elastic IP; its subnet's route table must point to an internet gateway. Check the instance security group outbound rules and the NACLs on both subnets, remembering NACLs are stateless and need ephemeral return ports. Confirm DNS resolution works (VPC DNS support and hostnames enabled) and that the OS has no local firewall or proxy settings blocking traffic. Use VPC Flow Logs and Reachability Analyzer to confirm where packets drop. If only AWS services are needed, consider VPC endpoints instead of NAT.",
+      "follow_ups": ["How would you avoid NAT gateway data charges for S3 traffic?", "What is the difference between a NAT gateway and a NAT instance?"]
+    },
+    {
+      "topic": "High availability",
+      "level": "mid",
+      "question": "Design a highly available web application on AWS.",
+      "answer": "Use a VPC spanning at least two Availability Zones with public subnets for an Application Load Balancer and private subnets for compute and data. Run the application in an Auto Scaling group (or ECS/EKS) across both AZs, with health checks tied to the load balancer and scaling policies on CPU or request count. Use RDS or Aurora Multi-AZ for the database, and ElastiCache for caching if needed. Store static assets in S3 behind CloudFront, and put Route 53 and WAF in front. Keep instances stateless, storing sessions in a shared store, and deploy with infrastructure as code. Trade-offs: cross-AZ data transfer costs money, and multi-AZ doubles some component costs. For regional failure tolerance, add a second region with replicated data and failover routing.",
+      "follow_ups": ["How would you handle sessions and uploads?", "How would you extend this to multi-region?"]
+    },
+    {
+      "topic": "Cost optimization",
+      "level": "mid",
+      "question": "Your monthly AWS bill grew 40%. How do you investigate and reduce it?",
+      "answer": "Start with visibility: use Cost Explorer grouped by service, account, region and cost allocation tags, and compare month over month to find the driver. Typical culprits are data transfer and NAT gateway charges, oversized or idle EC2 and RDS instances, unattached EBS volumes and old snapshots, unbounded CloudWatch Logs, and growing S3 storage. Use Compute Optimizer and Trusted Advisor for rightsizing, then commit steady usage with Savings Plans or Reserved Instances and use Spot for fault-tolerant work. Add S3 lifecycle rules, VPC endpoints, log retention policies and schedule non-production shutdowns. Prevent recurrence with AWS Budgets, anomaly detection, mandatory tagging and cost reviews. Avoid commitments before rightsizing, or you lock in waste.",
+      "follow_ups": ["Savings Plans versus Reserved Instances?", "How do you enforce tagging?"]
+    },
+    {
+      "topic": "Terraform",
+      "level": "mid",
+      "question": "How do you manage Terraform state safely in a team?",
+      "answer": "Use a remote backend rather than local files; on AWS this is typically an S3 bucket with versioning, encryption and blocked public access. Locking prevents concurrent applies: the S3 backend now supports native lockfile-based locking, and DynamoDB table locking is the older approach. Separate state per environment and component to limit blast radius, and restrict access with IAM so only the pipeline role can write. Never commit state or secrets, as state can contain sensitive values. Run plan on pull requests and apply from a controlled pipeline, pin provider and module versions, and use terraform import or moved blocks for refactors. Detect drift with scheduled plans. Trade-off: many small states reduce risk but add cross-state dependencies.",
+      "follow_ups": ["How do you detect and handle drift?", "When would you choose CDK or CloudFormation over Terraform?"]
+    },
+    {
+      "topic": "Serverless",
+      "level": "mid",
+      "question": "What are Lambda cold starts and concurrency limits, and how do you handle them?",
+      "answer": "A cold start happens when Lambda must create a new execution environment, download code and initialize the runtime, adding latency on the first invocation. It is worse with large packages, VPC-attached functions in older setups, and heavy-initialization runtimes such as Java. Mitigations include smaller packages, initializing SDK clients outside the handler, choosing lighter runtimes, SnapStart for supported runtimes, and provisioned concurrency for latency-critical paths at extra cost. Concurrency is capped by an account-level regional limit; reserved concurrency guarantees and caps capacity for one function, protecting downstream databases. Throttled async invocations retry, while synchronous callers receive errors. Use dead-letter queues or destinations for failures, and design handlers to be idempotent.",
+      "follow_ups": ["Reserved concurrency versus provisioned concurrency?", "How do you protect an RDS database from a Lambda burst?"]
+    },
+    {
+      "topic": "Containers",
+      "level": "mid",
+      "question": "How do you choose between ECS on Fargate, ECS on EC2, EKS and Lambda?",
+      "answer": "Lambda fits short event-driven tasks with spiky or low traffic and minimal operations, but has duration and runtime limits. ECS on Fargate runs containers without managing servers and suits most services where simplicity matters, at a higher unit price than well-utilized EC2. ECS on EC2 gives control over instance types, GPUs, daemons and lower cost at high steady utilization, but you patch and scale the hosts. EKS offers upstream Kubernetes, a large ecosystem (Helm, operators, service meshes) and portability, but adds cluster operations, upgrade cycles and a control plane charge. Choose EKS when you need Kubernetes tooling or multi-cloud consistency; otherwise ECS is simpler. Team skill and operational overhead are often decisive.",
+      "follow_ups": ["How do you scale pods and nodes on EKS?", "How would you do blue/green on ECS?"]
+    },
+    {
+      "topic": "Security",
+      "level": "senior",
+      "question": "How do SCPs, permission boundaries and identity policies interact?",
+      "answer": "Service control policies in AWS Organizations set the maximum permissions for accounts or OUs; they never grant access themselves and do not affect the management account or service-linked roles. Permission boundaries set the maximum permissions an IAM user or role can have, commonly used to let developers create roles without escalating privilege. Identity-based policies actually grant permissions. An action is allowed only if it is permitted by the identity policy and not blocked by any applicable SCP or boundary, and no explicit deny exists anywhere; explicit deny always wins. Session policies can narrow further. Use SCPs for organization guardrails, such as denying disabling CloudTrail or using unapproved regions, and test them in a sandbox OU first to avoid lockouts.",
+      "follow_ups": ["How would you restrict usage to approved regions?", "What does an explicit deny override?"]
+    },
+    {
+      "topic": "Disaster recovery",
+      "level": "senior",
+      "question": "Explain RTO and RPO and the AWS disaster recovery strategies.",
+      "answer": "RPO is the maximum acceptable data loss measured in time, and RTO is the maximum acceptable time to restore service. The strategies trade cost for recovery speed. Backup and restore is cheapest, with copies in another region and recovery in hours. Pilot light keeps core data replicated and minimal infrastructure ready, scaling up on failover (tens of minutes). Warm standby runs a scaled-down but fully functional copy, recovering in minutes. Multi-site active-active serves traffic from multiple regions and can approach near-zero RTO and RPO, but is the most expensive and complex, requiring conflict handling for data. Use Aurora Global Database, DynamoDB global tables, S3 replication and Route 53 health checks, and test regularly because untested plans fail.",
+      "follow_ups": ["How would you choose a strategy for a given business impact?", "How do you test failover safely?"]
+    },
+    {
+      "topic": "Networking",
+      "level": "senior",
+      "question": "When would you use Transit Gateway, VPC peering or PrivateLink?",
+      "answer": "VPC peering is a simple, low-cost one-to-one connection, but it is non-transitive and gets unmanageable as VPC counts grow, and CIDRs must not overlap. Transit Gateway is a regional hub that connects many VPCs and on-premises networks through VPN or Direct Connect, with route tables for segmentation and support for inter-region peering; it charges per attachment and per GB. PrivateLink exposes a specific service through interface endpoints, so consumers reach only that service, with no route exchange and tolerance for overlapping CIDRs. Use peering for a few VPCs, Transit Gateway for many-to-many or hybrid hub-and-spoke, and PrivateLink for service exposure to other teams, accounts or SaaS vendors.",
+      "follow_ups": ["How do you handle overlapping CIDRs?", "Gateway endpoints versus interface endpoints?"]
+    },
+    {
+      "topic": "Security",
+      "level": "senior",
+      "question": "How do you manage secrets and encryption in AWS applications?",
+      "answer": "Never hardcode secrets or put them in environment variables in source control. Store them in Secrets Manager, which supports automatic rotation for RDS and custom Lambda rotation, or in SSM Parameter Store for cheaper configuration values. Applications fetch them at runtime using their IAM role, with access scoped to specific secret ARNs. Encrypt data at rest with KMS: use AWS-managed keys for convenience and customer-managed keys when you need key policies, rotation control, cross-account sharing or audit trails via CloudTrail. Enforce TLS in transit. Key policies and IAM both govern key use, and grants allow delegated use. Trade-offs include KMS request costs and throttling at high volume, and the risk of deleting a key and losing the data, so use deletion waiting periods.",
+      "follow_ups": ["Secrets Manager versus Parameter Store?", "What is envelope encryption?"]
+    },
+    {
+      "topic": "CI/CD",
+      "level": "mid",
+      "question": "How would you securely deploy to AWS from GitHub Actions?",
+      "answer": "Avoid storing long-lived access keys as repository secrets. Instead configure an IAM OIDC identity provider for GitHub, create a deployment role whose trust policy restricts the token's subject claim to the specific repository and branch or environment, and use the aws-actions/configure-aws-credentials action to assume it for short-lived credentials. Grant the role least-privilege permissions for only what the pipeline deploys. Use separate roles per environment, GitHub environments with required approvals for production, and pin third-party actions to commit SHAs. Run plan or change set previews on pull requests, and apply on merge. For container workloads push images to ECR and deploy with ECS or Helm. Log deployments through CloudTrail for auditability.",
+      "follow_ups": ["What does the trust policy condition look like?", "How do you roll back a bad deployment?"]
+    },
+    {
+      "topic": "Databases",
+      "level": "mid",
+      "question": "When would you choose DynamoDB over RDS or Aurora?",
+      "answer": "Choose DynamoDB for key-value or document access patterns known up front, very high scale, single-digit millisecond latency, and minimal operations, with on-demand or provisioned capacity and global tables for multi-region writes. It requires modeling around access patterns (partition and sort keys, GSIs); ad-hoc queries, joins and complex transactions are limited and costly. Choose RDS or Aurora for relational data, SQL, joins, constraints and existing application compatibility. Aurora adds faster failover, up to 15 read replicas, storage that auto-scales, and Global Database for cross-region replication, at higher cost than standard RDS. Hot partitions can throttle DynamoDB, while relational databases scale writes vertically. Many systems use both, each for the workload that fits.",
+      "follow_ups": ["How do you avoid hot partitions?", "Aurora Serverless versus provisioned?"]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "IAM least privilege and policy evaluation",
+      "body": "IAM controls who can do what on which AWS resources. Least privilege means granting only the actions, resources and conditions a workload needs. Start from the job requirements, use AWS-managed policies only as a starting point, then refine with IAM Access Analyzer, which generates policies from CloudTrail activity and flags external access. Prefer roles with temporary credentials over users with access keys: EC2 instance profiles, Lambda execution roles, ECS task roles and IAM Roles Anywhere or OIDC federation for external systems. Policy evaluation follows a clear order: an explicit deny always wins; otherwise an action needs an allow, and it must also fit within any SCP, permission boundary or session policy that applies. Resource-based policies, such as S3 bucket policies, can grant cross-account access directly. Use conditions like aws:SourceVpce, aws:PrincipalOrgID and MFA presence to tighten access. Avoid wildcards on actions and resources, never use the root user for daily work, and enable MFA everywhere. Review unused permissions regularly with last-accessed data."
+    },
+    {
+      "title": "VPC design: subnets, routing, NAT and endpoints",
+      "body": "A VPC is a logically isolated network defined by a CIDR block, split into subnets that each live in one Availability Zone. A subnet is public if its route table sends 0.0.0.0/0 to an internet gateway and its resources have public IPs; private subnets have no direct inbound route and reach the internet outbound through a NAT gateway placed in a public subnet. For resilience, deploy one NAT gateway per AZ, accepting higher cost, or share one to save money at the price of an AZ dependency. Route tables decide where traffic goes, while security groups (stateful, allow-only, instance level) and network ACLs (stateless, subnet level, allow and deny) filter it. VPC endpoints keep traffic on the AWS network: gateway endpoints for S3 and DynamoDB are free, and interface endpoints powered by PrivateLink serve many other services at an hourly and per-GB cost. Plan CIDRs without overlap so you can later connect VPCs with peering or Transit Gateway. Enable VPC Flow Logs for troubleshooting and security analysis."
+    },
+    {
+      "title": "Auto Scaling and load balancing",
+      "body": "Elastic Load Balancing distributes traffic across targets in multiple Availability Zones. The Application Load Balancer works at layer 7, with host and path routing, WebSockets and integration with WAF; the Network Load Balancer works at layer 4, offering very high throughput, static IPs and PrivateLink support; the Gateway Load Balancer fronts virtual appliances. An EC2 Auto Scaling group keeps a desired number of instances launched from a launch template, replaces unhealthy ones using ELB health checks, and spreads capacity across AZs. Scaling policies include target tracking (for example keep average CPU at 50 percent or requests per target steady), step scaling, scheduled actions and predictive scaling. Tune warm-up time, cooldowns and deregistration delay so scaling and deployments do not drop requests. Mixed instance policies combine On-Demand and Spot capacity to lower cost. Instance refresh enables rolling replacement of the fleet when you change the AMI. Applications must be stateless so any instance can be terminated safely."
+    },
+    {
+      "title": "S3 storage classes and lifecycle management",
+      "body": "S3 offers durability of eleven nines across multiple AZs for most classes. Standard serves hot data. Intelligent-Tiering automatically moves objects between access tiers for a monitoring charge. Standard-IA and One Zone-IA cost less to store but charge per-GB retrieval and have a 30-day minimum duration, and One Zone-IA lives in a single AZ so it suits re-creatable data. The Glacier classes target archives: Instant Retrieval returns in milliseconds, Flexible Retrieval takes minutes to hours, and Deep Archive is cheapest with retrieval in hours and a 180-day minimum. Lifecycle rules transition objects between classes by age, expire objects, delete noncurrent versions and abort incomplete multipart uploads. Combine this with versioning and MFA delete for protection, Object Lock for write-once retention, cross-region or same-region replication for resilience, default encryption with SSE-S3 or SSE-KMS, and Block Public Access at account level. Bucket policies and access points control access, and S3 Storage Lens reveals cost and usage trends."
+    },
+    {
+      "title": "Infrastructure as code: CloudFormation, CDK and Terraform",
+      "body": "Infrastructure as code makes environments reproducible, reviewable and auditable. CloudFormation is AWS's native service: templates define stacks, change sets preview updates, and rollback on failure is automatic; StackSets deploy across accounts and regions. The AWS CDK lets you write infrastructure in languages like TypeScript or Python and synthesizes it to CloudFormation, giving loops, abstractions and constructs at the cost of deploying through CloudFormation's model. Terraform uses HCL and providers, supports many clouds and SaaS products, and tracks resources in a state file that must be stored remotely and locked. Core Terraform workflow is init, plan, apply, with modules for reuse and workspaces or separate directories per environment. Good practice: version control everything, review plans in pull requests, pin versions, keep secrets out of code, separate state by blast radius, scan with tools such as tflint and checkov, and detect drift. Choose based on team skills, multi-cloud needs and ecosystem rather than dogma."
+    },
+    {
+      "title": "Observability with CloudWatch and X-Ray",
+      "body": "Observability combines metrics, logs and traces. CloudWatch collects metrics from AWS services at standard one-minute or five-minute resolution, plus custom metrics, and the CloudWatch agent adds memory and disk metrics from instances. Alarms evaluate metrics and trigger SNS notifications, Auto Scaling actions or EventBridge automation; composite alarms reduce noise by combining conditions. CloudWatch Logs stores logs with retention settings, and Logs Insights queries them; metric filters turn log patterns into metrics. Always set retention, because indefinite log storage quietly raises costs. Dashboards give shared views, and Synthetics canaries test endpoints from outside. AWS X-Ray provides distributed tracing, showing latency across Lambda, API Gateway and containerized services via service maps and trace segments; OpenTelemetry through the AWS Distro is increasingly used. Define SLOs, alert on symptoms such as error rate and latency rather than raw CPU, and use CloudTrail alongside for API auditing. High-cardinality custom metrics and verbose logs are common cost surprises."
+    },
+    {
+      "title": "Well-Architected Framework",
+      "body": "The AWS Well-Architected Framework gives a consistent way to evaluate workloads against six pillars: operational excellence, security, reliability, performance efficiency, cost optimization and sustainability. Operational excellence stresses automation, small reversible changes and learning from failure. Security covers strong identity, traceability, defense in depth and protecting data in transit and at rest. Reliability focuses on recovering from failure, scaling horizontally, testing recovery procedures and managing change. Performance efficiency promotes choosing the right resource types, using serverless and managed services, and experimenting. Cost optimization emphasizes consumption-based pricing, measuring efficiency and attributing spend. Sustainability looks at reducing environmental impact through utilization and efficient architectures. The AWS Well-Architected Tool lets teams run structured reviews, record risks and track improvements, and lenses extend the framework for serverless, SaaS and other domains. In practice, use it to frame design discussions and trade-offs, since improving one pillar, such as reliability through multi-region, often raises cost and complexity."
+    },
+    {
+      "title": "Availability, multi-AZ and multi-region design",
+      "body": "Availability Zones are physically separate data center groups within a region, connected by low-latency links. Designing across at least two AZs protects against a data center failure and is the baseline for production. Multi-AZ RDS keeps a synchronous standby and fails over automatically, typically within a couple of minutes; Aurora stores data across three AZs and promotes a replica quickly. Load balancers, Auto Scaling groups, EFS, S3 and DynamoDB are already multi-AZ. Multi-region guards against regional events and supports latency or compliance goals, but costs more and adds complexity: data replication is asynchronous (Aurora Global Database, DynamoDB global tables, S3 replication), DNS failover uses Route 53 health checks, and operational tooling and secrets must exist in both regions. Define RTO and RPO per workload and pick backup and restore, pilot light, warm standby or active-active accordingly. Remove single points of failure, use health checks and timeouts with retries and backoff, avoid control-plane dependencies during failover, and rehearse failover regularly."
+    },
+    {
+      "title": "Serverless architecture on AWS",
+      "body": "Serverless means AWS manages servers, scaling and patching while you pay for usage. A common pattern is API Gateway or an Application Load Balancer invoking Lambda, which reads and writes DynamoDB or S3, with SQS, SNS and EventBridge decoupling producers from consumers and Step Functions orchestrating multi-step workflows. Lambda scales by running more concurrent environments, limited by account and reserved concurrency; functions have timeouts and memory settings that also determine CPU. Best practices include idempotent handlers, since events can be delivered more than once, dead-letter queues, structured logging, least-privilege execution roles, and reusing connections outside the handler. Use RDS Proxy when Lambda talks to relational databases to avoid exhausting connections. Infrastructure is defined with SAM, CDK or Terraform. Trade-offs include cold starts, execution limits, vendor coupling, harder local testing and costs that can exceed containers at sustained high throughput. Observability needs tracing across asynchronous hops using X-Ray or OpenTelemetry."
+    },
+    {
+      "title": "Cost optimization on AWS",
+      "body": "Cost optimization starts with visibility. Enforce cost allocation tags, use separate accounts per environment, and review Cost Explorer, Budgets, anomaly detection and the Cost and Usage Report. Then reduce waste: rightsize with Compute Optimizer, delete idle load balancers, unattached EBS volumes and old snapshots, set log retention, and schedule non-production shutdowns. Next, choose pricing models: Savings Plans (Compute or EC2 Instance) and Reserved Instances discount steady usage in exchange for a one or three year commitment, while Spot instances offer deep discounts for interruption-tolerant workloads like batch jobs and stateless containers. Architect for cost: use S3 lifecycle rules and Intelligent-Tiering, Graviton instances for better price-performance where software supports Arm, gateway and interface VPC endpoints to cut NAT charges, and CloudFront to reduce origin and egress traffic. Watch data transfer across AZs and regions, which is often overlooked. Serverless can reduce idle cost but not always total cost. Make cost a recurring review item, not a one-time cleanup."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Three-tier web app in a custom VPC",
+      "description": "Provision a VPC across two AZs with public and private subnets, NAT gateways, an ALB, an EC2 Auto Scaling group and a Multi-AZ RDS database using Terraform, with CloudWatch dashboards, alarms and a documented failure test where one AZ is taken out.",
+      "skills": ["aws", "vpc", "terraform", "ec2", "auto scaling", "rds", "cloudwatch", "high availability"]
+    },
+    {
+      "name": "Containerized service with CI/CD",
+      "description": "Containerize an application, store the image in ECR and run it on ECS Fargate behind an ALB. Build a GitHub Actions pipeline that assumes an IAM role through OIDC, runs tests, pushes the image and performs a rolling or blue/green deployment with automatic rollback on failed health checks.",
+      "skills": ["docker", "ecs", "fargate", "github actions", "iam", "ci/cd", "infrastructure as code"]
+    },
+    {
+      "name": "Serverless event-driven API",
+      "description": "Build a REST API using API Gateway, Lambda and DynamoDB with SQS-based asynchronous processing, Secrets Manager for configuration, X-Ray tracing and CloudWatch alarms. Deploy it with the AWS CDK or CloudFormation and include load testing with cost estimates.",
+      "skills": ["aws lambda", "serverless", "dynamodb", "aws cdk", "x-ray", "cloudwatch", "secrets manager"]
+    },
+    {
+      "name": "Multi-account landing zone with disaster recovery",
+      "description": "Set up AWS Organizations with separate accounts, SCP guardrails, centralized CloudTrail and GuardDuty, then implement a pilot-light disaster recovery environment in a second region using S3 replication, Aurora Global Database and Route 53 failover, and document measured RTO and RPO.",
+      "skills": ["aws organizations", "service control policies", "guardduty", "cloudtrail", "disaster recovery", "multi-region", "route 53", "aurora"]
+    }
+  ]
+}

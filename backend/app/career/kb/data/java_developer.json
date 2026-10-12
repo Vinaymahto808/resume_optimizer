@@ -1,0 +1,480 @@
+{
+  "id": "java_developer",
+  "name": "Java Developer",
+  "summary": "Java developers design, build and operate server-side applications, most often REST APIs and event-driven microservices on Spring Boot. They are hired by banks, insurers, e-commerce, telecom, logistics and enterprise software companies, as well as product startups, wherever reliable, long-lived backend systems are needed. Day to day the work spans writing clean object-oriented code, tuning SQL and JPA access, testing with JUnit and Mockito, and shipping containers to Kubernetes through CI/CD.",
+  "titles": [
+    "java developer",
+    "java software engineer",
+    "java backend developer",
+    "senior java developer",
+    "spring boot developer",
+    "java full stack developer",
+    "java microservices developer",
+    "java engineer",
+    "backend engineer java",
+    "java application developer"
+  ],
+  "skills": {
+    "core": [
+      "java",
+      "java 17",
+      "java 21",
+      "oop",
+      "solid principles",
+      "collections framework",
+      "multithreading",
+      "exception handling",
+      "streams api",
+      "lambda expressions",
+      "generics",
+      "spring boot",
+      "spring mvc",
+      "rest api",
+      "sql",
+      "jpa",
+      "hibernate",
+      "maven"
+    ],
+    "advanced": [
+      "spring data jpa",
+      "spring security",
+      "spring cloud",
+      "microservices",
+      "jvm tuning",
+      "garbage collection",
+      "g1gc",
+      "zgc",
+      "completablefuture",
+      "virtual threads",
+      "concurrency",
+      "design patterns",
+      "jwt",
+      "oauth2"
+    ],
+    "tools": [
+      "gradle",
+      "junit 5",
+      "mockito",
+      "kafka",
+      "docker",
+      "kubernetes",
+      "git",
+      "jenkins",
+      "intellij idea",
+      "postgresql",
+      "mysql",
+      "redis",
+      "swagger",
+      "testcontainers",
+      "flyway"
+    ]
+  },
+  "ats_keywords": [
+    "java",
+    "java 8",
+    "java 11",
+    "java 17",
+    "java 21",
+    "spring boot",
+    "spring framework",
+    "spring mvc",
+    "spring security",
+    "spring data jpa",
+    "hibernate",
+    "jpa",
+    "microservices",
+    "rest apis",
+    "restful web services",
+    "multithreading",
+    "concurrency",
+    "junit",
+    "mockito",
+    "maven",
+    "gradle",
+    "kafka",
+    "docker",
+    "kubernetes",
+    "sql",
+    "ci/cd",
+    "design patterns",
+    "object-oriented programming",
+    "agile",
+    "jvm"
+  ],
+  "certifications": [
+    {
+      "name": "Oracle Certified Professional: Java SE 17 Developer",
+      "provider": "Oracle",
+      "level": "professional",
+      "why": "Validates deep knowledge of the Java 17 language and core APIs, including records, sealed classes, streams and concurrency, which many interviews probe directly."
+    },
+    {
+      "name": "Oracle Certified Professional: Java SE 21 Developer",
+      "provider": "Oracle",
+      "level": "professional",
+      "why": "Shows you are current with the Java 21 LTS features such as virtual threads, pattern matching for switch and sequenced collections."
+    },
+    {
+      "name": "Spring Certified Professional",
+      "provider": "Broadcom (VMware Tanzu Spring)",
+      "level": "professional",
+      "why": "Demonstrates practical command of Spring Boot, dependency injection, data access, transactions, security and testing, the stack most Java job postings require."
+    },
+    {
+      "name": "Certified Kubernetes Application Developer (CKAD)",
+      "provider": "Cloud Native Computing Foundation and Linux Foundation",
+      "level": "associate",
+      "why": "A hands-on exam that proves you can package and run Java services on Kubernetes, a common expectation for microservices roles."
+    },
+    {
+      "name": "Oracle Certified Foundations Associate, Java",
+      "provider": "Oracle",
+      "level": "entry",
+      "why": "A starting credential for freshers that confirms basic Java syntax and object-oriented fundamentals before moving on to the professional exams."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Java language and OOP foundations",
+      "duration_weeks": 8,
+      "goals": [
+        "Write idiomatic Java 17 and 21 using records, sealed classes, switch expressions and text blocks",
+        "Apply OOP and SOLID principles to a small domain model",
+        "Understand the collections framework and the contracts of equals and hashCode",
+        "Use streams, lambdas and Optional correctly",
+        "Handle exceptions and write basic unit tests with JUnit 5"
+      ],
+      "skills": [
+        "java 17",
+        "oop",
+        "solid principles",
+        "collections framework",
+        "streams api",
+        "junit 5",
+        "maven"
+      ],
+      "project": "Build a command-line library management system with clean domain classes, an immutable record-based data layer, custom exceptions and at least 80 percent unit test coverage."
+    },
+    {
+      "stage": "JVM, concurrency and SQL",
+      "duration_weeks": 8,
+      "goals": [
+        "Explain heap, stack, metaspace and how G1 and ZGC collect garbage",
+        "Use ExecutorService, CompletableFuture and locks safely, and reason about the Java memory model",
+        "Try virtual threads on Java 21 and compare them with platform threads",
+        "Write joins, indexes and transactions in SQL and read query plans"
+      ],
+      "skills": [
+        "multithreading",
+        "completablefuture",
+        "virtual threads",
+        "garbage collection",
+        "jvm tuning",
+        "sql",
+        "postgresql"
+      ],
+      "project": "Create a concurrent web-page fetcher and aggregator that compares a fixed thread pool against virtual threads, with benchmark results and a GC log analysis in the README."
+    },
+    {
+      "stage": "Spring Boot, data and security",
+      "duration_weeks": 10,
+      "goals": [
+        "Build layered REST APIs with Spring MVC, validation and global exception handling",
+        "Model entities with Spring Data JPA and Hibernate and fix N+1 queries",
+        "Manage transactions and database migrations with Flyway",
+        "Secure endpoints with Spring Security, JWT and role-based access",
+        "Test with Mockito, MockMvc and Testcontainers"
+      ],
+      "skills": [
+        "spring boot",
+        "spring mvc",
+        "spring data jpa",
+        "hibernate",
+        "spring security",
+        "jwt",
+        "testcontainers",
+        "flyway"
+      ],
+      "project": "Build an order management REST API with PostgreSQL, JWT authentication, role-based authorization, pagination, OpenAPI documentation and integration tests running on Testcontainers."
+    },
+    {
+      "stage": "Microservices and cloud delivery",
+      "duration_weeks": 10,
+      "goals": [
+        "Split a system into services with clear boundaries and resilient inter-service calls",
+        "Publish and consume events with Kafka, handling retries and idempotency",
+        "Containerise services with Docker and deploy to Kubernetes",
+        "Set up a CI/CD pipeline and basic observability with metrics and tracing"
+      ],
+      "skills": [
+        "microservices",
+        "spring cloud",
+        "kafka",
+        "docker",
+        "kubernetes",
+        "ci/cd",
+        "gradle"
+      ],
+      "project": "Deliver an event-driven e-commerce backend of three Spring Boot services connected by Kafka, deployed to a local Kubernetes cluster with a GitHub Actions or Jenkins pipeline and Micrometer metrics."
+    }
+  ],
+  "resume_bullets": [
+    "Designed and delivered 12 REST microservices in Java 17 and Spring Boot handling 3M requests per day, cutting p95 latency from 480 ms to 190 ms through caching and query tuning.",
+    "Eliminated N+1 query patterns in Spring Data JPA and Hibernate by introducing fetch joins, entity graphs and batch fetching, reducing database calls per request by 85 percent.",
+    "Migrated a legacy Java 8 monolith to Java 21 and Spring Boot 3, adopting virtual threads for blocking I/O and increasing throughput by 2.5x on the same hardware.",
+    "Built an event-driven order pipeline with Apache Kafka and idempotent consumers, processing 40,000 events per minute with zero duplicate orders after introducing the outbox pattern.",
+    "Secured 30+ endpoints with Spring Security, OAuth2 and JWT role-based access, passing an external penetration test with no critical findings.",
+    "Raised unit and integration test coverage from 35 percent to 85 percent using JUnit 5, Mockito and Testcontainers, cutting production defects by 40 percent across four releases.",
+    "Tuned JVM memory and moved services from Parallel GC to G1 with right-sized heaps, reducing GC pause times from 400 ms to under 60 ms and eliminating timeout alerts.",
+    "Containerised services with Docker and deployed to Kubernetes through a Jenkins CI/CD pipeline, shortening release cycles from two weeks to daily deployments."
+  ],
+  "interview": [
+    {
+      "topic": "equals and hashCode",
+      "level": "junior",
+      "question": "Why must you override hashCode when you override equals, and what happens if you do not?",
+      "answer": "The contract says that if two objects are equal according to equals, they must return the same hashCode. Hash-based collections such as HashMap and HashSet first use hashCode to pick a bucket and only then call equals to compare keys. If you override equals but not hashCode, two logically equal objects usually get different identity-based hash codes, land in different buckets, and the map treats them as different keys. A lookup with an equal key then returns null and a set can hold duplicates. Both methods should use the same fields, and those fields should be immutable, because mutating a key after insertion makes it unreachable. Records and Lombok generate consistent implementations for you.",
+      "follow_ups": [
+        "What happens if hashCode always returns 1?",
+        "Why is it risky to use a mutable object as a HashMap key?"
+      ]
+    },
+    {
+      "topic": "immutability",
+      "level": "junior",
+      "question": "How do you create an immutable class in Java, and why is immutability useful?",
+      "answer": "Declare the class final or give it only private constructors, make all fields private and final, provide no setters, and initialise everything in the constructor. If a field holds a mutable object such as a List or Date, make a defensive copy on the way in and return an unmodifiable view or copy on the way out. Immutable objects are inherently thread-safe because their state never changes after construction, they are safe as map keys, and they are easy to reason about and cache. The trade-off is that each change creates a new object, which can add allocation cost. Since Java 16 a record gives you a concise immutable carrier, though you still need to copy mutable components yourself, for example with List.copyOf.",
+      "follow_ups": [
+        "Is a record deeply immutable?",
+        "What is the difference between List.of and Collections.unmodifiableList?"
+      ]
+    },
+    {
+      "topic": "HashMap internals",
+      "level": "mid",
+      "question": "Explain how HashMap works internally in Java, including collisions and resizing.",
+      "answer": "HashMap stores entries in an array of buckets. For a key it computes hashCode, spreads the bits with a XOR of the high half, and takes the index as (n - 1) & hash, where the table length n is a power of two. Entries in the same bucket form a linked list. Since Java 8 a bucket converts to a red-black tree once it holds 8 or more entries and the table has at least 64 slots, giving O(log n) worst-case lookups, and it reverts to a list when it shrinks. When the entry count exceeds capacity times the load factor, 0.75 by default, the table doubles and entries are redistributed, which is expensive, so pre-size it when you know the volume. HashMap is not thread-safe and permits one null key.",
+      "follow_ups": [
+        "Why is the table length always a power of two?",
+        "What can go wrong if two threads put into a HashMap concurrently?"
+      ]
+    },
+    {
+      "topic": "ConcurrentHashMap",
+      "level": "mid",
+      "question": "How does ConcurrentHashMap achieve thread safety, and how does it differ from Collections.synchronizedMap?",
+      "answer": "Since Java 8 ConcurrentHashMap no longer uses segment locks. Inserts into an empty bucket use a lock-free compare-and-swap, and when a bucket is already occupied it synchronizes only on the first node of that bucket, so threads working on different buckets rarely block each other. Reads are generally lock-free because node values and next pointers are volatile. Iterators are weakly consistent: they never throw ConcurrentModificationException but may or may not reflect concurrent updates. Atomic compound methods such as computeIfAbsent, merge and putIfAbsent make check-then-act safe. By contrast, synchronizedMap wraps every method in one mutex, serialising all access, and iteration still needs manual locking. ConcurrentHashMap forbids null keys and values, and size is only an estimate under concurrent modification.",
+      "follow_ups": [
+        "Why does ConcurrentHashMap not allow null values?",
+        "Is a get followed by put on a ConcurrentHashMap atomic?"
+      ]
+    },
+    {
+      "topic": "Java 17 and 21 language features",
+      "level": "mid",
+      "question": "What are records and sealed classes, and when would you use them together?",
+      "answer": "A record is a concise, shallowly immutable data carrier: the compiler generates the canonical constructor, accessors, equals, hashCode and toString from the components. Records are final, cannot extend other classes, and can have compact constructors for validation. A sealed class or interface uses permits to restrict which types may extend or implement it, and each permitted subtype must be final, sealed or non-sealed. Together they model algebraic data types, for example a sealed interface Shape permitting record Circle and record Rectangle. In Java 21, a switch expression with pattern matching over a sealed hierarchy is checked for exhaustiveness by the compiler, so adding a new subtype breaks compilation where you forgot to handle it. This is cleaner than visitor-style code and removes the need for a default branch.",
+      "follow_ups": [
+        "Can a record have mutable fields?",
+        "What does exhaustiveness checking buy you in a switch?"
+      ]
+    },
+    {
+      "topic": "garbage collection",
+      "level": "mid",
+      "question": "How do G1 and ZGC differ, and how would you choose between them?",
+      "answer": "G1, the default collector since Java 9, divides the heap into equal-sized regions and collects the regions with the most garbage first, aiming to meet a pause-time goal set with MaxGCPauseMillis. It performs concurrent marking but evacuates objects during stop-the-world pauses, which typically last tens to a few hundred milliseconds. ZGC is designed for very low pauses: it uses coloured pointers and load barriers to do marking, relocation and compaction concurrently, so pauses stay short and largely independent of heap size, which suits large heaps. Generational ZGC arrived in Java 21 and improves throughput for typical allocation patterns. The trade-off is a small throughput and CPU overhead and extra memory. Start with G1, and move to ZGC when GC logs show pause times violating latency requirements.",
+      "follow_ups": [
+        "What flags would you use to enable GC logging?",
+        "What causes a Full GC in G1?"
+      ]
+    },
+    {
+      "topic": "JVM memory",
+      "level": "mid",
+      "question": "Describe the JVM memory areas and what causes an OutOfMemoryError.",
+      "answer": "The heap holds objects and is split into young and old generations in generational collectors. Each thread has its own stack with frames for method calls, local variables and references. Metaspace, in native memory, stores class metadata and replaced PermGen in Java 8. There are also the code cache for JIT-compiled code, direct buffers and thread-related native memory. An OutOfMemoryError can mean heap exhaustion from a leak such as an unbounded cache or static collection, metaspace exhaustion from class loader leaks during redeployments, direct buffer exhaustion, or being unable to create native threads. A StackOverflowError is separate and comes from deep recursion. Diagnose with a heap dump from -XX:+HeapDumpOnOutOfMemoryError analysed in a tool such as Eclipse MAT, and check GC logs for growth in post-collection occupancy.",
+      "follow_ups": [
+        "How would you find a memory leak in production?",
+        "What is the difference between heap and stack memory?"
+      ]
+    },
+    {
+      "topic": "concurrency",
+      "level": "mid",
+      "question": "What is the difference between synchronized, volatile and atomic classes, and when would you use ExecutorService?",
+      "answer": "synchronized gives mutual exclusion and a happens-before relationship, so changes made inside one critical section are visible to the next thread acquiring the same monitor. volatile guarantees visibility and ordering of a single variable but not atomicity, so count++ on a volatile field is still a race. Atomic classes such as AtomicInteger use compare-and-swap for lock-free atomic updates of single values. For compound invariants across several fields use a lock. ExecutorService decouples task submission from thread management: you submit Runnable or Callable tasks to a pool, get Futures back and control the pool size and queue. Prefer bounded pools and queues with a sensible rejection policy rather than creating threads manually, and always shut the executor down. Avoid unbounded Executors.newCachedThreadPool under load.",
+      "follow_ups": [
+        "What is a deadlock and how do you prevent it?",
+        "How do you choose a thread pool size for CPU-bound versus I/O-bound work?"
+      ]
+    },
+    {
+      "topic": "CompletableFuture",
+      "level": "senior",
+      "question": "How do you compose asynchronous tasks with CompletableFuture, and what pitfalls should you watch for?",
+      "answer": "CompletableFuture lets you chain stages with thenApply for transformation, thenCompose for dependent async calls that return another future, thenCombine for joining two independent results, and allOf or anyOf for fan-in. Handle failures with exceptionally, handle or whenComplete, because an unhandled exception stays hidden inside the future. The common pitfall is the default executor: the async methods without an executor argument use the shared ForkJoinPool.commonPool, which is sized for CPU work, so blocking I/O there can starve other tasks. Pass a dedicated executor for blocking calls. Also avoid calling join or get inside another async stage, set timeouts with orTimeout or completeOnTimeout, and remember that thenApply and thenApplyAsync may run on different threads. With virtual threads, simple blocking code is often clearer than deep chains.",
+      "follow_ups": [
+        "What is the difference between thenApply and thenCompose?",
+        "How would you apply a timeout to a slow downstream call?"
+      ]
+    },
+    {
+      "topic": "virtual threads",
+      "level": "senior",
+      "question": "What are virtual threads in Java 21 and when should you not use them?",
+      "answer": "Virtual threads, finalised in Java 21 by Project Loom, are lightweight threads scheduled by the JVM onto a small pool of carrier platform threads. When a virtual thread blocks on supported I/O it is unmounted, freeing the carrier, so you can run hundreds of thousands of concurrent blocking tasks with simple thread-per-request code, for example Executors.newVirtualThreadPerTaskExecutor or spring.threads.virtual.enabled=true in Spring Boot 3.2 and later. They help I/O-bound workloads, not CPU-bound ones. Do not pool them; create one per task. Watch for pinning: in Java 21, blocking inside a synchronized block pins the carrier, so prefer ReentrantLock there. Overloaded downstream resources such as database connection pools still need limits, for which use semaphores. ThreadLocal use should be reviewed because of the sheer number of threads.",
+      "follow_ups": [
+        "What is thread pinning and how do you detect it?",
+        "How do virtual threads change how you size connection pools?"
+      ]
+    },
+    {
+      "topic": "Spring DI and bean lifecycle",
+      "level": "mid",
+      "question": "Explain dependency injection in Spring and the lifecycle of a singleton bean.",
+      "answer": "Dependency injection means the container creates objects and supplies their collaborators instead of the classes constructing them, which keeps code loosely coupled and testable. Constructor injection is preferred because dependencies are explicit, can be final, and the object is never half-initialised. The singleton lifecycle is: the container instantiates the bean, injects dependencies, calls Aware callbacks such as BeanNameAware, runs BeanPostProcessor beforeInitialization, then init callbacks in order of @PostConstruct, InitializingBean.afterPropertiesSet and a custom init method, followed by BeanPostProcessor afterInitialization, where AOP proxies are typically created. The bean then serves requests until the context closes, when @PreDestroy, DisposableBean and the custom destroy method run. Singleton scope is the default and means one instance per container, so singleton beans must be stateless or thread-safe.",
+      "follow_ups": [
+        "Why prefer constructor injection over field injection?",
+        "How does Spring resolve circular dependencies?"
+      ]
+    },
+    {
+      "topic": "@Transactional pitfalls",
+      "level": "senior",
+      "question": "What are common pitfalls with @Transactional in Spring?",
+      "answer": "Spring applies @Transactional through proxies, so a call from one method to another method in the same class bypasses the proxy and no transaction starts or changes. The annotation also does not work on private methods or on beans not managed by Spring. By default only unchecked exceptions and errors trigger rollback, so a checked exception commits unless you set rollbackFor. Catching an exception inside the method and swallowing it prevents rollback. REQUIRES_NEW suspends the outer transaction and uses a second connection, which can exhaust the pool or produce inconsistent outcomes. A transaction that spans a slow remote call holds a connection and locks for too long, so keep transactions short. Lazy loading outside a transaction throws LazyInitializationException, and readOnly = true is an optimisation hint, not a security guarantee.",
+      "follow_ups": [
+        "What is the difference between REQUIRED and REQUIRES_NEW?",
+        "How would you make a self-invocation transactional?"
+      ]
+    },
+    {
+      "topic": "JPA N+1 problem",
+      "level": "mid",
+      "question": "What is the N+1 select problem in JPA and Hibernate, and how do you fix it?",
+      "answer": "N+1 occurs when you load N parent entities with one query and then access a lazy association on each, triggering N extra queries, one per parent. It is easy to miss because the code looks innocent and only the SQL log or a query counter reveals it. Fixes include a JOIN FETCH in JPQL, an @EntityGraph on the repository method, a batch size via @BatchSize or hibernate.default_batch_fetch_size so that associations load with IN queries, or a DTO projection that selects exactly the columns you need. Each has trade-offs: fetching several collections with a join causes a Cartesian product and cannot be paginated in the database, and Hibernate warns about in-memory pagination. Keep associations lazy by default, avoid EAGER mappings, and add tests that assert the number of executed statements.",
+      "follow_ups": [
+        "Why does join fetching a collection break pagination?",
+        "When would you choose a DTO projection over an entity graph?"
+      ]
+    },
+    {
+      "topic": "microservices resilience",
+      "level": "senior",
+      "question": "How do you make calls between microservices resilient, and how do you keep data consistent without distributed transactions?",
+      "answer": "Set explicit timeouts on every remote call, add retries with exponential backoff and jitter only for idempotent operations, and wrap dependencies in a circuit breaker, for example with Resilience4j through Spring Cloud Circuit Breaker, so a failing service is cut off quickly instead of exhausting threads. Use bulkheads to isolate resources and provide fallbacks where degrading is acceptable. For consistency, avoid two-phase commit and instead use a saga: each service commits a local transaction and emits an event, with compensating actions on failure. Pair this with the transactional outbox pattern so that the database write and the Kafka event are published atomically, and design consumers to be idempotent because delivery is at least once. Accept eventual consistency and make business states such as PENDING explicit.",
+      "follow_ups": [
+        "What is the outbox pattern and what problem does it solve?",
+        "Choreography versus orchestration for sagas: how do you choose?"
+      ]
+    },
+    {
+      "topic": "Spring Security",
+      "level": "mid",
+      "question": "How does Spring Security authenticate requests in a stateless REST API using JWT?",
+      "answer": "Spring Security is built on a chain of servlet filters. For a stateless API you configure a SecurityFilterChain bean with sessions set to STATELESS, CSRF typically disabled for token-based APIs, and a custom filter placed before UsernamePasswordAuthenticationFilter. On login the server verifies credentials through an AuthenticationManager and a UserDetailsService with a BCrypt password encoder, then issues a signed JWT. On later requests the filter extracts the Bearer token, validates signature, expiry and claims, builds an Authentication with granted authorities and stores it in the SecurityContext. Authorisation then happens through requestMatchers rules or method security such as @PreAuthorize. In production, prefer the built-in oauth2ResourceServer support with an identity provider over hand-rolled token code, keep tokens short-lived and never store secrets in the token.",
+      "follow_ups": [
+        "Why can CSRF protection be disabled for a bearer-token API?",
+        "How would you handle token revocation?"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "How HashMap and ConcurrentHashMap work",
+      "body": "HashMap is an array of buckets indexed by the spread hash of the key. Colliding entries are chained in a linked list, and since Java 8 a long chain of 8 or more entries in a table of at least 64 slots is converted into a red-black tree, which bounds worst-case lookup to O(log n). The table doubles when size exceeds capacity times the load factor of 0.75, and entries are redistributed, so supplying an initial capacity avoids repeated resizing. Correctness depends on keys with consistent equals and hashCode and, ideally, immutable state. HashMap is not thread-safe: concurrent writes can lose updates or corrupt structure. ConcurrentHashMap solves this with compare-and-swap for empty buckets and fine-grained synchronization on the head node of a bucket otherwise, giving mostly lock-free reads and weakly consistent iterators. Its atomic methods such as computeIfAbsent and merge make compound operations safe, but a separate get then put is still a race. It does not allow null keys or values."
+    },
+    {
+      "title": "Records, sealed classes and pattern matching",
+      "body": "Modern Java moves data modelling towards concise, safe types. A record declares its components once and the compiler produces the constructor, accessors, equals, hashCode and toString. Records are final and shallowly immutable, which makes them ideal for DTOs, query projections and value objects, and they support compact constructors for validation. Sealed classes and interfaces restrict the set of permitted subtypes, so the compiler knows the full hierarchy. Combined with pattern matching for switch, finalised in Java 21, you can write switch expressions that destructure records and are checked for exhaustiveness, so a newly added subtype produces a compile error everywhere it is unhandled. Other useful features are text blocks for multi-line strings, var for local type inference, enhanced instanceof patterns, and sequenced collections in Java 21. These reduce boilerplate, but records are not suited to JPA entities, which need mutability, a no-argument constructor and proxying."
+    },
+    {
+      "title": "JVM memory model and garbage collection",
+      "body": "The JVM divides memory into the heap, per-thread stacks, metaspace for class metadata, and native areas such as the code cache. Objects live on the heap; short-lived ones die in the young generation and survivors are promoted to the old generation. G1, the default, splits the heap into regions, runs concurrent marking and collects regions with the most reclaimable space within a pause-time goal. ZGC performs almost all work concurrently, including compaction, using load barriers, which keeps pauses very short even on large heaps; generational ZGC in Java 21 improves its efficiency. Tuning starts with measurement: enable GC logging, watch pause times and the heap occupancy after collections, and size the heap with -Xms and -Xmx. Leaks in Java are usually reachable but unused objects, such as unbounded caches, static maps or listeners never removed. The Java Memory Model separately defines visibility rules through happens-before relations created by volatile, synchronized and final fields."
+    },
+    {
+      "title": "Class loading in the JVM",
+      "body": "Class loading is how the JVM finds bytecode and turns it into runtime classes. It has three phases: loading, which reads the class file; linking, which verifies bytecode, prepares static fields and optionally resolves references; and initialization, which runs static initialisers on first active use. Loaders follow the parent delegation model: a request goes first to the parent, so the bootstrap loader, then the platform loader, then the application loader. This prevents application code from replacing core classes such as java.lang.String. Frameworks create their own loaders, for example application servers isolate web applications, and Spring Boot's fat jar uses a launcher that loads nested jars. A class is identified by its name plus its defining loader, so the same class loaded by two loaders is two distinct types, which causes confusing ClassCastException errors. Classloader leaks, where a loader cannot be collected because something still references it, are a classic cause of metaspace exhaustion on redeploys."
+    },
+    {
+      "title": "Concurrency toolkit: executors, futures and virtual threads",
+      "body": "Never spawn raw threads for each task in production code. ExecutorService manages a pool of worker threads and a queue; choose bounded sizes: roughly the number of cores for CPU-bound work and larger pools for blocking I/O. Callable and Future give results, and CompletableFuture composes asynchronous stages with thenApply, thenCompose, thenCombine and error handling, while ideally using a dedicated executor for blocking calls. Shared mutable state needs synchronization: synchronized and ReentrantLock for mutual exclusion, volatile for visibility of a flag, atomics for lock-free counters, and concurrent collections for shared data structures. Deadlocks are avoided by acquiring locks in a consistent order and using timeouts. Java 21 virtual threads let you write simple blocking code that scales to very many concurrent tasks, because blocking unmounts the virtual thread from its carrier. They suit I/O-bound services, should not be pooled, and still require limits on scarce downstream resources such as database connections."
+    },
+    {
+      "title": "Spring Boot auto-configuration and dependency injection",
+      "body": "Spring Boot removes most manual configuration through starters and auto-configuration. A starter such as spring-boot-starter-web pulls in a coherent set of dependencies. At startup, @SpringBootApplication enables component scanning and auto-configuration, which registers beans conditionally, for example a DataSource only when a driver is on the classpath and no DataSource bean has been defined, using annotations such as @ConditionalOnClass and @ConditionalOnMissingBean. Your own beans always take precedence. Beans are created by the IoC container and wired by type, preferably through constructor injection, with @Qualifier or @Primary resolving ambiguity. Configuration is externalised through application.yml, profiles and environment variables, bound to typed classes with @ConfigurationProperties. Actuator exposes health and metrics endpoints. Because beans are singletons by default and shared across request threads, keep them stateless. Understanding the bean lifecycle and proxies explains behaviours such as @Transactional, @Async and @Cacheable not applying on self-invocation."
+    },
+    {
+      "title": "Spring MVC request flow and REST design",
+      "body": "In Spring MVC every request goes to the DispatcherServlet, the front controller. It asks HandlerMapping to find the matching controller method, runs interceptors, resolves arguments such as @PathVariable, @RequestParam and @RequestBody through HandlerMethodArgumentResolvers, and converts JSON using HttpMessageConverters, typically Jackson. The return value is written back as the response for a @RestController. Bean Validation with @Valid rejects bad input, and a @RestControllerAdvice with @ExceptionHandler methods maps exceptions to consistent error responses, ideally in the RFC 9457 problem details format. Good REST design uses nouns for resources, correct HTTP methods and status codes, idempotent PUT and DELETE, pagination for collections, versioning strategy, and DTOs instead of exposing entities directly. Keep controllers thin and place business logic in services. Use idempotency keys for non-idempotent operations that clients may retry, and document the contract with OpenAPI."
+    },
+    {
+      "title": "JPA and Hibernate essentials",
+      "body": "JPA is the specification and Hibernate is the most common implementation. The persistence context is a first-level cache of managed entities for one transaction: entities are tracked, and changes are flushed to the database as SQL when the transaction commits, which is called dirty checking. Associations should be lazy by default, because EAGER fetching loads data you may not need and hides performance problems. Lazy loading only works while the session is open, so map results to DTOs inside the service layer rather than relying on open-session-in-view. The N+1 problem is solved with fetch joins, entity graphs, batch fetching or projections. Use @Version for optimistic locking and pessimistic locks sparingly. Remember that equals and hashCode on entities must not depend on lazy collections, and that generated IDs are not available before persist for some strategies. Manage schema changes with Flyway or Liquibase, not hibernate.ddl-auto in production, and inspect the generated SQL regularly."
+    },
+    {
+      "title": "Microservices with Spring Cloud and Kafka",
+      "body": "Microservices split a system into independently deployable services around business capabilities, each owning its data. The price is distributed-systems complexity, so adopt them when team size and scaling needs justify it. Common building blocks include an API gateway such as Spring Cloud Gateway, service discovery or Kubernetes DNS, centralised configuration, circuit breakers and retries with Resilience4j, and distributed tracing with Micrometer Tracing and OpenTelemetry. Synchronous REST or gRPC calls are simple but create temporal coupling. Asynchronous messaging with Apache Kafka decouples services: producers append events to partitioned topics, consumer groups share partitions for parallelism, and ordering is guaranteed only within a partition, so the message key matters. Delivery is typically at least once, so consumers must be idempotent. Use the transactional outbox pattern to publish events reliably, sagas for multi-service workflows, and dead-letter topics for poison messages. Version contracts carefully so that services can be deployed independently."
+    },
+    {
+      "title": "Testing Java applications with JUnit 5 and Mockito",
+      "body": "A healthy Java test suite has many fast unit tests, fewer integration tests and a handful of end-to-end checks. JUnit 5 provides @Test, parameterised tests, nested classes, lifecycle hooks and an extension model. Mockito replaces collaborators with mocks or stubs so that a class is tested in isolation: stub behaviour with when and thenReturn, verify interactions with verify, and capture arguments with ArgumentCaptor. Mock only what you own at architecture boundaries and avoid over-mocking, which couples tests to implementation details. For Spring, use slice tests such as @WebMvcTest with MockMvc for controllers and @DataJpaTest for repositories, and @SpringBootTest sparingly for full context tests. Testcontainers runs real PostgreSQL or Kafka in Docker, which is more trustworthy than in-memory substitutes with different SQL behaviour. Keep tests deterministic, name them by behaviour, run them in the CI pipeline on every commit, and use coverage as a signal rather than a goal."
+    }
+  ],
+  "projects": [
+    {
+      "name": "E-commerce order service with Spring Boot and PostgreSQL",
+      "description": "A layered REST API for products, carts and orders using Spring MVC, Spring Data JPA and Flyway migrations. Includes JWT authentication with role-based access, validation, pagination, optimistic locking for stock updates, OpenAPI documentation and integration tests on Testcontainers, with a documented fix for an N+1 query.",
+      "skills": [
+        "spring boot",
+        "spring mvc",
+        "spring data jpa",
+        "hibernate",
+        "spring security",
+        "jwt",
+        "postgresql",
+        "testcontainers"
+      ]
+    },
+    {
+      "name": "Event-driven microservices with Kafka",
+      "description": "Three Spring Boot services for orders, payments and notifications communicating through Kafka topics. Implements the transactional outbox pattern, idempotent consumers, a dead-letter topic, a saga with compensation, and Resilience4j circuit breakers, with distributed tracing across the services.",
+      "skills": [
+        "microservices",
+        "kafka",
+        "spring cloud",
+        "spring boot",
+        "resilience4j",
+        "docker",
+        "saga pattern"
+      ]
+    },
+    {
+      "name": "Virtual threads versus thread pools benchmark",
+      "description": "A Java 21 service that calls slow downstream endpoints, implemented once with a fixed ExecutorService and once with virtual threads. Measures throughput, latency and memory with JMH or a load tool, captures GC logs for G1 and ZGC, and documents when each approach wins and how pinning was detected.",
+      "skills": [
+        "java 21",
+        "virtual threads",
+        "multithreading",
+        "completablefuture",
+        "garbage collection",
+        "zgc",
+        "g1gc"
+      ]
+    },
+    {
+      "name": "Containerised Java service on Kubernetes with CI/CD",
+      "description": "Package a Spring Boot application as a Docker image using a multi-stage build, deploy it to Kubernetes with deployments, services, config maps and liveness and readiness probes, and automate build, test and rollout with a Jenkins or GitHub Actions pipeline. Adds Micrometer metrics and JVM memory settings tuned for container limits.",
+      "skills": [
+        "docker",
+        "kubernetes",
+        "ci/cd",
+        "jenkins",
+        "spring boot",
+        "maven",
+        "gradle"
+      ]
+    }
+  ]
+}

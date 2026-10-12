@@ -1,0 +1,21 @@
+# Local environments, databases, build output and user uploads must never be deployed.
+node_modules
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.coverage
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/.env
+**/.env.local
+backend/uploads
+backend/tests
+backend/output
+frontend/dist
+.agents
+.claude
+skills-lock.json
+# Local dev pins 3.10; Vercel builds with its default (3.12), which the project supports (requires-python >=3.10).
+backend/.python-version

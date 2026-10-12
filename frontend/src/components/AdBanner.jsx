@@ -1,28 +1,38 @@
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { usePlan } from "../contexts/PlanContext";
-
-const ADSENSE_ID = import.meta.env.VITE_ADSENSE_ID || "";
+import { ADSENSE_CLIENT, adSlot, adsConfigured, loadAdSense } from "../lib/ads";
 
 const AD_STYLES = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 90,
-    padding: "16px",
+  frame: {
     borderRadius: "var(--radius)",
-    border: "1px dashed var(--border)",
-    background: "var(--bg-soft)",
+    border: "1px solid var(--border)",
+    background: "var(--bg-card)",
+    padding: "8px 8px 10px",
     overflow: "hidden",
-    position: "relative",
   },
   label: {
+    display: "block",
     fontSize: 10,
     fontWeight: 600,
     letterSpacing: "0.08em",
     textTransform: "uppercase",
     color: "var(--text-muted)",
-    opacity: 0.5,
+    textAlign: "center",
+    marginBottom: 6,
     userSelect: "none",
+  },
+  devBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "1px dashed var(--border)",
+    borderRadius: 8,
+    background: "var(--bg-soft)",
+    color: "var(--text-muted)",
+    fontSize: 11,
+    textAlign: "center",
+    padding: 8,
   },
   upgradeCard: {
     display: "flex",
@@ -62,44 +72,85 @@ const AD_STYLES = {
   },
 };
 
-export function AdPlaceholder({ style }) {
+const MIN_HEIGHT = { banner: 90, rectangle: 250, infeed: 120 };
+
+/** Fills one <ins> once it is in the page; a new route remounts it (see AdSlot's key). */
+function AdUnit({ kind }) {
+  const ref = useRef(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    loadAdSense().then((ok) => {
+      const el = ref.current;
+      if (cancelled || !el) return;
+      if (!ok) { setFailed(true); return; }
+      if (el.getAttribute("data-adsbygoogle-status")) return; // already filled (StrictMode re-run)
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch {
+        setFailed(true);
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+  if (failed) return null;
   return (
-    <div style={{ ...AD_STYLES.container, ...style }}>
-      <span style={AD_STYLES.label}>Advertisement</span>
-    </div>
+    <ins
+      ref={ref}
+      className="adsbygoogle"
+      style={{ display: "block", minHeight: MIN_HEIGHT[kind] }}
+      data-ad-client={ADSENSE_CLIENT}
+      data-ad-slot={adSlot(kind)}
+      data-ad-format={kind === "rectangle" ? "rectangle" : "auto"}
+      data-full-width-responsive="true"
+      {...(import.meta.env.DEV ? { "data-adtest": "on" } : {})}
+    />
   );
 }
 
-export function AdSidebar({ style }) {
-  return (
-    <div style={{ ...AD_STYLES.container, ...style, minHeight: 250, flexDirection: "column", gap: 8 }}>
-      <span style={AD_STYLES.label}>Sponsored Content</span>
-      {ADSENSE_ID && (
-        <div style={{ width: "100%", textAlign: "center", fontSize: 11, color: "var(--text-muted)", opacity: 0.4 }}>
-          AdSense Unit — 300x250
+/**
+ * An ad for free-plan users only. Paid users never load the AdSense script.
+ * Without AdSense configuration it renders nothing in production and a labelled box in development.
+ */
+export function AdSlot({ kind = "banner", style }) {
+  const { isPaid, planLoading } = usePlan();
+  const { pathname } = useLocation();
+  if (planLoading || isPaid) return null;
+  if (!adsConfigured()) {
+    if (!import.meta.env.DEV) return null;
+    return (
+      <div style={{ ...AD_STYLES.frame, ...style }}>
+        <span style={AD_STYLES.label}>Advertisement</span>
+        <div style={{ ...AD_STYLES.devBox, minHeight: MIN_HEIGHT[kind] }}>
+          Ad slot ({kind}) — set VITE_ADSENSE_ID and VITE_ADSENSE_SLOT_* to show real ads
         </div>
-      )}
-    </div>
+      </div>
+    );
+  }
+  return (
+    <aside style={{ ...AD_STYLES.frame, ...style }} aria-label="Advertisement">
+      <span style={AD_STYLES.label}>Advertisement</span>
+      <AdUnit key={pathname} kind={kind} />
+    </aside>
   );
 }
 
 export function AdHorizontal({ style }) {
-  return (
-    <div style={{ ...AD_STYLES.container, ...style, minHeight: 90, flexDirection: "column", gap: 8 }}>
-      <span style={AD_STYLES.label}>Advertisement</span>
-      {ADSENSE_ID && (
-        <div style={{ width: "100%", textAlign: "center", fontSize: 11, color: "var(--text-muted)", opacity: 0.4 }}>
-          AdSense Unit — 728x90
-        </div>
-      )}
-    </div>
-  );
+  return <AdSlot kind="banner" style={style} />;
+}
+
+export function AdSidebar({ style }) {
+  return <AdSlot kind="rectangle" style={style} />;
+}
+
+export function AdInFeed({ style }) {
+  return <AdSlot kind="infeed" style={style} />;
 }
 
 export function UpgradePrompt({ compact, style }) {
-  const { plan } = usePlan();
+  const { isPaid, planLoading } = usePlan();
 
-  if (plan !== "free") return null;
+  if (planLoading || isPaid) return null;
 
   if (compact) {
     return (
@@ -117,7 +168,7 @@ export function UpgradePrompt({ compact, style }) {
         transition: "all 0.15s",
         ...style,
       }}>
-        Upgrade to Pro &rarr;
+        Go ad-free with Turbo &rarr;
       </a>
     );
   }
@@ -125,9 +176,9 @@ export function UpgradePrompt({ compact, style }) {
   return (
     <div style={{ ...AD_STYLES.upgradeCard, ...style }}>
       <div>
-        <div style={AD_STYLES.upgradeTextStrong}>Unlock Pro Features</div>
+        <div style={AD_STYLES.upgradeTextStrong}>Go ad-free with Turbo</div>
         <div style={AD_STYLES.upgradeText}>
-          Remove ads, get unlimited AI rewrites, and unlock premium templates.
+          No ads, unlimited AI credits, full resume tailoring and Insider Connections.
         </div>
       </div>
       <a href="/pricing" style={AD_STYLES.upgradeBtn}>

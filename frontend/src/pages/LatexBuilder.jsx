@@ -7,7 +7,6 @@ const FONTS = ["modern", "sans", "serif", "elegant"];
 const SPACING_OPTS = ["compact", "normal", "spacious"];
 const COLORS_ARRAY = ["navy", "emerald", "crimson", "slate", "purple", "teal", "amber", "rose", "indigo", "zinc"];
 const COLOR_HEX = { navy:"#1e3a5f", emerald:"#047857", crimson:"#b91c1c", slate:"#475569", purple:"#7e22ce", teal:"#0d9488", amber:"#b45309", rose:"#9f1239", indigo:"#3730a3", zinc:"#3f3f46" };
-const PAPER_SIZES = ["a4paper", "letterpaper"];
 
 const EMPTY_RESUME = {
   personal: { name: "", email: "", phone: "", linkedin: "", website: "", title: "", address: "" },
@@ -28,12 +27,17 @@ export default function LatexBuilder() {
   const [skillInput, setSkillInput] = useState("");
   const [showConfig, setShowConfig] = useState(false);
   const [version, setVersion] = useState(1);
-  const [savedVersions, setSavedVersions] = useState([]);
   const [toast, setToast] = useState(null);
   const previewRef = useRef(null);
 
-  useEffect(() => {
+  // Show the loader again whenever the template id changes.
+  const [prevId, setPrevId] = useState(id);
+  if (prevId !== id) {
+    setPrevId(id);
     setLoading(true);
+  }
+
+  useEffect(() => {
     latex.list().then(r => {
       const data = r.data || [];
       const t = data.find(tm => tm.id === id) || data[0];
@@ -96,7 +100,7 @@ export default function LatexBuilder() {
       if (pdfUrl) URL.revokeObjectURL(pdfUrl);
       setPdfUrl(url);
       showToast("PDF compiled successfully");
-    } catch (e) {
+    } catch {
       setError("Compilation failed. Ensure pdflatex is installed on the server.");
       showToast("Compilation failed", "error");
     } finally {
@@ -120,21 +124,13 @@ export default function LatexBuilder() {
     try {
       localStorage.setItem(`latex_resume_${id}`, JSON.stringify({ data: resumeData, config, version }));
       showToast("Draft auto-saved");
-    } catch {}
+    } catch { /* ignore: localStorage may be unavailable or full */ }
   };
 
   const handleSaveVersion = () => {
     const v = { version: version + 1, data: JSON.parse(JSON.stringify(resumeData)), config: { ...config }, date: new Date().toISOString() };
-    setSavedVersions(prev => [v, ...prev]);
     setVersion(prev => prev + 1);
     showToast(`Version ${v.version} saved`);
-  };
-
-  const restoreVersion = (v) => {
-    setResumeData(JSON.parse(JSON.stringify(v.data)));
-    setConfig({ ...v.config });
-    setVersion(v.version);
-    showToast(`Version ${v.version} restored`);
   };
 
   const sections = [
@@ -157,7 +153,7 @@ export default function LatexBuilder() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 0, margin: -28, height: "calc(100vh - 60px)" }}>
+    <div className="lb-page" style={{ display: "flex", flexDirection: "column", gap: 0, margin: -28, height: "calc(100vh - 60px)" }}>
       <SEO
         title="LaTeX Resume Builder"
         description="Build and customize ATS-optimized LaTeX resumes with real-time preview and multiple templates."
@@ -181,7 +177,7 @@ export default function LatexBuilder() {
       )}
 
       {/* Top Bar */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 20px", borderBottom: "1px solid var(--border)", background: "rgba(8,12,22,0.9)", backdropFilter: "blur(12px)", flexShrink: 0 }}>
+      <div className="lb-topbar" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 20px", borderBottom: "1px solid var(--border)", background: "rgba(8,12,22,0.9)", backdropFilter: "blur(12px)", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button onClick={() => navigate("/templates")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: 16, padding: "4px 8px", display: "flex", alignItems: "center" }}>←</button>
           <div style={{ width: 1, height: 20, background: "var(--border)" }} />
@@ -190,7 +186,7 @@ export default function LatexBuilder() {
             v{version}
           </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <div className="lb-actions" style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <button className="btn-secondary" style={{ fontSize: 11, padding: "6px 12px" }} onClick={handleAutoSave}>💾 Save</button>
           <button className="btn-secondary" style={{ fontSize: 11, padding: "6px 12px" }} onClick={handleSaveVersion}>📌 Version</button>
           <button className="btn-secondary" style={{ fontSize: 11, padding: "6px 12px" }} onClick={handleDownloadTex}>📄 .tex</button>
@@ -246,7 +242,7 @@ export default function LatexBuilder() {
             {activeSection === "personal" && (
               <div>
                 <h3 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>👤 Personal Information</h3>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                   {["name", "email", "phone", "linkedin", "website", "title", "address"].map((f) => (
                     <div key={f} style={f === "address" ? { gridColumn: "1/-1" } : {}}>
                       <label style={{ fontSize: 10, fontWeight: 600, color: "var(--text-muted)", display: "block", marginBottom: 2, textTransform: "capitalize" }}>{f.replace("_", " ")}</label>
@@ -321,7 +317,7 @@ export default function LatexBuilder() {
                       <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>#{i + 1}</span>
                       <button onClick={() => removeEntry("experience", i)} style={{ fontSize: 10, color: "var(--danger)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px", borderRadius: 4 }}>✕ Remove</button>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                    <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                       {["company", "role", "location", "start_date", "end_date"].map((f) => (
                         <div key={f}>
                           <label style={{ fontSize: 9, fontWeight: 600, color: "var(--text-muted)", textTransform: "capitalize" }}>{f.replace("_", " ")}</label>
@@ -357,7 +353,7 @@ export default function LatexBuilder() {
                       <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>#{i + 1}</span>
                       <button onClick={() => removeEntry("education", i)} style={{ fontSize: 10, color: "var(--danger)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px", borderRadius: 4 }}>✕ Remove</button>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                    <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                       {["institution", "degree", "field", "start_date", "end_date", "gpa"].map((f) => (
                         <div key={f}>
                           <label style={{ fontSize: 9, fontWeight: 600, color: "var(--text-muted)", textTransform: "capitalize" }}>{f.replace("_", " ")}</label>
@@ -383,7 +379,7 @@ export default function LatexBuilder() {
                       <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>#{i + 1}</span>
                       <button onClick={() => removeEntry("projects", i)} style={{ fontSize: 10, color: "var(--danger)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px", borderRadius: 4 }}>✕ Remove</button>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                    <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                       {["name", "url", "description"].map((f) => (
                         <div key={f} style={(f === "description" || f === "url") ? { gridColumn: "1/-1" } : {}}>
                           <label style={{ fontSize: 9, fontWeight: 600, color: "var(--text-muted)", textTransform: "capitalize" }}>{f}</label>
@@ -413,7 +409,7 @@ export default function LatexBuilder() {
                       <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>#{i + 1}</span>
                       <button onClick={() => removeEntry("certifications", i)} style={{ fontSize: 10, color: "var(--danger)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px", borderRadius: 4 }}>✕ Remove</button>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                    <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                       {["name", "issuer", "date"].map((f) => (
                         <div key={f}>
                           <label style={{ fontSize: 9, fontWeight: 600, color: "var(--text-muted)", textTransform: "capitalize" }}>{f}</label>
@@ -439,7 +435,7 @@ export default function LatexBuilder() {
                       <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>#{i + 1}</span>
                       <button onClick={() => removeEntry("languages", i)} style={{ fontSize: 10, color: "var(--danger)", background: "none", border: "none", cursor: "pointer", padding: "2px 6px", borderRadius: 4 }}>✕ Remove</button>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                    <div className="lb-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                       {["language", "proficiency"].map((f) => (
                         <div key={f}>
                           <label style={{ fontSize: 9, fontWeight: 600, color: "var(--text-muted)", textTransform: "capitalize" }}>{f}</label>
@@ -554,6 +550,17 @@ export default function LatexBuilder() {
         @media (max-width: 768px) {
           .lb-split { flex-direction: column !important; }
           .lb-editor { width: 100% !important; min-width: unset !important; border-right: none !important; max-height: 50vh !important; }
+        }
+        @media (max-width: 900px) {
+          .lb-page { margin: -20px -16px -40px !important; height: calc(100dvh - 64px) !important; }
+          .lb-topbar { flex-wrap: wrap; gap: 8px; padding: 8px 12px !important; }
+          .lb-actions { width: 100%; flex-wrap: wrap; }
+          .lb-actions > button { white-space: nowrap; }
+        }
+        @media (max-width: 480px) {
+          .lb-grid-2 { grid-template-columns: 1fr !important; }
+          .lb-editor label { font-size: 11px !important; }
+          .lb-editor input, .lb-editor textarea { font-size: 16px !important; }
         }
       `}</style>
     </div>

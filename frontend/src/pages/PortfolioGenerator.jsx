@@ -68,15 +68,16 @@ const TYPING_SPEED = 60;
 
 function CodeStream({ onComplete }) {
   const [visibleLines, setVisibleLines] = useState(0);
-  const [done, setDone] = useState(false);
+  const done = visibleLines >= PLACEHOLDER_LINES.length;
+  const completedRef = useRef(false);
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    if (visibleLines < PLACEHOLDER_LINES.length) {
+    if (!done) {
       const timer = setTimeout(() => setVisibleLines((v) => v + 1), TYPING_SPEED);
       return () => clearTimeout(timer);
-    } else if (!done) {
-      setDone(true);
+    } else if (!completedRef.current) {
+      completedRef.current = true;
       onComplete?.();
     }
   }, [visibleLines, done, onComplete]);
@@ -129,17 +130,6 @@ export default function PortfolioGenerator() {
   const [autoFired, setAutoFired] = useState(false);
   const streamDoneRef = useRef(false);
 
-  useEffect(() => {
-    if (latestText && !autoFired && !loading && !result) {
-      setAutoFired(true);
-      const timer = setTimeout(() => {
-        setText(latestText);
-        handleGenerate(latestText);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [latestText]);
-
   const onStreamComplete = useCallback(() => {
     streamDoneRef.current = true;
   }, []);
@@ -162,6 +152,18 @@ export default function PortfolioGenerator() {
     }
     setLoading(false);
   };
+
+  // Auto-generate once when resume text arrives from context.
+  useEffect(() => {
+    if (latestText && !autoFired && !loading && !result) {
+      Promise.resolve().then(() => setAutoFired(true));
+      const timer = setTimeout(() => {
+        setText(latestText);
+        handleGenerate(latestText);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [latestText]); // eslint-disable-line react-hooks/exhaustive-deps -- intentionally fires only when latestText changes
 
   return (
     <div style={styles.wrapper}>

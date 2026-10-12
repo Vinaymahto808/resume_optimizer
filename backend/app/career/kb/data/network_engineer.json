@@ -1,0 +1,334 @@
+{
+  "id": "network_engineer",
+  "name": "Network Engineer",
+  "summary": "Network engineers design, build, secure and troubleshoot the LAN, WAN, wireless, data-center and cloud networks that connect users and applications. They work with routing and switching, firewalls and VPNs, and increasingly with automation and cloud networking. They are hired by enterprises, ISPs and carriers, managed service providers, data-center and cloud companies, and any organization with campuses, branches or critical connectivity.",
+  "titles": [
+    "network engineer",
+    "senior network engineer",
+    "network administrator",
+    "network security engineer",
+    "network automation engineer",
+    "wan engineer",
+    "data center network engineer",
+    "noc engineer",
+    "cloud network engineer",
+    "network architect"
+  ],
+  "skills": {
+    "core": [
+      "ospf", "bgp", "eigrp", "vlan", "stp", "rapid pvst+", "etherchannel", "lacp",
+      "tcp/ip", "subnetting", "vlsm", "dns", "dhcp", "nat", "acl", "ipsec",
+      "qos", "hsrp", "vrrp", "inter-vlan routing"
+    ],
+    "advanced": [
+      "vxlan", "bgp evpn", "mpls", "sd-wan", "ipv6", "802.1x", "pim", "route reflector",
+      "spine-leaf", "netconf", "restconf", "ssl vpn", "dmvpn", "zero trust"
+    ],
+    "tools": [
+      "cisco ios", "cisco nx-os", "junos", "arista eos", "palo alto networks", "fortigate",
+      "wireshark", "netmiko", "ansible", "python", "solarwinds", "netbox", "aws vpc",
+      "azure vnet", "terraform"
+    ]
+  },
+  "ats_keywords": [
+    "network infrastructure",
+    "lan/wan",
+    "network troubleshooting",
+    "firewall configuration",
+    "network monitoring",
+    "routing protocols",
+    "network automation",
+    "site-to-site vpn",
+    "remote access vpn",
+    "network segmentation",
+    "wireless lan",
+    "load balancer",
+    "f5 big-ip",
+    "packet capture",
+    "network design",
+    "change management",
+    "itil",
+    "ccna",
+    "ccnp",
+    "ccie",
+    "jncia-junos",
+    "pcnsa",
+    "network+",
+    "cisco catalyst",
+    "palo alto",
+    "fortinet",
+    "high availability",
+    "network documentation",
+    "ip addressing",
+    "next-generation firewall"
+  ],
+  "certifications": [
+    {
+      "name": "CompTIA Network+",
+      "provider": "CompTIA",
+      "level": "entry",
+      "why": "A vendor-neutral foundation in TCP/IP, switching, routing and troubleshooting that helps early-career candidates clear HR and ATS filters."
+    },
+    {
+      "name": "Cisco Certified Network Associate (CCNA)",
+      "provider": "Cisco",
+      "level": "associate",
+      "why": "The most widely requested networking credential, covering routing, switching, IP services, security basics and automation fundamentals."
+    },
+    {
+      "name": "Cisco Certified Network Professional (CCNP) Enterprise",
+      "provider": "Cisco",
+      "level": "professional",
+      "why": "Validates enterprise routing, SD-WAN, wireless and automation depth through the ENCOR core exam plus a concentration exam."
+    },
+    {
+      "name": "Palo Alto Networks Certified Network Security Administrator (PCNSA)",
+      "provider": "Palo Alto Networks",
+      "level": "associate",
+      "why": "Shows hands-on ability to configure and operate next-generation firewalls, a common requirement for network security roles."
+    },
+    {
+      "name": "AWS Certified Advanced Networking - Specialty",
+      "provider": "Amazon Web Services",
+      "level": "specialty",
+      "why": "Proves expertise in hybrid connectivity, VPC design, Transit Gateway, Direct Connect and cloud network troubleshooting."
+    },
+    {
+      "name": "Cisco Certified Internetwork Expert (CCIE) Enterprise Infrastructure",
+      "provider": "Cisco",
+      "level": "expert",
+      "why": "A top-tier credential demonstrating mastery of enterprise routing, overlay and automation design, valued for senior and architect roles."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Networking fundamentals",
+      "duration_weeks": 8,
+      "goals": [
+        "Understand the OSI and TCP/IP models and how a packet travels end to end",
+        "Subnet IPv4 networks quickly and read IPv6 addresses",
+        "Configure VLANs, trunks, STP and basic inter-VLAN routing",
+        "Learn DNS, DHCP, ARP and NAT behavior using packet captures"
+      ],
+      "skills": ["tcp/ip", "subnetting", "vlan", "stp", "dhcp", "dns", "nat", "wireshark"],
+      "project": "Build a small office network in Packet Tracer or GNS3 with three VLANs, a DHCP server, inter-VLAN routing and NAT, and document the addressing plan."
+    },
+    {
+      "stage": "Routing, switching and security core",
+      "duration_weeks": 12,
+      "goals": [
+        "Configure OSPF multi-area and basic eBGP with route filtering",
+        "Build redundant L2/L3 designs with EtherChannel and HSRP or VRRP",
+        "Write ACLs and configure site-to-site IPsec tunnels",
+        "Prepare for and pass CCNA"
+      ],
+      "skills": ["ospf", "bgp", "etherchannel", "hsrp", "acl", "ipsec", "cisco ios", "ccna"],
+      "project": "Lab a two-site enterprise with redundant core switches, OSPF internally, eBGP to two simulated ISPs, and an IPsec VPN between sites, then test failover."
+    },
+    {
+      "stage": "Automation and platforms",
+      "duration_weeks": 10,
+      "goals": [
+        "Automate configuration backups and audits with Python and Netmiko",
+        "Use Ansible playbooks and Jinja2 templates for repeatable changes",
+        "Query devices through NETCONF/RESTCONF and model-driven data",
+        "Work with a second vendor such as Juniper, Arista or Palo Alto"
+      ],
+      "skills": ["python", "netmiko", "ansible", "netconf", "restconf", "netbox", "junos", "arista eos"],
+      "project": "Create a Git-backed automation pipeline that pulls inventory from NetBox, renders Jinja2 configs, pushes them with Ansible and validates results."
+    },
+    {
+      "stage": "Data center, cloud and specialization",
+      "duration_weeks": 14,
+      "goals": [
+        "Design a spine-leaf fabric with VXLAN and BGP EVPN",
+        "Build hybrid connectivity between on-prem and AWS or Azure",
+        "Deploy next-generation firewall policy and SD-WAN overlays",
+        "Pursue CCNP Enterprise, PCNSA or the AWS Advanced Networking specialty"
+      ],
+      "skills": ["vxlan", "bgp evpn", "spine-leaf", "aws vpc", "azure vnet", "sd-wan", "palo alto networks", "terraform"],
+      "project": "Deploy a Terraform-built AWS VPC with Transit Gateway and a Site-to-Site VPN to a lab router running BGP, with flow logs and a documented failover test."
+    }
+  ],
+  "resume_bullets": [
+    "Migrated 40 branch sites from static routing to OSPF and eBGP over dual ISPs, cutting average failover time from minutes to under 10 seconds using BFD.",
+    "Automated configuration backups and compliance audits for 600+ Cisco and Arista devices with Python, Netmiko and Ansible, reducing manual audit effort by 85%.",
+    "Designed and deployed a spine-leaf data-center fabric with VXLAN and BGP EVPN across 12 racks, enabling multi-tenant segmentation with zero downtime cutover.",
+    "Rebuilt perimeter security on Palo Alto next-generation firewalls with App-ID and User-ID policies, removing 1,200 legacy rules and shrinking the rule base by 60%.",
+    "Troubleshot a recurring packet-loss incident with Wireshark and interface counters, isolating a duplex mismatch and eliminating 95% of related helpdesk tickets.",
+    "Implemented Cisco SD-WAN across 25 branches, replacing MPLS circuits for non-critical traffic and lowering WAN circuit cost by 30% while keeping SLA-based path selection.",
+    "Built AWS VPCs with Transit Gateway and IPsec VPN to on-prem using Terraform, standardizing hybrid connectivity for 15 application teams.",
+    "Deployed 802.1X with RADIUS and dynamic VLAN assignment on 3,000 campus ports, improving network access control coverage from 40% to 98%."
+  ],
+  "interview": [
+    {
+      "topic": "TCP/IP",
+      "level": "junior",
+      "question": "Walk me through what happens when you type a URL in a browser, from a network perspective.",
+      "answer": "The host first resolves the name: it checks its cache, then asks the configured DNS resolver, which returns an IP address. The host compares the destination to its own subnet; if it is remote, it ARPs for the default gateway's MAC address. It then opens a TCP connection with a three-way handshake (SYN, SYN-ACK, ACK) to port 443, performs a TLS handshake, and sends an HTTP request. Each router along the path makes a hop-by-hop forwarding decision using its routing table, rewriting the Layer 2 header while keeping the IP header (apart from TTL). NAT may translate the source address at the edge. The response returns along a possibly different path.",
+      "follow_ups": ["What changes if the destination is on the same subnet?", "Where could DNS or MTU problems break this flow?"]
+    },
+    {
+      "topic": "Subnetting",
+      "level": "junior",
+      "question": "Subnet 192.168.10.0/24 into subnets that each hold at least 50 hosts. What are the subnets?",
+      "answer": "Fifty hosts need 6 host bits because 2^6 - 2 = 62 usable addresses, so the prefix is /26 (255.255.255.192). A /24 splits into four /26 subnets with a block size of 64: 192.168.10.0/26 (hosts .1-.62, broadcast .63), 192.168.10.64/26 (.65-.126, broadcast .127), 192.168.10.128/26 (.129-.190, broadcast .191) and 192.168.10.192/26 (.193-.254, broadcast .255). If requirements were uneven I would use VLSM, allocating the largest subnets first to avoid waste, and leave room for growth. In practice I also reserve addresses for gateways, HSRP virtual IPs and infrastructure.",
+      "follow_ups": ["How would you split one /26 into subnets for 10 and 20 hosts?", "How do you summarize these four subnets?"]
+    },
+    {
+      "topic": "Switching",
+      "level": "junior",
+      "question": "What is the difference between an access port and a trunk port, and what is the native VLAN?",
+      "answer": "An access port carries traffic for a single VLAN and sends frames untagged, typically to end hosts. A trunk carries multiple VLANs between switches or to routers and firewalls, using 802.1Q tags to identify each VLAN. The native VLAN is the one whose frames are sent untagged on a trunk. Both ends must agree on it; a mismatch causes CDP/STP warnings and leaks traffic between VLANs. Best practice is to change the native VLAN to an unused one, prune allowed VLANs on trunks to those needed, disable DTP negotiation with switchport nonegotiate, and explicitly set the mode. This reduces VLAN hopping risk and limits broadcast scope.",
+      "follow_ups": ["What is a double-tagging attack?", "How would you find a native VLAN mismatch?"]
+    },
+    {
+      "topic": "Spanning Tree",
+      "level": "mid",
+      "question": "How does spanning tree choose a root bridge, and how would you prevent a rogue switch from becoming root?",
+      "answer": "STP elects the switch with the lowest bridge ID, which is priority (default 32768 plus the VLAN ID in PVST) followed by MAC address. Every other switch picks a root port with the lowest path cost to root, each segment elects a designated port, and the rest are blocked or discarding. To control the outcome I set the intended core switches to low priorities (for example 4096 and 8192) or use the root primary macro. To protect it, enable root guard on ports facing downstream devices so a superior BPDU puts the port in root-inconsistent state, BPDU guard on PortFast edge ports so a switch plugged in err-disables the port, and loop guard on non-designated links. I prefer Rapid PVST+ or MST for faster convergence.",
+      "follow_ups": ["What is the difference between root guard and BPDU guard?", "When would you choose MST over Rapid PVST+?"]
+    },
+    {
+      "topic": "OSPF",
+      "level": "mid",
+      "question": "Two OSPF routers will not form an adjacency. How do you troubleshoot it?",
+      "answer": "I work from the bottom up. First confirm Layer 1/2 and IP reachability between the interfaces, then check that OSPF is enabled on the interface (show ip ospf interface brief) and the interface is not passive. Next compare the parameters that must match on a link: area ID, subnet and mask, hello and dead timers, authentication type and key, and the stub or NSSA flags. Router IDs must be unique, and MTU must match or neighbors stick in ExStart/Exchange. On multi-access networks I check network type, since a mismatch between broadcast and point-to-point changes timers and DR election. I use show ip ospf neighbor and debug ip ospf adj sparingly, and check ACLs or firewalls blocking protocol 89 or multicast 224.0.0.5/6.",
+      "follow_ups": ["Why does an MTU mismatch cause a stuck ExStart state?", "What is the role of the DR and BDR?"]
+    },
+    {
+      "topic": "BGP",
+      "level": "mid",
+      "question": "Explain how BGP selects the best path, and how you would influence inbound and outbound traffic.",
+      "answer": "BGP evaluates attributes in order: highest weight (Cisco local), highest local preference, locally originated, shortest AS path, lowest origin code, lowest MED (between the same neighboring AS), eBGP over iBGP, lowest IGP metric to next hop, then tie-breakers such as oldest path and lowest router ID. For outbound traffic I raise local preference on the preferred exit, because it propagates across the iBGP domain. For inbound traffic I have fewer tools: AS path prepending, MED to a neighbor AS, more-specific prefix advertisement, or provider communities that adjust their local preference. Always apply prefix lists and max-prefix limits to avoid leaks, and remember that inbound control depends on how other networks treat your advertisements.",
+      "follow_ups": ["Why does iBGP need a full mesh or route reflectors?", "How do you avoid becoming a transit AS accidentally?"]
+    },
+    {
+      "topic": "Troubleshooting",
+      "level": "mid",
+      "question": "Users at a branch report that the internet is slow, but the WAN link shows low utilization. How do you investigate?",
+      "answer": "I define the scope first: who, which apps, since when, and whether anything changed. Then I test layer by layer. On the branch router I check interface errors, drops, duplex and CRC counters, and QoS queue drops, since low average utilization can hide microbursts or policer drops. I run ping and traceroute with various packet sizes to look for latency, loss and MTU or fragmentation issues, and compare DNS resolution time against direct IP access. I check CPU and memory on the router and firewall, and look at SD-WAN or IP SLA path quality. A packet capture on both sides shows retransmissions and window behavior. Finally I review recent changes and ISP circuit health, and document the root cause and fix.",
+      "follow_ups": ["How would you detect an MTU black hole?", "What tools give you historical baselines?"]
+    },
+    {
+      "topic": "Firewalls and VPNs",
+      "level": "mid",
+      "question": "Describe how an IPsec site-to-site VPN is established and how you would debug a tunnel that is down.",
+      "answer": "IKE runs in two phases. Phase 1 (IKE SA) authenticates peers using pre-shared keys or certificates, and negotiates encryption, hash, DH group and lifetime. IKEv2 collapses this into IKE_SA_INIT and IKE_AUTH. Phase 2 (child SA) negotiates the ESP parameters and the traffic selectors or proxy IDs, then data flows encrypted. To debug, I confirm reachability on UDP 500 and 4500 (NAT-T), then compare both sides for proposal mismatches, identity or PSK errors, and mismatched traffic selectors, which is the most common failure. Logs or debug crypto on Cisco, ike-gateway logs on Palo Alto, or diagnose vpn ike on FortiGate show which phase fails. I also check routing into the tunnel, NAT exemption, and MTU or MSS clamping.",
+      "follow_ups": ["Policy-based versus route-based VPN: when to use each?", "What is dead peer detection?"]
+    },
+    {
+      "topic": "Redundancy",
+      "level": "mid",
+      "question": "Compare HSRP, VRRP and GLBP, and explain how you would design gateway redundancy for a campus VLAN.",
+      "answer": "All three give hosts a virtual IP as default gateway. HSRP is Cisco proprietary with an active and standby router; VRRP is an open standard with a master and backups; GLBP is Cisco-only and load-balances by handing out different virtual MACs. For a campus I pair two distribution or core switches, set the intended primary as active with a higher priority, enable preemption with a delay, and track the uplink or upstream route so failover occurs when the northbound path fails. I align the STP root and HSRP active on the same switch to avoid suboptimal traffic crossing the inter-switch link. Where supported I prefer stacking or multichassis designs such as VSS or vPC, which remove first-hop redundancy complexity.",
+      "follow_ups": ["What happens without preemption after the primary recovers?", "How does BFD speed up failover?"]
+    },
+    {
+      "topic": "Automation",
+      "level": "mid",
+      "question": "How would you automate configuration changes across hundreds of network devices safely?",
+      "answer": "I treat the network like code. Source of truth lives in NetBox or Git, configurations are generated from Jinja2 templates and variables, and changes go through pull requests and review. Execution uses Ansible with network modules or Python with Netmiko, Nornir or NETCONF where devices support it, because structured, idempotent models are safer than screen-scraped CLI. Before pushing I run pre-checks, take a backup, use dry-run or diff mode, and apply changes to a canary group first with a rollback plan such as commit confirm on Junos or configure replace on IOS XE. Afterward I run post-checks that validate neighbors, routes and reachability, and I log results. Credentials sit in a vault, never in playbooks.",
+      "follow_ups": ["What is the advantage of NETCONF over SSH CLI scraping?", "How do you handle configuration drift?"]
+    },
+    {
+      "topic": "Data center",
+      "level": "senior",
+      "question": "Why do modern data centers use spine-leaf with VXLAN and BGP EVPN instead of a traditional three-tier design?",
+      "answer": "Three-tier designs depend on spanning tree or large Layer 2 domains, which limit scale, waste links and create wide failure domains. A spine-leaf fabric is Layer 3 everywhere with equal-cost multipath, so every leaf is the same hop count from every other, bandwidth scales by adding spines, and failures are contained. VXLAN overlays carry Layer 2 and Layer 3 tenant networks over that routed underlay, supporting about 16 million segments rather than 4094 VLANs. BGP EVPN is the control plane that distributes MAC and IP reachability, replacing flood-and-learn, enabling distributed anycast gateways, ARP suppression and multi-tenancy with VRFs. Trade-offs are operational complexity, MTU requirements for the encapsulation, and the need for strong automation and telemetry skills.",
+      "follow_ups": ["What does the underlay protocol need to provide?", "How does EVPN multihoming work compared with vPC?"]
+    },
+    {
+      "topic": "Cloud networking",
+      "level": "senior",
+      "question": "Design hybrid connectivity between an on-prem data center and many AWS VPCs. What are the key decisions?",
+      "answer": "I would use AWS Transit Gateway as the hub to avoid a mesh of VPC peerings, since peering is non-transitive and does not scale. On-prem connectivity comes from Direct Connect for predictable latency and throughput, with a Site-to-Site VPN as an encrypted backup, both using BGP with the same prefixes and AS path or local preference to prefer Direct Connect. Key decisions are non-overlapping CIDR planning, TGW route tables to segment prod, dev and shared services, centralized egress or inspection with a firewall VPC, and DNS through Route 53 Resolver endpoints. I would size for bandwidth limits, enforce flow logs, and define everything in Terraform. Redundancy means two Direct Connect locations and diverse paths.",
+      "follow_ups": ["How does overlapping CIDR get handled?", "What are the cost drivers in this design?"]
+    },
+    {
+      "topic": "Security",
+      "level": "senior",
+      "question": "A next-generation firewall rule base has grown to thousands of rules. How would you clean it up without causing an outage?",
+      "answer": "I start with data: export hit counts and last-hit timestamps over a meaningful window (at least 90 days, covering quarter-end jobs), and identify shadowed, duplicate, expired and zero-hit rules. I group rules by application owner, replace broad port or any-any rules with App-ID and user based policies, and use address groups and tags to reduce object sprawl. Cleanup is staged: first disable-tag and log rules with no hits, notify owners, and then remove after a grace period, always keeping a candidate config backup and a rollback plan. Changes happen in a maintenance window with monitoring of deny logs. I then put governance in place: change tickets, rule expiry dates, owner fields and periodic recertification, ideally managed through code or Panorama templates.",
+      "follow_ups": ["How do you handle rules for seasonal or rarely used systems?", "What logging impact should you consider?"]
+    },
+    {
+      "topic": "Troubleshooting",
+      "level": "senior",
+      "question": "You get paged: a core BGP session to your ISP is flapping and traffic is intermittently dropping. Walk through your response.",
+      "answer": "First I stabilize and scope: check which circuits and sites are affected, and confirm whether a secondary path is carrying traffic. I look at the BGP neighbor logs and notification codes: hold timer expired points to loss or congestion on the path, while cease or max-prefix messages point to policy. I check the physical and Layer 2 side for interface errors, optics levels, flaps and CPU spikes on the router that could delay keepalives, and test with ping and traceroute to the peer. If the cause is unclear I open a ticket with the carrier while gathering evidence. Mitigation can include shutting the flapping session to use the backup, applying route dampening cautiously, and enabling BFD tuned sensibly. Afterward I write a root-cause review with prevention actions.",
+      "follow_ups": ["Why can aggressive BFD timers make things worse?", "What would you check if the session is up but no prefixes arrive?"]
+    },
+    {
+      "topic": "Wireless",
+      "level": "junior",
+      "question": "A user complains that Wi-Fi is slow and drops in one area. What do you check?",
+      "answer": "I would gather the client details first: device, SSID, band and the time of the issue, then check the controller or dashboard for the client's RSSI, SNR, data rate, retries and roaming history. Common causes are weak coverage (target roughly -67 dBm or better with good SNR in the user area), co-channel interference from overlapping APs, a noisy 2.4 GHz band, too many clients on one AP, or sticky clients that refuse to roam. I would do a spectrum or site survey with a tool such as Ekahau, review channel and power plans, enable band steering and use 5 or 6 GHz channels with 20 or 40 MHz widths in dense areas. I also verify that the wired uplink, VLAN and DHCP scope are healthy, as these can mimic a wireless fault.",
+      "follow_ups": ["Why use 20 MHz channels in high-density deployments?", "How does 802.11r help roaming?"]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "OSI model versus TCP/IP model",
+      "body": "The OSI model has seven layers: physical, data link, network, transport, session, presentation and application. The TCP/IP model collapses these into four or five: link, internet, transport and application. OSI is a reference model used mainly for troubleshooting vocabulary; TCP/IP describes the protocols actually deployed. Engineers use layer language constantly: a Layer 1 problem is a bad cable or optic, Layer 2 covers MAC addresses, VLANs and spanning tree, Layer 3 covers IP addressing and routing, and Layer 4 covers TCP and UDP ports and session behavior. A device is described by the highest layer it inspects: a switch forwards on MAC addresses, a router on IP, a stateful firewall on connections, and a next-generation firewall or load balancer on applications. Troubleshooting works best methodically, bottom-up, top-down or divide-and-conquer, rather than guessing. Encapsulation adds headers on the way down, so each layer's data is a payload to the layer below, and decapsulation reverses the process at the receiver."
+    },
+    {
+      "title": "Subnetting and VLSM",
+      "body": "An IPv4 address has a network portion and a host portion, separated by the prefix length. Each additional prefix bit halves the subnet size: a /24 has 256 addresses (254 usable), a /25 has 128, a /26 has 64, a /27 has 32 and a /30 has four addresses, leaving two usable hosts for point-to-point links (a /31 is allowed for point-to-point under RFC 3021). The block size is 256 minus the interesting octet of the mask. Variable-length subnet masking lets you carve one block into differently sized subnets, allocating the largest requirement first so ranges stay aligned on their boundaries. Summarization combines contiguous aligned subnets into a single prefix, for example 10.1.0.0/24 through 10.1.3.0/24 become 10.1.0.0/22, which shrinks routing tables and hides instability. Private ranges are 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16. IPv6 uses 128-bit addresses with /64 subnets as standard and no broadcast, relying on neighbor discovery instead of ARP."
+    },
+    {
+      "title": "VLANs, trunks and spanning tree",
+      "body": "A VLAN is a logical broadcast domain that segments a switch infrastructure; hosts in different VLANs communicate only through a Layer 3 device. Trunks use IEEE 802.1Q tagging to carry multiple VLANs, with one native VLAN untagged. Inter-VLAN routing is done with a router-on-a-stick or, more commonly, switched virtual interfaces on a Layer 3 switch. Because redundant Layer 2 paths cause loops and broadcast storms, spanning tree blocks some links. Rapid PVST+ runs a spanning tree per VLAN with fast convergence; MST maps groups of VLANs to a few instances to reduce load. The root bridge should be chosen deliberately by lowering priority on the core, and edge protections are essential: PortFast with BPDU guard on access ports, root guard toward downstream switches and loop guard on uplinks. EtherChannel with LACP bundles links into one logical interface that STP treats as a single link, giving bandwidth and redundancy, while multichassis technologies like vPC or VSS let the bundle span two switches."
+    },
+    {
+      "title": "OSPF versus EIGRP versus BGP",
+      "body": "OSPF is an open-standard link-state IGP. Routers flood link-state advertisements within an area, build an identical database, and run Dijkstra's SPF algorithm using cost based on bandwidth. Areas, with area 0 as the backbone, limit flooding and enable summarization at ABRs. EIGRP is an advanced distance-vector protocol, originally Cisco proprietary and now documented in an RFC, that uses DUAL for fast loop-free convergence, feasible successors and a composite metric; it is simple to configure but largely limited to Cisco environments. BGP is a path-vector protocol designed for policy and scale between autonomous systems, and it is increasingly used inside data centers as well. It chooses paths by attributes rather than by a simple metric, runs over TCP port 179 and relies on explicit neighbor configuration. Choose an IGP for fast internal reachability and BGP where you need routing policy, internet peering, multi-homing, or a scalable fabric underlay. Administrative distance decides between routing sources: connected 0, static 1, eBGP 20, EIGRP 90, OSPF 110, iBGP 200."
+    },
+    {
+      "title": "NAT, DNS and DHCP essentials",
+      "body": "NAT translates addresses at a boundary. Static NAT maps one inside address to one outside address, dynamic NAT uses a pool, and PAT (overload) maps many inside hosts to one address by rewriting source ports, which conserves public IPv4 space. NAT complicates protocols that embed addresses and breaks end-to-end transparency, so IPv6 aims to remove the need for it. DNS resolves names to records: A and AAAA for addresses, CNAME for aliases, MX for mail, PTR for reverse lookups, and NS and SOA for delegation. Queries use UDP 53 and fall back to TCP for large responses and zone transfers. Recursive resolvers cache answers according to TTL. DHCP automates addressing through the DORA process: discover, offer, request, acknowledge. Clients broadcast, so routers need an ip helper-address (DHCP relay) to forward requests to a central server. Good practice is reserving ranges for static devices, using lease times that match client churn, and enabling DHCP snooping to block rogue servers."
+    },
+    {
+      "title": "Firewalls, ACLs and zone-based security",
+      "body": "An ACL is an ordered list of permit or deny entries evaluated top-down with an implicit deny at the end. Standard ACLs match only source addresses; extended ACLs match protocol, source, destination and ports. ACLs are stateless on most routers, so return traffic must be allowed explicitly, while a stateful firewall tracks connections and automatically permits return traffic. Next-generation firewalls add application identification, user identity, intrusion prevention, URL filtering and TLS inspection, so policy is written by application and user rather than by port alone. Security zones group interfaces such as inside, DMZ and outside, and policy is applied between zones. Sound practice is least privilege, a final explicit deny with logging, rule ordering from specific to general, regular cleanup of unused rules, and separate management access protected by MFA. High availability is typically active-passive or active-active pairs with session synchronization. Segmentation by VRF or VLAN and zero trust principles limit lateral movement after a compromise."
+    },
+    {
+      "title": "IPsec and SSL VPN",
+      "body": "IPsec secures IP traffic at the network layer. IKE negotiates security associations and keys; ESP provides encryption and integrity, while AH provides integrity only and is rarely used. Tunnel mode encapsulates the original packet and is used for site-to-site VPNs, while transport mode protects host-to-host payloads. Site-to-site tunnels can be policy-based, matching traffic selectors or access lists, or route-based using virtual tunnel interfaces so routing protocols such as OSPF or BGP can run over them. DMVPN and similar overlays add dynamic spoke-to-spoke tunnels for hub-and-spoke WANs. NAT in the path requires NAT-T, which wraps ESP in UDP 4500. SSL or TLS VPNs run over TCP or DTLS on port 443 and suit remote users because they traverse restrictive firewalls and can offer clientless or full-tunnel access with per-application control. IPsec remote access with IKEv2 is common too. Key choices include strong algorithms (AES-GCM, SHA-2, DH group 14 or higher or elliptic curves), perfect forward secrecy, certificate or SAML-based authentication with MFA, and split tunneling policy."
+    },
+    {
+      "title": "SD-WAN and WAN design",
+      "body": "Traditional WANs used MPLS circuits with routing handled by static or dynamic protocols at each branch. SD-WAN separates the control plane from the data plane and builds an encrypted overlay, usually IPsec tunnels, across any transport such as broadband, LTE or MPLS. A central controller or orchestrator distributes policy, templates and routing information, enabling zero-touch provisioning of branches. The main benefit is application-aware routing: the fabric measures loss, latency and jitter on each path and steers critical traffic, such as voice or SaaS, to the best one, with fast failover. It also enables cloud on-ramps, local internet breakout with integrated security, and simpler segmentation. Trade-offs include dependence on the vendor ecosystem, the need to design the underlay and control-plane scale carefully, troubleshooting across overlay and underlay, and licensing. MPLS remains valuable for guaranteed quality and carrier-managed services. Many networks adopt a hybrid design, and SASE extends the model by delivering security services from the cloud."
+    },
+    {
+      "title": "Network automation and programmability",
+      "body": "Manual CLI changes do not scale and cause drift. Network automation applies software practices: a source of truth such as NetBox for inventory and intended state, templates in Jinja2, version control in Git, automated testing and CI/CD pipelines. Python libraries like Netmiko and Paramiko automate SSH sessions, NAPALM abstracts vendors, and Nornir runs tasks concurrently. Ansible uses declarative playbooks with network modules and is agentless. Model-driven programmability uses YANG data models accessed through NETCONF (XML over SSH, with transactional commits and candidate datastores) or RESTCONF (HTTP/REST with JSON or XML), while gNMI streams telemetry. Structured data beats screen scraping with regex or TextFSM, though parsers are still needed for legacy devices. Safe practice includes idempotent tasks, pre- and post-validation, canary rollouts, rollback options and secrets stored in a vault. Infrastructure as code tools like Terraform extend this to cloud networks, VPNs and firewalls. Telemetry from SNMP, syslog, NetFlow and streaming data feeds closed-loop monitoring."
+    },
+    {
+      "title": "Cloud networking: AWS VPC and Azure VNet",
+      "body": "A VPC in AWS and a VNet in Azure are logically isolated virtual networks with CIDR blocks divided into subnets. Public subnets route to an internet gateway, while private subnets reach the internet through a NAT gateway. AWS uses security groups (stateful, attached to interfaces) and network ACLs (stateless, per subnet); Azure uses network security groups plus Azure Firewall. Connecting networks at scale uses AWS Transit Gateway or Azure Virtual WAN and hub-and-spoke topologies, because VPC and VNet peering are non-transitive. Hybrid connectivity relies on a Site-to-Site VPN with BGP, or private circuits: AWS Direct Connect and Azure ExpressRoute. Private endpoints such as AWS PrivateLink expose services without traversing the internet. Plan non-overlapping CIDR ranges early because renumbering is painful, design for multiple availability zones, and use flow logs for troubleshooting and audit. Costs matter: data transfer between zones, regions and out to the internet, plus NAT gateway processing, can be significant. Define everything as code."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Multi-site enterprise network lab",
+      "description": "Build a three-site topology in GNS3 or EVE-NG with redundant core switches, OSPF internally, eBGP to two simulated ISPs, HSRP gateways and IPsec site-to-site VPNs. Document the IP plan, run failover tests and capture convergence times.",
+      "skills": ["ospf", "bgp", "hsrp", "ipsec", "etherchannel", "gns3", "cisco ios"]
+    },
+    {
+      "name": "Network automation toolkit",
+      "description": "Write a Python and Netmiko tool that backs up configurations, diffs them against Git, audits compliance rules and pushes templated changes with Ansible, using NetBox as the source of truth. Publish with unit tests and a README.",
+      "skills": ["python", "netmiko", "ansible", "netbox", "netconf", "restconf"]
+    },
+    {
+      "name": "Spine-leaf VXLAN EVPN fabric",
+      "description": "Emulate a two-spine, four-leaf data-center fabric on Arista cEOS or Cisco NX-OS with an eBGP underlay, VXLAN with BGP EVPN overlay, anycast gateways and tenant VRFs, and automate the build with Ansible.",
+      "skills": ["vxlan", "bgp evpn", "spine-leaf", "arista eos", "cisco nx-os", "ansible"]
+    },
+    {
+      "name": "Hybrid cloud connectivity with Terraform",
+      "description": "Provision an AWS VPC with Transit Gateway, private subnets and a Site-to-Site VPN to a lab router running BGP, with flow logs, security groups and a documented failover test. Repeat a smaller version in Azure.",
+      "skills": ["aws vpc", "azure vnet", "terraform", "bgp", "ipsec"]
+    }
+  ]
+}

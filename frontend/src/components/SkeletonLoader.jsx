@@ -1,4 +1,10 @@
+import { useState } from "react";
+
 export default function SkeletonCard({ lines = 3, width = "100%", height = "auto" }) {
+  // Random line widths computed once per mount (keeps render pure).
+  const [lineWidths] = useState(() =>
+    Array.from({ length: Math.max(lines, 1) }, () => 70 + Math.random() * 30)
+  );
   return (
     <div
       style={{
@@ -19,7 +25,7 @@ export default function SkeletonCard({ lines = 3, width = "100%", height = "auto
           key={i}
           style={{
             ...styles.line,
-            width: `${70 + Math.random() * 30}%`,
+            width: `${lineWidths[i % lineWidths.length]}%`,
             animationDelay: `${i * 0.1}s`,
           }}
         />

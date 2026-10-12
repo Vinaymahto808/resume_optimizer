@@ -22,14 +22,18 @@ dependencies = [
     "httpx",
     "requests",
     "openai>=1.0.0",
-    "pinecone-client>=5.0.0",
     "numpy>=1.24.0",
-    "scipy>=1.10.0",
-    "playwright>=1.40.0",
-    "spacy>=3.7.0",
     "pypdf>=4.0.0",
-    "thefuzz>=0.22.0",
     "cachetools>=7.0.0",
     "gunicorn>=23.0.0",
-    "resend>=2.10.0"
+    "resend>=2.10.0",
+    "segno>=1.6.6",
+    "pinecone>=5.0.0",
+    "langgraph>=0.2.0",
+]
+
+[project.optional-dependencies]
+full = [
+    "playwright>=1.40.0",
+    "spacy>=3.7.0",
 ]

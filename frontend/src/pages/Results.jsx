@@ -3,8 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import { resumes, v1 } from "../api";
 import { useResume } from "../contexts/ResumeContext";
 import { usePlan } from "../contexts/PlanContext";
-import { AdHorizontal, AdSidebar, UpgradePrompt } from "../components/AdBanner";
+import { AdSidebar, UpgradePrompt } from "../components/AdBanner";
 import SEO from "../components/SEO";
+import ImproveResume from "../components/career/ImproveResume";
 
 const categoryIcons = {
   Content: "📄", Format: "📐", Skills: "💼", Sections: "📋", Style: "🎨",
@@ -195,7 +196,7 @@ export default function Results() {
       })
       .catch(() => setData(null))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, updateResumeText]);
 
   if (loading) {
     return (
@@ -234,6 +235,9 @@ export default function Results() {
             Scan Another
           </Link>
         </div>
+
+        {/* Fix the resume right away: issues, job match, inline editor, instant re-check */}
+        <ImproveResume initialScore={score} rawText={data.raw_text || ""} initialIssues={data.suggestions || []} />
 
         {/* 19-Point Resume Check */}
         <NineteenPointCheck data={data.nineteen_point} />
@@ -376,7 +380,7 @@ export default function Results() {
                 </div>
               ) : !jobsLoading ? <p style={{ fontSize: 13, color: "var(--text-muted)" }}>No job recommendations available</p> : null}
               {jobs && jobs.length > 5 && (
-                <Link to="/job-recommender" style={{ display: "block", textAlign: "center", marginTop: 14, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
+                <Link to="/jobs" style={{ display: "block", textAlign: "center", marginTop: 14, fontSize: 13, color: "var(--accent)", fontWeight: 600 }}>
                   View all {jobs.length} matches &rarr;
                 </Link>
               )}

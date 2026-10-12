@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { nextPath } from "../lib/nextPath";
 import { useAuth } from "../contexts/AuthContext";
+import { authError } from "../api";
 import AuthShell from "../components/AuthShell";
+import { AuthCard, AuthNote, PasswordField } from "../components/auth/AuthParts";
 import SEO from "../components/SEO";
 
 export default function Login() {
   const { user, login } = useAuth();
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const after = nextPath(search);
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) navigate("/dashboard", { replace: true });
-  }, [user, navigate]);
+    if (user) navigate(after, { replace: true });
+  }, [user, navigate, after]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,9 +26,9 @@ export default function Login() {
     setLoading(true);
     try {
       await login(form.email, form.password);
-      navigate("/dashboard");
+      navigate(after);
     } catch (err) {
-      setError(err?.response?.data?.detail || "Invalid email or password");
+      setError(authError(err, "Invalid email or password"));
     } finally {
       setLoading(false);
     }
@@ -36,21 +41,12 @@ export default function Login() {
         description="Sign in to your ProfileOptimizer account to access your resume scans, AI analysis, and career tools."
         canonical="https://www.profileotimizer.online/login"
       />
-      <div className="auth-card">
-        <Link to="/" className="auth-brand" style={{ textDecoration: "none" }}>
-          <div className="auth-brand-dot">P</div>
-          <span className="auth-brand-name">ProfileOptimizer</span>
-        </Link>
-
-        <h1 className="auth-title">Welcome back</h1>
-        <p className="auth-subtitle">Sign in to your account to continue.</p>
-
-        {error && (
-          <div style={{ color: "var(--danger)", fontSize: 13, marginBottom: 16, padding: "10px 14px", background: "var(--danger-soft)", borderRadius: 8, border: "1px solid rgba(239,68,68,0.15)" }}>
-            {error}
-          </div>
-        )}
-
+      <AuthCard
+        title="Welcome back"
+        subtitle="Sign in to your account to continue."
+        footer={<>Don't have an account? <Link to={`/signup${search}`}>Create one for free</Link></>}
+      >
+        <AuthNote>{error}</AuthNote>
         <form onSubmit={handleSubmit}>
           <div className="auth-field">
             <label className="auth-label" htmlFor="email">Email address</label>
@@ -58,41 +54,28 @@ export default function Login() {
               id="email"
               className="auth-input"
               type="email"
+              autoComplete="email"
+              inputMode="email"
               placeholder="you@example.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
             />
           </div>
-
-          <div className="auth-field">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-              <label className="auth-label" htmlFor="password" style={{ marginBottom: 0 }}>Password</label>
-              <Link to="/forgot-password" style={{ fontSize: 12, color: "var(--accent)", fontWeight: 600, textDecoration: "none" }}>
-                Forgot password?
-              </Link>
-            </div>
-            <input
-              id="password"
-              className="auth-input"
-              type="password"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
-          </div>
-
+          <PasswordField
+            id="password"
+            label="Password"
+            value={form.password}
+            onChange={(password) => setForm({ ...form, password })}
+            autoComplete="current-password"
+            placeholder="Your password"
+            aside={<Link to="/forgot-password" className="auth-aside-link">Forgot password?</Link>}
+          />
           <button className="auth-btn" type="submit" disabled={loading}>
             {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
-
-        <p className="auth-footer-links">
-          Don't have an account?{" "}
-          <Link to="/signup">Create one for free</Link>
-        </p>
-      </div>
+      </AuthCard>
     </AuthShell>
   );
 }

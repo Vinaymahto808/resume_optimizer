@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet, Navigate, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./contexts/AuthContext";
 import { PlanProvider } from "./contexts/PlanContext";
@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import DashboardLayout from "./components/DashboardLayout";
 import GTMProvider from "./components/GTMProvider";
+import ScrollManager from "./components/ScrollManager";
+import UpgradeModal from "./components/career/UpgradeModal";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -18,7 +20,6 @@ import Results from "./pages/Results";
 import Pricing from "./pages/Pricing";
 import Templates from "./pages/Templates";
 import ProfileAnalyzer from "./pages/ProfileAnalyzer";
-import JobRecommender from "./pages/JobRecommender";
 import AIAnalysis from "./pages/AIAnalysis";
 import CareerRoadmap from "./pages/CareerRoadmap";
 import PortfolioGenerator from "./pages/PortfolioGenerator";
@@ -29,8 +30,14 @@ import Account from "./pages/Account";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-import AutoApply from "./pages/AutoApply";
-import AutomationHub from "./pages/AutomationHub";
+import Jobs from "./pages/Jobs";
+import ResumeEditor from "./pages/ResumeEditor";
+import Tracker from "./pages/Tracker";
+import Agent from "./pages/Agent";
+import Orion from "./pages/Orion";
+import Recruiter from "./pages/Recruiter";
+import Admin from "./pages/Admin";
+import Feature, { FeaturesIndex } from "./pages/Feature";
 
 function PublicLayout() {
   return (
@@ -40,6 +47,12 @@ function PublicLayout() {
       <Footer />
     </>
   );
+}
+
+/** Old URLs kept working: forward to the page that replaced them (query string preserved). */
+function Redirect({ to }) {
+  const { search } = useLocation();
+  return <Navigate to={`${to}${search}`} replace />;
 }
 
 function AuthPage({ children }) {
@@ -54,6 +67,8 @@ export default function App() {
         <PlanProvider>
         <GTMProvider>
         <ResumeProvider>
+          <UpgradeModal />
+          <ScrollManager />
           <Routes>
             {/* Public pages with Navbar */}
             <Route element={<PublicLayout />}>
@@ -65,6 +80,8 @@ export default function App() {
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/templates" element={<Templates />} />
               <Route path="/about" element={<About />} />
+              <Route path="/features" element={<FeaturesIndex />} />
+              <Route path="/features/:slug" element={<Feature />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
             </Route>
@@ -73,7 +90,19 @@ export default function App() {
             <Route path="/scan" element={<AuthPage><Scan /></AuthPage>} />
             <Route path="/results/:id" element={<AuthPage><Results /></AuthPage>} />
             <Route path="/profile-analyzer" element={<AuthPage><ProfileAnalyzer /></AuthPage>} />
-            <Route path="/job-recommender" element={<AuthPage><JobRecommender /></AuthPage>} />
+            <Route path="/jobs" element={<AuthPage><Jobs /></AuthPage>} />
+            <Route path="/resume-editor" element={<AuthPage><ResumeEditor /></AuthPage>} />
+            <Route path="/tracker" element={<AuthPage><Tracker /></AuthPage>} />
+            <Route path="/agent" element={<AuthPage><Agent /></AuthPage>} />
+            <Route path="/coach" element={<AuthPage><Orion /></AuthPage>} />
+            <Route path="/orion" element={<Redirect to="/coach" />} />
+            <Route path="/recruiter" element={<AuthPage><Recruiter /></AuthPage>} />
+            <Route path="/admin" element={<AuthPage><Admin /></AuthPage>} />
+            <Route path="/admin/payments" element={<Redirect to="/admin" />} />
+            {/* Replaced pages */}
+            <Route path="/job-recommender" element={<Redirect to="/jobs" />} />
+            <Route path="/auto-apply" element={<Redirect to="/agent" />} />
+            <Route path="/automation" element={<Redirect to="/agent" />} />
             <Route path="/ai-analysis" element={<AuthPage><AIAnalysis /></AuthPage>} />
             <Route path="/career-roadmap" element={<AuthPage><CareerRoadmap /></AuthPage>} />
             <Route path="/portfolio-generator" element={<AuthPage><PortfolioGenerator /></AuthPage>} />
@@ -81,8 +110,6 @@ export default function App() {
             <Route path="/student-resume" element={<AuthPage><StudentResume /></AuthPage>} />
             <Route path="/account" element={<AuthPage><Account /></AuthPage>} />
             <Route path="/latex-builder/:id" element={<AuthPage><LatexBuilder /></AuthPage>} />
-            <Route path="/auto-apply" element={<AuthPage><AutoApply /></AuthPage>} />
-            <Route path="/automation" element={<AuthPage><AutomationHub /></AuthPage>} />
           </Routes>
         </ResumeProvider>
         </GTMProvider>

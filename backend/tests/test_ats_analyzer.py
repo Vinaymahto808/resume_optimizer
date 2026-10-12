@@ -87,12 +87,12 @@ class TestAnalyzeAts:
     def test_resume_too_short(self):
         text = "word " * 50
         result = analyze_ats(text)
-        assert len(result["suggestions"]) > 0
+        assert "50 words" in result["suggestions"][0]
 
     def test_resume_too_long(self):
         text = "word " * 1000
         result = analyze_ats(text)
-        assert len(result["suggestions"]) > 0
+        assert "1000 words" in result["suggestions"][0]
 
     def test_education_section(self):
         text = "Education\nMIT\n2019"

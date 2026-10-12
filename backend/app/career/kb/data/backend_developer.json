@@ -1,0 +1,372 @@
+{
+  "id": "backend_developer",
+  "name": "Backend Developer",
+  "summary": "Backend developers design, build and operate the services, APIs, data stores and asynchronous pipelines behind web and mobile products. They are hired by product companies, SaaS vendors, fintechs, marketplaces and consultancies, usually working in Python, Go, Node.js or Java alongside PostgreSQL, Redis, a message broker and a cloud platform. The role is judged on correctness, reliability and the ability to debug production systems, not only on writing endpoints.",
+  "titles": [
+    "backend developer",
+    "backend engineer",
+    "software engineer backend",
+    "python developer",
+    "golang developer",
+    "node.js developer",
+    "api developer",
+    "senior backend engineer",
+    "platform engineer",
+    "software development engineer"
+  ],
+  "skills": {
+    "core": [
+      "python",
+      "go",
+      "node.js",
+      "sql",
+      "postgresql",
+      "rest api",
+      "http",
+      "json",
+      "git",
+      "data structures",
+      "algorithms",
+      "authentication",
+      "authorization",
+      "oauth2",
+      "jwt",
+      "unit testing",
+      "docker",
+      "linux"
+    ],
+    "advanced": [
+      "microservices",
+      "distributed systems",
+      "grpc",
+      "graphql",
+      "event-driven architecture",
+      "database indexing",
+      "query optimization",
+      "transaction isolation",
+      "caching",
+      "idempotency",
+      "rate limiting",
+      "circuit breaker",
+      "concurrency",
+      "system design"
+    ],
+    "tools": [
+      "fastapi",
+      "django",
+      "express",
+      "redis",
+      "kafka",
+      "rabbitmq",
+      "aws sqs",
+      "kubernetes",
+      "opentelemetry",
+      "prometheus",
+      "grafana",
+      "sqlalchemy",
+      "pytest",
+      "nginx",
+      "github actions"
+    ]
+  },
+  "ats_keywords": [
+    "backend development",
+    "restful apis",
+    "rest api",
+    "microservices",
+    "api design",
+    "database design",
+    "sql optimization",
+    "postgresql",
+    "redis",
+    "kafka",
+    "message queue",
+    "event-driven",
+    "grpc",
+    "graphql",
+    "docker",
+    "kubernetes",
+    "ci/cd",
+    "unit testing",
+    "integration testing",
+    "scalable systems",
+    "high availability",
+    "distributed systems",
+    "observability",
+    "monitoring",
+    "oauth2",
+    "authentication",
+    "system design",
+    "cloud services",
+    "aws",
+    "agile"
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Developer - Associate",
+      "provider": "Amazon Web Services",
+      "level": "associate",
+      "why": "Validates building and debugging cloud applications with services such as SQS, Lambda, DynamoDB and IAM, which many backend postings list."
+    },
+    {
+      "name": "Certified Kubernetes Application Developer (CKAD)",
+      "provider": "CNCF / The Linux Foundation",
+      "level": "associate",
+      "why": "A hands-on exam on deploying and configuring applications on Kubernetes, useful if your target teams run containerised services."
+    },
+    {
+      "name": "HashiCorp Terraform Associate",
+      "provider": "HashiCorp",
+      "level": "associate",
+      "why": "Shows you can describe infrastructure as code, a common expectation for engineers who own their services end to end."
+    },
+    {
+      "name": "EDB PostgreSQL Associate Certification",
+      "provider": "EDB",
+      "level": "associate",
+      "why": "Confirms PostgreSQL administration and SQL fundamentals; certification is optional, and a project showing real query tuning is stronger evidence."
+    }
+  ],
+  "roadmap": [
+    {
+      "stage": "Foundations: one language, HTTP and SQL",
+      "duration_weeks": 8,
+      "goals": [
+        "Become fluent in one language (Python, Go or Node.js) including error handling and packaging",
+        "Understand HTTP methods, status codes, headers, cookies and idempotency of verbs",
+        "Write joins, aggregates and CTEs in PostgreSQL and read EXPLAIN output",
+        "Use git, branching and pull request review daily",
+        "Write unit tests for business logic"
+      ],
+      "skills": ["python", "sql", "postgresql", "http", "git", "rest api", "pytest"],
+      "project": "Build a CRUD REST API for a bookmarks or task service with FastAPI (or Express/Gin), PostgreSQL migrations, input validation, pagination and a test suite."
+    },
+    {
+      "stage": "Production-grade services",
+      "duration_weeks": 10,
+      "goals": [
+        "Add authentication (JWT or OAuth2) and role-based authorization",
+        "Fix N+1 queries and add the right indexes using EXPLAIN ANALYZE",
+        "Introduce Redis caching with explicit invalidation rules",
+        "Package the service with Docker and run it in CI with GitHub Actions",
+        "Add structured logging, health checks and basic metrics"
+      ],
+      "skills": ["fastapi", "docker", "redis", "jwt", "oauth2", "sqlalchemy", "database indexing", "github actions"],
+      "project": "Extend the API into a multi-tenant notes or e-commerce backend with auth, Redis caching, a query-optimised search endpoint, load test results and a CI pipeline that builds and pushes an image."
+    },
+    {
+      "stage": "Asynchronous and distributed systems",
+      "duration_weeks": 10,
+      "goals": [
+        "Publish and consume events with Kafka, RabbitMQ or SQS and handle redelivery safely",
+        "Implement idempotency keys, retries with backoff and dead-letter queues",
+        "Apply timeouts, rate limiting and a circuit breaker to outbound calls",
+        "Understand transaction isolation and the outbox pattern",
+        "Split one bounded context into a separate service with gRPC or REST"
+      ],
+      "skills": ["kafka", "rabbitmq", "aws sqs", "idempotency", "grpc", "circuit breaker", "rate limiting", "microservices"],
+      "project": "Build an order-processing system with an orders service, a payments stub and a notification worker connected through a queue, using the outbox pattern and idempotent consumers."
+    },
+    {
+      "stage": "Operate it: observability, Kubernetes and system design",
+      "duration_weeks": 8,
+      "goals": [
+        "Instrument services with OpenTelemetry traces, Prometheus metrics and correlated logs",
+        "Deploy to Kubernetes with probes, resource limits and a rolling update",
+        "Define SLIs and alerts, then run a failure drill and write a short postmortem",
+        "Practise system design interviews on feeds, URL shorteners and rate limiters",
+        "Read and explain slow-query and latency traces"
+      ],
+      "skills": ["kubernetes", "opentelemetry", "prometheus", "grafana", "system design", "distributed systems", "concurrency"],
+      "project": "Deploy the order-processing system to a local Kubernetes cluster (kind or minikube) with traces and dashboards, then document a load test and one injected failure with the fix."
+    }
+  ],
+  "resume_bullets": [
+    "Designed and shipped 25+ REST endpoints in FastAPI and PostgreSQL serving 1.2M requests per day, with OpenAPI docs and contract tests that cut client integration bugs by 40%.",
+    "Reduced p95 latency of the order-history endpoint from 1.8s to 220ms by eliminating an N+1 query with eager loading and adding a composite index verified with EXPLAIN ANALYZE.",
+    "Introduced Redis cache-aside with TTL jitter and event-based invalidation, lowering database read load by 65% and absorbing a 5x traffic spike without scaling the primary.",
+    "Built an idempotent payment-webhook consumer on Kafka using idempotency keys and a transactional outbox, eliminating duplicate charges across 3M monthly events.",
+    "Migrated a Django monolith module to a Go microservice behind gRPC, improving throughput 3x and cutting service memory usage by 50% while keeping zero-downtime deploys.",
+    "Instrumented 12 services with OpenTelemetry tracing and Prometheus metrics, reducing mean time to resolve production incidents from 90 to 35 minutes.",
+    "Added token-bucket rate limiting, request timeouts and circuit breakers around third-party APIs, raising availability of the checkout flow from 99.5% to 99.95%.",
+    "Containerised services with Docker and deployed them to Kubernetes via GitHub Actions, shortening release cycles from weekly to multiple deploys per day with automated rollback."
+  ],
+  "interview": [
+    {
+      "topic": "REST fundamentals",
+      "level": "junior",
+      "question": "Which HTTP methods are idempotent, and why does it matter when designing an API?",
+      "answer": "GET, PUT, DELETE, HEAD and OPTIONS are idempotent: repeating the same request leaves the server in the same state as sending it once. POST and PATCH are not guaranteed to be. It matters because networks fail and clients, proxies and load balancers retry; if a retry of a safe or idempotent method is harmless, clients can retry without fear. For non-idempotent operations such as creating a payment, you add an Idempotency-Key header and store the result against it. Note that idempotent does not mean the response is identical, for example a second DELETE may return 404 instead of 204, only that the resulting server state is the same.",
+      "follow_ups": ["How would you make a POST /payments endpoint safe to retry?", "Is PATCH idempotent?"]
+    },
+    {
+      "topic": "Database indexing",
+      "level": "junior",
+      "question": "What is a database index, and what are the costs of adding one?",
+      "answer": "An index is a separate data structure, in PostgreSQL usually a B-tree, that lets the database find rows matching a predicate without scanning the whole table. It speeds up equality and range filters, joins, ORDER BY and uniqueness checks. The costs are extra disk space, slower INSERT, UPDATE and DELETE because every index must be maintained, and more work for vacuum. An index is only used if the planner thinks it is cheaper than a sequential scan, so low-selectivity columns such as a boolean rarely benefit. Add indexes based on real query patterns, verify with EXPLAIN ANALYZE, and drop unused ones using pg_stat_user_indexes.",
+      "follow_ups": ["When would the planner ignore an index?", "What is a partial index?"]
+    },
+    {
+      "topic": "Composite indexes",
+      "level": "mid",
+      "question": "You have a query filtering on tenant_id and status and ordering by created_at. How do you index it?",
+      "answer": "Create a composite B-tree index with equality columns first and the sort column last, for example (tenant_id, status, created_at DESC). The leftmost-prefix rule means the index also serves queries on tenant_id alone or tenant_id plus status, but not queries on status alone. With equality on the leading columns the rows come out already ordered by created_at, so the database can satisfy ORDER BY ... LIMIT without a sort. If most rows share one status, a partial index such as WHERE status = 'open' is smaller and faster. Confirm with EXPLAIN (ANALYZE, BUFFERS) that you get an index scan rather than a sort node, and check write overhead.",
+      "follow_ups": ["What is a covering index (INCLUDE) and when is it useful?", "How do you add an index to a large live table safely?"]
+    },
+    {
+      "topic": "N+1 queries",
+      "level": "mid",
+      "question": "What is the N+1 query problem and how do you detect and fix it?",
+      "answer": "N+1 happens when code loads a list with one query and then issues one additional query per row to fetch a related object, for example fetching 100 orders and then each order's customer lazily, giving 101 queries. It looks fine in development with small data and becomes slow in production because of round-trip latency. Detect it with query logging, APM traces showing repeated similar statements, or test assertions on query counts. Fix it by eager loading with a JOIN or a second batched IN query: select_related and prefetch_related in Django, joinedload or selectinload in SQLAlchemy, or a DataLoader in GraphQL. Avoid over-fetching huge joins, which can multiply rows, so measure both approaches.",
+      "follow_ups": ["How does DataLoader batch queries in GraphQL?", "When is a JOIN worse than two queries?"]
+    },
+    {
+      "topic": "Transactions and isolation",
+      "level": "mid",
+      "question": "Explain PostgreSQL's default isolation level and what anomalies the higher levels prevent.",
+      "answer": "PostgreSQL defaults to READ COMMITTED: each statement sees only data committed before that statement began, so a repeated read in the same transaction can return different rows (non-repeatable read or phantom). REPEATABLE READ uses a snapshot taken at the first statement, so reads are stable, and PostgreSQL's implementation also prevents phantoms but can still allow write skew; conflicting updates fail with a serialization error. SERIALIZABLE uses serializable snapshot isolation to detect dangerous dependency patterns and aborts one transaction, so the application must retry. Higher levels trade concurrency and retries for correctness. For simple cases, SELECT ... FOR UPDATE or unique constraints on READ COMMITTED are often enough.",
+      "follow_ups": ["What is write skew? Give an example.", "How does SELECT FOR UPDATE SKIP LOCKED help with job queues?"]
+    },
+    {
+      "topic": "Caching strategies",
+      "level": "mid",
+      "question": "Compare cache-aside and write-through caching, and how would you handle invalidation?",
+      "answer": "In cache-aside, the application reads the cache first, on a miss loads from the database and populates the cache; writes update the database and then delete the cache key. It is simple, tolerates cache failure, and only caches data that is read, but allows stale reads between write and invalidation. In write-through, every write goes through the cache layer to the database so the cache is always fresh, at the price of write latency and caching data that may never be read. Always set a TTL as a safety net, add jitter to avoid synchronised expiry, delete rather than update on write to avoid races, and protect hot keys from stampedes with request coalescing or a short lock.",
+      "follow_ups": ["What is a cache stampede and how do you prevent it?", "Why delete the key instead of updating it?"]
+    },
+    {
+      "topic": "Idempotency",
+      "level": "senior",
+      "question": "How would you implement idempotency keys for a payment creation endpoint?",
+      "answer": "The client sends a unique Idempotency-Key header per logical operation. On receipt, the server atomically inserts a record keyed by (client, key) with the request fingerprint and status in_progress, using a unique constraint to win races. If the insert succeeds, it performs the work, ideally in the same database transaction as the business writes, then stores the response. If the key already exists with a completed status and the same payload hash, return the stored response; if the payload differs, return 422; if still in progress, return 409 or make the caller wait. Expire keys after a window such as 24 hours. Downstream calls to payment providers should also carry an idempotency key derived from yours.",
+      "follow_ups": ["What if the server crashes after charging but before storing the response?", "Where should the key store live: Redis or PostgreSQL?"]
+    },
+    {
+      "topic": "Message queues",
+      "level": "mid",
+      "question": "What does at-least-once delivery mean, and how do you build consumers that cope with it?",
+      "answer": "At-least-once means a broker guarantees a message is delivered one or more times: if the consumer crashes or an acknowledgement is lost before commit, the message is redelivered, so duplicates are normal. Kafka commits offsets after processing, SQS redelivers after the visibility timeout, and RabbitMQ requeues unacked messages. Consumers must therefore be idempotent: use a processed-message table with a unique key, upserts, or natural business keys, ideally updated in the same transaction as the side effect. Also use bounded retries with exponential backoff and a dead-letter queue for poison messages. Exactly-once is achievable only within a system, for example Kafka transactions, and not across external side effects such as sending email.",
+      "follow_ups": ["How does Kafka's partition key affect ordering?", "What is the transactional outbox pattern?"]
+    },
+    {
+      "topic": "Kafka vs RabbitMQ vs SQS",
+      "level": "senior",
+      "question": "When would you choose Kafka over RabbitMQ or SQS?",
+      "answer": "Kafka is a distributed, partitioned, replicated log: messages are retained for a configured period, consumers track offsets and can replay, and ordering is guaranteed per partition. It suits high-throughput event streaming, event sourcing, many independent consumer groups and stream processing, but has higher operational complexity. RabbitMQ is a smart broker with flexible routing (exchanges, topics), per-message acknowledgements, priorities and low latency, suited to task distribution and request/reply workflows. SQS is a fully managed queue with almost no operations, scales transparently, offers standard (at-least-once, unordered) and FIFO queues, and fits simple decoupling on AWS. Choose by need for replay, ordering, throughput, routing and operational burden.",
+      "follow_ups": ["How do you scale consumers in Kafka?", "How do dead-letter queues work in SQS?"]
+    },
+    {
+      "topic": "Concurrency",
+      "level": "mid",
+      "question": "How do you handle concurrent updates to the same row, such as decrementing inventory?",
+      "answer": "Never read-modify-write in application code without protection. Options: a single atomic statement such as UPDATE stock SET qty = qty - 1 WHERE id = $1 AND qty > 0 and checking affected rows; pessimistic locking with SELECT ... FOR UPDATE inside a transaction; or optimistic locking with a version column, where the update includes WHERE version = $v and the caller retries on zero rows affected. Atomic statements are simplest and fastest; pessimistic locks suit short critical sections but risk contention and deadlocks (acquire locks in a consistent order); optimistic locking suits low conflict rates. For cross-service coordination use a distributed lock sparingly, preferring idempotent design and database constraints.",
+      "follow_ups": ["How do you avoid deadlocks?", "Why is a Redis lock alone not a safe correctness guarantee?"]
+    },
+    {
+      "topic": "Concurrency models",
+      "level": "mid",
+      "question": "Compare threads, async I/O and goroutines for a backend service.",
+      "answer": "Threads are scheduled by the OS and run blocking code naturally, but are memory-heavy and contention-prone; Python threads also share the GIL, limiting CPU parallelism. Async I/O (Python asyncio in FastAPI, Node.js event loop) multiplexes many connections on one thread and excels at I/O-bound work, but any blocking or CPU-heavy call stalls the whole loop, so offload it to a worker pool or process. Go goroutines are lightweight, multiplexed by the runtime across cores, and communicate via channels, giving both simple blocking-style code and parallelism. Whatever the model, bound concurrency with worker pools or semaphores, propagate cancellation and timeouts (context in Go), and protect shared state.",
+      "follow_ups": ["What happens if you call a blocking library inside an async endpoint?", "How do you prevent goroutine leaks?"]
+    },
+    {
+      "topic": "API versioning",
+      "level": "mid",
+      "question": "How do you version a public REST API and evolve it without breaking clients?",
+      "answer": "Prefer additive, backward-compatible changes: add optional fields and new endpoints, never remove or change the meaning of existing fields, and make clients tolerant of unknown fields. When a breaking change is unavoidable, introduce a new version, commonly in the URL path (/v2/orders) because it is explicit and easy to route and cache, or via a header or media type. Publish a deprecation policy with Deprecation and Sunset headers, monitor per-version usage to know who is affected, and run old and new versions side by side until traffic drains. Contract tests and an OpenAPI diff in CI catch accidental breaks. For gRPC, follow protobuf rules: never reuse field numbers, and reserve removed ones.",
+      "follow_ups": ["How do you evolve a Protobuf schema safely?", "How would you handle pagination changes?"]
+    },
+    {
+      "topic": "Debugging performance",
+      "level": "senior",
+      "question": "An endpoint has become slow in production. Walk through how you would debug it.",
+      "answer": "First quantify: check latency percentiles, error rate and when it began, and correlate with deploys, traffic or data growth. Use a distributed trace or APM to see where time goes: the handler, database, cache, or an outbound call. If it is the database, capture the query with pg_stat_statements and run EXPLAIN (ANALYZE, BUFFERS), looking for sequential scans, bad row estimates, missing indexes, N+1 patterns, lock waits or pool exhaustion. If it is outbound, check timeouts and retries. Check resource saturation: CPU, memory, GC pauses, connection pool wait, event-loop lag. Reproduce with a load test, change one thing at a time, and verify the p95 improvement. Finally add an alert and a regression test.",
+      "follow_ups": ["What would pg_stat_statements show you?", "How do you tell connection pool exhaustion from a slow query?"]
+    },
+    {
+      "topic": "Resilience",
+      "level": "senior",
+      "question": "How do timeouts, retries and circuit breakers work together when calling another service?",
+      "answer": "Every outbound call needs a timeout, otherwise slow dependencies exhaust your threads or connections and cascade the failure. Retries recover from transient errors but must be limited, use exponential backoff with jitter, and apply only to idempotent operations or those protected by idempotency keys; otherwise retries amplify load during an outage (retry storm). A circuit breaker tracks failures, opens after a threshold to fail fast and give the dependency room to recover, then half-opens to probe. Combine with bulkheads (separate pools per dependency), fallbacks or cached data, and a retry budget. Ensure the total deadline across retries fits within the caller's own timeout, and propagate deadlines downstream.",
+      "follow_ups": ["Why add jitter to backoff?", "What would your fallback be for a recommendations service?"]
+    },
+    {
+      "topic": "Rate limiting",
+      "level": "senior",
+      "question": "Design a rate limiter for an API running on many instances.",
+      "answer": "Choose the algorithm: token bucket allows bursts at a steady refill rate and is the common default; sliding window counters are smoother but cost more; fixed windows are cheap but permit double bursts at boundaries. With multiple instances, state must be shared, typically in Redis, with the check-and-update done atomically using a Lua script or INCR with EXPIRE, keyed by user, API key or IP and route. Return 429 with Retry-After and rate-limit headers. Decide failure behaviour if Redis is down: fail open for availability or fail closed for protection. Add a local in-memory pre-filter to reduce Redis round trips, and enforce coarse limits at the gateway or CDN as well.",
+      "follow_ups": ["Why is a GET-then-SET check racy?", "How would you rate limit per tenant with different plans?"]
+    },
+    {
+      "topic": "Architecture",
+      "level": "senior",
+      "question": "When would you choose microservices over a monolith?",
+      "answer": "Start with a well-structured modular monolith unless there is a concrete reason to split: it has simpler deployment, transactions, debugging and refactoring. Microservices pay off when multiple teams need to deploy independently, when components have very different scaling or reliability needs, or when boundaries are stable and aligned to business domains. The costs are real: network failures, distributed transactions (sagas, outbox), data consistency, versioned contracts, observability, and more operational overhead. Splitting too early produces a distributed monolith. Practical path: enforce module boundaries in the monolith, extract a service along a bounded context with its own data store, and use the strangler pattern to migrate incrementally.",
+      "follow_ups": ["How do you handle a transaction spanning two services?", "What signals tell you a service boundary is wrong?"]
+    }
+  ],
+  "concepts": [
+    {
+      "title": "ACID and transaction isolation levels",
+      "body": "ACID describes the guarantees of a database transaction. Atomicity means all statements commit or none do. Consistency means a transaction moves the database from one valid state to another, enforced by constraints. Isolation means concurrent transactions do not see each other's partial work. Durability means committed data survives crashes, via the write-ahead log. The SQL standard defines isolation levels by the anomalies they allow: dirty reads, non-repeatable reads and phantoms. PostgreSQL implements READ COMMITTED (default; each statement sees a fresh snapshot), REPEATABLE READ (one snapshot per transaction, which also blocks phantoms) and SERIALIZABLE (detects dangerous patterns such as write skew and aborts a transaction). It never allows dirty reads, because it uses multiversion concurrency control: readers do not block writers. Higher isolation reduces anomalies but increases serialization failures, so code must retry. Keep transactions short, avoid network calls inside them, and use row locks or unique constraints for specific invariants."
+    },
+    {
+      "title": "PostgreSQL indexing and EXPLAIN",
+      "body": "A B-tree index is the default and supports equality, range and ordering. Other types include GIN for arrays, JSONB and full-text search, GiST for geometric and range data, and BRIN for huge append-only tables with naturally ordered columns. Composite indexes follow the leftmost-prefix rule, so put equality columns first and range or sort columns last. Partial indexes cover a subset of rows, expression indexes cover computed values such as lower(email), and covering indexes use INCLUDE so an index-only scan can avoid visiting the table. Read plans with EXPLAIN (ANALYZE, BUFFERS): compare estimated and actual rows to spot stale statistics, and watch for sequential scans, nested loops over large sets, and sorts spilling to disk. Run ANALYZE after bulk loads. On live tables use CREATE INDEX CONCURRENTLY to avoid blocking writes. Every index slows writes and consumes memory, so remove unused ones."
+    },
+    {
+      "title": "Cache-aside, write-through and invalidation",
+      "body": "Caching trades freshness for speed and load reduction. In cache-aside (lazy loading) the application checks the cache, loads from the database on a miss, and fills the cache; on writes it updates the database and deletes the key. Write-through writes to the cache and database together, keeping reads fresh but slowing writes. Write-behind buffers writes and flushes them asynchronously, which is fast but risks data loss. Invalidation is the hard part: use TTLs as a backstop, add random jitter so keys do not expire together, and prefer deleting over updating to avoid race conditions between concurrent writers. A cache stampede occurs when a hot key expires and many requests hit the database at once; mitigate it with request coalescing, a short lock, or refreshing early. Cache negative results briefly, namespace keys with a version, bound memory with an eviction policy such as LRU, and never treat the cache as the source of truth."
+    },
+    {
+      "title": "At-least-once delivery and idempotency keys",
+      "body": "Distributed messaging cannot cheaply guarantee a message is delivered exactly once, because a consumer can finish work and crash before acknowledging. Most brokers therefore offer at-least-once delivery: duplicates are possible, loss is not. The standard answer is idempotent processing. Give each message or request a unique identifier, either a business key or an idempotency key supplied by the client, and record it with a unique constraint in the same transaction as the side effect. When a duplicate arrives the insert fails or the stored result is returned. For HTTP, clients send an Idempotency-Key header and the server stores the response for a window. For side effects outside your database, such as email or card charges, pass your key to the provider or use the transactional outbox pattern, which writes the event to an outbox table in the business transaction and publishes it afterwards. Pair this with retries with backoff and a dead-letter queue."
+    },
+    {
+      "title": "REST, gRPC and GraphQL",
+      "body": "REST models resources over HTTP with standard verbs, status codes and caching, uses JSON, and is the best default for public APIs because every client understands it. gRPC uses HTTP/2 and Protocol Buffers: schemas are strongly typed, messages are compact, code is generated for many languages, and it supports streaming and deadlines. It suits internal service-to-service traffic where latency matters, but browser support needs gRPC-Web and debugging is less convenient. GraphQL exposes a typed schema where clients select exactly the fields they need, reducing over-fetching and round trips for varied front ends. Its costs are harder HTTP caching, the N+1 problem in resolvers (solved with DataLoader), and the need for query depth and cost limits. Many systems use REST publicly, gRPC internally and GraphQL as a backend-for-frontend. Whichever you choose, design for pagination, errors, versioning and idempotency from the start."
+    },
+    {
+      "title": "Connection pooling",
+      "body": "Opening a database connection is expensive, and PostgreSQL runs a process per connection, so each one costs memory and too many degrade performance. A connection pool keeps a bounded set of open connections that requests borrow and return. Size it from the database's capacity and the number of application instances, not from request concurrency: total connections across all instances must stay below max_connections, and a small pool is often faster than a large one. When the pool is exhausted, requests queue, so long transactions, forgotten returns or slow queries show up as latency rather than errors; set a pool acquisition timeout. In serverless or Kubernetes with many replicas, put PgBouncer in front in transaction pooling mode, remembering that session-level features such as prepared statements and advisory locks need care. Also pool HTTP clients, and configure idle timeouts and health checks so stale connections are discarded."
+    },
+    {
+      "title": "Observability: logs, metrics and traces",
+      "body": "Observability is the ability to understand a system's internal state from its outputs. Logs are discrete events; emit them as structured JSON with a request or trace ID, severity and context, and avoid logging secrets. Metrics are numeric time series, cheap to aggregate and alert on; track the RED signals for services (rate, errors, duration) and USE signals for resources (utilisation, saturation, errors), using histograms for latency percentiles. Traces follow a request across services as spans with timing and attributes, showing where latency lives. OpenTelemetry is the vendor-neutral standard for generating all three: SDKs and auto-instrumentation produce telemetry, context propagation (W3C traceparent) links services, and a collector exports to backends such as Prometheus, Grafana, Jaeger or a commercial vendor. Beware high-cardinality metric labels such as user IDs. Define SLOs, alert on symptoms like error budget burn, not every cause, and link alerts to runbooks."
+    },
+    {
+      "title": "Authentication and authorization",
+      "body": "Authentication establishes who the caller is; authorization decides what they may do. For browser apps, server-side sessions with secure, HttpOnly, SameSite cookies are simple and revocable. For APIs, bearer tokens are common: OAuth 2.0 with OpenID Connect delegates login to an identity provider and issues short-lived access tokens plus refresh tokens. JWTs are self-contained signed tokens; validate signature, issuer, audience and expiry, keep lifetimes short, and remember they cannot be revoked easily without a denylist. Store passwords with a slow hash such as Argon2id or bcrypt, never reversible encryption. Authorization models include role-based access control, attribute-based policies and resource ownership checks; enforce them on the server for every request, which prevents broken object-level authorization, the most common API flaw. Add TLS everywhere, rate limiting on login, input validation, and least-privilege secrets management."
+    },
+    {
+      "title": "Timeouts, retries and circuit breakers",
+      "body": "Failures in distributed systems are routine, so each remote call needs a defence in depth. A timeout bounds how long you wait; without one a slow dependency ties up threads and connections and the failure cascades upstream. Retries handle transient faults, but they multiply load, so cap attempts, use exponential backoff with jitter, retry only idempotent operations, and keep a retry budget. A circuit breaker monitors error rates: closed means normal, open means calls fail immediately for a cooling period, half-open allows trial calls to test recovery. Bulkheads isolate resources, such as separate connection pools per dependency, so one failing service cannot starve others. Provide graceful degradation, for instance returning cached or default data. Propagate deadlines through the call chain so downstream services stop working on requests the caller has abandoned, and test failure modes with fault injection."
+    },
+    {
+      "title": "Microservices, monoliths and Kubernetes basics",
+      "body": "A monolith deploys as one unit; it is easy to develop, test and run, and a modular monolith with clear internal boundaries scales surprisingly far. Microservices split by business capability into independently deployable services, each owning its data. They enable team autonomy and targeted scaling but add network latency, partial failure, eventual consistency, and heavy operational demands, so adopt them for organisational or scaling reasons, not fashion. Containers package an app with its dependencies using a Dockerfile; keep images small, run as non-root, and use multi-stage builds. Kubernetes schedules containers: a Pod runs containers, a Deployment manages replicas and rolling updates, a Service gives stable networking, and ConfigMaps and Secrets inject configuration. Set resource requests and limits, plus liveness and readiness probes, so traffic only reaches ready pods. Handle SIGTERM for graceful shutdown, and keep services stateless so they scale horizontally."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Idempotent payments and orders service",
+      "description": "Build an orders API with a payments stub, Idempotency-Key support backed by PostgreSQL unique constraints, a transactional outbox publishing events to Kafka or SQS, and an idempotent consumer. Include a test that replays duplicate requests and messages.",
+      "skills": ["fastapi", "postgresql", "kafka", "idempotency", "docker"]
+    },
+    {
+      "name": "High-read catalog API with caching",
+      "description": "Create a product catalog service with search and pagination on PostgreSQL, composite and partial indexes, an N+1 fix, and Redis cache-aside with TTL jitter. Publish before-and-after load test results and EXPLAIN ANALYZE plans.",
+      "skills": ["django", "postgresql", "redis", "database indexing", "query optimization"]
+    },
+    {
+      "name": "Rate limiter and API gateway",
+      "description": "Implement a Go gateway that authenticates JWTs, enforces per-key token-bucket rate limits in Redis using atomic Lua scripts, applies timeouts and a circuit breaker to upstream services, and exposes Prometheus metrics.",
+      "skills": ["go", "redis", "rate limiting", "circuit breaker", "prometheus", "jwt"]
+    },
+    {
+      "name": "Observable microservices on Kubernetes",
+      "description": "Split a small shop into three services communicating over gRPC and a queue, instrument them with OpenTelemetry traces and Grafana dashboards, and deploy to a local Kubernetes cluster with probes and a CI pipeline.",
+      "skills": ["grpc", "microservices", "opentelemetry", "kubernetes", "grafana", "rabbitmq"]
+    }
+  ]
+}

@@ -3,16 +3,23 @@ import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/logo.png";
 
 const productLinks = [
-  { label: "Resume Scan", to: "/scan" },
-  { label: "Profile Analyzer", to: "/profile-analyzer" },
-  { label: "Job Matcher", to: "/job-recommender" },
-  { label: "AI Analysis", to: "/ai-analysis" },
+  { label: "Smart Job Match", to: "/features/ai-job-match" },
+  { label: "Resume Tailor", to: "/features/resume-ai" },
+  { label: "Instant Autofill", to: "/features/job-autofill" },
+  { label: "Referral Finder", to: "/features/insider-connections" },
+  { label: "Sage AI Coach", to: "/features/ai-career-coach" },
+  { label: "Visa-Friendly Jobs", to: "/features/h1b-jobs" },
+  { label: "Interview Practice", to: "/features/interview-prep" },
 ];
 
 const companyLinks = [
+  { label: "Cover Letter Writer", to: "/features/cover-letter" },
+  { label: "Application Board", to: "/features/job-tracker" },
+  { label: "ATS Resume Checker", to: "/features/ats-resume-checker" },
+  { label: "Candidate Verification", to: "/features/fraud-detection" },
+  { label: "For Employers", to: "/features/ai-recruiter" },
+  { label: "All features", to: "/features" },
   { label: "Pricing", to: "/pricing" },
-  { label: "Templates", to: "/templates" },
-  { label: "Dashboard", to: "/dashboard" },
 ];
 
 function SocialIcon({ children, href, label }) {
@@ -36,11 +43,11 @@ export default function Footer() {
           <div className="footer-brand-row">
             <img src={logo} alt="Profile Optimizer" className="footer-logo" />
             <div>
-              <div className="footer-brand-tag">ATS + LinkedIn optimization in one workflow</div>
+              <div className="footer-brand-tag">Apply smarter with AI</div>
             </div>
           </div>
           <p className="footer-description">
-            A polished resume suite for applicants who want stronger ATS scores, better profile keywords, and clearer next steps.
+            Fit-ranked jobs, a resume tailored to each role, one-click applications, referral leads and an always-on AI coach.
           </p>
           <div className="footer-cta-row">
             <Link to={user ? "/scan" : "/signup"} className="btn-primary footer-cta">
@@ -53,7 +60,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-column">
-          <h4 className="footer-title">Product</h4>
+          <h4 className="footer-title">Features</h4>
           {productLinks.map((item) => (
             <Link key={item.to} to={item.to} className="footer-link">
               {item.label}
@@ -62,12 +69,16 @@ export default function Footer() {
         </div>
 
         <div className="footer-column">
-          <h4 className="footer-title">Company</h4>
+          <h4 className="footer-title">Tools</h4>
           {companyLinks.map((item) => (
             <Link key={item.to} to={item.to} className="footer-link">
               {item.label}
             </Link>
           ))}
+        </div>
+
+        <div className="footer-column">
+          <h4 className="footer-title">Company</h4>
           <Link to="/about" className="footer-link">About us</Link>
           <Link to="/privacy" className="footer-link">Privacy policy</Link>
           <Link to="/terms" className="footer-link">Terms of service</Link>
@@ -78,29 +89,6 @@ export default function Footer() {
           <p className="footer-small-copy">
             Upload once, score instantly, and move from application to interview with fewer blind spots.
           </p>
-          <svg className="footer-illustration" viewBox="0 0 420 240" fill="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="footerLine" x1="38" y1="36" x2="382" y2="206" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#22c55e" />
-                <stop offset="1" stopColor="#06b6d4" />
-              </linearGradient>
-              <linearGradient id="footerGlow" x1="90" y1="26" x2="320" y2="214" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#38bdf8" stopOpacity="0.45" />
-                <stop offset="1" stopColor="#22c55e" stopOpacity="0.1" />
-              </linearGradient>
-            </defs>
-            <rect x="28" y="22" width="364" height="196" rx="28" fill="rgba(15, 23, 42, 0.55)" stroke="rgba(148, 163, 184, 0.18)" />
-            <path d="M80 152C120 124 150 108 182 108C222 108 242 138 280 138C312 138 342 124 356 110" stroke="url(#footerLine)" strokeWidth="3.25" strokeLinecap="round" />
-            <path d="M80 150C118 119 150 98 182 98C219 98 247 132 280 132C311 132 338 120 356 102" stroke="url(#footerGlow)" strokeWidth="12" strokeLinecap="round" />
-            <circle cx="112" cy="130" r="8" fill="#22c55e" />
-            <circle cx="178" cy="104" r="8" fill="#06b6d4" />
-            <circle cx="286" cy="136" r="8" fill="#38bdf8" />
-            <circle cx="348" cy="108" r="8" fill="#22c55e" />
-            <path d="M94 64H186" stroke="rgba(226,232,240,0.3)" strokeWidth="10" strokeLinecap="round" />
-            <path d="M94 86H152" stroke="rgba(226,232,240,0.24)" strokeWidth="8" strokeLinecap="round" />
-            <rect x="276" y="58" width="78" height="36" rx="14" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.24)" />
-            <path d="M294 76L302 84L316 68" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
         </div>
       </div>
 

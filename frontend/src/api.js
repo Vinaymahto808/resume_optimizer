@@ -8,13 +8,53 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+// Career copilot (/api/career): plan paywall + credit refresh signals for PlanContext / UpgradeModal.
+export const PAYWALL_EVENT = "career:paywall";
+export const CREDITS_EVENT = "career:credits";
+const METERED_PATHS = /^\/api\/career\/(resume\/tailor|cover-letter|auto-apply|agent\/run|interview\/|jobs\/[^/]+\/deep-match|connections\/[^/]+\/referral-message)/;
+
+/** Readable message from an axios error (FastAPI `detail` may be a string or a validation list). */
+export function apiError(err, fallback = "Something went wrong. Please try again.") {
+  const detail = err?.response?.data?.detail;
+  if (Array.isArray(detail)) return detail.map((d) => d.msg).filter(Boolean).join("; ") || fallback;
+  return (typeof detail === "string" && detail) || err?.message || fallback;
+}
+
+/** Like apiError, but explains when the API server can't be reached (no response, or the dev proxy's 502-504). */
+export function authError(err, fallback) {
+  const status = err?.response?.status;
+  if (!err?.response || status === 502 || status === 503 || status === 504) {
+    if (import.meta.env.DEV) {
+      return "Can't reach the API server. Start the backend (in resume_optimizer/backend: "
+        + "uvicorn main:app --port 8000) and try again.";
+    }
+    return "Can't reach the server right now. Please try again in a moment.";
+  }
+  return apiError(err, fallback);
+}
+
 API.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    const { method, url = "" } = res.config || {};
+    if (method === "post" && METERED_PATHS.test(url)) window.dispatchEvent(new Event(CREDITS_EVENT));
+    return res;
+  },
   (err) => {
-    if (err.response?.status === 401) {
+    if (err.response?.status === 402 && (err.config?.url || "").startsWith("/api/career")) {
+      window.dispatchEvent(new CustomEvent(PAYWALL_EVENT, { detail: apiError(err, "Upgrade to Turbo to continue.") }));
+    }
+    // A 401 on a request that carried a token means the session expired: sign out and come back here
+    // after logging in. Login/register/reset answer 401 for a wrong password; the form shows that error.
+    const sentToken = Boolean(err.config?.headers?.Authorization);
+    const authForm = /^\/api\/auth\/(login|register|forgot-password|reset-password)/.test(err.config?.url || "");
+    if (err.response?.status === 401 && sentToken && !authForm) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/login";
+      localStorage.removeItem("plan");
+      const here = window.location.pathname + window.location.search;
+      if (!/^\/(login|signup|forgot-password|reset-password)\b/.test(window.location.pathname)) {
+        window.location.href = `/login?next=${encodeURIComponent(here)}`;
+      }
     }
     return Promise.reject(err);
   }
@@ -329,4 +369,157 @@ export const automation = {
     API.get("/api/automation/analytics/events", { params }).then((r) => r.data),
   flushAnalytics: () =>
     API.post("/api/automation/analytics/flush").then((r) => r.data),
+};
+
+// === Career copilot (/api/career) ===
+// The JWT from the request interceptor identifies the user; the backend maps it to their career profile.
+const C = "/api/career";
+const data = (r) => r.data;
+const form = (fields) => {
+  const fd = new FormData();
+  Object.entries(fields).forEach(([k, v]) => {
+    if (v === undefined || v === null || v === "") return;
+    if (Array.isArray(v)) v.forEach((item) => fd.append(k, item));
+    else fd.append(k, v);
+  });
+  return fd;
+};
+const clean = (params) =>
+  Object.fromEntries(Object.entries(params || {}).filter(([, v]) => v !== undefined && v !== "" && v !== null));
+
+export const career = {
+  // profile, plan & billing
+  me: () => API.get(`${C}/me`).then(data),
+  updateMe: (body) => API.put(`${C}/me`, body).then(data),
+  plans: () => API.get(`${C}/plans`).then(data),
+  checkout: (period = "monthly") => API.post(`${C}/plan/checkout`, { period }).then(data),
+  upgrade: (order_id = "", period = "monthly") => API.post(`${C}/plan/upgrade`, { order_id, period }).then(data),
+  cancelPlan: () => API.post(`${C}/plan/cancel`).then(data),
+  upiDetails: (period = "monthly") => API.get(`${C}/payments/upi`, { params: { period } }).then(data),
+  upiQrImage: () => API.get(`${C}/payments/qr-image`, { responseType: "blob" }).then((r) => URL.createObjectURL(r.data)),
+  submitPayment: ({ period, utr, email, screenshot }) =>
+    API.post(`${C}/payments`, form({ period, utr, email, screenshot })).then(data),
+  myPayment: () => API.get(`${C}/payments/me`).then(data),
+  system: () => API.get(`${C}/system`).then(data),
+
+  // jobs
+  jobs: (q = {}) => API.get(`${C}/jobs`, { params: clean(q) }).then(data),
+  job: (id) => API.get(`${C}/jobs/${id}`).then(data),
+  jobStats: () => API.get(`${C}/jobs/stats`).then(data),
+  deepMatch: (id) => API.post(`${C}/jobs/${id}/deep-match`).then(data),
+  decide: (id, decision) => API.post(`${C}/jobs/${id}/decision`, { decision }).then(data),
+  resetFeed: () => API.delete(`${C}/jobs/decisions`).then(data),
+  ingest: () => API.post(`${C}/jobs/ingest`).then(data),
+  ingestStatus: () => API.get(`${C}/jobs/ingest/status`).then(data),
+  companyInsights: (name) => API.get(`${C}/companies/insights`, { params: { name } }).then(data),
+
+  // AI writing
+  tailor: (body) => API.post(`${C}/resume/tailor`, body).then(data),
+  coverLetter: (body) => API.post(`${C}/cover-letter`, body).then(data),
+  interviewQuestions: (body) => API.post(`${C}/interview/questions`, body).then(data),
+  interviewFeedback: (body) => API.post(`${C}/interview/feedback`, body).then(data),
+  salary: (body) => API.post(`${C}/salary`, body).then(data),
+
+  // structured resume (resume builder: the resume used for matching)
+  structuredResume: () => API.get(`${C}/resume/structured`).then(data),
+  saveStructuredResume: (resume) => API.put(`${C}/resume/structured`, resume).then(data),
+  parseResume: ({ file, text } = {}, save = false) =>
+    API.post(`${C}/resume/structured/parse`, form({ file, resume_text: text, save: String(save) })).then(data),
+  recheck: (body = {}) => API.post(`${C}/resume/recheck`, body).then(data),
+  exportResume: (format = "pdf", template = "classic") =>
+    API.get(`${C}/resume/structured/export`, { params: { format, template }, responseType: "blob" }),
+
+  // tracker
+  applications: () => API.get(`${C}/applications`).then(data),
+  createApplication: (body) => API.post(`${C}/applications`, body).then(data),
+  updateApplication: (id, body) => API.patch(`${C}/applications/${id}`, body).then(data),
+  deleteApplication: (id) => API.delete(`${C}/applications/${id}`).then(data),
+  packet: (id) => API.get(`${C}/applications/${id}/packet`).then(data),
+  autoApply: (job_id, min_match = 0) => API.post(`${C}/auto-apply`, { job_id, min_match }).then(data),
+
+  // background agent
+  agent: () => API.get(`${C}/agent`).then(data),
+  updateAgent: (body) => API.put(`${C}/agent`, body).then(data),
+  runAgent: () => API.post(`${C}/agent/run`).then(data),
+  agentTasks: (scope = "today") => API.get(`${C}/agent/tasks`, { params: { scope } }).then(data),
+  agentTask: (id) => API.get(`${C}/agent/tasks/${id}`).then(data),
+  resolveAgentTask: (id, outcome, detail = "") =>
+    API.post(`${C}/agent/tasks/${id}/resolve`, { outcome, detail }).then(data),
+
+  // Sage AI coach
+  chat: (message) => API.post(`${C}/copilot/chat`, { message }).then(data),
+  chatHistory: () => API.get(`${C}/copilot/history`).then(data),
+  clearChat: () => API.delete(`${C}/copilot/history`).then(data),
+
+  // career knowledge base (domains, skill-gap roadmap, interview bank, RAG answers)
+  kbDomains: () => API.get(`${C}/kb/domains`).then(data),
+  kbDomain: (id) => API.get(`${C}/kb/domains/${encodeURIComponent(id)}`).then(data),
+  kbGap: (domain) => API.post(`${C}/kb/gap`, clean({ domain })).then(data),
+  kbInterview: (domain, params) => API.get(`${C}/kb/interview`, { params: clean({ domain, ...params }) }).then(data),
+  kbAsk: (question, domain) => API.post(`${C}/kb/ask`, clean({ question, domain })).then(data),
+
+  // insider connections
+  connections: (company = "") => API.get(`${C}/connections`, { params: clean({ company }) }).then(data),
+  addConnection: (body) => API.post(`${C}/connections`, body).then(data),
+  importConnections: (file) => API.post(`${C}/connections/import`, form({ file })).then(data),
+  deleteConnection: (id) => API.delete(`${C}/connections/${id}`).then(data),
+  insiders: (jobId) => API.get(`${C}/jobs/${jobId}/insiders`).then(data),
+  referralMessage: (connId, job_id) =>
+    API.post(`${C}/connections/${connId}/referral-message`, { job_id }).then(data),
+
+  // alerts
+  alerts: () => API.get(`${C}/alerts`).then(data),
+  createAlert: (body) => API.post(`${C}/alerts`, body).then(data),
+  deleteAlert: (id) => API.delete(`${C}/alerts/${id}`).then(data),
+  alertHits: () => API.get(`${C}/alerts/hits`).then(data),
+  markHitsSeen: () => API.post(`${C}/alerts/hits/seen`).then(data),
+
+  // Chrome extension pairing
+  extensionToken: () => API.get(`${C}/extension/token`).then(data),
+  createExtensionToken: () => API.post(`${C}/extension/token`).then(data),
+  revokeExtensionToken: () => API.delete(`${C}/extension/token`).then(data),
+
+  // recruiter
+  recruiterDashboard: () => API.get(`${C}/recruiter/dashboard`).then(data),
+  createRole: (body) => API.post(`${C}/recruiter/roles`, body).then(data),
+  role: (id) => API.get(`${C}/recruiter/roles/${id}`).then(data),
+  deleteRole: (id) => API.delete(`${C}/recruiter/roles/${id}`).then(data),
+  addCandidates: (roleId, files = [], resumeText = "", name = "") =>
+    API.post(`${C}/recruiter/roles/${roleId}/candidates`, form({ files, resume_text: resumeText, name })).then(data),
+  sourceCandidates: (roleId) => API.post(`${C}/recruiter/roles/${roleId}/source`).then(data),
+  candidate: (id) => API.get(`${C}/recruiter/candidates/${id}`).then(data),
+  draftOutreach: (id) => API.post(`${C}/recruiter/candidates/${id}/outreach`).then(data),
+  contactCandidate: (id, body) => API.post(`${C}/recruiter/candidates/${id}/contact`, body).then(data),
+  updateCandidate: (id, status) => API.patch(`${C}/recruiter/candidates/${id}`, { status }).then(data),
+};
+
+/** Save a blob response (export) as a download, using the server's filename when given. */
+export function saveBlob(response, fallbackName) {
+  const name = /filename="([^"]+)"/.exec(response.headers?.["content-disposition"] || "")?.[1] || fallbackName;
+  const url = URL.createObjectURL(response.data);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// === Admin (JWT of an is_admin user) ===
+export const careerAdmin = {
+  me: () => API.get(`${C}/admin/me`).then(data),
+  system: () => API.get(`${C}/admin/system`).then(data),
+  ingest: (include_network = true) => API.post(`${C}/admin/ingest`, null, { params: { include_network } }).then(data),
+  users: (q = "", offset = 0) => API.get(`${C}/admin/users`, { params: { q, offset, limit: 50 } }).then(data),
+  setAdmin: (userId, is_admin) => API.patch(`${C}/admin/users/${userId}`, { is_admin }).then(data),
+  setPlan: (clientId, body) => API.patch(`${C}/admin/profiles/${encodeURIComponent(clientId)}/plan`, body).then(data),
+  payments: (status = "pending") => API.get(`${C}/admin/payments`, { params: { status } }).then(data),
+  paymentScreenshot: (id) =>
+    API.get(`${C}/admin/payments/${id}/screenshot`, { responseType: "blob" }).then((r) => URL.createObjectURL(r.data)),
+  approvePayment: (id) => API.post(`${C}/admin/payments/${id}/approve`).then(data),
+  rejectPayment: (id, reason) => API.post(`${C}/admin/payments/${id}/reject`, { reason }).then(data),
+  boards: (ats) => API.get(`${C}/admin/boards`, { params: clean({ ats }) }).then(data),
+  addBoard: (body) => API.post(`${C}/admin/boards`, body).then(data),
+  updateBoard: (id, body) => API.patch(`${C}/admin/boards/${id}`, body).then(data),
+  deleteBoard: (id) => API.delete(`${C}/admin/boards/${id}`).then(data),
+  crawlBoard: (id) => API.post(`${C}/admin/boards/${id}/crawl`).then(data),
 };
