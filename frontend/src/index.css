@@ -2855,7 +2855,7 @@ input::placeholder, textarea::placeholder {
 
 .pricing-page {
   min-height: calc(100vh - 60px);
-  padding: 72px 24px 96px;
+  padding: 104px 24px 96px;  /* clears the fixed navbar */
   background: var(--bg-soft);
   position: relative;
   overflow: hidden;

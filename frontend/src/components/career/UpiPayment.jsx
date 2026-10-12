@@ -133,19 +133,22 @@ export default function UpiPayment({ period, periodLabel, onSubmitted, onApprove
   if (pending) return <UnderReview request={last} auto={auto} />;
 
   return (
-    <div className="cp-stack">
+    <div className="cp-stack upi-pay">
       {last?.status === "rejected" && (
         <Note tone="warn">Your last payment ({last.utr}) was rejected: {last.reject_reason}. You can submit again below.</Note>
       )}
       <div className="cp-card cp-card-tight cp-stack">
         <div className="cp-eyebrow">Step 1 · Pay by UPI</div>
+        {details && (
+          <a href={details.upi_link} className="btn-primary upi-app-btn">Pay {inr(details.amount_inr)} in a UPI app</a>
+        )}
         {!details ? <Loading /> : (
-          <div className="cp-row" style={{ alignItems: "flex-start", gap: 16 }}>
-            {qrSrc ? (
-              <img src={qrSrc} alt={`UPI QR code for ${details.payee_name}`}
-                style={{ width: 180, height: 180, borderRadius: 12, border: "1px solid var(--border)", background: "#fff", padding: 4, objectFit: "contain" }} />
-            ) : <Spinner />}
-            <div style={{ flex: 1, minWidth: 200 }}>
+          <div className="upi-qr-row">
+            <div className="upi-qr">
+              {qrSrc ? <img src={qrSrc} alt={`UPI QR code for ${details.payee_name}`} /> : <Spinner />}
+              <span className="cp-muted">Scan with any UPI app</span>
+            </div>
+            <div className="upi-details">
               <Row name="Amount" value={inr(details.amount_inr)} copy={String(details.amount_inr)} />
               <Row name="UPI ID" value={details.upi_id} copy={details.upi_id} />
               <Row name="Add this to the UPI note" value={details.reference_code} copy={details.reference_code} />
@@ -155,7 +158,6 @@ export default function UpiPayment({ period, periodLabel, onSubmitted, onApprove
             </div>
           </div>
         )}
-        {details && <a href={details.upi_link} className="btn-secondary" style={{ textAlign: "center" }}>Open in a UPI app (on your phone)</a>}
       </div>
 
       <form onSubmit={submit} className="cp-card cp-card-tight cp-stack">

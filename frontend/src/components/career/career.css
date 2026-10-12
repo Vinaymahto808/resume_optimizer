@@ -236,3 +236,56 @@
   .kb-summary { flex-direction: column; align-items: flex-start; }
   .kb-q summary { flex-direction: column; }
 }
+
+/* ── Payments: plans, UPI checkout, account plan stats ── */
+.turbo-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 780px; margin-top: 12px; }
+.turbo-plans--compact .turbo-cards { gap: 16px; }
+.turbo-save { color: #059669; font-size: 11px; margin-left: 6px; font-weight: 700; }
+
+.upi-pay { width: 100%; max-width: 720px; margin: 0 auto; }
+.upi-qr-row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 20px; align-items: start; }
+.upi-qr { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.upi-qr img { width: 200px; height: 200px; border-radius: 12px; border: 1px solid var(--border); background: #fff; padding: 6px; object-fit: contain; }
+.upi-app-btn { display: none; }
+
+@media (max-width: 860px) {
+  .turbo-cards { grid-template-columns: 1fr; max-width: 440px; }
+  .turbo-cards .pricing-card--popular { order: -1; }          /* lead with the paid plan */
+  .turbo-plans--compact .pricing-card--free { display: none; } /* the upgrade popup only needs Turbo */
+}
+
+@media (max-width: 768px) {
+  .cp-tabs.turbo-periods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; overflow: visible; }
+  .turbo-periods .cp-tab { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 8px 4px; white-space: normal; }
+  .turbo-save { margin-left: 0; font-size: 10px; }
+  /* On a phone the QR can't be scanned by the same phone: lead with the UPI app link. */
+  .upi-app-btn { display: block; text-align: center; padding: 13px 16px !important; font-size: 15px !important; }
+  .cp-grid-3.plan-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .plan-stats .cp-stat { padding: 10px; }
+  .plan-stats .cp-stat-value { font-size: 15px; }
+  .plan-stats .cp-stat-label { font-size: 10px; }
+}
+
+@media (max-width: 560px) {
+  .upi-qr-row { grid-template-columns: 1fr; gap: 12px; }
+  .upi-qr img { width: 220px; height: 220px; }
+}
+
+/* Admin payment queue: one card per payment on phones, labels inline, full-width actions */
+@media (max-width: 768px) {
+  .pay-table, .pay-table tbody, .pay-table tr, .pay-table td { display: block; width: 100%; }
+  .pay-table thead { display: none; }
+  .pay-table tr { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .pay-table tr:last-child { border-bottom: 0; }
+  .pay-table td { border: 0; padding: 3px 0; display: flex; gap: 10px; align-items: baseline; }
+  .pay-table td[data-label]::before {
+    content: attr(data-label); flex: 0 0 82px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .pay-table .pay-user { flex-wrap: wrap; word-break: break-all; }
+  .pay-table .pay-user .cp-muted { flex-basis: 100%; padding-left: 92px; font-size: 11px; }
+  .pay-table .pay-actions { padding-top: 10px; }
+  .pay-table .pay-actions .cp-row { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .pay-table .pay-actions .cp-btn-sm { padding: 10px 8px !important; font-size: 13px !important; }
+  .pay-table .pay-actions .cp-muted { grid-column: 1 / -1; }
+}

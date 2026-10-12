@@ -59,7 +59,7 @@ export default function TurboPlans({ compact = false, onUpgraded, onNeedLogin })
 
   if (paying && period) {
     return (
-      <div className="cp-stack">
+      <div className="cp-stack upi-pay">
         <button className="cp-link" style={{ alignSelf: "flex-start" }} onClick={() => setPaying(false)}>← Back to plans</button>
         <UpiPayment period={period.id} periodLabel={period.label} onSubmitted={() => refreshCareer()}
           onApproved={async () => { await refreshCareer(); setPaying(false); onUpgraded?.(); }} />
@@ -68,28 +68,28 @@ export default function TurboPlans({ compact = false, onUpgraded, onNeedLogin })
   }
 
   return (
-    <div className="cp-stack" style={{ gap: compact ? 14 : 20 }}>
+    <div className={`cp-stack turbo-plans${compact ? " turbo-plans--compact" : ""}`} style={{ gap: compact ? 14 : 20 }}>
       {careerPlan?.payment?.status === "pending" && (
         <Note tone="warn">Your UPI payment ({careerPlan.payment.utr}) is under review. Turbo turns on once it's approved.</Note>
       )}
       {periods.length > 1 && (
-        <div className="cp-tabs" role="radiogroup" aria-label="Billing period" style={{ alignSelf: "center" }}>
+        <div className="cp-tabs turbo-periods" role="radiogroup" aria-label="Billing period" style={{ alignSelf: "center" }}>
           {periods.map((p) => (
             <button key={p.id} role="radio" aria-checked={p.id === periodId}
               className={`cp-tab${p.id === periodId ? " cp-tab--active" : ""}`} onClick={() => setPeriodId(p.id)}>
-              {p.label}{p.savings_pct > 0 && <span style={{ color: "#059669", fontSize: 11, marginLeft: 6 }}>-{p.savings_pct}%</span>}
+              {p.label}{p.savings_pct > 0 && <span className="turbo-save">-{p.savings_pct}%</span>}
             </button>
           ))}
         </div>
       )}
-      <div className="pricing-cards" style={compact ? { gap: 12, marginTop: 0 } : undefined}>
+      <div className="pricing-cards turbo-cards">
         {info.plans.map((p) => {
           const turbo = p.id === "turbo";
           const amount = turbo && period
             ? price(period.per_month_usd, period.per_month_inr ?? Math.round(period.price_inr / period.months))
             : price(0, 0);
           return (
-            <div key={p.id} className={`pricing-card${turbo ? " pricing-card--popular" : ""}`}>
+            <div key={p.id} className={`pricing-card${turbo ? " pricing-card--popular" : " pricing-card--free"}`}>
               {turbo && <div className="pricing-card-badge">Best for job seekers</div>}
               <div className="pricing-card-header">
                 <div className={`pricing-plan-name${turbo ? " pricing-plan-name--popular" : ""}`}>{p.name}</div>

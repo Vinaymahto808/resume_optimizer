@@ -37,17 +37,17 @@ function Payments() {
       <ErrorNote message={error} />
       {!rows ? <Loading /> : rows.length === 0 ? <EmptyState title={`No ${status} payments`} /> : (
         <div className="cp-card cp-table-wrap" style={{ padding: 0 }}>
-          <table className="cp-table">
+          <table className="cp-table pay-table">
             <thead><tr><th>Submitted</th><th>User</th><th>Plan</th><th>UTR</th><th>Reference</th><th /></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id}>
-                  <td className="cp-muted">{fmtDateTime(r.created_at)}</td>
-                  <td>{r.email}<div className="cp-muted">{r.client_id}</div></td>
-                  <td>{r.plan_label} · <strong>{inr(r.amount_inr)}</strong></td>
-                  <td style={{ fontFamily: "monospace" }}>{r.utr}</td>
-                  <td style={{ fontFamily: "monospace" }}>{r.reference_code}</td>
-                  <td>
+                  <td data-label="Submitted" className="cp-muted">{fmtDateTime(r.created_at)}</td>
+                  <td data-label="User" className="pay-user">{r.email}<div className="cp-muted">{r.client_id}</div></td>
+                  <td data-label="Plan">{r.plan_label} · <strong>{inr(r.amount_inr)}</strong></td>
+                  <td data-label="UTR" style={{ fontFamily: "monospace" }}>{r.utr}</td>
+                  <td data-label="Reference" style={{ fontFamily: "monospace" }}>{r.reference_code}</td>
+                  <td className="pay-actions">
                     <div className="cp-row">
                       <button className="btn-secondary cp-btn-sm" onClick={() => viewShot(r.id)}>Screenshot</button>
                       {r.status === "pending" && (

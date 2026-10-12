@@ -34,7 +34,7 @@ function PlanCard() {
   return (
     <Card id="plan" heading="Plan & AI credits"
       right={isTurbo ? <Pill tone="green">Turbo active</Pill> : <button className="btn-primary" onClick={() => openPaywall(null)}>Upgrade to Turbo</button>}>
-      <div className="cp-grid-3">
+      <div className="cp-grid-3 plan-stats">
         <div className="cp-stat"><div className="cp-stat-value">{p.plan_name}</div><div className="cp-stat-label">Plan</div></div>
         <div className="cp-stat">
           <div className="cp-stat-value">{p.credits_limit === null ? "Unlimited" : `${p.credits_remaining} / ${p.credits_limit}`}</div>
