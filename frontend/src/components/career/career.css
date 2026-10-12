@@ -289,3 +289,16 @@
   .pay-table .pay-actions .cp-btn-sm { padding: 10px 8px !important; font-size: 13px !important; }
   .pay-table .pay-actions .cp-muted { grid-column: 1 / -1; }
 }
+
+/* Admin console frame (signed in with the admin password, outside the user dashboard) */
+.admin-shell { min-height: 100vh; background: var(--bg-soft); padding-bottom: 40px; }
+.admin-bar {
+  position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 20px; margin-bottom: 20px; background: var(--bg-card); border-bottom: 1px solid var(--border);
+}
+.admin-bar-brand { font-weight: 800; color: var(--text-heading); font-size: 15px; }
+.admin-shell > .cp-page { padding: 0 20px; }
+@media (max-width: 640px) {
+  .admin-bar { padding: 10px 16px; }
+  .admin-shell > .cp-page { padding: 0 16px; }
+}

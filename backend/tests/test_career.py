@@ -826,3 +826,58 @@ def test_admin_payment_alert_recipients(monkeypatch):
     assert admin_recipients() == ["owner@example.com", "ops@example.com"]
     monkeypatch.setenv("ADMIN_EMAIL", "ops@example.com")   # listed in both: alerted once
     assert admin_recipients() == ["ops@example.com", "owner@example.com"]
+
+
+@pytest.fixture()
+def admin_login(client, monkeypatch):
+    from app.career.admin_auth import hash_password
+    monkeypatch.setenv("ADMIN_USERNAME", "owner")
+    monkeypatch.setenv("ADMIN_PASSWORD_HASH", hash_password("correct horse battery"))
+    monkeypatch.delenv("ADMIN_PASSWORD", raising=False)
+    return client
+
+
+def _admin_login(c, username="owner", password="correct horse battery", ip="203.0.113.7"):
+    return c.post("/api/career/admin/login", json={"username": username, "password": password},
+                  headers={"X-Forwarded-For": f"{ip}, 10.0.0.1"})
+
+
+def test_admin_password_login_session(admin_login, monkeypatch):
+    c = admin_login
+    assert _admin_login(c, password="nope").status_code == 401
+    assert _admin_login(c, username="someone").status_code == 401
+    r = _admin_login(c, username="OWNER")   # username is case-insensitive
+    assert r.status_code == 200, r.text
+    token = r.json()["token"]
+    me = c.get("/api/career/admin/me", headers={"X-Admin-Token": token})
+    assert me.status_code == 200 and me.json()["via"] == "password"
+    assert c.get("/api/career/admin/payments", headers={"X-Admin-Token": token}).status_code == 200
+    # A user session is not an admin session, and a forged token is refused.
+    assert c.get("/api/career/admin/me", headers={"X-Admin-Token": token[:-2] + "xx"}).status_code == 401
+    # Changing the password ends existing sessions.
+    from app.career.admin_auth import hash_password
+    monkeypatch.setenv("ADMIN_PASSWORD_HASH", hash_password("a brand new password"))
+    assert c.get("/api/career/admin/me", headers={"X-Admin-Token": token}).status_code == 401
+
+
+def test_admin_login_locks_out_after_failures(admin_login):
+    c = admin_login
+    for _ in range(10):
+        assert _admin_login(c, password="wrong", ip="198.51.100.9").status_code == 401
+    assert _admin_login(c, ip="198.51.100.9").status_code == 429      # even the right password
+    assert _admin_login(c, ip="198.51.100.10").status_code == 200     # other IPs are unaffected
+
+
+def test_admin_login_not_configured(client, monkeypatch):
+    monkeypatch.delenv("ADMIN_PASSWORD_HASH", raising=False)
+    monkeypatch.delenv("ADMIN_PASSWORD", raising=False)
+    assert _admin_login(client).status_code == 503
+
+
+def test_admin_plain_password_refused_in_production(client, monkeypatch):
+    monkeypatch.delenv("ADMIN_PASSWORD_HASH", raising=False)
+    monkeypatch.setenv("ADMIN_USERNAME", "owner")
+    monkeypatch.setenv("ADMIN_PASSWORD", "correct horse battery")
+    assert _admin_login(client).status_code == 200
+    monkeypatch.setattr("app.config.settings.RUN_ENV", "production")
+    assert _admin_login(client).status_code == 503

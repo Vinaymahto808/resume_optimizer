@@ -20,7 +20,6 @@ const NAV_ITEMS = [
   { icon: "◇", label: "Analytics", path: "/dashboard-analytics" },
 ];
 const EMPLOYER_ITEMS = [{ icon: "⌂", label: "For Employers", path: "/recruiter" }];
-const ADMIN_ITEMS = [{ icon: "⚙", label: "Admin", path: "/admin" }];
 
 const BREADCRUMB_MAP = {
   "/dashboard": ["Dashboard"],
@@ -37,7 +36,6 @@ const BREADCRUMB_MAP = {
   "/agent": ["Dashboard", "Background Agent"],
   "/coach": ["Dashboard", "Sage AI Coach"],
   "/recruiter": ["Dashboard", "For Employers"],
-  "/admin": ["Dashboard", "Admin"],
   "/portfolio-generator": ["Dashboard", "Portfolio Generator"],
   "/student-resume": ["Dashboard", "Student Resume"],
   "/account": ["Dashboard", "Account Settings"],
@@ -138,7 +136,7 @@ export default function DashboardLayout({ children }) {
         {/* Nav */}
         <nav style={s.nav}>
           {!collapsed && <div style={s.navSection}>MAIN MENU</div>}
-          {[...NAV_ITEMS, ...EMPLOYER_ITEMS, ...(user.is_admin ? ADMIN_ITEMS : [])].map((item) => {
+          {[...NAV_ITEMS, ...EMPLOYER_ITEMS].map((item) => {
             const active = location.pathname === item.path;
             return (
               <Link
@@ -268,7 +266,6 @@ export default function DashboardLayout({ children }) {
                   {[
                     { icon: "◎", label: "My Account", path: "/account" },
                     { icon: "◇", label: "Plan & billing", path: "/pricing" },
-                    ...(user.is_admin ? [{ icon: "⚙", label: "Admin", path: "/admin" }] : []),
                   ].map((item) => (
                     <Link key={item.label} to={item.path} style={s.dropdownItem}>
                       <span style={s.dropdownItemIcon}>{item.icon}</span>

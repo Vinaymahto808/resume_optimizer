@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
 import { careerAdmin, apiError } from "../api";
+import { clearAdminToken, getAdminToken } from "../lib/adminSession";
 import { useAuth } from "../contexts/AuthContext";
 import { EmptyState, ErrorNote, Field, Loading, Modal, Note, Pill, Spinner, Tabs } from "../components/career/ui";
 import { fmtDate, fmtDateTime, inr } from "../components/career/format";
@@ -279,24 +280,32 @@ function System() {
 }
 
 export default function Admin() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
   const [tab, setTab] = useState("payments");
-  if (user && !user.is_admin) return <Navigate to="/dashboard" replace />;
+  // Signed in with the admin password (see AdminLogin), independent of any user account.
+  if (!getAdminToken()) return <Navigate to="/admin/login" replace />;
+  const signOut = () => { clearAdminToken(); navigate("/admin/login", { replace: true }); };
   return (
-    <div className="cp-page" style={{ maxWidth: 1300 }}>
-      <SEO title="Admin" description="Admin console" />
-      <div className="cp-page-head">
-        <div>
-          <div className="cp-eyebrow">Admin</div>
-          <h1 className="cp-title">Admin console</h1>
+    <div className="admin-shell">
+      <header className="admin-bar">
+        <span className="admin-bar-brand">ProfileOptimizer · Admin</span>
+        <button className="btn-secondary cp-btn-sm" onClick={signOut}>Log out</button>
+      </header>
+      <div className="cp-page" style={{ maxWidth: 1300 }}>
+        <SEO title="Admin" description="Admin console" />
+        <div className="cp-page-head">
+          <div>
+            <div className="cp-eyebrow">Admin</div>
+            <h1 className="cp-title">Admin console</h1>
+          </div>
+          <Tabs tabs={[{ id: "payments", label: "Payments" }, { id: "users", label: "Users" }, { id: "sources", label: "Job sources" }, { id: "system", label: "System" }]}
+            value={tab} onChange={setTab} />
         </div>
-        <Tabs tabs={[{ id: "payments", label: "Payments" }, { id: "users", label: "Users" }, { id: "sources", label: "Job sources" }, { id: "system", label: "System" }]}
-          value={tab} onChange={setTab} />
+        {tab === "payments" && <Payments />}
+        {tab === "users" && <Users />}
+        {tab === "sources" && <JobSources />}
+        {tab === "system" && <System />}
       </div>
-      {tab === "payments" && <Payments />}
-      {tab === "users" && <Users />}
-      {tab === "sources" && <JobSources />}
-      {tab === "system" && <System />}
     </div>
   );
 }

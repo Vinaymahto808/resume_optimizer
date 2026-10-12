@@ -2,8 +2,9 @@
 
 An admin is a logged-in user with ``users.is_admin``. Bootstrap the first one with ``ADMIN_EMAILS`` (users
 with those emails are promoted when they log in or call an admin endpoint) or with
-``python -m app.career.make_admin you@example.com``. ``X-Admin-Token`` == ``ADMIN_TOKEN`` still works as a
-fallback for scripts and for setups without accounts."""
+``python -m app.career.make_admin you@example.com``. The admin console itself signs in with its own username
+and password (see ``admin_auth``) and sends the session as ``X-Admin-Token``; ``ADMIN_TOKEN`` is still
+accepted there as a fallback for scripts."""
 import hmac
 import os
 import threading
@@ -11,12 +12,12 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Literal, Optional
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Query
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
-from app.career import plans, scheduler
+from app.career import admin_auth, plans, scheduler
 from app.career.identity import user_client_id, user_from_bearer
 from app.career.llm import llm_available
 from app.career.models import PaymentRequest, PlatformJob, SeekerProfile, TrackedApplication
@@ -49,6 +50,10 @@ def require_admin(
     db: Session = Depends(get_db),
 ) -> AdminActor:
     if x_admin_token:
+        if admin_auth.verify_session(x_admin_token):
+            return AdminActor(user=None, via="password")
+        if x_admin_token.count(".") == 2:   # a session token that's expired, forged or from an old password
+            raise HTTPException(status_code=401, detail="Admin session expired. Sign in again.")
         expected = os.getenv("ADMIN_TOKEN", "")
         if not expected:
             raise HTTPException(status_code=503, detail="Admin token login is not configured (set ADMIN_TOKEN).")
@@ -65,6 +70,26 @@ def require_admin(
 
 
 # ------------------------------------------------------------- endpoints --
+
+class AdminLoginBody(BaseModel):
+    username: str = Field(min_length=1, max_length=100)
+    password: str = Field(min_length=1, max_length=200)
+
+
+@router.post("/login")
+def admin_login(body: AdminLoginBody, request: Request, db: Session = Depends(get_db),
+                x_forwarded_for: str = Header(default=""), x_real_ip: str = Header(default="")):
+    if not admin_auth.configured():
+        raise HTTPException(status_code=503, detail="Admin sign-in isn't set up (set ADMIN_PASSWORD_HASH).")
+    ip = admin_auth.client_ip(x_forwarded_for, x_real_ip, request.client.host if request.client else "")
+    if admin_auth.locked_out(db, ip):
+        raise HTTPException(status_code=429, detail="Too many failed attempts. Try again in 15 minutes.")
+    if not admin_auth.check_credentials(body.username, body.password):
+        admin_auth.record_failure(db, ip)
+        raise HTTPException(status_code=401, detail="Wrong username or password.")
+    admin_auth.clear_failures(db, ip)
+    return admin_auth.issue_session()
+
 
 def _profile_summary(profile: Optional[SeekerProfile], db: Session) -> dict:
     if profile is None:

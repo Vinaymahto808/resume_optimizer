@@ -1,8 +1,17 @@
 import axios from "axios";
+import { clearAdminToken, getAdminToken } from "./lib/adminSession";
 
 const API = axios.create({ baseURL: import.meta.env.VITE_API_URL || "" });
 
+const ADMIN_API = /^\/api\/career\/admin(\/|$)/;
+
 API.interceptors.request.use((config) => {
+  // The admin console signs in with its own password, never with a user's session.
+  if (ADMIN_API.test(config.url || "")) {
+    const adminToken = getAdminToken();
+    if (adminToken) config.headers["X-Admin-Token"] = adminToken;
+    return config;
+  }
   const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
@@ -40,6 +49,12 @@ API.interceptors.response.use(
     return res;
   },
   (err) => {
+    // Admin password wrong or changed: drop it and send the admin back to the admin sign-in page.
+    if (err.response?.status === 401 && ADMIN_API.test(err.config?.url || "") && !/\/admin\/login$/.test(err.config?.url || "")) {
+      clearAdminToken();
+      if (window.location.pathname !== "/admin/login") window.location.href = "/admin/login";
+      return Promise.reject(err);
+    }
     if (err.response?.status === 402 && (err.config?.url || "").startsWith("/api/career")) {
       window.dispatchEvent(new CustomEvent(PAYWALL_EVENT, { detail: apiError(err, "Upgrade to Turbo to continue.") }));
     }
@@ -506,6 +521,7 @@ export function saveBlob(response, fallbackName) {
 
 // === Admin (JWT of an is_admin user) ===
 export const careerAdmin = {
+  login: (username, password) => API.post(`${C}/admin/login`, { username, password }).then(data),
   me: () => API.get(`${C}/admin/me`).then(data),
   system: () => API.get(`${C}/admin/system`).then(data),
   ingest: (include_network = true) => API.post(`${C}/admin/ingest`, null, { params: { include_network } }).then(data),

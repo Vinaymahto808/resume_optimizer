@@ -37,6 +37,7 @@ import Agent from "./pages/Agent";
 import Orion from "./pages/Orion";
 import Recruiter from "./pages/Recruiter";
 import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
 import Feature, { FeaturesIndex } from "./pages/Feature";
 
 function PublicLayout() {
@@ -97,7 +98,9 @@ export default function App() {
             <Route path="/coach" element={<AuthPage><Orion /></AuthPage>} />
             <Route path="/orion" element={<Redirect to="/coach" />} />
             <Route path="/recruiter" element={<AuthPage><Recruiter /></AuthPage>} />
-            <Route path="/admin" element={<AuthPage><Admin /></AuthPage>} />
+            {/* Admin console: its own password sign-in, separate from user accounts */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/admin/payments" element={<Redirect to="/admin" />} />
             {/* Replaced pages */}
             <Route path="/job-recommender" element={<Redirect to="/jobs" />} />

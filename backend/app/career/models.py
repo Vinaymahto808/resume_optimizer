@@ -319,3 +319,13 @@ class CompanyBoard(Base):
     last_status = Column(String, default="")          # ok | error: <reason>
     last_count = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AdminLoginAttempt(Base):
+    """Failed admin sign-ins, for per-IP lockout. Kept in the database because serverless instances
+    don't share memory."""
+    __tablename__ = "platform_admin_login_attempts"
+
+    id = Column(String, primary_key=True, default=_uuid)
+    ip = Column(String, index=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
