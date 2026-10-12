@@ -2,8 +2,10 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
-    Boolean, Column, DateTime, Float, ForeignKey, Index, Integer, String, Text, UniqueConstraint, text,
+    Boolean, Column, DateTime, Float, ForeignKey, Index, Integer, LargeBinary, String, Text, UniqueConstraint, text,
 )
+
+from sqlalchemy.orm import deferred
 
 from app.database import Base
 
@@ -217,7 +219,10 @@ class PaymentRequest(Base):
     amount_inr = Column(Integer, nullable=False)
     reference_code = Column(String, nullable=False, index=True)
     utr = Column(String, unique=True, nullable=False)
-    screenshot_path = Column(String, nullable=False)  # file name inside uploads/payments/
+    screenshot_path = Column(String, nullable=False)  # file name (its extension gives the image type)
+    # The image itself. Stored in the database because serverless disks (Vercel /tmp) don't persist;
+    # older rows may only have a file under uploads/payments/.
+    screenshot_data = deferred(Column(LargeBinary, nullable=True))  # loaded only when the image is opened
     email = Column(String, nullable=False)
     status = Column(String, default="pending", index=True)  # pending | approved | rejected
     reject_reason = Column(Text, default="")

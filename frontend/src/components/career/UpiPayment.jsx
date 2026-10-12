@@ -3,7 +3,7 @@ import { career, apiError } from "../../api";
 import { CopyButton, ErrorNote, Field, Loading, Note, Spinner } from "./ui";
 import { inr } from "./format";
 
-const MAX_BYTES = 5 * 1024 * 1024;
+const MAX_BYTES = 4 * 1024 * 1024;  // matches the server (Vercel caps uploads at 4.5 MB)
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp"];
 const POLL_MS = 4000;
 
@@ -86,7 +86,7 @@ export default function UpiPayment({ period, periodLabel, onSubmitted, onApprove
   const pickFile = (f) => {
     setError(null);
     if (f && !IMAGE_TYPES.includes(f.type)) { setFile(null); setError("Screenshot must be a PNG, JPG or WebP image."); return; }
-    if (f && f.size > MAX_BYTES) { setFile(null); setError("Screenshot is too large (5 MB max)."); return; }
+    if (f && f.size > MAX_BYTES) { setFile(null); setError("Screenshot is too large (4 MB max)."); return; }
     setFile(f);
   };
 
@@ -166,7 +166,7 @@ export default function UpiPayment({ period, periodLabel, onSubmitted, onApprove
           <input required inputMode="numeric" autoComplete="off" maxLength={12} placeholder="e.g. 412345678901" value={utr}
             onChange={(e) => setUtr(e.target.value.replace(/\D/g, "").slice(0, 12))} style={{ letterSpacing: "0.08em" }} />
         </Field>
-        <Field label={`Payment screenshot (PNG, JPG or WebP, max 5 MB)${auto ? ", optional" : ""}`}>
+        <Field label={`Payment screenshot (PNG, JPG or WebP, max 4 MB)${auto ? ", optional" : ""}`}>
           <input type="file" required={!auto} accept="image/png,image/jpeg,image/webp" onChange={(e) => pickFile(e.target.files?.[0] ?? null)} />
         </Field>
         <div className="cp-grid-2">

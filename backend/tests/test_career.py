@@ -319,7 +319,8 @@ def test_upi_mode_details_and_create_request(upi, tmp_path):
     req = r.json()["request"]
     assert req["status"] == "pending" and req["amount_inr"] == 499
     assert req["reference_code"] == info["reference_code"]
-    assert len(list((tmp_path / "payments").iterdir())) == 1
+    # The screenshot lives in the database (serverless disks don't persist), not under uploads/.
+    assert not (tmp_path / "payments").exists()
     assert upi.sent == [("admin@example.com", upi.sent[0][1])]
     assert upi.get("/api/career/payments/me", headers=H).json()["request"]["id"] == req["id"]
     me = upi.get("/api/career/me", headers=H).json()

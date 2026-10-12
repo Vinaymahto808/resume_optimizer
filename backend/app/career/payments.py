@@ -19,7 +19,7 @@ from urllib.parse import quote
 from fastapi import (
     APIRouter, BackgroundTasks, Depends, File, Form, Header, HTTPException, Query, Request, UploadFile,
 )
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel, Field
 from sqlalchemy import func, update
 from sqlalchemy.exc import IntegrityError
@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/career", tags=["career-payments"])
 
-MAX_SCREENSHOT_BYTES = 5 * 1024 * 1024
+MAX_SCREENSHOT_BYTES = 4 * 1024 * 1024  # Vercel rejects request bodies over 4.5 MB
 DAILY_REQUEST_LIMIT = 5
 _UTR_RE = re.compile(r"^\d{12}$")
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -266,25 +266,23 @@ async def create_payment(
         raise HTTPException(status_code=409, detail="This UTR has already been submitted.")
 
     # With SMS auto-verification the bank SMS is the proof, so the screenshot is optional.
-    folder = screenshot_dir()
-    filename = ""
+    filename, data = "", None
     if screenshot is None:
         if not auto:
             raise HTTPException(status_code=422, detail="Attach a screenshot of the payment.")
     else:
         data = await screenshot.read(MAX_SCREENSHOT_BYTES + 1)
         if len(data) > MAX_SCREENSHOT_BYTES:
-            raise HTTPException(status_code=413, detail="Screenshot is too large (5 MB max).")
+            raise HTTPException(status_code=413, detail="Screenshot is too large (4 MB max).")
         kind = sniff_image(data)
         if not kind:
             raise HTTPException(status_code=415, detail="Screenshot must be a PNG, JPG or WebP image.")
-        folder.mkdir(parents=True, exist_ok=True)
         filename = f"{secrets.token_hex(16)}.{kind}"
-        (folder / filename).write_bytes(data)
 
     req = PaymentRequest(
         client_id=profile.client_id, plan_period=period, amount_inr=plans.BILLING_PERIODS[period]["price_inr"],
-        reference_code=reference_code(profile.client_id), utr=utr, screenshot_path=filename, email=email)
+        reference_code=reference_code(profile.client_id), utr=utr, screenshot_path=filename, screenshot_data=data,
+        email=email)
     db.add(req)
     if not profile.email:
         profile.email = email
@@ -293,8 +291,6 @@ async def create_payment(
     except IntegrityError:
         # Lost a race with a concurrent submit (same UTR, or a second pending request).
         db.rollback()
-        if filename:
-            (folder / filename).unlink(missing_ok=True)
         raise HTTPException(status_code=409, detail="This payment was already submitted.")
     db.refresh(req)
 
@@ -331,11 +327,14 @@ def admin_list(status: Literal["pending", "approved", "rejected"] = "pending",
 @router.get("/admin/payments/{req_id}/screenshot", dependencies=[Depends(require_admin)])
 def admin_screenshot(req_id: str, db: Session = Depends(get_db)):
     req = _request_or_404(db, req_id)
+    media = _MEDIA_TYPES.get(Path(req.screenshot_path or "").suffix.lstrip("."), "application/octet-stream")
+    if req.screenshot_data:
+        return Response(content=bytes(req.screenshot_data), media_type=media, headers={"Cache-Control": "no-store"})
+    # Requests submitted before screenshots moved into the database keep a file on disk.
     folder = screenshot_dir().resolve()
-    path = (folder / req.screenshot_path).resolve()
-    if path.parent != folder or not path.is_file():
+    path = (folder / (req.screenshot_path or "")).resolve()
+    if not req.screenshot_path or path.parent != folder or not path.is_file():
         raise HTTPException(status_code=404, detail="Screenshot not found.")
-    media = _MEDIA_TYPES.get(path.suffix.lstrip("."), "application/octet-stream")
     return FileResponse(str(path), media_type=media, headers={"Cache-Control": "no-store"})
 
 
