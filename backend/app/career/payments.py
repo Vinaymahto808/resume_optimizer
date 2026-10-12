@@ -170,6 +170,12 @@ def _notify(to_email: str, subject: str, body: str) -> None:
         logger.exception("UPI payment email to %s failed", to_email)
 
 
+def admin_recipients() -> list[str]:
+    """Where new-payment alerts go: ADMIN_EMAIL, plus the admins listed in ADMIN_EMAILS."""
+    raw = ",".join((os.getenv("ADMIN_EMAIL", ""), os.getenv("ADMIN_EMAILS", "")))
+    return list(dict.fromkeys(e.strip().lower() for e in raw.split(",") if e.strip()))
+
+
 def _period_label(period: str) -> str:
     return plans.BILLING_PERIODS.get(period, {}).get("label", period)
 
@@ -298,14 +304,15 @@ async def create_payment(
     if auto and _auto_approve(db, utr, background):
         return {"request": request_dict(_request_or_404(db, req.id))}
 
-    background.add_task(
-        _notify, os.getenv("ADMIN_EMAIL", "").strip(),
-        f"New UPI payment to review: ₹{req.amount_inr} ({req.reference_code})",
-        f"A Turbo payment is waiting for review.\n\n"
-        f"Plan: {_period_label(req.plan_period)}\nAmount: ₹{req.amount_inr}\nReference: {req.reference_code}\n"
-        f"UTR: {req.utr}\nEmail: {req.email}\n\n"
-        f"Verify the UTR and amount in your PhonePe Business app, then approve or reject:\n"
-        f"{settings.FRONTEND_URL}/admin/payments\n")
+    for admin_email in admin_recipients():
+        background.add_task(
+            _notify, admin_email,
+            f"New UPI payment to review: ₹{req.amount_inr} ({req.reference_code})",
+            f"A Turbo payment is waiting for review.\n\n"
+            f"Plan: {_period_label(req.plan_period)}\nAmount: ₹{req.amount_inr}\nReference: {req.reference_code}\n"
+            f"UTR: {req.utr}\nEmail: {req.email}\n\n"
+            f"Verify the UTR and amount in your UPI or bank app, then approve or reject:\n"
+            f"{settings.FRONTEND_URL}/admin\n")
     return {"request": request_dict(req)}
 
 

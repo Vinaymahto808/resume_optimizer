@@ -817,3 +817,12 @@ def test_parser_keeps_experience_without_bullet_characters():
     ]
     out = resume_builder.to_text(doc)
     assert "Helped the team with dashboards" in out and "Cleaned survey data in Python" in out
+
+
+def test_admin_payment_alert_recipients(monkeypatch):
+    from app.career.payments import admin_recipients
+    monkeypatch.delenv("ADMIN_EMAIL", raising=False)
+    monkeypatch.setenv("ADMIN_EMAILS", "Owner@Example.com, ops@example.com")
+    assert admin_recipients() == ["owner@example.com", "ops@example.com"]
+    monkeypatch.setenv("ADMIN_EMAIL", "ops@example.com")   # listed in both: alerted once
+    assert admin_recipients() == ["ops@example.com", "owner@example.com"]
