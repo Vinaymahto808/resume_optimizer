@@ -21,14 +21,11 @@ router = APIRouter(tags=["auth"])
 
 
 def _user_with_sub(user: User, db: Session) -> dict:
-    from app.career.admin import sync_bootstrap_admin
-    sync_bootstrap_admin(user, db)
     sub = db.query(Subscription).filter(Subscription.user_id == user.id).first()
     return {
         "id": user.id,
         "email": user.email,
         "full_name": user.full_name,
-        "is_admin": bool(user.is_admin),
         "plan": sub.plan.value if sub and sub.plan else PlanTier.FREE.value,
         "subscription_status": sub.status.value if sub and sub.status else SubscriptionStatus.ACTIVE.value,
     }

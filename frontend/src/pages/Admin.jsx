@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
 import { careerAdmin, apiError } from "../api";
 import { clearAdminToken, getAdminToken } from "../lib/adminSession";
-import { useAuth } from "../contexts/AuthContext";
 import { EmptyState, ErrorNote, Field, Loading, Modal, Note, Pill, Spinner, Tabs } from "../components/career/ui";
 import { fmtDate, fmtDateTime, inr } from "../components/career/format";
 
@@ -121,7 +120,6 @@ function PlanEditor({ user, onClose, onSaved }) {
 }
 
 function Users() {
-  const { user: me } = useAuth();
   const [q, setQ] = useState("");
   const [query, setQuery] = useState("");
   const [data, setData] = useState(null);
@@ -132,11 +130,6 @@ function Users() {
     careerAdmin.users(query).then(setData).catch((e) => setError(apiError(e)));
   }, [query]);
   useEffect(load, [load]);
-
-  const toggleAdmin = async (u) => {
-    if (!window.confirm(`${u.is_admin ? "Remove admin access from" : "Make admin:"} ${u.email}?`)) return;
-    try { await careerAdmin.setAdmin(u.id, !u.is_admin); load(); } catch (e) { setError(apiError(e)); }
-  };
 
   return (
     <div className="cp-stack">
@@ -152,16 +145,13 @@ function Users() {
             <tbody>
               {data.users.map((u) => (
                 <tr key={u.id}>
-                  <td>{u.email}{u.is_admin && <> <Pill tone="purple">Admin</Pill></>}<div className="cp-muted">{u.full_name}</div></td>
+                  <td>{u.email}<div className="cp-muted">{u.full_name}</div></td>
                   <td className="cp-muted">{fmtDate(u.created_at)}</td>
                   <td>{u.plan === "turbo" ? <Pill tone="green">Turbo</Pill> : <Pill>Free</Pill>}{u.plan_expires_at && <div className="cp-muted">until {fmtDate(u.plan_expires_at)}</div>}</td>
                   <td>{u.has_resume ? "Yes" : "—"}</td>
                   <td>{u.applications}</td>
                   <td>
-                    <div className="cp-row">
-                      <button className="btn-secondary cp-btn-sm" onClick={() => setEditing(u)}>Plan</button>
-                      {u.id !== me?.id && <button className="btn-secondary cp-btn-sm" onClick={() => toggleAdmin(u)}>{u.is_admin ? "Remove admin" : "Make admin"}</button>}
-                    </div>
+                    <button className="btn-secondary cp-btn-sm" onClick={() => setEditing(u)}>Plan</button>
                   </td>
                 </tr>
               ))}

@@ -95,25 +95,41 @@ def test_anonymous_browser_can_pair_extension(client):
     assert client.get("/api/career/me", headers={"X-Extension-Token": token}).json()["client_id"] == ANON["X-Client-Id"]
 
 
-def test_admin_requires_admin_user(client):
+def _admin_session(client, monkeypatch):
+    from app.career.admin_auth import hash_password
+    monkeypatch.setenv("ADMIN_USERNAME", "owner")
+    monkeypatch.setenv("ADMIN_PASSWORD_HASH", hash_password("correct horse battery"))
+    r = client.post("/api/career/admin/login", json={"username": "owner", "password": "correct horse battery"})
+    assert r.status_code == 200, r.text
+    return {"X-Admin-Token": r.json()["token"]}
+
+
+def test_user_accounts_never_get_admin_access(client, monkeypatch):
     assert client.get("/api/career/admin/users").status_code == 401
-    auth, _ = _signup(client)
-    assert client.get("/api/career/admin/users", headers=auth).status_code == 403
-    assert client.get("/api/career/admin/payments", headers=auth).status_code == 403
-    assert client.get("/api/auth/me", headers=auth).json()["is_admin"] is False
+    monkeypatch.setenv("ADMIN_EMAILS", "boss@example.com")   # now only an alert address, never a grant
+    auth, user = _signup(client, email="boss@example.com", name="Boss")
+    assert "is_admin" not in client.get("/api/auth/me", headers=auth).json()
+    # Even with the old database flag set, a user session opens nothing.
+    from app.database import get_db
+    from app.models import User
+    db = next(client.app.dependency_overrides[get_db]())
+    db.get(User, user["id"]).is_admin = True
+    db.commit()
+    for path in ("/api/career/admin/users", "/api/career/admin/payments", "/api/career/admin/system",
+                 "/api/career/admin/boards"):
+        assert client.get(path, headers=auth).status_code == 401, path
+    assert client.patch(f"/api/career/admin/profiles/u_{user['id']}/plan", headers=auth,
+                        json={"plan": "turbo"}).status_code == 401
 
 
-def test_admin_bootstrap_and_actions(client, monkeypatch):
-    monkeypatch.setenv("ADMIN_EMAILS", "Boss@Example.com")
-    admin, admin_user = _signup(client, email="boss@example.com", name="Boss")
+def test_admin_console_actions(client, monkeypatch):
+    admin = _admin_session(client, monkeypatch)
     member, member_user = _signup(client, email="member@example.com", name="Member")
-    assert client.get("/api/auth/me", headers=admin).json()["is_admin"] is True
-    assert client.get("/api/auth/me", headers=member).json()["is_admin"] is False
-
     users = client.get("/api/career/admin/users?q=member", headers=admin).json()
     assert users["total"] == 1 and users["users"][0]["email"] == "member@example.com"
+    assert "is_admin" not in users["users"][0]
     assert client.get("/api/career/admin/payments", headers=admin).status_code == 200
-    assert client.get("/api/career/admin/system", headers=admin).json()["users"] == 2
+    assert client.get("/api/career/admin/system", headers=admin).json()["users"] == 1
 
     # Plan override for an account that never opened the career features.
     r = client.patch(f"/api/career/admin/profiles/u_{member_user['id']}/plan", headers=admin,
@@ -124,17 +140,13 @@ def test_admin_bootstrap_and_actions(client, monkeypatch):
     assert client.get("/api/career/me", headers=member).json()["plan"]["plan"] == "free"
     assert client.patch("/api/career/admin/profiles/nobody-here-1234/plan", headers=admin,
                         json={"plan": "turbo"}).status_code == 404
-
-    # Promote, then the new admin can act; nobody can demote themselves.
+    # The old promote/demote endpoint is gone.
     assert client.patch(f"/api/career/admin/users/{member_user['id']}", headers=admin,
-                        json={"is_admin": True}).json()["is_admin"] is True
-    assert client.get("/api/career/admin/users", headers=member).status_code == 200
-    assert client.patch(f"/api/career/admin/users/{admin_user['id']}", headers=admin,
-                        json={"is_admin": False}).status_code == 400
+                        json={"is_admin": True}).status_code in (404, 405)
 
 
 def test_admin_token_fallback(client, monkeypatch):
-    assert client.get("/api/career/admin/users", headers={"X-Admin-Token": "x"}).status_code == 503
+    assert client.get("/api/career/admin/users", headers={"X-Admin-Token": "x"}).status_code == 401
     monkeypatch.setenv("ADMIN_TOKEN", "fallback-token-123")
     assert client.get("/api/career/admin/users", headers={"X-Admin-Token": "wrong"}).status_code == 401
     assert client.get("/api/career/admin/users", headers={"X-Admin-Token": "fallback-token-123"}).status_code == 200

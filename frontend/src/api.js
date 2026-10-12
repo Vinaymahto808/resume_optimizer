@@ -519,14 +519,13 @@ export function saveBlob(response, fallbackName) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-// === Admin (JWT of an is_admin user) ===
+// === Admin console (signed in at /admin/login; see lib/adminSession.js) ===
 export const careerAdmin = {
   login: (username, password) => API.post(`${C}/admin/login`, { username, password }).then(data),
   me: () => API.get(`${C}/admin/me`).then(data),
   system: () => API.get(`${C}/admin/system`).then(data),
   ingest: (include_network = true) => API.post(`${C}/admin/ingest`, null, { params: { include_network } }).then(data),
   users: (q = "", offset = 0) => API.get(`${C}/admin/users`, { params: { q, offset, limit: 50 } }).then(data),
-  setAdmin: (userId, is_admin) => API.patch(`${C}/admin/users/${userId}`, { is_admin }).then(data),
   setPlan: (clientId, body) => API.patch(`${C}/admin/profiles/${encodeURIComponent(clientId)}/plan`, body).then(data),
   payments: (status = "pending") => API.get(`${C}/admin/payments`, { params: { status } }).then(data),
   paymentScreenshot: (id) =>
